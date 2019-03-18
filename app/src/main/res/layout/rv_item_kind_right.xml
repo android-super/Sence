@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:background="@color/white"
+                android:layout_height="100dp">
+
+    <com.sence.view.NiceImageView
+            android:id="@+id/item_img"
+            android:src="@drawable/hint_img"
+            android:scaleType="centerCrop"
+            android:layout_centerVertical="true"
+            android:layout_width="75dp"
+            app:corner_radius="4dp"
+            android:layout_height="75dp"/>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/shape_line"/>
+
+    <TextView
+            android:id="@+id/item_name"
+            android:text="@string/hint_describe"
+            android:layout_width="wrap_content"
+            android:textSize="15sp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="2dp"
+            android:maxLines="2"
+            android:textColor="#333333"
+            android:layout_toRightOf="@id/item_img"
+            android:layout_alignTop="@id/item_img"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:id="@+id/item_price"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/item_img"
+            android:layout_alignBottom="@id/item_img"
+            android:layout_width="wrap_content"
+            android:textColor="@color/theme_green"
+            android:text="@string/hint_price"
+            android:layout_height="wrap_content"/>
+    <ImageView
+            android:id="@+id/item_bus"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/kind_gouwu"
+            android:layout_marginBottom="8dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"/>
+</RelativeLayout>

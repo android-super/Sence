@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="155dp"
+              android:gravity="center"
+              android:background="@color/white">
+    <TextView
+            android:layout_width="wrap_content"
+            android:text="你的购物车空空如也"
+            android:textSize="14sp"
+            android:textColor="#808080"
+            android:layout_height="wrap_content"/>
+    <TextView
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:text="去挑几件好货吧"
+            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content"/>
+    <TextView
+            android:id="@+id/bus_go"
+            android:background="@drawable/bus_button"
+            android:layout_width="wrap_content"
+            android:text="去逛逛"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"/>
+</LinearLayout>

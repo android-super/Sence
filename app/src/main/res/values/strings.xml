@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Sence</string>
+    <string name="title_home">首页</string>
+    <string name="title_vip">会员</string>
+    <string name="title_kind">分类</string>
+    <string name="title_bus">购物车</string>
+    <string name="title_user">我的</string>
+    <string name="main_search_hint">秋冬润唇膏大全</string>
+    <string name="hint_name">阿里山</string>
+    <string name="hint_describe">我爱中国</string>
+    <string name="hint_num">99+</string>
+    <string name="hint_price">￥0.00</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
