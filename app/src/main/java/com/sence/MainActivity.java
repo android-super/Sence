@@ -25,8 +25,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         
         String name ="我是一个小数";
 
-
-
         main_home = findViewById(R.id.main_home);
         main_vip = findViewById(R.id.main_vip);
         main_kind = findViewById(R.id.main_kind);
