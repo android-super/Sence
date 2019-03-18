@@ -22,9 +22,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        String name = "我的";
-
-
+        
+        String name ="feafaef";
         main_home = findViewById(R.id.main_home);
         main_vip = findViewById(R.id.main_vip);
         main_kind = findViewById(R.id.main_kind);
