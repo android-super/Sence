@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         
         String name ="我爱中国";
-        //sdasad十大撒旦
         main_home = findViewById(R.id.main_home);
         main_vip = findViewById(R.id.main_vip);
         main_kind = findViewById(R.id.main_kind);
