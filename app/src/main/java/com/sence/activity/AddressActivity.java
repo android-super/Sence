@@ -1,8 +1,10 @@
 package com.sence.activity;
 
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
+
 import com.sence.R;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class AddressActivity extends AppCompatActivity {
 
@@ -10,5 +12,6 @@ public class AddressActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address);
+
     }
 }

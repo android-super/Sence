@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.orhanobut.logger.Logger;
 import com.sence.fragment.BusFragment;
 import com.sence.fragment.KindFragment;
 import com.sence.fragment.MainFragment;
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
+        Logger.e(view.getTag().toString(),"message");
         setSelect((Integer) view.getTag());
     }
 
