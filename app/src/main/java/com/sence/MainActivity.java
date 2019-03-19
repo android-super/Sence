@@ -6,7 +6,10 @@ import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 import com.sence.fragment.*;
+import com.squareup.leakcanary.CanaryLog;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private LinearLayout main_home, main_vip, main_kind, main_bus, main_user;
@@ -50,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
+        Logger.e(view.getTag().toString(),"message");
         setSelect((Integer) view.getTag());
     }
 
