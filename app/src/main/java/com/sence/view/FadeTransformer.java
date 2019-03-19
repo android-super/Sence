@@ -1,15 +1,18 @@
 package com.sence.view;
 
 import android.view.View;
+import androidx.annotation.NonNull;
+import androidx.viewpager.widget.ViewPager;
 import com.ToxicBakery.viewpager.transforms.ABaseTransformer;
 
 /**
  * ViewPager渐变效果
  */
-public class FadeTransformer extends ABaseTransformer {
+public class FadeTransformer implements ViewPager.PageTransformer {
+
 
     @Override
-    protected void onTransform(View view, float position) {
-        view.setAlpha(1 - Math.abs(position));
+    public void transformPage(@NonNull View page, float position) {
+        page.setAlpha(1 - Math.abs(position));
     }
 }

@@ -54,7 +54,7 @@ public class MainFragment extends Fragment {
         }
         viewPager.setAdapter(pagerAdapter);
         tab_layout.setupWithViewPager(viewPager);
-        viewPager.setPageTransformer(true, new FadeTransformer());
+        viewPager.setPageTransformer(false, new FadeTransformer());
         for (int i = 0; i < tab_layout.getTabCount(); i++) {
             TabLayout.Tab tab = tab_layout.getTabAt(i);
             if (tab != null) {
