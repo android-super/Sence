@@ -3,10 +3,16 @@ package com.sence;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+
+import com.sence.fragment.BusFragment;
+import com.sence.fragment.KindFragment;
+import com.sence.fragment.MainFragment;
+import com.sence.fragment.UserFragment;
+import com.sence.fragment.VipFragment;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import com.sence.fragment.*;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private LinearLayout main_home, main_vip, main_kind, main_bus, main_user;
