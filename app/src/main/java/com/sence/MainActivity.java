@@ -28,10 +28,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
-        String name ="我爱中国";
-        //测试
-        String content  = "我是小青蛙";
         main_home = findViewById(R.id.main_home);
         main_vip = findViewById(R.id.main_vip);
         main_kind = findViewById(R.id.main_kind);

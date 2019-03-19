@@ -16,6 +16,7 @@ import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.sence.R;
 import com.sence.adapter.MainFocusAdapter;
+import com.sence.view.GridSpacingItemDecoration;
 
 /**
  * 关注Fragment
@@ -51,11 +52,12 @@ public class FocusFragment extends Fragment {
         smartRefreshLayout.setRefreshFooter(new ClassicsFooter(getActivity()));
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new MainFocusAdapter(R.layout.rv_item_main_focus);
+        recyclerView.setNestedScrollingEnabled(true);
         recyclerView.setAdapter(adapter);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(),
-                DividerItemDecoration.VERTICAL);
-        dividerItemDecoration.setDrawable(ContextCompat.getDrawable(getActivity(),R.drawable.shape_line_hign));
-        recyclerView.addItemDecoration(dividerItemDecoration);
+        GridSpacingItemDecoration gridSpacingItemDecoration = new GridSpacingItemDecoration(2, 10, false);
+        recyclerView.addItemDecoration(gridSpacingItemDecoration);
+        adapter.addData("");
+        adapter.addData("");
         adapter.addData("");
         adapter.addData("");
         adapter.addData("");

@@ -9,15 +9,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.*;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.sence.R;
 import com.sence.adapter.FocusAdapter;
 import com.sence.adapter.MainFocusAdapter;
+import com.sence.adapter.NoteAdapter;
+import com.sence.view.GridDividerItemDecoration;
+import com.sence.view.GridSpacingItemDecoration;
 
 /**
  * 笔记Fragment
@@ -26,7 +27,7 @@ public class NoteFragment extends Fragment {
     private SmartRefreshLayout smartRefreshLayout;
     private RecyclerView recyclerView;
 
-    private FocusAdapter adapter;
+    private NoteAdapter adapter;
 
     public NoteFragment() {
         // Required empty public constructor
@@ -44,7 +45,6 @@ public class NoteFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initRefresh();
-
     }
 
     public void initRefresh() {
@@ -52,13 +52,16 @@ public class NoteFragment extends Fragment {
         recyclerView = getView().findViewById(R.id.recycle_view);
         smartRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
         smartRefreshLayout.setRefreshFooter(new ClassicsFooter(getActivity()));
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new FocusAdapter(R.layout.rv_item_main_focus);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+        recyclerView.setLayoutManager(gridLayoutManager);
+        GridSpacingItemDecoration gridSpacingItemDecoration = new GridSpacingItemDecoration(2, 10, false);
+        recyclerView.addItemDecoration(gridSpacingItemDecoration);
+        adapter = new NoteAdapter(R.layout.rv_item_note);
         recyclerView.setAdapter(adapter);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(),
-                DividerItemDecoration.VERTICAL);
-        dividerItemDecoration.setDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.shape_line_hign));
-        recyclerView.addItemDecoration(dividerItemDecoration);
+        adapter.addData("");
+        adapter.addData("");
+        adapter.addData("");
+        adapter.addData("");
         adapter.addData("");
         adapter.addData("");
         adapter.addData("");
