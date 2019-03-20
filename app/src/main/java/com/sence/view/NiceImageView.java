@@ -7,8 +7,8 @@ import android.util.AttributeSet;
 import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
+import com.blankj.utilcode.util.ConvertUtils;
 import com.sence.R;
-import com.sence.util.Utils;
 
 public class NiceImageView extends AppCompatImageView {
     private Context context;
@@ -151,7 +151,8 @@ public class NiceImageView extends AppCompatImageView {
                 drawCircleBorder(canvas, borderWidth, borderColor, radius - borderWidth / 2.0f);
             }
             if (innerBorderWidth > 0) {
-                drawCircleBorder(canvas, innerBorderWidth, innerBorderColor, radius - borderWidth - innerBorderWidth / 2.0f);
+                drawCircleBorder(canvas, innerBorderWidth, innerBorderColor,
+                        radius - borderWidth - innerBorderWidth / 2.0f);
             }
         } else {
             if (borderWidth > 0) {
@@ -184,7 +185,8 @@ public class NiceImageView extends AppCompatImageView {
      */
     private void initBorderRectF() {
         if (!isCircle) {
-            borderRectF.set(borderWidth / 2.0f, borderWidth / 2.0f, width - borderWidth / 2.0f, height - borderWidth / 2.0f);
+            borderRectF.set(borderWidth / 2.0f, borderWidth / 2.0f, width - borderWidth / 2.0f,
+                    height - borderWidth / 2.0f);
         }
     }
 
@@ -260,7 +262,7 @@ public class NiceImageView extends AppCompatImageView {
     }
 
     public void setBorderWidth(int borderWidth) {
-        this.borderWidth = Utils.dip2px(context, borderWidth);
+        this.borderWidth = ConvertUtils.dp2px(borderWidth);
         calculateRadiiAndRectF(false);
     }
 
@@ -270,7 +272,7 @@ public class NiceImageView extends AppCompatImageView {
     }
 
     public void setInnerBorderWidth(int innerBorderWidth) {
-        this.innerBorderWidth = Utils.dip2px(context, innerBorderWidth);
+        this.innerBorderWidth = ConvertUtils.dp2px(innerBorderWidth);
         clearInnerBorderWidth();
         invalidate();
     }
@@ -281,27 +283,27 @@ public class NiceImageView extends AppCompatImageView {
     }
 
     public void setCornerRadius(int cornerRadius) {
-        this.cornerRadius = Utils.dip2px(context, cornerRadius);
+        this.cornerRadius = ConvertUtils.dp2px(cornerRadius);
         calculateRadiiAndRectF(false);
     }
 
     public void setCornerTopLeftRadius(int cornerTopLeftRadius) {
-        this.cornerTopLeftRadius = Utils.dip2px(context, cornerTopLeftRadius);
+        this.cornerTopLeftRadius = ConvertUtils.dp2px(cornerTopLeftRadius);
         calculateRadiiAndRectF(true);
     }
 
     public void setCornerTopRightRadius(int cornerTopRightRadius) {
-        this.cornerTopRightRadius = Utils.dip2px(context, cornerTopRightRadius);
+        this.cornerTopRightRadius = ConvertUtils.dp2px(cornerTopRightRadius);
         calculateRadiiAndRectF(true);
     }
 
     public void setCornerBottomLeftRadius(int cornerBottomLeftRadius) {
-        this.cornerBottomLeftRadius = Utils.dip2px(context, cornerBottomLeftRadius);
+        this.cornerBottomLeftRadius = ConvertUtils.dp2px(cornerBottomLeftRadius);
         calculateRadiiAndRectF(true);
     }
 
     public void setCornerBottomRightRadius(int cornerBottomRightRadius) {
-        this.cornerBottomRightRadius = Utils.dip2px(context, cornerBottomRightRadius);
+        this.cornerBottomRightRadius = ConvertUtils.dp2px(cornerBottomRightRadius);
         calculateRadiiAndRectF(true);
     }
 

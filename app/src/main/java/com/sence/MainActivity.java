@@ -3,14 +3,18 @@ package com.sence;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import com.bumptech.glide.Glide;
-import com.orhanobut.logger.AndroidLogAdapter;
+import com.blankj.utilcode.util.SPUtils;
 import com.orhanobut.logger.Logger;
+import com.sence.bean.request.RRegisterBean;
 import com.sence.fragment.*;
-import com.squareup.leakcanary.CanaryLog;
+import com.sence.net.manager.ApiCallBack;
+import com.sence.net.HttpCode;
+import com.sence.net.HttpManager;
+import com.sence.utils.StatusBarUtil;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private LinearLayout main_home, main_vip, main_kind, main_bus, main_user;
@@ -26,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        StatusBarUtil.setLightMode(this);
         main_home = findViewById(R.id.main_home);
         main_vip = findViewById(R.id.main_vip);
         main_kind = findViewById(R.id.main_kind);
@@ -50,12 +55,50 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mains = new LinearLayout[]{main_home, main_vip, main_kind, main_bus, main_user};
 
         setSelect(0);
+
+        HttpManager.getInstance().PlayNetCode(HttpCode.GET_SYSTEM_TIME).request(new ApiCallBack<String>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(String time, String msg) {
+                long sys_time = System.currentTimeMillis() / 1000;
+                long resu = Long.parseLong(time) - sys_time;
+                SPUtils.getInstance().put("sysTime", String.valueOf(resu));
+            }
+        });
     }
 
     @Override
     public void onClick(View view) {
-        Logger.e(view.getTag().toString(),"message");
+        Logger.e(view.getTag().toString());
         setSelect((Integer) view.getTag());
+
+
+        HttpManager.getInstance().PlayNetCode(HttpCode.IS_REGISTER, new RRegisterBean("17600183077")).request(new ApiCallBack<String>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(String o, String msg) {
+                Logger.e("msg==========" + msg);
+                Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void setSelect(int position) {
