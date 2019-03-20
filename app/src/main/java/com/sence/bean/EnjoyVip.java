@@ -1,4 +1,4 @@
-package com.sence.base;
+package com.sence.bean;
 
 public class EnjoyVip {
     private String img;

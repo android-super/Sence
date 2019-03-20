@@ -8,4 +8,5 @@
     <color name="gray">#d4d4d4</color>
     <color name="main_gray">#999999</color>
     <color name="theme_green">#16a5af</color>
+    <color name="theme_blue">#3F51B5</color>
 </resources>

@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
+
 import com.google.android.material.tabs.TabLayout;
 import com.sence.R;
 import com.sence.adapter.pager.CustomViewPagerAdapter;
@@ -15,6 +13,10 @@ import com.sence.fragment.main.FocusFragment;
 import com.sence.fragment.main.NoteFragment;
 import com.sence.fragment.main.RecommendFragment;
 import com.sence.view.FadeTransformer;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 /**
  * A simple {@link Fragment} subclass.

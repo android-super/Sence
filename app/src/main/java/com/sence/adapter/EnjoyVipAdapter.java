@@ -1,11 +1,13 @@
-package com.sence.adapter.pager;
+package com.sence.adapter;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.sence.R;
 import com.sence.bean.EnjoyVip;
 
@@ -24,18 +26,20 @@ public class EnjoyVipAdapter extends RecyclerView.Adapter<EnjoyVipAdapter.ViewHo
     }
     public void setList(List<EnjoyVip> list){
         this.list = list;
+        notifyDataSetChanged();
     }
 
     @NonNull
     @Override
     public EnjoyVipAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = View.inflate(context,R.layout.rv_item_enjoyvip,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.rv_item_enjoyvip,parent,false);
         return new ViewHolder(view);
 
     }
 
     @Override
     public void onBindViewHolder(@NonNull EnjoyVipAdapter.ViewHolder holder, int position) {
+        Glide.with(context).load(list.get(position).getImg()).into(holder.imageView);
         holder.name.setText(list.get(position).getName());
     }
 
