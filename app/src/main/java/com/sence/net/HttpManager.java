@@ -1,6 +1,7 @@
 package com.sence.net;
 
 import android.widget.Toast;
+
 import com.blankj.utilcode.util.NetworkUtils;
 import com.orhanobut.logger.Logger;
 import com.sence.base.BaseApp;
@@ -8,14 +9,15 @@ import com.sence.bean.base.BaseRequestBean;
 import com.sence.bean.base.BaseResponseBean;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.net.manager.HttpClientManager;
+
+import java.net.SocketTimeoutException;
+import java.util.concurrent.TimeoutException;
+
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-
-import java.net.SocketTimeoutException;
-import java.util.concurrent.TimeoutException;
 
 /**
  * Created by zwy on 2019/3/19.
@@ -50,6 +52,15 @@ public class HttpManager<P> {
                 break;
             case ADDRESS_ADD:
                 observable = HttpClientManager.Instance.httpService.AddressAdd(requestBean.getMap());
+                break;
+            case ORDER_LIST:
+                observable = HttpClientManager.Instance.httpService.OrderList(requestBean.getMap());
+                break;
+            case ADDRESS_LIST:
+                observable = HttpClientManager.Instance.httpService.AddressList(requestBean.getMap());
+                break;
+            case ADDRESS_DELETE:
+                observable = HttpClientManager.Instance.httpService.AddressDelete(requestBean.getMap());
                 break;
         }
         observable = observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());

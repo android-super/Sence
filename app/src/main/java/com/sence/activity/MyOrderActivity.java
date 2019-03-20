@@ -9,6 +9,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.sence.R;
 import com.sence.adapter.MyOrderViewPagerAdatpter;
 import com.sence.fragment.MyOrderFragment;
+import com.sence.utils.StatusBarUtil;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -24,6 +25,7 @@ public class MyOrderActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myorder);
+        StatusBarUtil.setLightMode(this);
         tabLayout = findViewById(R.id.tl_title_myorder);
         viewPager = findViewById(R.id.vp_content_myorder);
         findViewById(R.id.iv_back_myorder).setOnClickListener(this);
@@ -31,9 +33,13 @@ public class MyOrderActivity extends AppCompatActivity implements View.OnClickLi
         pagerAdapter = new MyOrderViewPagerAdatpter(getSupportFragmentManager(),this,fragmentList,list,nums);
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
+        viewPager.setOffscreenPageLimit(5);
+//        setUpTabBadge();
 
-        setUpTabBadge();
+
     }
+
+
     private void setUpTabBadge() {
         for (int i = 0; i < list.length; i++) {
             TabLayout.Tab tab = tabLayout.getTabAt(i);

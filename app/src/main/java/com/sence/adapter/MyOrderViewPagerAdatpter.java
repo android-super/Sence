@@ -1,6 +1,7 @@
 package com.sence.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -27,7 +28,11 @@ public class MyOrderViewPagerAdatpter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return fragmentList[position];
+        Fragment myFragment = fragmentList[position];
+        Bundle bundle = new Bundle();
+        bundle.putInt("status",position);
+        myFragment.setArguments(bundle);
+        return myFragment;
     }
     @Override
     public int getCount() {

@@ -7,9 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.sence.R;
-import com.sence.bean.EnjoyVip;
+import com.sence.bean.response.PEnjoyVipBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +18,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class EnjoyVipAdapter extends RecyclerView.Adapter<EnjoyVipAdapter.ViewHolder> {
     private Context context;
-    private List<EnjoyVip> list = new ArrayList<>();
+    private List<PEnjoyVipBean> list = new ArrayList<>();
 
     public EnjoyVipAdapter(Context context){
         this.context = context;
     }
-    public void setList(List<EnjoyVip> list){
+    public void setList(List<PEnjoyVipBean> list){
         this.list = list;
         notifyDataSetChanged();
     }
@@ -39,8 +38,8 @@ public class EnjoyVipAdapter extends RecyclerView.Adapter<EnjoyVipAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull EnjoyVipAdapter.ViewHolder holder, int position) {
-        Glide.with(context).load(list.get(position).getImg()).into(holder.imageView);
-        holder.name.setText(list.get(position).getName());
+//        Glide.with(context).load(list.get(position).getImg()).into(holder.imageView);
+//        holder.name.setText(list.get(position).getName());
     }
 
     @Override

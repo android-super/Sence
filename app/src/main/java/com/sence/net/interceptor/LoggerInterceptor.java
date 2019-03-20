@@ -1,14 +1,14 @@
 package com.sence.net.interceptor;
 
-import android.util.Log;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.orhanobut.logger.Logger;
+
+import java.io.IOException;
+
 import okhttp3.CacheControl;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
-
-import java.io.IOException;
 
 /**
  * Created by zwy on 2019/3/19.

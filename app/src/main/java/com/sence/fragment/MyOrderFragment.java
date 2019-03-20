@@ -11,7 +11,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.sence.R;
 import com.sence.adapter.MyOrderAdapter;
 import com.sence.bean.request.RMyOrderBean;
-import com.sence.bean.result.PMyOrderBean;
+import com.sence.bean.response.PMyOrderBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;

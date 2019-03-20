@@ -5,6 +5,14 @@ import android.view.View;
 
 import com.sence.R;
 import com.sence.adapter.ManageAddressAdapter;
+import com.sence.bean.request.RManageAddressBean;
+import com.sence.bean.response.PManageAddressBean;
+import com.sence.net.HttpCode;
+import com.sence.net.HttpManager;
+import com.sence.net.manager.ApiCallBack;
+import com.sence.utils.StatusBarUtil;
+
+import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,11 +22,13 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
 
     private RecyclerView recyclerView;
     private ManageAddressAdapter manageAddressAdapter;
+    private int page=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manageaddress);
+        StatusBarUtil.setLightMode(this);
         recyclerView = findViewById(R.id.rlv_address_manageaddress);
         findViewById(R.id.iv_back_manageaddress).setOnClickListener(this);
         manageAddressAdapter = new ManageAddressAdapter(this);
@@ -26,6 +36,34 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(manageAddressAdapter);
+        dohttp();
+
+    }
+
+    private void dohttp() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.ADDRESS_LIST, new RManageAddressBean("1",page+"","10")).request(new ApiCallBack<List<PManageAddressBean>>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(final List<PManageAddressBean> o, String msg) {
+                manageAddressAdapter.setList(o);
+                manageAddressAdapter.result(new ManageAddressAdapter.DeleteAddressListener() {
+                    @Override
+                    public void delete(int i) {
+                        o.remove(i);
+                        manageAddressAdapter.setList(o);
+                    }
+                });
+            }
+        });
     }
 
     @Override

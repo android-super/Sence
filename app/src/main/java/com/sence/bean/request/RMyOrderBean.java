@@ -2,14 +2,14 @@ package com.sence.bean.request;
 
 import com.sence.bean.base.BaseRequestBean;
 
-public class MyOrderBean extends BaseRequestBean {
+public class RMyOrderBean extends BaseRequestBean {
     private String uid;
     private String page;
     private String size;
     private String status;
 
 
-    public MyOrderBean(String uid, String page, String size, String status) {
+    public RMyOrderBean(String uid, String page, String size, String status) {
         this.uid = uid;
         this.page = page;
         this.size = size;

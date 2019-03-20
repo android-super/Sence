@@ -32,6 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="11dp"
         android:textSize="13sp"
+        android:id="@+id/tv_address_manageaddress"
         android:textColor="#666666"
         android:text="收货地址"
         android:lineSpacingExtra="9dp"

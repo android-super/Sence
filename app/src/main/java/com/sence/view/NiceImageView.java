@@ -2,13 +2,22 @@ package com.sence.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.*;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.RectF;
+import android.graphics.Xfermode;
 import android.util.AttributeSet;
+
+import com.blankj.utilcode.util.ConvertUtils;
+import com.sence.R;
+
 import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
-import com.blankj.utilcode.util.ConvertUtils;
-import com.sence.R;
 
 public class NiceImageView extends AppCompatImageView {
     private Context context;

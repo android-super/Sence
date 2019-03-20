@@ -1,9 +1,13 @@
 package com.sence.utils;
 
 import com.blankj.utilcode.util.SPUtils;
-import com.orhanobut.logger.Logger;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class SPCommonUtils {
     public static final String key = "sence";

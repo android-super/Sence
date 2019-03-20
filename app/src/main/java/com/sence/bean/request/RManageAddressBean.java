@@ -2,13 +2,13 @@ package com.sence.bean.request;
 
 import com.sence.bean.base.BaseRequestBean;
 
-public class ManageAddressBean extends BaseRequestBean {
+public class RManageAddressBean extends BaseRequestBean {
     private String uid;
     private String page;
     private String size;
 
 
-    public ManageAddressBean(String uid, String page, String size) {
+    public RManageAddressBean(String uid, String page, String size) {
         this.uid = uid;
         this.page = page;
         this.size = size;
