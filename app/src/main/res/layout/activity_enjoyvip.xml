@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
+              android:fitsSystemWindows="true"
               android:layout_height="match_parent">
     <androidx.appcompat.widget.Toolbar
         android:elevation="1dp"
@@ -10,10 +11,14 @@
         android:background="@color/white"
         style="@style/NoLeftToolbar"
         >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@drawable/fanhui"
+            android:scaleType="center"
             android:id="@+id/iv_back_enjoyvip"
             android:layout_gravity="center_vertical"/>
         <TextView
@@ -23,17 +28,18 @@
             android:textColor="@color/black"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+        </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="15dp"
         android:layout_marginTop="18dp"
-        android:layout_marginLeft="15dp"
         android:src="@drawable/enjoyvip_huiy"/>
     <LinearLayout
-        android:layout_width="345dp"
+        android:layout_width="match_parent"
         android:layout_height="95dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_gravity="center_horizontal"
         android:orientation="vertical"
         android:layout_marginTop="13dp">
@@ -44,16 +50,16 @@
             android:background="@drawable/enjoyvip_chang"
             android:orientation="horizontal">
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:id="@+id/ll_price_enjoyvip"
                 android:orientation="vertical">
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="19dp"
-                    android:layout_marginLeft="22.5dp"
-                    android:layout_marginRight="22.5dp"
                     android:layout_marginBottom="9dp"
                     android:src="@drawable/enjoyvip_zhuanxiangjia"/>
                 <TextView
@@ -66,16 +72,16 @@
                     android:layout_gravity="center_horizontal"/>
             </LinearLayout>
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:id="@+id/ll_share_enjoyvip"
                 android:orientation="vertical">
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="19dp"
-                    android:layout_marginLeft="22.5dp"
-                    android:layout_marginRight="22.5dp"
                     android:layout_marginBottom="9dp"
                     android:src="@drawable/enjoyvip_fenxiangzhuanq"/>
                 <TextView
@@ -89,16 +95,16 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:id="@+id/ll_vip_enjoyvip"
                 android:orientation="vertical">
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="19dp"
-                    android:layout_marginLeft="22.5dp"
-                    android:layout_marginRight="22.5dp"
                     android:layout_marginBottom="9dp"
                     android:src="@drawable/enjoyvip_vip"/>
                 <TextView
@@ -111,16 +117,16 @@
                     android:layout_gravity="center_horizontal"/>
             </LinearLayout>
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:id="@+id/ll_salon_enjoyvip"
                 android:orientation="vertical">
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="19dp"
-                    android:layout_marginLeft="22.5dp"
-                    android:layout_marginRight="22.5dp"
                     android:layout_marginBottom="9dp"
                     android:src="@drawable/enjoyvip_shalong"/>
                 <TextView
@@ -147,7 +153,7 @@
         android:layout_marginLeft="178dp"
         android:text="服务不限次享用"
         android:textSize="@dimen/sp_12"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/white"
         android:gravity="center"
         android:background="@drawable/enjoyvip_qipao"/>
     <androidx.recyclerview.widget.RecyclerView

@@ -3,8 +3,7 @@ package com.sence.view;
 import android.graphics.Rect;
 import android.view.View;
 import androidx.recyclerview.widget.RecyclerView;
-import com.scwang.smartrefresh.layout.util.DensityUtil;
-import com.sence.util.Utils;
+import com.blankj.utilcode.util.ConvertUtils;
 
 public class GridPlaySpacingItemDecoration extends RecyclerView.ItemDecoration {
 
@@ -33,6 +32,6 @@ public class GridPlaySpacingItemDecoration extends RecyclerView.ItemDecoration {
             outRect.right = spacing - (column + 1) * spacing / spanCount; // spacing - (column + 1) * ((1f /
             // spanCount) * spacing)
         }
-        outRect.bottom = Utils.dip2px(parent.getContext(), 8);
+        outRect.bottom = ConvertUtils.dp2px(8);
     }
 }
