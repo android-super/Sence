@@ -26,20 +26,20 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </RelativeLayout>
-    <com.google.android.material.tabs.TabLayout
+    <com.tlz.fucktablayout.FuckTabLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        app:tabIndicatorColor="@color/theme_green"
-        app:tabSelectedTextColor="@color/theme_green"
-        app:tabTextColor="#050505"
-        app:tabInlineLabel="true"
-        app:tabUnboundedRipple="true"
-        app:tabIndicatorFullWidth="false"
-        app:tabGravity="center"
+        app:fTabIndicatorColor="@color/theme_green"
+        app:fTabSelectedTextColor="@color/theme_green"
+        app:fTabIndicatorFullWidth="false"
+        app:fTabTextColor="#050505"
+        app:fTabInlineLabel="true"
+        app:fTabUnboundedRipple="true"
+        app:fTabGravity="center"
         android:background="#ffffff"
         android:id="@+id/tl_title_myorder">
 
-    </com.google.android.material.tabs.TabLayout>
+    </com.tlz.fucktablayout.FuckTabLayout>
     <androidx.viewpager.widget.ViewPager
         android:layout_width="match_parent"
         android:layout_height="match_parent"

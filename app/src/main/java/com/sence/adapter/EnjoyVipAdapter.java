@@ -44,7 +44,7 @@ public class EnjoyVipAdapter extends RecyclerView.Adapter<EnjoyVipAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return 4;
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
 

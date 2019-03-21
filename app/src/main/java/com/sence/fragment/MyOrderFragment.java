@@ -1,6 +1,7 @@
 package com.sence.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,8 @@ import android.widget.TextView;
 
 import com.orhanobut.logger.Logger;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.sence.R;
 import com.sence.adapter.MyOrderAdapter;
 import com.sence.bean.request.RMyOrderBean;
@@ -40,20 +43,27 @@ public class MyOrderFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         Bundle arguments = getArguments();
         status = arguments.getInt("status");
-        initRefresh();
+        initData();
     }
 
-    private void initRefresh() {
+    private void initData() {
         recyclerView = getView().findViewById(R.id.recycle_myorder);
         smartRefreshLayout = getView().findViewById(R.id.srl_more_myorder);
         more = getView().findViewById(R.id.tv_more_myorder);
         myOrderAdapter = new MyOrderAdapter(getContext());
+        smartRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
+        smartRefreshLayout.setRefreshFooter(new ClassicsFooter(getActivity()));
         LinearLayoutManager linearLayout = new LinearLayoutManager(getContext());
         linearLayout.setOrientation(RecyclerView.VERTICAL);
+        Log.i("aaa",status+"");
         recyclerView.setLayoutManager(linearLayout);
         recyclerView.setAdapter(myOrderAdapter);
+
         dohttp();
+
     }
+
+
 
     private void dohttp() {
         HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_LIST, new RMyOrderBean("1",page+"","10",status+"")).request(new ApiCallBack<PMyOrderBean>() {
@@ -72,6 +82,7 @@ public class MyOrderFragment extends Fragment {
                 Logger.e("msg==========" + msg);
                 if(o.getList().size()>0){
                     myOrderAdapter.setList(o.getList());
+                    more.setVisibility(View.VISIBLE);
                 }else{
                     more.setVisibility(View.GONE);
                 }
@@ -80,6 +91,5 @@ public class MyOrderFragment extends Fragment {
             }
         });
     }
-
 
 }

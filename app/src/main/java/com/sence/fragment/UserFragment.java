@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sence.R;
+import com.sence.activity.EnjoyVipActivity;
 import com.sence.activity.MyOrderActivity;
 
 import androidx.annotation.Nullable;
@@ -37,6 +38,12 @@ public class UserFragment extends Fragment {
     }
 
     private void initRefresh() {
+        getView().findViewById(R.id.iv_vip_user).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), EnjoyVipActivity.class));
+            }
+        });
         getView().findViewById(R.id.user_all_order).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

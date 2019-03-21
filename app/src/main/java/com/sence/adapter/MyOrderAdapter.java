@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.sence.R;
 import com.sence.activity.ConfirmOrderActivity;
+import com.sence.activity.OrderDetailsActivity;
 import com.sence.bean.response.PMyOrderBean;
 
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull MyOrderAdapter.ViewHolder holder, int position) {
-        Glide.with(context).load(list.get(position).getGoods().getImg()).into(holder.imageView);
+        Glide.with(context).load(list.get(position).getGoods().getImg()).placeholder(R.drawable.hint_img).fallback(R.drawable.hint_img).into(holder.imageView);
         holder.name.setText(list.get(position).getGoods().getName());
         holder.time.setText(list.get(position).getAddtime());
         if(list.get(position).getGoods().getPrice().contains(".")){
@@ -80,6 +81,12 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
             @Override
             public void onClick(View v) {
                 context.startActivity(new Intent(context, ConfirmOrderActivity.class));
+            }
+        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, OrderDetailsActivity.class));
             }
         });
     }
