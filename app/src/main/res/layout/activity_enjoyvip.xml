@@ -61,9 +61,10 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/enjoyvip_chang"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/enjoyvip_chang9"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -171,15 +172,16 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:padding="@dimen/dp_10"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/enjoyvip_chang"
+                android:background="@drawable/enjoyvip_chang9"
                 android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="38dp"
+                    android:layout_marginTop="28dp"
                     android:src="@drawable/enjoyvip_zhuanshujinbi"/>
 
                 <TextView
@@ -197,6 +199,8 @@
                     android:id="@+id/recycle_enjoyvip"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
                     android:layout_marginTop="18dp"/>
             </LinearLayout>
         </LinearLayout>

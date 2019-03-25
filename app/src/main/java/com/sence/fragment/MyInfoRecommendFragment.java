@@ -5,14 +5,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.orhanobut.logger.Logger;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
-import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.sence.R;
-import com.sence.adapter.MyOrderAdapter;
+import com.sence.adapter.MyInfoRecommendAdapter;
 import com.sence.bean.request.RMyOrderBean;
 import com.sence.bean.response.PMyOrderBean;
 import com.sence.net.HttpCode;
@@ -24,45 +20,33 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MyOrderFragment extends Fragment {
+public class MyInfoRecommendFragment extends Fragment {
 
-    private RecyclerView recyclerView;
-    private TextView more;
-    private SmartRefreshLayout smartRefreshLayout;
-    private MyOrderAdapter myOrderAdapter;
+    private MyInfoRecommendAdapter myInfoRecommendAdapter;
     private int page=1;
-    private int status;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_myorder, container, false);
+        return inflater.inflate(R.layout.fragment_myinfo_recommend, container, false);
     }
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Bundle arguments = getArguments();
-        status = arguments.getInt("status");
         init();
     }
-    
+
 
     private void init() {
-        recyclerView = getView().findViewById(R.id.recycle_myorder);
-        smartRefreshLayout = getView().findViewById(R.id.srl_more_myorder);
-        more = getView().findViewById(R.id.tv_more_myorder);
-        myOrderAdapter = new MyOrderAdapter(getContext());
-        smartRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
-        smartRefreshLayout.setRefreshFooter(new ClassicsFooter(getActivity()));
+        RecyclerView recyclerView = getView().findViewById(R.id.recycle_myinforecommend);
+        myInfoRecommendAdapter = new MyInfoRecommendAdapter(getContext());
         LinearLayoutManager linearLayout = new LinearLayoutManager(getContext());
         linearLayout.setOrientation(RecyclerView.VERTICAL);
-        Log.i("aaa",status+"");
         recyclerView.setLayoutManager(linearLayout);
-        recyclerView.setAdapter(myOrderAdapter);
+        recyclerView.setAdapter(myInfoRecommendAdapter);
 
 
     }
-
 
 
     private static final String TAG = "LazyFragment";
@@ -109,7 +93,7 @@ public class MyOrderFragment extends Fragment {
         //这里进行双重标记判断,是因为setUserVisibleHint会多次回调,并且会在onCreateView执行前回调,
         // 必须确保onCreateView加载完毕且页面可见,才加载数据
         if (isViewCreated && isUiVisible) {
-            loadData();
+//            loadData();
             //数据加载完毕,恢复标记,防止重复加载
             isViewCreated = false;
             isUiVisible = false;
@@ -117,7 +101,7 @@ public class MyOrderFragment extends Fragment {
     }
 
     private void loadData() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_LIST, new RMyOrderBean("1",page+"","10",status+"")).request(new ApiCallBack<PMyOrderBean>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_LIST, new RMyOrderBean("1",page+"","10","")).request(new ApiCallBack<PMyOrderBean>() {
             @Override
             public void onFinish() {
 
@@ -131,13 +115,9 @@ public class MyOrderFragment extends Fragment {
             @Override
             public void onSuccess(PMyOrderBean o, String msg) {
                 Logger.e("msg==========" + msg);
-                if(o.getList().size()>0){
-                    myOrderAdapter.setList(o.getList());
-                    more.setVisibility(View.VISIBLE);
-                }else{
-                    more.setVisibility(View.GONE);
+                if(o.getList().size()>0) {
+                    myInfoRecommendAdapter.setList(o.getList());
                 }
-
 
             }
         });
@@ -152,6 +132,5 @@ public class MyOrderFragment extends Fragment {
         isViewCreated = false;
         isUiVisible = false;
     }
-
 
 }

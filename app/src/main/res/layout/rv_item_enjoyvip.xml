@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="wrap_content"
-              android:layout_height="220dp"
+              android:layout_height="wrap_content"
+              android:paddingLeft="6dp"
+              android:paddingRight="6dp"
               android:orientation="vertical">
 
     <RelativeLayout
@@ -12,7 +14,6 @@
             android:id="@+id/iv_img_enjoyvip_item"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="12dp"
             android:scaleType="fitXY"
             android:src="@drawable/hint_img"
             />
@@ -20,20 +21,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/enjoyvip_yiying"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="12dp"/>
+            android:layout_alignParentBottom="true"/>
     </RelativeLayout>
 
 
     <TextView
         android:id="@+id/tv_name_enjoyvip_item"
-        android:layout_width="wrap_content"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/enjoyvip_biankuang"
         android:gravity="center"
-        android:paddingLeft="@dimen/dp_10"
         android:text="万豪旅游"
         android:textColor="@color/theme_green"
         android:textSize="10sp"/>
@@ -41,7 +39,6 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
         android:layout_marginTop="6dp"
         android:layout_marginBottom="15dp"
         android:src="@drawable/enjoyvip_xingxing"/>

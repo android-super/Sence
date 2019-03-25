@@ -65,7 +65,10 @@
                     android:textSize="7sp"
                     android:layout_marginLeft="15dp"
                     android:background="@drawable/shape_shopdetials_labelbg"
-                    android:padding="3dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
                     android:textColor="@color/theme_green"
                     android:text="7.0折"/>
                 <TextView
@@ -73,7 +76,10 @@
                     android:layout_height="wrap_content"
                     android:textSize="7sp"
                     android:background="@drawable/shape_shopdetials_labelbg"
-                    android:padding="3dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
                     android:layout_marginLeft="6dp"
                     android:textColor="@color/theme_green"
                     android:text="会员价"/>
