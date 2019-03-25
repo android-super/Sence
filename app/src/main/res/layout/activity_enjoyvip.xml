@@ -1,164 +1,206 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:descendantFocusability="blocksDescendants"
               android:fitsSystemWindows="true"
-              android:layout_height="match_parent">
+              android:orientation="vertical">
+
     <androidx.appcompat.widget.Toolbar
-        android:elevation="1dp"
+        style="@style/NoLeftToolbar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/white"
-        style="@style/NoLeftToolbar"
+        android:elevation="1dp"
         >
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/fanhui"
-            android:scaleType="center"
-            android:id="@+id/iv_back_enjoyvip"
-            android:layout_gravity="center_vertical"/>
-        <TextView
-            android:text="尊享会员"
-            android:gravity="center"
-            android:textSize="18sp"
-            android:textColor="@color/black"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+
+            <ImageView
+                android:id="@+id/iv_back_enjoyvip"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_vertical"
+                android:scaleType="center"
+                android:src="@drawable/fanhui"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="尊享会员"
+                android:textColor="@color/black"
+                android:textSize="18sp"/>
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
-    <ImageView
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:src="@drawable/enjoyvip_huiy"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="95dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_gravity="center_horizontal"
-        android:orientation="vertical"
-        android:layout_marginTop="13dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/enjoyvip_chang"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:id="@+id/ll_price_enjoyvip"
-                android:orientation="vertical">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="19dp"
-                    android:layout_marginBottom="9dp"
-                    android:src="@drawable/enjoyvip_zhuanxiangjia"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="11sp"
-                    android:textColor="#222222"
-                    android:text="会员专享价"
-                    android:layout_marginBottom="21dp"
-                    android:layout_gravity="center_horizontal"/>
-            </LinearLayout>
+                android:layout_marginTop="18dp"
+                android:src="@drawable/enjoyvip_huiy"/>
+
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:id="@+id/ll_share_enjoyvip"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="13dp"
                 android:orientation="vertical">
-                <ImageView
-                    android:layout_width="wrap_content"
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="19dp"
-                    android:layout_marginBottom="9dp"
-                    android:src="@drawable/enjoyvip_fenxiangzhuanq"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="11sp"
-                    android:textColor="#222222"
-                    android:text="分享赚钱"
-                    android:layout_marginBottom="21dp"
-                    android:layout_gravity="center_horizontal"/>
+                    android:background="@drawable/enjoyvip_chang"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/ll_price_enjoyvip"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="9dp"
+                            android:layout_marginTop="19dp"
+                            android:src="@drawable/enjoyvip_zhuanxiangjia"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginBottom="21dp"
+                            android:text="会员专享价"
+                            android:textColor="#222222"
+                            android:textSize="11sp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_share_enjoyvip"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="9dp"
+                            android:layout_marginTop="19dp"
+                            android:src="@drawable/enjoyvip_fenxiangzhuanq"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginBottom="21dp"
+                            android:text="分享赚钱"
+                            android:textColor="#222222"
+                            android:textSize="11sp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_vip_enjoyvip"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="9dp"
+                            android:layout_marginTop="19dp"
+                            android:src="@drawable/enjoyvip_vip"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginBottom="21dp"
+                            android:text="VIP资源共享"
+                            android:textColor="#222222"
+                            android:textSize="11sp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_salon_enjoyvip"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="9dp"
+                            android:layout_marginTop="19dp"
+                            android:src="@drawable/enjoyvip_shalong"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginBottom="21dp"
+                            android:text="沙龙活动"
+                            android:textColor="#222222"
+                            android:textSize="11sp"/>
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:id="@+id/ll_vip_enjoyvip"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/enjoyvip_chang"
                 android:orientation="vertical">
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="19dp"
-                    android:layout_marginBottom="9dp"
-                    android:src="@drawable/enjoyvip_vip"/>
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="38dp"
+                    android:src="@drawable/enjoyvip_zhuanshujinbi"/>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="11sp"
-                    android:textColor="#222222"
-                    android:text="VIP资源共享"
-                    android:layout_marginBottom="21dp"
-                    android:layout_gravity="center_horizontal"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:id="@+id/ll_salon_enjoyvip"
-                android:orientation="vertical">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="19dp"
-                    android:layout_marginBottom="9dp"
-                    android:src="@drawable/enjoyvip_shalong"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="11sp"
-                    android:textColor="#222222"
-                    android:text="沙龙活动"
-                    android:layout_marginBottom="21dp"
-                    android:layout_gravity="center_horizontal"/>
+                    android:layout_marginLeft="178dp"
+                    android:layout_marginTop="7dp"
+                    android:background="@drawable/enjoyvip_qipao"
+                    android:gravity="center"
+                    android:text="服务不限次享用"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_12"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycle_enjoyvip"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="18dp"/>
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-    <ImageView
-        android:layout_marginTop="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/enjoyvip_zhuanshujinbi"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
-        android:layout_marginLeft="178dp"
-        android:text="服务不限次享用"
-        android:textSize="@dimen/sp_12"
-        android:textColor="@color/white"
-        android:gravity="center"
-        android:background="@drawable/enjoyvip_qipao"/>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycle_enjoyvip"
-        android:layout_width="match_parent"
-        android:layout_marginTop="18dp"
-        android:layout_height="match_parent"/>
+
+    </androidx.core.widget.NestedScrollView>
+
 </LinearLayout>

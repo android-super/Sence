@@ -43,9 +43,9 @@ public class ManageAddressAdapter extends RecyclerView.Adapter<ManageAddressAdap
 
     @Override
     public void onBindViewHolder(@NonNull ManageAddressAdapter.ViewHolder holder, final int position) {
-        holder.name.setText(list.get(position).getUsername());
-        holder.address.setText(list.get(position).getArea());
-        holder.phone.setText(list.get(position).getPhone());
+//        holder.name.setText(list.get(position).getUsername());
+//        holder.address.setText(list.get(position).getArea());
+//        holder.phone.setText(list.get(position).getPhone());
         holder.editor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

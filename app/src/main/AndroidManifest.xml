@@ -32,6 +32,9 @@
         <activity android:name=".activity.MyOrderActivity"></activity>
         <activity android:name=".activity.ConfirmOrderActivity"></activity>
         <activity android:name=".activity.ManageAddressActivity"></activity>
+        <activity android:name=".activity.MyInfoActivity"></activity>
+        <activity android:name=".activity.ShopDetailsActivity"></activity>
+        <activity android:name=".activity.OrderDetailsActivity"></activity>
     </application>
 
 </manifest>

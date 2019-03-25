@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="wrap_content">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,6 +47,7 @@
             android:layout_height="89dp"
             android:layout_marginLeft="13dp"
             android:src="@drawable/hint_img"
+            android:scaleType="centerCrop"
             android:layout_marginTop="16dp"
             android:id="@+id/iv_img_myorder"
             android:layout_below="@id/rl_head_myorder"/>
@@ -69,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="41dp"
             android:layout_marginLeft="@dimen/dp_10"
-            android:text="￥0.0"
+            android:text="￥100.00"
             android:textColor="#070506"
             android:textSize="@dimen/sp_12"
             android:layout_below="@id/tv_name_myorder"
@@ -79,7 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="41dp"
-            android:text="×1"
+            android:text="х1"
             android:layout_marginLeft="@dimen/dp_10"
             android:textColor="#070506"
             android:textSize="@dimen/sp_12"
