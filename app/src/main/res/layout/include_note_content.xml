@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                                       xmlns:app="http://schemas.android.com/apk/res-auto"
+                                       android:layout_width="match_parent"
+                                       android:background="@color/white"
+                                       android:layout_marginBottom="45.5dp"
+                                       app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                                       android:layout_height="match_parent">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="1000dp">
+
+        <RelativeLayout
+                android:padding="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <com.sence.view.NiceImageView
+                    app:is_circle="true"
+                    android:id="@+id/note_head"
+                    android:src="@drawable/hint_img"
+                    android:scaleType="centerCrop"
+                    android:layout_width="23dp"
+                    android:layout_centerVertical="true"
+                    android:layout_height="23dp"/>
+
+            <TextView
+                    android:layout_toRightOf="@id/note_head"
+                    android:layout_marginLeft="7dp"
+                    android:text="@string/hint_name"
+                    android:textSize="13sp"
+                    android:textColor="#333333"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:layout_alignParentRight="true"
+                    android:drawableRight="@drawable/note_dianzan"
+                    android:layout_centerVertical="true"
+                    android:drawablePadding="5dp"
+                    android:text="@string/hint_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:layout_alignParentRight="true"
+                    android:drawableRight="@drawable/note_yuedu"
+                    android:layout_centerVertical="true"
+                    android:drawablePadding="5dp"
+                    android:layout_marginRight="60dp"
+                    android:text="@string/hint_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:layout_alignParentRight="true"
+                    android:drawableRight="@drawable/note_pinglun"
+                    android:layout_centerVertical="true"
+                    android:drawablePadding="5dp"
+                    android:layout_marginRight="120dp"
+                    android:text="@string/hint_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+        </RelativeLayout>
+
+        <TextView
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="@string/hint_content"
+                android:textSize="13sp"
+                android:textColor="#333333"
+                android:lineSpacingExtra="10dp"
+                android:paddingBottom="25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="#f6f6f6"/>
+
+        <ImageView
+                android:paddingTop="24dp"
+                android:paddingBottom="10dp"
+                android:src="@drawable/note_bjtj"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycle_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

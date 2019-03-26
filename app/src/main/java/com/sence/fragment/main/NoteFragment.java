@@ -2,22 +2,22 @@ package com.sence.fragment.main;
 
 
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import androidx.recyclerview.widget.*;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import com.blankj.utilcode.util.ConvertUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sence.R;
-import com.sence.adapter.FocusAdapter;
-import com.sence.adapter.MainFocusAdapter;
 import com.sence.adapter.NoteAdapter;
-import com.sence.view.GridDividerItemDecoration;
 import com.sence.view.GridSpacingItemDecoration;
 
 /**
@@ -54,10 +54,22 @@ public class NoteFragment extends Fragment {
         smartRefreshLayout.setRefreshFooter(new ClassicsFooter(getActivity()));
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.setLayoutManager(gridLayoutManager);
-        GridSpacingItemDecoration gridSpacingItemDecoration = new GridSpacingItemDecoration(2, 10, false);
+        GridSpacingItemDecoration gridSpacingItemDecoration = new GridSpacingItemDecoration(2, ConvertUtils.dp2px(10),
+                true);
         recyclerView.addItemDecoration(gridSpacingItemDecoration);
         adapter = new NoteAdapter(R.layout.rv_item_note);
         recyclerView.setAdapter(adapter);
+        smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                smartRefreshLayout.finishLoadMore();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                smartRefreshLayout.finishRefresh();
+            }
+        });
         adapter.addData("");
         adapter.addData("");
         adapter.addData("");
@@ -66,6 +78,7 @@ public class NoteFragment extends Fragment {
         adapter.addData("");
         adapter.addData("");
         adapter.addData("");
+
     }
 
 }

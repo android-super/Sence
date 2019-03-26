@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
             android:allowBackup="true"
@@ -16,10 +18,33 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppThemeNoActionBar">
-        <activity android:name=".activity.AddressActivity">
-        </activity>
+
         <activity
-                android:theme="@style/AppThemeNoActionBar"
+                android:name=".wxapi.WXEntryActivity"
+                android:configChanges="keyboardHidden|orientation|screenSize"
+                android:exported="true"
+                android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+
+        <activity android:name=".activity.MyAccountActivity">
+        </activity>
+        <activity android:name=".activity.MemberActivity">
+        </activity>
+        <activity android:name=".activity.CommentReleaseActivity">
+        </activity>
+        <activity android:name=".activity.MyFocusActivity">
+        </activity>
+        <activity android:name=".activity.MyFansActivity">
+        </activity>
+        <activity android:name=".VerifyActivity">
+        </activity>
+        <activity android:name=".BindPhoneActivity">
+        </activity>
+        <activity android:name=".LoginActivity">
+        </activity>
+        <activity android:name=".activity.ContentDetailActivity"/>
+        <activity android:name=".activity.NoteDetailActivity"/>
+        <activity
                 android:name=".MainActivity"
                 android:label="@string/app_name">
             <intent-filter>

@@ -4,9 +4,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 /**
- * Created by zwy on 2019/3/15.
+ * Created by zwy on 2019/3/22.
  * package_name is com.sence.adapter
- * 描述:Sence
+ * 描述:SenceGit
  */
 public class FocusAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
     public FocusAdapter(int layoutResId) {

@@ -62,7 +62,8 @@
     </option>
   </component>
   <component name="ProjectPlainTextFileTypeManager">
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/shape_top_shader.xml" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/menu/menu_scrolling.xml" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/menu/navigation.xml" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />

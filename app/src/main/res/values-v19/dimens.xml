@@ -1,0 +1,11 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="status_height">25dp</dimen>
+    <dimen name="status_tool_bar_height">75dp</dimen>
+    <dimen name="status_account_height">155dp</dimen>
+
+    <!--BottomNavigationView 只放图标时的设置-->
+    <!--<dimen name="design_bottom_navigation_active_text_size">0sp</dimen>-->
+    <!--<dimen name="design_bottom_navigation_text_size">0sp</dimen>-->
+    <!--<dimen name="design_bottom_navigation_margin">16dp</dimen>-->
+</resources>

@@ -2,19 +2,21 @@ package com.sence.fragment.main;
 
 
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sence.R;
-import com.sence.adapter.NoteAdapter;
+import com.sence.adapter.RecommendAdapter;
 
 /**
  * 推荐Fragment
@@ -23,7 +25,7 @@ public class RecommendFragment extends Fragment {
     private SmartRefreshLayout smartRefreshLayout;
     private RecyclerView recyclerView;
 
-    private NoteAdapter adapter;
+    private RecommendAdapter adapter;
 
     public RecommendFragment() {
         // Required empty public constructor
@@ -48,11 +50,22 @@ public class RecommendFragment extends Fragment {
         recyclerView = getView().findViewById(R.id.recycle_view);
         smartRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
         smartRefreshLayout.setRefreshFooter(new ClassicsFooter(getActivity()));
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
-        recyclerView.setLayoutManager(gridLayoutManager);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setNestedScrollingEnabled(true);
-        adapter = new NoteAdapter(R.layout.rv_item_recommend);
+        adapter = new RecommendAdapter(R.layout.rv_item_recommend);
         recyclerView.setAdapter(adapter);
+        smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                smartRefreshLayout.finishLoadMore();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                smartRefreshLayout.finishRefresh();
+            }
+        });
         adapter.addData("");
         adapter.addData("");
         adapter.addData("");

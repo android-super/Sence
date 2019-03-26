@@ -32,7 +32,8 @@
                 android:text="@string/hint_price"
                 android:layout_marginLeft="10dp"
                 android:textColor="@color/white"
-                android:padding="1dp"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
                 android:background="@drawable/shape_rect_theme_green"/>
     </LinearLayout>
 

@@ -15,8 +15,10 @@ import com.sence.R;
  */
 public class CustomViewPagerAdapter extends ViewPagerAdapter {
     private Context context;
-    private String[] titles = {"关注","笔记","推荐"};
-    private int[] drawables = {R.drawable.ic_main_focus_selector,R.drawable.ic_main_note_selector,R.drawable.ic_main_recommend_selector};
+    private String[] titles = {"关注", "推荐", "笔记"};
+    private int[] drawables = {R.drawable.ic_main_focus_selector, R.drawable.ic_main_recommend_selector,
+            R.drawable.ic_main_note_selector};
+
     public CustomViewPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
         this.context = context;

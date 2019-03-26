@@ -26,7 +26,7 @@ public class MainFragment extends Fragment {
     private TabLayout tab_layout;
     private CustomViewPagerAdapter pagerAdapter;
 
-    private String[] titles = {"关注", "笔记", "推荐"};
+    private String[] titles = {"关注", "推荐", "笔记"};
 
     public MainFragment() {
 
@@ -48,7 +48,7 @@ public class MainFragment extends Fragment {
     }
 
     private void initTabLayout() {
-        final Fragment[] fragments = {new FocusFragment(), new NoteFragment(), new RecommendFragment()};
+        final Fragment[] fragments = {new FocusFragment(), new RecommendFragment(), new NoteFragment()};
         pagerAdapter = new CustomViewPagerAdapter(getChildFragmentManager(), getActivity());
         for (int i = 0; i < titles.length; i++) {
             tab_layout.addTab(tab_layout.newTab());

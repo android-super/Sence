@@ -7,13 +7,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.blankj.utilcode.util.ConvertUtils;
 import com.sence.R;
 import com.sence.adapter.VipBottomAdapter;
 import com.sence.adapter.VipTopAdapter;
+import com.sence.view.DividerSpacingItemDecoration;
+import com.sence.view.GridSpacingItemDecoration;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,8 +49,11 @@ public class VipFragment extends Fragment {
         recycle_view_bottom = getView().findViewById(R.id.recycle_view_bottom);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        recycle_view_top.addItemDecoration(new DividerSpacingItemDecoration(DividerSpacingItemDecoration.HORIZONTAL,
+                ConvertUtils.dp2px(15)));
         recycle_view_top.setLayoutManager(linearLayoutManager);
-        recycle_view_bottom.setLayoutManager(new GridLayoutManager(getActivity(),2));
+        recycle_view_bottom.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        recycle_view_bottom.addItemDecoration(new GridSpacingItemDecoration(2, ConvertUtils.dp2px(15), false));
         topAdapter = new VipTopAdapter(R.layout.rv_item_vip_top);
         recycle_view_top.setAdapter(topAdapter);
         bottomAdapter = new VipBottomAdapter(R.layout.rv_item_vip_bottom);

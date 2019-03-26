@@ -4,162 +4,132 @@
               android:orientation="vertical"
               android:background="@color/white"
               android:layout_width="match_parent"
-              android:layout_height="400dp">
+              android:paddingLeft="15dp"
+              android:paddingRight="15dp"
+              android:paddingTop="15dp"
+              android:layout_height="320dp">
 
-    <RelativeLayout
-            android:paddingLeft="20dp"
-            android:paddingRight="15dp"
-            android:layout_width="match_parent"
-            android:layout_height="66dp">
 
-        <com.sence.view.NiceImageView
-                android:id="@+id/item_head"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                app:is_circle="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/hint_img"
-                android:layout_centerVertical="true"
-                />
-
-        <LinearLayout
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="2dp"
-                android:layout_alignTop="@id/item_head"
-                android:layout_toRightOf="@id/item_head"
-                android:layout_width="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:layout_height="wrap_content">
-
-            <TextView
-                    android:textColor="@color/black"
-                    android:text="@string/hint_name"
-                    android:textSize="15sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-            <ImageView
-                    android:layout_marginLeft="4dp"
-                    android:src="@drawable/main_huiyuanbiaoshi"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-        </LinearLayout>
-
-        <TextView
-                android:layout_marginLeft="8dp"
-                android:layout_toRightOf="@id/item_head"
-                android:layout_alignBottom="@id/item_head"
-                android:layout_width="wrap_content"
-                android:textSize="13sp"
-                android:textColor="#b4b4b4"
-                android:text="@string/hint_describe"
-                android:layout_height="wrap_content"/>
-
-        <TextView
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_width="wrap_content"
-                android:text="+ 关注"
-                android:gravity="center"
-                android:textColor="@color/theme_green"
-                android:textSize="13sp"
-                android:background="@drawable/shape_main_forcus"
-                android:layout_height="wrap_content"/>
-    </RelativeLayout>
-
-    <androidx.appcompat.widget.AppCompatImageView
+    <com.sence.view.NiceImageView
             android:id="@+id/item_img"
-            android:layout_marginLeft="15dp"
             android:src="@drawable/hint_img"
-            android:layout_marginRight="15dp"
             android:scaleType="centerCrop"
+            app:corner_radius="3.5dp"
+            android:transitionName="@string/translation_recommend_name"
             android:layout_width="match_parent"
-            android:layout_height="220dp"/>
+            android:layout_height="160dp"/>
 
     <TextView
             android:text="@string/hint_describe"
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:textColor="@color/black"
-            android:lineSpacingExtra="8dp"
-            android:padding="15dp"
+            android:textSize="16sp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:maxLines="1"
             android:layout_height="match_parent"/>
 
-    <View
+    <TextView
+            android:text="@string/hint_content"
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@drawable/shape_line"/>
+            android:layout_weight="1"
+            android:textColor="#333333"
+            android:lineSpacingExtra="8dp"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            android:maxLines="2"
+            android:layout_height="match_parent"/>
 
-    <LinearLayout
+    <RelativeLayout
+            android:layout_weight="1"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="40dp">
+            android:layout_height="match_parent">
+
 
         <LinearLayout
-                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
-                android:gravity="center"
-                android:layout_height="match_parent">
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content">
 
-            <ImageView
-                    android:src="@drawable/main_zan"
+            <com.sence.view.NiceImageView
+                    android:src="@drawable/hint_img"
+                    app:is_circle="true"
+                    android:scaleType="centerCrop"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"/>
+
+            <TextView
+                    android:text="@string/hint_name"
+                    android:layout_marginLeft="6dp"
+                    android:gravity="center"
+                    android:textSize="12sp"
+                    android:textColor="#666666"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
-            <TextView
-                    android:text="@string/hint_num"
-                    android:layout_marginLeft="8dp"
-                    android:gravity="center"
-                    android:textSize="14sp"
-                    android:textColor="@color/main_gray"
+            <ImageView
+                    android:src="@drawable/main_recommend_v"
+                    android:layout_marginLeft="3dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
         </LinearLayout>
 
         <LinearLayout
-                android:layout_weight="1"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center"
-                android:layout_height="match_parent">
-
-            <ImageView
-                    android:src="@drawable/main_pinglun"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:layout_alignParentRight="true"
+                android:layout_height="wrap_content">
 
             <TextView
                     android:text="@string/hint_num"
                     android:layout_marginLeft="8dp"
                     android:gravity="center"
-                    android:textSize="14sp"
-                    android:textColor="@color/main_gray"
+                    android:textSize="12sp"
+                    android:textColor="#666666"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
+
+            <ImageView
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/main_recommend_dianzan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+
         </LinearLayout>
 
         <LinearLayout
-                android:layout_weight="1"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center"
-                android:layout_height="match_parent">
-
-            <ImageView
-                    android:src="@drawable/main_fenxiang"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                android:layout_centerVertical="true"
+                android:layout_marginRight="75dp"
+                android:layout_alignParentRight="true"
+                android:layout_height="wrap_content">
 
             <TextView
                     android:text="@string/hint_num"
                     android:layout_marginLeft="8dp"
                     android:gravity="center"
-                    android:textSize="14sp"
-                    android:textColor="@color/main_gray"
+                    android:textSize="12sp"
+                    android:textColor="#666666"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
+
+            <ImageView
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/main_recommend_pinglun"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+
         </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.sence.R;
 import com.sence.adapter.KindLeftAdapter;
 import com.sence.adapter.KindRightAdapter;
@@ -50,8 +51,15 @@ public class KindFragment extends Fragment {
         rightAdapter = new KindRightAdapter(R.layout.rv_item_kind_right);
         recycle_view_vertical.setAdapter(rightAdapter);
 
+        leftAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                leftAdapter.setPosition(position);
+            }
+        });
+
         for (int i = 0; i < 8; i++) {
-            leftAdapter.addData("");
+            leftAdapter.addData("上衣" + i);
             rightAdapter.addData("");
         }
     }
