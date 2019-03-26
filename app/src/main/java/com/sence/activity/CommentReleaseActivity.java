@@ -15,5 +15,8 @@ public class CommentReleaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment_release);
         StatusBarUtil.setLightMode(this);
+
+
+        
     }
 }

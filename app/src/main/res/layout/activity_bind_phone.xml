@@ -6,6 +6,7 @@
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
         tools:context=".BindPhoneActivity">
 
     <ImageView
@@ -14,7 +15,7 @@
             android:paddingTop="12dp"
             android:paddingBottom="12dp"
             android:paddingRight="28dp"
-            android:layout_marginTop="@dimen/status_height"
+            android:layout_marginTop="0dp"
             android:src="@drawable/login_guanbi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -64,6 +65,8 @@
                 android:minHeight="20dp"
                 android:gravity="bottom"
                 android:minWidth="100dp"
+                android:inputType="phone"
+                android:maxLength="11"
                 android:textColor="@color/black"
                 android:textColorHint="#c2c8cd"
                 android:hint="输入手机号"
@@ -93,6 +96,7 @@
             android:background="@drawable/shape_bind_selector"
             android:layout_width="match_parent"
             android:layout_height="40dp"/>
+
     <ImageView
             android:layout_marginBottom="20dp"
             android:layout_centerHorizontal="true"

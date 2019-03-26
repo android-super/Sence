@@ -6,4 +6,9 @@ package com.sence.utils;
  * 描述:SenceGit
  */
 public class LoginStatus {
+    public static boolean isLogin() {
+        boolean is_login = SharedPreferencesUtil.getInstance().getBoolean("is_login");
+        String uid = SharedPreferencesUtil.getInstance().getString("uid");
+        return uid != null && is_login;
+    }
 }

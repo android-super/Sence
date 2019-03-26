@@ -2,6 +2,7 @@ package com.sence.base;
 
 import android.app.Application;
 import android.content.Context;
+import androidx.multidex.MultiDex;
 import com.blankj.utilcode.util.Utils;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
@@ -23,6 +24,7 @@ public class BaseApp extends Application {
     public void onCreate() {
         super.onCreate();
         INSTANCE = this;
+        MultiDex.install(this);
         initLeakCanary();
         initLogger();
         initUtil();
