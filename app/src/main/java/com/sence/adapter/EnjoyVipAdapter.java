@@ -49,13 +49,13 @@ public class EnjoyVipAdapter extends RecyclerView.Adapter<EnjoyVipAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
 
 
-        private ImageView imageView;
-        private TextView name;
+        private ImageView mImageView;
+        private TextView mName;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.iv_img_enjoyvip_item);
-            name = itemView.findViewById(R.id.tv_name_enjoyvip_item);
+            mImageView = itemView.findViewById(R.id.iv_img_enjoyvip_item);
+            mName = itemView.findViewById(R.id.tv_name_enjoyvip_item);
         }
     }
 }

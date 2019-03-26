@@ -1,6 +1,7 @@
 package com.sence.activity;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.sence.R;
 import com.sence.adapter.EnjoyVipAdapter;
@@ -11,19 +12,25 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class EnjoyVipActivity extends AppCompatActivity {
-    private RecyclerView recyclerView;
-    private EnjoyVipAdapter adapter;
+    private RecyclerView mRecyclerView;
+    private EnjoyVipAdapter mEnjoyVipAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enjoyvip);
         StatusBarUtil.setLightMode(this);
-        recyclerView = findViewById(R.id.recycle_enjoyvip);
-        adapter = new EnjoyVipAdapter(this);
+        findViewById(R.id.iv_back_enjoyvip).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        mRecyclerView = findViewById(R.id.recycle_enjoyvip);
+        mEnjoyVipAdapter = new EnjoyVipAdapter(this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
         gridLayoutManager.setOrientation(RecyclerView.VERTICAL);
-        recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.setAdapter(adapter);
+        mRecyclerView.setLayoutManager(gridLayoutManager);
+        mRecyclerView.setAdapter(mEnjoyVipAdapter);
     }
 }

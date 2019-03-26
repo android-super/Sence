@@ -46,13 +46,13 @@ public class ManageAddressAdapter extends RecyclerView.Adapter<ManageAddressAdap
 //        holder.name.setText(list.get(position).getUsername());
 //        holder.address.setText(list.get(position).getArea());
 //        holder.phone.setText(list.get(position).getPhone());
-        holder.editor.setOnClickListener(new View.OnClickListener() {
+        holder.mEditor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
         });
-        holder.delete.setOnClickListener(new View.OnClickListener() {
+        holder.mDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 HttpManager.getInstance().PlayNetCode(HttpCode.ADDRESS_DELETE, new RAddressDeleteBean("1",list.get(position).getId())).request(new ApiCallBack<String>() {
@@ -83,16 +83,16 @@ public class ManageAddressAdapter extends RecyclerView.Adapter<ManageAddressAdap
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private LinearLayout editor,delete;
-        private TextView name,phone,address;
+        private LinearLayout mEditor,mDelete;
+        private TextView mName,mPhone,mAddress;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.tv_name_manageaddress);
-            phone = itemView.findViewById(R.id.tv_phone_manageaddress);
-            address = itemView.findViewById(R.id.tv_address_manageaddress);
-            editor = itemView.findViewById(R.id.ll_editor_manageaddress);
-            delete = itemView.findViewById(R.id.ll_delete_manageaddress);
+            mName = itemView.findViewById(R.id.tv_name_manageaddress);
+            mPhone = itemView.findViewById(R.id.tv_phone_manageaddress);
+            mAddress = itemView.findViewById(R.id.tv_address_manageaddress);
+            mEditor = itemView.findViewById(R.id.ll_editor_manageaddress);
+            mDelete = itemView.findViewById(R.id.ll_delete_manageaddress);
         }
     }
     private DeleteAddressListener listener;

@@ -47,15 +47,15 @@ public class ShopDetailsCommendAdapter extends RecyclerView.Adapter<ShopDetailsC
     public class ViewHolder extends RecyclerView.ViewHolder {
 
 
-        private ImageView imageView,img;
-        private TextView name,content;
+        private ImageView mImageView,mImg;
+        private TextView mName,mContent;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.iv_shopcomment_shopdetails);
-            img = itemView.findViewById(R.id.iv_shopcommentimg_shopdetails);
-            name = itemView.findViewById(R.id.tv_name_shopdetailscommend);
-            content = itemView.findViewById(R.id.tv_content_shopdetailscommend);
+            mImageView = itemView.findViewById(R.id.iv_shopcomment_shopdetails);
+            mImg = itemView.findViewById(R.id.iv_shopcommentimg_shopdetails);
+            mName = itemView.findViewById(R.id.tv_name_shopdetailscommend);
+            mContent = itemView.findViewById(R.id.tv_content_shopdetailscommend);
         }
     }
 }

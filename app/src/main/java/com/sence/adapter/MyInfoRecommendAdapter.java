@@ -50,15 +50,15 @@ public class MyInfoRecommendAdapter extends RecyclerView.Adapter<MyInfoRecommend
     public class ViewHolder extends RecyclerView.ViewHolder {
 
 
-        private ImageView imageView;
-        private TextView name,price,pnum,state,num,sevice,cancel,alipay,time,pprice;
+        private ImageView mImageView;
+        private TextView mName,mPrice,mPnum,mState,mNum,mSevice,mCancel,mAlipay,mTime,mPprice;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            state = itemView.findViewById(R.id.tv_state_myorder);
+            mState = itemView.findViewById(R.id.tv_state_myorder);
 //            time = itemView.findViewById(R.id.tv_time_myorder);
-            imageView = itemView.findViewById(R.id.iv_img_myorder);
-            name = itemView.findViewById(R.id.tv_name_myorder);
+            mImageView = itemView.findViewById(R.id.iv_img_myorder);
+            mName = itemView.findViewById(R.id.tv_name_myorder);
 //            pprice = itemView.findViewById(R.id.tv_pprice_myorder);
 //            pnum = itemView.findViewById(R.id.tv_pnum_myorder);
 //            num = itemView.findViewById(R.id.tv_num_myorder);

@@ -20,8 +20,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ManageAddressActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private RecyclerView recyclerView;
-    private ManageAddressAdapter manageAddressAdapter;
+    private RecyclerView mRecyclerView;
+    private ManageAddressAdapter mManageAddressAdapter;
     private int page=1;
 
     @Override
@@ -29,13 +29,13 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manageaddress);
         StatusBarUtil.setLightMode(this);
-        recyclerView = findViewById(R.id.rlv_address_manageaddress);
+        mRecyclerView = findViewById(R.id.rlv_address_manageaddress);
         findViewById(R.id.iv_back_manageaddress).setOnClickListener(this);
-        manageAddressAdapter = new ManageAddressAdapter(this);
+        mManageAddressAdapter = new ManageAddressAdapter(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(manageAddressAdapter);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+        mRecyclerView.setAdapter(mManageAddressAdapter);
         dohttp();
 
     }
@@ -54,12 +54,12 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
 
             @Override
             public void onSuccess(final List<PManageAddressBean> o, String msg) {
-                manageAddressAdapter.setList(o);
-                manageAddressAdapter.result(new ManageAddressAdapter.DeleteAddressListener() {
+                mManageAddressAdapter.setList(o);
+                mManageAddressAdapter.result(new ManageAddressAdapter.DeleteAddressListener() {
                     @Override
                     public void delete(int i) {
                         o.remove(i);
-                        manageAddressAdapter.setList(o);
+                        mManageAddressAdapter.setList(o);
                     }
                 });
             }

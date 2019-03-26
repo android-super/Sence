@@ -21,53 +21,53 @@ import androidx.viewpager.widget.ViewPager;
 
 public class MyInfoActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private ViewPager viewPager;
-    private MyInfoRecommendViewPagerAdatpter myInfoRecommendAdapter;
+    private ViewPager mViewPager;
+    private MyInfoRecommendViewPagerAdatpter mMyInfoRecommendViewPagerAdatpter;
     private String[] list = {"推荐","笔记","共享"};
-    private RelativeLayout relativeLayout,footer;
-    private AppBarLayout appBarLayout;
-    private TabLayout tabLayoutbuttom;
-    private TabLayout tabLayout;
-    private Toolbar toolBar;
-    private RelativeLayout title;
-    private RelativeLayout imgBg;
+    private RelativeLayout mRelativeLayout,mFlooter;
+    private AppBarLayout mAppBarLayout;
+    private TabLayout mTabLayoutButtom;
+    private TabLayout mTabLayout;
+    private Toolbar mToolbar;
+    private RelativeLayout mTitle;
+    private RelativeLayout mImgBg;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myinfo);
-        relativeLayout = findViewById(R.id.rl_tool_myinfo);
-        footer = findViewById(R.id.rl_footer_myinfo);
-        tabLayout = findViewById(R.id.tl_tab_myinfo);
-        appBarLayout = findViewById(R.id.al_appbar_myinfo);
-        tabLayoutbuttom = findViewById(R.id.tl_tabhid_myinfo);
-        imgBg = findViewById(R.id.iv_imgbg_myinfo);
-        viewPager = findViewById(R.id.vp_content_myinfo);
+        mRelativeLayout = findViewById(R.id.rl_tool_myinfo);
+        mFlooter = findViewById(R.id.rl_footer_myinfo);
+        mTabLayout = findViewById(R.id.tl_tab_myinfo);
+        mAppBarLayout = findViewById(R.id.al_appbar_myinfo);
+        mTabLayoutButtom = findViewById(R.id.tl_tabhid_myinfo);
+        mImgBg = findViewById(R.id.iv_imgbg_myinfo);
+        mViewPager = findViewById(R.id.vp_content_myinfo);
         findViewById(R.id.iv_back_myinfo).setOnClickListener(this);
-        toolBar = findViewById(R.id.tb_tab_myinfo);
-        title = findViewById(R.id.rl_title_myinfo);
+        mToolbar = findViewById(R.id.tb_tab_myinfo);
+        mTitle = findViewById(R.id.rl_title_myinfo);
         final Fragment[] fragmentList = {new MyInfoRecommendFragment(), new MyInfoRecommendFragment(), new MyInfoRecommendFragment(), new MyOrderFragment(), new MyOrderFragment()};
-        myInfoRecommendAdapter = new MyInfoRecommendViewPagerAdatpter(getSupportFragmentManager(),this,fragmentList,list);
-        viewPager.setAdapter(myInfoRecommendAdapter);
-        tabLayout.setupWithViewPager(viewPager);
-        tabLayoutbuttom.setupWithViewPager(viewPager);
-        appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
+        mMyInfoRecommendViewPagerAdatpter = new MyInfoRecommendViewPagerAdatpter(getSupportFragmentManager(),this,fragmentList,list);
+        mViewPager.setAdapter(mMyInfoRecommendViewPagerAdatpter);
+        mTabLayout.setupWithViewPager(mViewPager);
+        mTabLayoutButtom.setupWithViewPager(mViewPager);
+        mAppBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
             @Override
             public void onStateChanged(AppBarLayout appBarLayout, State state) {
                 Log.d("STATE", state.name());
                 if( state == State.EXPANDED ) {
 
                     //展开状态
-                    tabLayoutbuttom.setVisibility(View.VISIBLE);
-                    toolBar.setVisibility(View.GONE);
+                    mTabLayoutButtom.setVisibility(View.VISIBLE);
+                    mToolbar.setVisibility(View.GONE);
                 }else if(state == State.COLLAPSED){
-                    tabLayoutbuttom.setVisibility(View.GONE);
-                    toolBar.setVisibility(View.VISIBLE);
+                    mTabLayoutButtom.setVisibility(View.GONE);
+                    mToolbar.setVisibility(View.VISIBLE);
                     //折叠状态
 
                 }else {
-                    tabLayoutbuttom.setVisibility(View.VISIBLE);
-                    toolBar.setVisibility(View.GONE);
+                    mTabLayoutButtom.setVisibility(View.VISIBLE);
+                    mToolbar.setVisibility(View.GONE);
                     //中间状态
 
                 }
