@@ -11,6 +11,7 @@ import com.sence.R;
 import com.sence.activity.EnjoyVipActivity;
 import com.sence.activity.MyInfoActivity;
 import com.sence.activity.MyOrderActivity;
+import com.sence.activity.ShopDetailsActivity;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -55,6 +56,12 @@ public class UserFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), MyOrderActivity.class));
+            }
+        });
+        getView().findViewById(R.id.user_account).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), ShopDetailsActivity.class));
             }
         });
     }

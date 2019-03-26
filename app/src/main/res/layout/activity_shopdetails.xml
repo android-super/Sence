@@ -1,159 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <com.bigkoo.convenientbanner.ConvenientBanner
-                android:id="@+id/cb_banner_shopdetails"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:canLoop="true"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="14dp"
-                        android:textSize="@dimen/sp_12"
-                        android:text="￥"
-                        android:textColor="@color/theme_green"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="18sp"
-                        android:text="100"
-                        android:textColor="@color/theme_green"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="6dp"
-                        android:textSize="9sp"
-                        android:text="￥"
-                        android:textColor="#979797"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="12sp"
-                        android:text="100"
-                        android:textColor="#979797"/>
-                </LinearLayout>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="7sp"
-                    android:layout_marginLeft="15dp"
-                    android:background="@drawable/shape_shopdetials_labelbg"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:paddingTop="3dp"
-                    android:paddingBottom="3dp"
-                    android:textColor="@color/theme_green"
-                    android:text="7.0折"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="7sp"
-                    android:background="@drawable/shape_shopdetials_labelbg"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:paddingTop="3dp"
-                    android:paddingBottom="3dp"
-                    android:layout_marginLeft="6dp"
-                    android:textColor="@color/theme_green"
-                    android:text="会员价"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:paddingLeft="14dp"
-                android:paddingBottom="20dp"
-                android:layout_marginBottom="@dimen/dp_10"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="绿竹是禾本科，绿竹属竿较高大，近直立"
-                    android:layout_marginTop="20dp"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="27dp"
-                    android:textColor="#333333"
-                    android:text="绿竹是禾本科，绿竹属竿较高大，近直立，单丛生；节间圆筒形，竿壁厚。箨鞘质地坚韧，顶端截形或两肩部广圆；箨耳存在，较显著；"
-                    android:textSize="14sp"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="21dp"
-                    android:text="绿竹是禾本科，绿竹属竿较高大，近直立，单丛生；节间圆筒形，竿壁厚。箨鞘质地坚韧，顶端截形或两肩部广圆；箨耳存在，较显著；"
-                    android:textColor="#333333"
-                    android:textSize="14sp"
-                    />
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="22dp"
-                    android:gravity="center_vertical">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:text="阿迪达斯品牌"
-                        android:textSize="@dimen/sp_12"
-                        android:textColor="#999999"/>
-                </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="14dp"
-                    android:layout_marginTop="16dp"
-                    android:textColor="#333333"
-                    android:textSize="@dimen/sp_16"
-                    android:text="商品评价(0)"/>
-            </LinearLayout>
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        android:id="@+id/ll_fooler_shopdetails"
+        android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -220,10 +76,17 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/theme_green"
+            android:background="#24a5ae"
             android:gravity="center"
             android:text="立即购买"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_16"/>
     </LinearLayout>
-</LinearLayout>
+    <androidx.viewpager.widget.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/ll_fooler_shopdetails"
+        android:id="@+id/vp_content_shopdetails">
+
+    </androidx.viewpager.widget.ViewPager>
+</RelativeLayout>

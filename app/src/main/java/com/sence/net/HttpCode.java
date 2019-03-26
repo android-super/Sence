@@ -10,4 +10,5 @@ public enum HttpCode {
     ORDER_LIST,
     ADDRESS_LIST,
     ADDRESS_DELETE,
+    GOOD_DETAIL,
 }

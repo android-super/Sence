@@ -1,0 +1,108 @@
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:id="@+id/app_bar_layout"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:contentScrim="@color/white"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="300dp">
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/vp_img_shopdetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp">
+                </androidx.viewpager.widget.ViewPager>
+                <TextView
+                    android:id="@+id/tv_imgnum_shopdetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="15dp"
+                    android:textSize="10sp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:background="@drawable/shape_shopdetails_bg"
+                    android:text="1/4"
+                    android:textColor="@color/white"/>
+            </RelativeLayout>
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/rl_head_shopdetails"
+                android:layout_width="match_parent"
+                app:layout_collapseMode="pin"
+                style="@style/NoLeftToolbar"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <View
+                        android:id="@+id/shop_view"
+                        android:background="@color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+
+                    <ImageView
+                        android:id="@+id/iv_back_shopdetails"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerVertical="true"
+                        android:scaleType="center"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:src="@drawable/fanhui"/>】
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:id="@+id/ll_head_shopdetails"
+                        android:visibility="gone"
+                        android:layout_toRightOf="@+id/iv_back_shopdetails"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:textSize="18sp"
+                            android:gravity="center"
+                            android:textColor="#000000"
+                            android:text="详情"/>
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:textSize="12sp"
+                            android:id="@+id/tv_commend_shopdetails"
+                            android:gravity="center_vertical"
+                            android:textColor="#000000"
+                            android:text="评价"/>
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <include
+        layout="@layout/layout_shop_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        />
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

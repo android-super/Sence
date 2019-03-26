@@ -41,4 +41,7 @@ public interface HttpService {
     @FormUrlEncoded
     @POST(Urls.ADDRESS_DELETE)
     Observable<BaseResponseBean<String>> AddressDelete(@FieldMap Map<String, Object> map);//删除收货地址
+    @FormUrlEncoded
+    @POST(Urls.GOOD_DETAIL)
+    Observable<BaseResponseBean<String>> GoodDetail(@FieldMap Map<String, Object> map);//商品详情
 }
