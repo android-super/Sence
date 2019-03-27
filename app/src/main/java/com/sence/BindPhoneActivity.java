@@ -14,6 +14,7 @@ import com.blankj.utilcode.util.PhoneUtils;
 import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
+import com.orhanobut.logger.Logger;
 import com.sence.utils.StatusBarUtil;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
@@ -29,11 +30,28 @@ public class BindPhoneActivity extends AppCompatActivity {
     private EditText bind_number;
     private TextView bind_get_code;
 
+    private String unionid;
+    private String openid;
+    private String gender;
+    private String profile_image_url;
+    private String name;
+    private String screen_name;
+    private String iconurl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bind_phone);
         StatusBarUtil.setLightMode(this);
+
+        unionid = this.getIntent().getStringExtra("unionid");
+        openid = this.getIntent().getStringExtra("openid");
+        gender = this.getIntent().getStringExtra("gender");
+        profile_image_url = this.getIntent().getStringExtra("profile_image_url");
+        name = this.getIntent().getStringExtra("name");
+        screen_name = this.getIntent().getStringExtra("screen_name");
+        iconurl = this.getIntent().getStringExtra("iconurl");
+
         initView();
     }
 
@@ -80,6 +98,13 @@ public class BindPhoneActivity extends AppCompatActivity {
                 if (RegexUtils.isMobileExact(phone)) {
                     Intent intent = new Intent(BindPhoneActivity.this, VerifyActivity.class);
                     intent.putExtra("phone", bind_number.getText().toString());
+                    intent.putExtra("unionid",unionid);
+                    intent.putExtra("openid",openid);
+                    intent.putExtra("profile_image_url",profile_image_url);
+                    intent.putExtra("gender",gender);
+                    intent.putExtra("name",name);
+                    intent.putExtra("screen_name",screen_name);
+                    intent.putExtra("iconurl",iconurl);
                     startActivity(intent);
                 } else {
                     ToastUtils.showShort("请输入正确的手机号");
@@ -100,6 +125,11 @@ public class BindPhoneActivity extends AppCompatActivity {
 
         @Override
         public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                String key = entry.getKey();
+                String value = entry.getValue();
+                Logger.e(key + "=====" + value);
+            }
             finish();
         }
 

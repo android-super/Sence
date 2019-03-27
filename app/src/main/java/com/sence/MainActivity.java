@@ -16,6 +16,7 @@ import com.sence.fragment.VipFragment;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
+import com.sence.utils.PermissionUtil;
 import com.sence.utils.StatusBarUtil;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private BusFragment busFragment;
     private UserFragment userFragment;
     private Fragment[] fragments;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

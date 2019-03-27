@@ -3,10 +3,15 @@ package com.sence.net;
 import android.widget.Toast;
 
 import com.blankj.utilcode.util.NetworkUtils;
+import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonSyntaxException;
 import com.orhanobut.logger.Logger;
 import com.sence.base.BaseApp;
 import com.sence.bean.base.BaseRequestBean;
 import com.sence.bean.base.BaseResponseBean;
+import com.sence.net.bean.ErrorConstants;
+import com.sence.net.bean.HttpJsonErrorBean;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.net.manager.HttpClientManager;
 
@@ -42,25 +47,33 @@ public class HttpManager<P> {
 
     /**
      * 添加请求识别Code
+     *
      * @param code
      * @return
      */
     public HttpManager PlayNetCode(HttpCode code, BaseRequestBean requestBean) {
+        HttpService httpService = HttpClientManager.Instance.httpService;
         switch (code) {
             case IS_REGISTER:
-                observable = HttpClientManager.Instance.httpService.IsRegister(requestBean.getMap());
+                observable = httpService.IsRegister(requestBean.getMap());
                 break;
             case ADDRESS_ADD:
-                observable = HttpClientManager.Instance.httpService.AddressAdd(requestBean.getMap());
+                observable = httpService.AddressAdd(requestBean.getMap());
                 break;
             case ORDER_LIST:
-                observable = HttpClientManager.Instance.httpService.OrderList(requestBean.getMap());
+                observable = httpService.OrderList(requestBean.getMap());
                 break;
             case ADDRESS_LIST:
-                observable = HttpClientManager.Instance.httpService.AddressList(requestBean.getMap());
+                observable = httpService.AddressList(requestBean.getMap());
                 break;
             case ADDRESS_DELETE:
-                observable = HttpClientManager.Instance.httpService.AddressDelete(requestBean.getMap());
+                observable = httpService.AddressDelete(requestBean.getMap());
+                break;
+            case SEND_VERIFY_CODE:
+                observable = httpService.SendVerifyCode(requestBean.getMap());
+                break;
+            case REGISTER:
+                observable = httpService.Register(requestBean.getMap());
                 break;
         }
         observable = observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
@@ -69,6 +82,7 @@ public class HttpManager<P> {
 
     /**
      * 添加请求识别Code
+     *
      * @param code
      * @return
      */
@@ -85,6 +99,7 @@ public class HttpManager<P> {
 
     /**
      * 去请求
+     *
      * @param apiCallBack
      */
     public void request(final ApiCallBack<P> apiCallBack) {
@@ -101,7 +116,7 @@ public class HttpManager<P> {
 
             @Override
             public void onNext(BaseResponseBean<P> result) {
-                Logger.e("status is "+result.getStatus()+ "\nmsg is " + result.getMsg());
+                Logger.e("status is " + result.getStatus() + "\nmsg is " + result.getMsg() + "\ndata is " + result.getData().toString());
                 if (!disposable.isDisposed()) {
                     if (result.getStatus() == 1) {
                         apiCallBack.onSuccess(result.getData(), result.getMsg());
@@ -125,6 +140,11 @@ public class HttpManager<P> {
                     Toast.makeText(BaseApp.INSTANCE,
                             "网络不给力",
                             Toast.LENGTH_SHORT).show();
+                } else if (e instanceof JsonSyntaxException) {
+                    Logger.e("error_content====" + ErrorConstants.error_content);
+                    HttpJsonErrorBean errorBean = new Gson().fromJson(ErrorConstants.error_content,
+                            HttpJsonErrorBean.class);
+                    apiCallBack.Message(errorBean.getStatus(), errorBean.getMsg());
                 } else {
                     Toast.makeText(BaseApp.INSTANCE,
                             "请求失败", Toast.LENGTH_SHORT).show();

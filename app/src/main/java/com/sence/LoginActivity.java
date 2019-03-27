@@ -8,12 +8,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import com.orhanobut.logger.Logger;
 import com.sence.activity.WebActivity;
 import com.sence.utils.StatusBarUtil;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -47,6 +49,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         login_look = findViewById(R.id.login_look);
         login_wx = findViewById(R.id.login_wx);
 
+        login_cancel.setOnClickListener(this);
         login_check.setOnClickListener(this);
         login_wx.setOnClickListener(this);
         login_agree.setOnClickListener(this);
@@ -81,7 +84,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.login_wx:
                 UMShareAPI.get(this).getPlatformInfo(this, SHARE_MEDIA.WEIXIN, umAuthListener);
-                startActivity(new Intent(LoginActivity.this, BindPhoneActivity.class));
                 break;
         }
     }
@@ -97,7 +99,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         @Override
         public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
-            Set<String> keySet = map.keySet();
+            Intent intent = new Intent(LoginActivity.this, BindPhoneActivity.class);
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                String key = entry.getKey();
+                String value = entry.getValue();
+                intent.putExtra(key, value);
+            }
+            startActivity(intent);
         }
 
         @Override
