@@ -6,21 +6,21 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.sence.LoginActivity;
 import com.sence.R;
 import com.sence.activity.EnjoyVipActivity;
 import com.sence.activity.MyInfoActivity;
 import com.sence.activity.MyOrderActivity;
 import com.sence.activity.ShopDetailsActivity;
+import com.sence.utils.LoginStatus;
+import com.sence.view.NiceImageView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import com.sence.utils.LoginStatus;
-import com.sence.view.NiceImageView;
 
 /**
  * A simple {@link Fragment} subclass.

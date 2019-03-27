@@ -62,6 +62,21 @@ public class HttpManager<P> {
             case ADDRESS_DELETE:
                 observable = HttpClientManager.Instance.httpService.AddressDelete(requestBean.getMap());
                 break;
+            case GOOD_DETAIL:
+                observable = HttpClientManager.Instance.httpService.GoodDetail(requestBean.getMap());
+                break;
+            case SERVE_DETAIL:
+                observable = HttpClientManager.Instance.httpService.ServeDetail(requestBean.getMap());
+                break;
+            case COMMENT_SHOP_LIST:
+                observable = HttpClientManager.Instance.httpService.CommentShopList(requestBean.getMap());
+                break;
+            case SERVE_COMMENT_LIST:
+                observable = HttpClientManager.Instance.httpService.ServeCommentList(requestBean.getMap());
+                break;
+            case ORDER_DETAIL:
+                observable = HttpClientManager.Instance.httpService.OrderDetail(requestBean.getMap());
+                break;
         }
         observable = observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
         return this;

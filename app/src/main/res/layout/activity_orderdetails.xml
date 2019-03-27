@@ -315,6 +315,7 @@
                     android:layout_marginLeft="8dp"
                     android:gravity="center_vertical"
                     android:text="￥656.00"
+                    android:id="@+id/tv_money_orderdetails"
                     android:textColor="@color/theme_green"
                     android:textSize="@dimen/sp_14"/>
             </LinearLayout>
@@ -344,14 +345,15 @@
                 android:textSize="@dimen/sp_16"
                 android:layout_marginLeft="15dp"
                 android:text="合计金额："/>
+
             <TextView
+                android:id="@+id/tv_sprice_orderdetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#16a5af"
-                android:textSize="15sp"
                 android:layout_marginLeft="11dp"
-                android:id="@+id/tv_sprice_orderdetails"
-                android:text="￥1020.0"/>
+                android:text="￥1020.0"
+                android:textColor="#16a5af"
+                android:textSize="15sp"/>
             <View
                 android:layout_width="0dp"
                 android:layout_weight="1"

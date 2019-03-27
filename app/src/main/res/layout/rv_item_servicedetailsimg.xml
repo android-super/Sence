@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="wrap_content"
-              android:layout_height="wrap_content">
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="5dp"
+              android:layout_marginRight="5dp"
+              android:orientation="vertical">
+
     <ImageView
-        android:layout_width="102dp"
-        android:layout_height="102dp"
-        android:src="@drawable/hint_img"
-        android:scaleType="fitXY"
         android:id="@+id/iv_img_servicedetailsimg"
-        android:paddingRight="5dp"
-        android:paddingBottom="5dp"/>
+        android:layout_width="97dp"
+        android:layout_height="97dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/hint_img"/>
 </LinearLayout>

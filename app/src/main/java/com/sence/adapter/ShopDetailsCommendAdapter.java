@@ -7,8 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.sence.R;
-import com.sence.bean.response.PMyOrderBean;
+import com.sence.bean.response.PShopDetailsBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +19,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ShopDetailsCommendAdapter extends RecyclerView.Adapter<ShopDetailsCommendAdapter.ViewHolder> {
     private Context context;
-    private List<PMyOrderBean.ListBean> list = new ArrayList<>();
+    private List<PShopDetailsBean.CommentBean> list = new ArrayList<>();
 
     public ShopDetailsCommendAdapter(Context context){
         this.context = context;
     }
-    public void setList(List<PMyOrderBean.ListBean> list){
+    public void setList(List<PShopDetailsBean.CommentBean> list){
         this.list = list;
         notifyDataSetChanged();
     }
@@ -38,11 +39,15 @@ public class ShopDetailsCommendAdapter extends RecyclerView.Adapter<ShopDetailsC
 
     @Override
     public void onBindViewHolder(@NonNull ShopDetailsCommendAdapter.ViewHolder holder, int position) {
+        holder.mName.setText(list.get(position).getNickname());
+        holder.mContent.setText(list.get(position).getContent());
+        Glide.with(context).load(list.get(position).getImg()).placeholder(R.drawable.hint_img).fallback(R.drawable.hint_img).into(holder.mImageView);
+        Glide.with(context).load(list.get(position).getAvatar()).placeholder(R.drawable.hint_img).fallback(R.drawable.hint_img).into(holder.mImg);
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return list.size();
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -52,7 +57,7 @@ public class ShopDetailsCommendAdapter extends RecyclerView.Adapter<ShopDetailsC
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mImageView = itemView.findViewById(R.id.iv_shopcomment_shopdetails);
+            mImageView = itemView.findViewById(R.id.iv_img_shopdetails);
             mImg = itemView.findViewById(R.id.iv_shopcommentimg_shopdetails);
             mName = itemView.findViewById(R.id.tv_name_shopdetailscommend);
             mContent = itemView.findViewById(R.id.tv_content_shopdetailscommend);

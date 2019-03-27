@@ -18,12 +18,12 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="300dp">
+                    android:layout_height="350dp">
 
                     <androidx.viewpager.widget.ViewPager
                         android:id="@+id/vp_img_shopdetails"
                         android:layout_width="match_parent"
-                        android:layout_height="300dp">
+                        android:layout_height="350dp">
                     </androidx.viewpager.widget.ViewPager>
                     <TextView
                         android:id="@+id/tv_imgnum_shopdetails"
@@ -38,7 +38,7 @@
                         android:paddingTop="3dp"
                         android:paddingBottom="3dp"
                         android:background="@drawable/shape_shopdetails_bg"
-                        android:text="1/4"
+                        android:text="1/1"
                         android:textColor="@color/white"/>
                 </RelativeLayout>
 
@@ -70,11 +70,9 @@
                             android:layout_height="50dp"
                             android:id="@+id/ll_head_shopdetails"
                             android:visibility="gone"
-                            android:layout_toRightOf="@+id/iv_back_shopdetails"
                             android:orientation="horizontal">
                             <TextView
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
+                                android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:textSize="18sp"
                                 android:gravity="center"

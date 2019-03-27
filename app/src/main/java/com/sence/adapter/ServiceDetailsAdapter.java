@@ -4,11 +4,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.sence.R;
-import com.sence.bean.response.PMyOrderBean;
+import com.sence.bean.response.PServiceCommendBean;
+import com.sence.view.NiceImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +20,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ServiceDetailsAdapter extends RecyclerView.Adapter<ServiceDetailsAdapter.ViewHolder> {
     private Context context;
-    private List<PMyOrderBean.ListBean> list = new ArrayList<>();
+    private List<PServiceCommendBean> list = new ArrayList<>();
 
     public ServiceDetailsAdapter(Context context){
         this.context = context;
     }
-    public void setList(List<PMyOrderBean.ListBean> list){
+    public void setList(List<PServiceCommendBean> list){
         this.list = list;
         notifyDataSetChanged();
     }
@@ -39,27 +40,42 @@ public class ServiceDetailsAdapter extends RecyclerView.Adapter<ServiceDetailsAd
 
     @Override
     public void onBindViewHolder(@NonNull ServiceDetailsAdapter.ViewHolder holder, int position) {
+        holder.mContent.setText(list.get(position).getContent());
+        holder.mName.setText(list.get(position).getUsername());
+        holder.mTime.setText(list.get(position).getTime());
+        Glide.with(context)
+                .load(list.get(position).getAvatar())
+                .placeholder(R.drawable.hint_img)
+                .fallback(R.drawable.hint_img)
+                .into(holder.mImageView);
         ServiceDetailsImgAdapter mServiceDetailsImgAdapter = new ServiceDetailsImgAdapter(context);
         GridLayoutManager linearLayoutManager = new GridLayoutManager(context,3);
-        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+        linearLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
         holder.mRecyclerView.setLayoutManager(linearLayoutManager);
         holder.mRecyclerView.setAdapter(mServiceDetailsImgAdapter);
+        if(list.get(position).getImgs().size()>0){
+            mServiceDetailsImgAdapter.setList(list.get(position).getImgs());
+        }else{
+            holder.mRecyclerView.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return list.size();
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
 
 
-        private ImageView mImageView;
-        private TextView mName,mContent;
+        private NiceImageView mImageView;
+        private TextView mName,mContent,mTime;
         private RecyclerView mRecyclerView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mImageView = itemView.findViewById(R.id.iv_vimg_servicedetails);
+            mTime = itemView.findViewById(R.id.tv_vtime_servicedetails);
             mName = itemView.findViewById(R.id.tv_vname_servicedetails);
             mContent = itemView.findViewById(R.id.tv_vcontent_servicedetails);
             mRecyclerView = itemView.findViewById(R.id.recycle_servicedetails_img);

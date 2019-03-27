@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,9 +16,10 @@
             android:layout_marginTop="16dp"
             android:orientation="horizontal">
 
-            <ImageView
+            <com.sence.view.NiceImageView
                 android:layout_width="37dp"
                 android:layout_height="37dp"
+                app:is_circle="true"
                 android:scaleType="center"
                 android:src="@drawable/hint_img"
                 android:id="@+id/iv_img_shopcommend"
@@ -49,6 +51,7 @@
             android:layout_height="175dp"
             android:layout_marginTop="15dp"
             android:scaleType="fitXY"
+            android:id="@+id/iv_commendimg_shopcommend"
             android:src="@drawable/hint_img"/>
 
         <LinearLayout

@@ -12,6 +12,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.sence.R;
+import com.sence.activity.MyOrderActivity;
 import com.sence.adapter.MyOrderAdapter;
 import com.sence.bean.request.RMyOrderBean;
 import com.sence.bean.response.PMyOrderBean;
@@ -131,6 +132,7 @@ public class MyOrderFragment extends Fragment {
             @Override
             public void onSuccess(PMyOrderBean o, String msg) {
                 Logger.e("msg==========" + msg);
+                ((MyOrderActivity)getActivity()).setTitleNum(o.getAllNum(),o.getWaitPay(),o.getWaitSend(),o.getWaitConfirm(),o.getWaitEvlua());
                 if(o.getList().size()>0){
                     myOrderAdapter.setList(o.getList());
                     more.setVisibility(View.VISIBLE);

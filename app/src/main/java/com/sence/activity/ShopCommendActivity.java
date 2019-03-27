@@ -3,8 +3,16 @@ package com.sence.activity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.orhanobut.logger.Logger;
 import com.sence.R;
 import com.sence.adapter.ShopCommendAdapter;
+import com.sence.bean.request.RShopCommendBean;
+import com.sence.bean.response.PShopCommendBean;
+import com.sence.net.HttpCode;
+import com.sence.net.HttpManager;
+import com.sence.net.manager.ApiCallBack;
+
+import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ShopCommendActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private ShopCommendAdapter mShopCommendAdapter;
+    private int page=1;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,10 +36,31 @@ public class ShopCommendActivity extends AppCompatActivity {
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(mShopCommendAdapter);
+        doHttp();
         findViewById(R.id.iv_back_shopcommend).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+    }
+
+    private void doHttp() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.COMMENT_SHOP_LIST, new RShopCommendBean("1",page+"","10")).request(new ApiCallBack<List<PShopCommendBean>>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(List<PShopCommendBean> o, String msg) {
+                Logger.e("msg==========" + msg+o.size());
+                mShopCommendAdapter.setList(o);
             }
         });
     }

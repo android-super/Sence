@@ -5,6 +5,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.sence.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +17,9 @@ import androidx.viewpager.widget.ViewPager;
 
 public class ShopDetailsImgAdapter extends PagerAdapter {
     private Context context;
-    private List<Integer> list = new ArrayList<>();
+    private List<String> list = new ArrayList<>();
     private ViewPager viewPager;
-    public ShopDetailsImgAdapter(Context context, List<Integer> list, ViewPager viewPager){
+    public ShopDetailsImgAdapter(Context context, List<String> list, ViewPager viewPager){
         this.context =context ;
         this.list=list;
         this.viewPager=viewPager;
@@ -36,14 +39,14 @@ public class ShopDetailsImgAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         ImageView imageView = new ImageView(context);
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        imageView.setImageResource(list.get(position));
-        container.addView(imageView);
+        Glide.with(context).load(list.get(position)).placeholder(R.drawable.hint_img).fallback(R.drawable.hint_img).into(imageView);
+        viewPager.addView(imageView);
         return imageView;
 
     }
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        container.removeView((View) object);
+        viewPager.removeView((View) object);
     }
 }

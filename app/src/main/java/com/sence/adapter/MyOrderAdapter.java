@@ -41,7 +41,7 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyOrderAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyOrderAdapter.ViewHolder holder, final int position) {
         Glide.with(context).load(list.get(position).getGoods().getImg()).placeholder(R.drawable.hint_img).fallback(R.drawable.hint_img).into(holder.mImageView);
         holder.mName.setText(list.get(position).getGoods().getName());
         holder.mTime.setText(list.get(position).getAddtime());
@@ -87,7 +87,9 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, OrderDetailsActivity.class));
+                Intent intent = new Intent(context, OrderDetailsActivity.class);
+                intent.putExtra("id",list.get(position).getId());
+                context.startActivity(intent);
             }
         });
     }

@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content">
-    <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.sence.view.NiceImageView
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginTop="24dp"
         android:src="@drawable/hint_img"
         android:scaleType="fitXY"
+        app:is_circle="true"
         android:id="@+id/iv_vimg_servicedetails"
         android:layout_marginLeft="12dp"/>
     <TextView
@@ -33,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="29dp"
-
+        android:id="@+id/tv_vtime_servicedetails"
         android:layout_marginRight="15dp"
         android:layout_alignParentRight="true"
         android:text="3月26日"
@@ -61,10 +63,10 @@
         android:layout_marginRight="14dp"
         android:layout_below="@+id/tv_vcontent_servicedetails"
         android:layout_marginTop="15dp"
+        android:visibility="gone"
         android:scaleType="fitXY"/>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:visibility="gone"
         android:layout_height="wrap_content"
         android:layout_marginLeft="60dp"
         android:layout_marginRight="14dp"
@@ -72,7 +74,7 @@
         android:layout_marginTop="15dp"
         android:nestedScrollingEnabled="false"
         android:id="@+id/recycle_servicedetails_img"
-        android:layout_marginBottom="15dp">
+        android:layout_marginBottom="20dp">
 
     </androidx.recyclerview.widget.RecyclerView>
 </RelativeLayout>

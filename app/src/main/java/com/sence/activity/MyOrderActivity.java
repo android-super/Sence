@@ -1,5 +1,6 @@
 package com.sence.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 
@@ -41,6 +42,29 @@ public class MyOrderActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.iv_back_myorder:
                 finish();
                 break;
+        }
+    }
+
+    public void setTitleNum(String allNum, String waitPay, String waitSend, String waitConfirm, String waitEvlua) {
+        int num = Integer.parseInt(allNum);
+        int pay = Integer.parseInt(waitPay);
+        int send = Integer.parseInt(waitSend);
+        int confirm = Integer.parseInt(waitConfirm);
+        int evlua = Integer.parseInt(waitEvlua);
+        if(num>0){
+            mFuckTabLayout.addNumberBadge(0, num, Color.parseColor("#16a5af"), Color.parseColor("#FFFFFF"), 30);
+        }
+        if(pay>0){
+            mFuckTabLayout.addNumberBadge(1, pay, Color.parseColor("#16a5af"), Color.parseColor("#FFFFFF"), 30);
+        }
+        if(send>0){
+            mFuckTabLayout.addNumberBadge(2, send, Color.parseColor("#16a5af"), Color.parseColor("#FFFFFF"), 30);
+        }
+        if(confirm>0){
+            mFuckTabLayout.addNumberBadge(3, confirm, Color.parseColor("#16a5af"), R.color.white, 25);
+        }
+        if(evlua>0){
+            mFuckTabLayout.addNumberBadge(4, evlua, Color.parseColor("#16a5af"), R.color.white, 25);
         }
     }
 }

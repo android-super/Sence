@@ -40,10 +40,11 @@ public class Urls {
     public static final String NOTE_DELETE = "/index.php/Api/Notes/delUserNote";//删除笔记
     public static final String NOTE_ADD = "/index.php/Api/Notes/addUserNote";//添加笔记
     //商品
-    public static final String ORDER_DETAIL = "/index.php/Api/Goods/getCommentGoods";//订单详情
+    public static final String ORDER_DETAIL = "/index.php/Api/Goods/getOrderDetail";//订单详情
     public static final String BUS_RECOMMEND = "/index.php/Api/Goods/getCommentGoods";//购物车页面推荐商品数据
     public static final String BUS_LIST = "/index.php/Api/Goods/getCartList";//购物车列表
     public static final String ORDER_PAY = "/index.php/Api/Orders/payOrder";//支付订单
+    public static final String COMMENT_SHOP_LIST = "/index.php/Api/Goods/getGoodsCommentList";//商品评论列表
     public static final String ORDER_COMMENT = "/index.php/Api/Orders/evaluOrder";//评价订单
     public static final String ORDER_COMMIT = "/index.php/Api/Orders/submitUserOrder";//提交订单
     public static final String ORDER_LIST = "/index.php/Api/Orders/getUserOrders";//订单列表
@@ -57,4 +58,5 @@ public class Urls {
     public static final String ADDRESS_EDIT = "/index.php/Api/Address/editAddress";//编辑收货地址
     //服务
     public static final String SERVE_DETAIL = "/index.php/Api/Serve/getServeDetail";//服务详情
+    public static final String SERVE_COMMENT_LIST = "/index.php/Api/Serve/getServiceComments";//服务评论列表
 }

@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.sence.R;
-import com.sence.bean.response.PMyOrderBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,12 +17,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ServiceDetailsImgAdapter extends RecyclerView.Adapter<ServiceDetailsImgAdapter.ViewHolder> {
     private Context context;
-    private List<PMyOrderBean.ListBean> list = new ArrayList<>();
+    private List<String> list = new ArrayList<>();
 
     public ServiceDetailsImgAdapter(Context context){
         this.context = context;
     }
-    public void setList(List<PMyOrderBean.ListBean> list){
+    public void setList(List<String> list){
         this.list = list;
         notifyDataSetChanged();
     }
@@ -37,12 +37,16 @@ public class ServiceDetailsImgAdapter extends RecyclerView.Adapter<ServiceDetail
 
     @Override
     public void onBindViewHolder(@NonNull ServiceDetailsImgAdapter.ViewHolder holder, int position) {
-
+        Glide.with(context)
+                .load(list.get(position))
+                .placeholder(R.drawable.hint_img)
+                .fallback(R.drawable.hint_img)
+                .into(holder.mImageView);
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return list.size();
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
 

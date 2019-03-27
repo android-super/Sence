@@ -3,6 +3,11 @@ package com.sence.net;
 import com.sence.bean.base.BaseResponseBean;
 import com.sence.bean.response.PManageAddressBean;
 import com.sence.bean.response.PMyOrderBean;
+import com.sence.bean.response.POrderDetailsBean;
+import com.sence.bean.response.PServiceCommendBean;
+import com.sence.bean.response.PServiceeDetails;
+import com.sence.bean.response.PShopCommendBean;
+import com.sence.bean.response.PShopDetailsBean;
 
 import java.util.List;
 import java.util.Map;
@@ -41,7 +46,24 @@ public interface HttpService {
     @FormUrlEncoded
     @POST(Urls.ADDRESS_DELETE)
     Observable<BaseResponseBean<String>> AddressDelete(@FieldMap Map<String, Object> map);//删除收货地址
+
     @FormUrlEncoded
     @POST(Urls.GOOD_DETAIL)
-    Observable<BaseResponseBean<String>> GoodDetail(@FieldMap Map<String, Object> map);//商品详情
+    Observable<BaseResponseBean<PShopDetailsBean>> GoodDetail(@FieldMap Map<String, Object> map);//商品详情
+
+    @FormUrlEncoded
+    @POST(Urls.SERVE_DETAIL)
+    Observable<BaseResponseBean<PServiceeDetails>> ServeDetail(@FieldMap Map<String, Object> map);//服务详情
+
+    @FormUrlEncoded
+    @POST(Urls.COMMENT_SHOP_LIST)
+    Observable<BaseResponseBean<List<PShopCommendBean>>> CommentShopList(@FieldMap Map<String, Object> map);//商品评论列表
+
+    @FormUrlEncoded
+    @POST(Urls.SERVE_COMMENT_LIST)
+    Observable<BaseResponseBean<List<PServiceCommendBean>>> ServeCommentList(@FieldMap Map<String, Object> map);//商品评论列表
+
+    @FormUrlEncoded
+    @POST(Urls.ORDER_DETAIL)
+    Observable<BaseResponseBean<POrderDetailsBean>> OrderDetail(@FieldMap Map<String, Object> map);//商品评论列表
 }
