@@ -16,7 +16,6 @@ import com.sence.fragment.VipFragment;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
-import com.sence.utils.PermissionUtil;
 import com.sence.utils.StatusBarUtil;
 
 import androidx.appcompat.app.AppCompatActivity;

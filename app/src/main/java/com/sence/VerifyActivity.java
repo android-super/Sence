@@ -8,9 +8,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import androidx.appcompat.app.AppCompatActivity;
+
 import com.blankj.utilcode.util.PhoneUtils;
-import com.google.gson.JsonObject;
 import com.orhanobut.logger.Logger;
 import com.sence.bean.request.RRegisterBean;
 import com.sence.bean.request.RUserRegisterBean;
@@ -21,14 +20,16 @@ import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.SharedPreferencesUtil;
 import com.sence.utils.StatusBarUtil;
+
+import java.util.concurrent.TimeUnit;
+
+import androidx.appcompat.app.AppCompatActivity;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * 验证码

@@ -7,7 +7,7 @@
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:id="@+id/app_bar_layout"
+            android:id="@+id/app_barlayout_shiodetails"
             android:layout_height="wrap_content">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -18,11 +18,13 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="350dp">
+                    android:layout_height="350dp"
+                    android:id="@+id/rl_vp_shiodetails">
 
                     <androidx.viewpager.widget.ViewPager
                         android:id="@+id/vp_img_shopdetails"
                         android:layout_width="match_parent"
+                        android:transitionName="@string/translation_note_name"
                         android:layout_height="350dp">
                     </androidx.viewpager.widget.ViewPager>
                     <TextView
@@ -47,7 +49,7 @@
                     android:layout_width="match_parent"
                     app:layout_collapseMode="pin"
                     style="@style/NoLeftToolbar"
-                    android:layout_height="wrap_content">
+                    android:layout_height="70dp">
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
@@ -61,13 +63,14 @@
                             android:id="@+id/iv_back_shopdetails"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:layout_centerVertical="true"
+                            android:layout_alignParentBottom="true"
                             android:scaleType="center"
                             android:layout_marginLeft="@dimen/dp_10"
                             android:src="@drawable/fanhui"/>】
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
+                            android:layout_alignParentBottom="true"
                             android:id="@+id/ll_head_shopdetails"
                             android:visibility="gone"
                             android:orientation="horizontal">

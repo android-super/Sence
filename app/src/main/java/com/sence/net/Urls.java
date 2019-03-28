@@ -55,9 +55,11 @@ public class Urls {
     public static final String ADDRESS_LIST = "/index.php/Api/Address/getAddressList";//用户地址列表
     public static final String ADDRESS_DELETE = "/index.php/Api/Address/delAddress";//删除收货地址
     public static final String ADDRESS_ADD = "/index.php/Api/Address/addAddress";//添加收货地址
+    public static final String ORDER_DELETE = "/index.php/Api/Orders/cancelOrder";//取消待付款，待支付订单
     public static final String ADDRESS_EDIT = "/index.php/Api/Address/editAddress";//编辑收货地址
     //服务
     public static final String SERVE_DETAIL = "/index.php/Api/Serve/getServeDetail";//服务详情
+    public static final String ENJOY_VIP = "/index.php/Api/User/getEnjoyInfo";//尊享会员
     public static final String SERVE_COMMENT_LIST = "/index.php/Api/Serve/getServiceComments";//服务评论列表
     public static final String SERVE_COMMENT_ADD = "/index.php/Api/Orders/evaluateOrder";//添加服务评价
 }

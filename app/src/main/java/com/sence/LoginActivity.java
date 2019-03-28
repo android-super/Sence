@@ -1,23 +1,21 @@
 package com.sence;
 
-import android.content.Entity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import com.orhanobut.logger.Logger;
+
 import com.sence.activity.WebActivity;
 import com.sence.utils.StatusBarUtil;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * 登录页
@@ -99,13 +97,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         @Override
         public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
-            Intent intent = new Intent(LoginActivity.this, BindPhoneActivity.class);
-            for (Map.Entry<String, String> entry : map.entrySet()) {
-                String key = entry.getKey();
-                String value = entry.getValue();
-                intent.putExtra(key, value);
+            if(UMShareAPI.get(LoginActivity.this).isAuthorize(LoginActivity.this,SHARE_MEDIA.WEIXIN)) {
+                
+            }else{
+                Intent intent = new Intent(LoginActivity.this, BindPhoneActivity.class);
+                for (Map.Entry<String, String> entry : map.entrySet()) {
+                    String key = entry.getKey();
+                    String value = entry.getValue();
+                    intent.putExtra(key, value);
+                }
+                startActivity(intent);
             }
-            startActivity(intent);
+
         }
 
         @Override

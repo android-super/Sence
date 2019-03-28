@@ -8,56 +8,47 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.sence.R;
-import com.sence.bean.response.PServiceCommendBean;
+import com.sence.bean.response.POrderDetailsBean;
+import com.sence.net.Urls;
 import com.sence.view.NiceImageView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ServiceDetailsAdapter extends RecyclerView.Adapter<ServiceDetailsAdapter.ViewHolder> {
+public class OrderDetailsAdapter extends RecyclerView.Adapter<OrderDetailsAdapter.ViewHolder> {
     private Context context;
-    private List<PServiceCommendBean> list = new ArrayList<>();
+    private List<POrderDetailsBean.GoodsBean> list = new ArrayList<>();
 
-    public ServiceDetailsAdapter(Context context){
+    public OrderDetailsAdapter(Context context){
         this.context = context;
     }
-    public void setList(List<PServiceCommendBean> list){
+    public void setList(List<POrderDetailsBean.GoodsBean> list){
         this.list = list;
         notifyDataSetChanged();
     }
 
     @NonNull
     @Override
-    public ServiceDetailsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.rv_item_servicedetails,parent,false);
-        return new ServiceDetailsAdapter.ViewHolder(view);
+    public OrderDetailsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.rv_item_orderdetails,parent,false);
+        return new OrderDetailsAdapter.ViewHolder(view);
 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ServiceDetailsAdapter.ViewHolder holder, int position) {
-        holder.mContent.setText(list.get(position).getContent());
-        holder.mName.setText(list.get(position).getUsername());
-        holder.mTime.setText(list.get(position).getTime());
+    public void onBindViewHolder(@NonNull OrderDetailsAdapter.ViewHolder holder, int position) {
+
+        holder.mName.setText(list.get(position).getName());
+        holder.mPrice.setText(list.get(position).getPrice());
+        holder.mNum.setText(list.get(position).getNum());
         Glide.with(context)
-                .load(list.get(position).getAvatar())
+                .load(Urls.base_url + list.get(position).getImg())
                 .placeholder(R.drawable.hint_img)
                 .fallback(R.drawable.hint_img)
-                .into(holder.mImageView);
-        ServiceDetailsImgAdapter mServiceDetailsImgAdapter = new ServiceDetailsImgAdapter(context);
-        GridLayoutManager linearLayoutManager = new GridLayoutManager(context,3);
-        linearLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
-        holder.mRecyclerView.setLayoutManager(linearLayoutManager);
-        holder.mRecyclerView.setAdapter(mServiceDetailsImgAdapter);
-        if(list.get(position).getImgs().size()>0){
-            mServiceDetailsImgAdapter.setList(list.get(position).getImgs());
-        }else{
-            holder.mRecyclerView.setVisibility(View.GONE);
-        }
+                .into(holder.mImg);
 
     }
 
@@ -68,17 +59,16 @@ public class ServiceDetailsAdapter extends RecyclerView.Adapter<ServiceDetailsAd
     public class ViewHolder extends RecyclerView.ViewHolder {
 
 
-        private NiceImageView mImageView;
-        private TextView mName,mContent,mTime;
-        private RecyclerView mRecyclerView;
+        private NiceImageView mImg;
+        private TextView mName,mStroeName,mPrice,mNum;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mImageView = itemView.findViewById(R.id.iv_vimg_servicedetails);
-            mTime = itemView.findViewById(R.id.tv_vtime_servicedetails);
-            mName = itemView.findViewById(R.id.tv_vname_servicedetails);
-            mContent = itemView.findViewById(R.id.tv_vcontent_servicedetails);
-            mRecyclerView = itemView.findViewById(R.id.recycle_servicedetails_img);
+
+            mImg = itemView.findViewById(R.id.iv_img_orderdetails);
+            mName = itemView.findViewById(R.id.tv_shopname_orderdetails);
+            mPrice = itemView.findViewById(R.id.tv_price_orderdetails);
+            mNum = itemView.findViewById(R.id.tv_num_orderdetails);
         }
     }
 }

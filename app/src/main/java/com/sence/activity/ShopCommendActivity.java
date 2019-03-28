@@ -2,6 +2,8 @@ package com.sence.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.orhanobut.logger.Logger;
 import com.sence.R;
@@ -11,6 +13,7 @@ import com.sence.bean.response.PShopCommendBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
+import com.sence.utils.StatusBarUtil;
 
 import java.util.List;
 
@@ -27,6 +30,7 @@ public class ShopCommendActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopcommend);
+        StatusBarUtil.setLightMode(this);
         initData();
     }
     private void initData() {
@@ -37,7 +41,10 @@ public class ShopCommendActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(mShopCommendAdapter);
         doHttp();
-        findViewById(R.id.iv_back_shopcommend).setOnClickListener(new View.OnClickListener() {
+        TextView mTitle = findViewById(R.id.pub_title);
+        mTitle.setText("小伙伴们说");
+        ImageView mBack = findViewById(R.id.pub_back);
+        mBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -59,7 +66,7 @@ public class ShopCommendActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(List<PShopCommendBean> o, String msg) {
-                Logger.e("msg==========" + msg+o.size());
+                Logger.e("msg==========" + msg);
                 mShopCommendAdapter.setList(o);
             }
         });

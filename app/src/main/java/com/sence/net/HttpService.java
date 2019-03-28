@@ -1,7 +1,7 @@
 package com.sence.net;
 
-import com.google.gson.JsonObject;
 import com.sence.bean.base.BaseResponseBean;
+import com.sence.bean.response.PEnjoyVipBean;
 import com.sence.bean.response.PManageAddressBean;
 import com.sence.bean.response.PMyOrderBean;
 import com.sence.bean.response.POrderDetailsBean;
@@ -9,12 +9,12 @@ import com.sence.bean.response.PServiceCommendBean;
 import com.sence.bean.response.PServiceeDetails;
 import com.sence.bean.response.PShopCommendBean;
 import com.sence.bean.response.PShopDetailsBean;
+import com.sence.bean.response.PUserBean;
+import com.sence.bean.response.PVerifyCodeBean;
 
 import java.util.List;
 import java.util.Map;
 
-import com.sence.bean.response.PUserBean;
-import com.sence.bean.response.PVerifyCodeBean;
 import io.reactivex.Observable;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
@@ -170,4 +170,12 @@ public interface HttpService {
     @FormUrlEncoded
     @POST(Urls.GOOD_LIST)
     Observable<BaseResponseBean<String>> GoodList(@FieldMap Map<String,Object> map);//分类下的商品列表
+
+    @FormUrlEncoded
+    @POST(Urls.ENJOY_VIP)
+    Observable<BaseResponseBean<PEnjoyVipBean>> EnjoyVip(@FieldMap Map<String,Object> map);//分类下的商品列表
+
+    @FormUrlEncoded
+    @POST(Urls.ORDER_DELETE)
+    Observable<BaseResponseBean<String>> OrderDelete(@FieldMap Map<String,Object> map);//分类下的商品列表
 }

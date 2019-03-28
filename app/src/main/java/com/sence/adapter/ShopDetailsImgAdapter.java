@@ -1,28 +1,20 @@
 package com.sence.adapter;
 
-import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
-import com.bumptech.glide.Glide;
-import com.sence.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 public class ShopDetailsImgAdapter extends PagerAdapter {
-    private Context context;
-    private List<String> list = new ArrayList<>();
-    private ViewPager viewPager;
-    public ShopDetailsImgAdapter(Context context, List<String> list, ViewPager viewPager){
-        this.context =context ;
+    private List<ImageView> list = new ArrayList<>();
+    public void setList( List<ImageView> list){
         this.list=list;
-        this.viewPager=viewPager;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -37,16 +29,13 @@ public class ShopDetailsImgAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        ImageView imageView = new ImageView(context);
-        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        Glide.with(context).load(list.get(position)).placeholder(R.drawable.hint_img).fallback(R.drawable.hint_img).into(imageView);
-        viewPager.addView(imageView);
-        return imageView;
+        container.addView(list.get(position));
+        return list.get(position);
 
     }
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        viewPager.removeView((View) object);
+        container.removeView(list.get(position));
     }
 }

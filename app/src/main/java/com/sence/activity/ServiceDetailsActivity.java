@@ -15,7 +15,10 @@ import com.sence.bean.response.PServiceCommendBean;
 import com.sence.bean.response.PServiceeDetails;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
+import com.sence.net.Urls;
 import com.sence.net.manager.ApiCallBack;
+import com.sence.utils.LoginStatus;
+import com.sence.utils.StatusBarUtil;
 import com.sence.view.NiceImageView;
 
 import java.util.List;
@@ -37,6 +40,7 @@ public class ServiceDetailsActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
       setContentView(R.layout.activity_servicedetails);
+      StatusBarUtil.setLightMode(this);
       initData();
     }
 
@@ -52,17 +56,28 @@ public class ServiceDetailsActivity extends AppCompatActivity {
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(mServiceDetailsAdapter);
-        findViewById(R.id.iv_back_servicedetails).setOnClickListener(new View.OnClickListener() {
+        TextView mTitle = findViewById(R.id.pub_title);
+        mTitle.setText("服务详情");
+        ImageView mBack = findViewById(R.id.pub_back);
+        ImageView mImg = findViewById(R.id.pub_right_img);
+        mBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        mImg.setImageResource(R.drawable.servicedetails_pingjia);
+        mImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
         doHttp();
     }
 
     private void doHttp() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.SERVE_DETAIL, new RShopDetailsBean("1","")).request(new ApiCallBack<PServiceeDetails>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.SERVE_DETAIL, new RShopDetailsBean("1", LoginStatus.getUid())).request(new ApiCallBack<PServiceeDetails>() {
             @Override
             public void onFinish() {
 
@@ -80,12 +95,12 @@ public class ServiceDetailsActivity extends AppCompatActivity {
                 mAddress.setText(o.getPosition());
                 mUserName.setText(o.getUsername());
                 Glide.with(ServiceDetailsActivity.this)
-                        .load(o.getImg())
+                        .load(Urls.base_url + o.getImg())
                         .placeholder(R.drawable.hint_img)
                         .fallback(R.drawable.hint_img)
                         .into(mImg);
                 Glide.with(ServiceDetailsActivity.this)
-                        .load(o.getAvatar())
+                        .load(Urls.base_url + o.getAvatar())
                         .placeholder(R.drawable.hint_img)
                         .fallback(R.drawable.hint_img)
                         .into(mUserImg);
@@ -104,7 +119,7 @@ public class ServiceDetailsActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(List<PServiceCommendBean> o, String msg) {
-                Logger.e("msg==========" + msg+o.size()+o.get(0).getContent());
+                Logger.e("msg==========" + msg);
                 if(o.size()>0){
                     mServiceDetailsAdapter.setList(o);
                 }

@@ -1,19 +1,16 @@
 package com.sence;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import com.blankj.utilcode.util.PhoneUtils;
+
 import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.blankj.utilcode.util.Utils;
 import com.orhanobut.logger.Logger;
 import com.sence.utils.StatusBarUtil;
 import com.umeng.socialize.UMAuthListener;
@@ -21,6 +18,8 @@ import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.util.Map;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * 绑定手机号

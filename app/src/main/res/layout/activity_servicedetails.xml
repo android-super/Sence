@@ -6,6 +6,7 @@
     android:focusableInTouchMode="true"
     android:descendantFocusability="blocksDescendants"
     android:fillViewport="true"
+    android:fitsSystemWindows="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
     >
@@ -13,42 +14,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <androidx.appcompat.widget.Toolbar
-            style="@style/NoLeftToolbar"
+        <include
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/white"
-            android:elevation="1dp"
-            >
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:id="@+id/iv_back_servicedetails"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_vertical"
-                    android:scaleType="center"
-                    android:src="@drawable/fanhui"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="服务详情"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"/>
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_gravity="center_vertical"
-                    android:scaleType="center"
-                    android:src="@drawable/servicedetails_pingjia"/>
-            </RelativeLayout>
-        </androidx.appcompat.widget.Toolbar>
+            layout="@layout/include_title"></include>
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="184dp"

@@ -71,10 +71,18 @@ public class PMyOrderBean {
 
         private String id;
         private String addtime;
+        private String statusMsg;
         private String needpay;
         private GoodsBean goods;
         private CustomBean custom;
 
+        public String getStatusMsg() {
+            return statusMsg;
+        }
+
+        public void setStatusMsg(String statusMsg) {
+            this.statusMsg = statusMsg;
+        }
         public String getId() {
             return id;
         }

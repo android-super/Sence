@@ -1,7 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="wrap_content">
 
+    <RelativeLayout
+        android:id="@+id/rl_shopinfo_orderdetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff">
+
+
+        <com.sence.view.NiceImageView
+            app:corner_radius="6dp"
+            android:id="@+id/iv_img_orderdetails"
+            android:layout_width="89dp"
+            android:layout_height="89dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/shape_confirmorder_imgbg"
+            android:scaleType="centerCrop"
+            android:src="@drawable/hint_img"
+            />
+
+        <TextView
+            android:id="@+id/tv_shopname_orderdetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="16dp"
+            android:layout_toRightOf="@+id/iv_img_orderdetails"
+            android:ellipsize="end"
+            android:lineSpacingExtra="5dp"
+            android:maxLines="2"
+            android:text="东方福唐"
+            android:textColor="#070506"
+            android:textSize="@dimen/sp_12"/>
+
+        <TextView
+            android:id="@+id/tv_price_orderdetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_shopname_orderdetails"
+            android:layout_marginLeft="10.5dp"
+            android:layout_marginTop="32dp"
+            android:layout_toRightOf="@+id/iv_img_orderdetails"
+            android:text="￥1000.0"
+            android:textColor="#070506"
+            android:textSize="@dimen/sp_12"/>
+
+        <TextView
+            android:id="@+id/tv_num_orderdetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_shopname_orderdetails"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="32dp"
+            android:layout_toRightOf="@+id/tv_price_orderdetails"
+            android:text="х1"
+            android:textColor="#070506"
+            android:textSize="@dimen/sp_12"/>
+
+
+
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#f6f6f6"
+        android:layout_marginTop="8dp"></View>
 </LinearLayout>

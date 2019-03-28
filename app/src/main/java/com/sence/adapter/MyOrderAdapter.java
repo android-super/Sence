@@ -9,10 +9,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.orhanobut.logger.Logger;
 import com.sence.R;
 import com.sence.activity.ConfirmOrderActivity;
 import com.sence.activity.OrderDetailsActivity;
+import com.sence.bean.request.ROrderDetailsBean;
 import com.sence.bean.response.PMyOrderBean;
+import com.sence.net.HttpCode;
+import com.sence.net.HttpManager;
+import com.sence.net.Urls;
+import com.sence.net.manager.ApiCallBack;
+import com.sence.utils.LoginStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +30,6 @@ import androidx.recyclerview.widget.RecyclerView;
 public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHolder> {
     private Context context;
     private List<PMyOrderBean.ListBean> list = new ArrayList<>();
-
     public MyOrderAdapter(Context context){
         this.context = context;
     }
@@ -42,38 +48,42 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull MyOrderAdapter.ViewHolder holder, final int position) {
-        Glide.with(context).load(list.get(position).getGoods().getImg()).placeholder(R.drawable.hint_img).fallback(R.drawable.hint_img).into(holder.mImageView);
+        Glide.with(context).load(Urls.base_url + list.get(position).getGoods().getImg()).placeholder(R.drawable.hint_img).fallback(R.drawable.hint_img).into(holder.mImageView);
         holder.mName.setText(list.get(position).getGoods().getName());
         holder.mTime.setText(list.get(position).getAddtime());
         if(list.get(position).getGoods().getPrice().contains(".")){
             holder.mPprice.setText("￥"+list.get(position).getGoods().getPrice());
-            holder.mPrice.setText("￥"+list.get(position).getGoods().getPrice());
+            holder.mPrice.setText("￥"+Integer.parseInt(list.get(position).getGoods().getPrice())*Integer.parseInt(list.get(position).getGoods().getNum()));
         }else{
             holder.mPprice.setText("￥"+list.get(position).getGoods().getPrice()+".00");
-            holder.mPrice.setText("￥"+list.get(position).getGoods().getPrice()+".00");
+            holder.mPrice.setText("￥"+Integer.parseInt(list.get(position).getGoods().getPrice())*Integer.parseInt(list.get(position).getGoods().getNum())+".00");
         }
         holder.mPnum.setText("×"+list.get(position).getGoods().getNum());
         holder.mNum.setText("共"+list.get(position).getGoods().getNum()+"件");
-        switch (position){
-            case 0:
-                holder.mState.setText("全部商品");
-                break;
-            case 1:
-                holder.mState.setText("等待支付");
-                break;
-            case 2:
-                holder.mState.setText("等待发货");
-                break;
-            case 3:
-                holder.mState.setText("等待收货");
-                break;
-            case 4:
-                holder.mState.setText("等待评价");
-                break;
-        }
+        holder.mState.setText(list.get(position).getStatusMsg());
         holder.mCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_DELETE, new ROrderDetailsBean(list.get(position).getId(), LoginStatus.getUid())).request(new ApiCallBack<String>() {
+                    @Override
+                    public void onFinish() {
+
+                    }
+
+                    @Override
+                    public void Message(int code, String message) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(String o, String msg) {
+                        Logger.e("msg==========" + msg);
+                        if(msg.equals("取消成功")){
+                            listener.delete(position);
+                        }
+                    }
+                });
 
             }
         });
@@ -118,5 +128,14 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
             mCancel = itemView.findViewById(R.id.tv_cancel_myorder);
             mAlipay = itemView.findViewById(R.id.tv_alipay_myorder);
         }
+    }
+    private DeleteOrderListener listener;
+
+    public void result( DeleteOrderListener listener){
+        this.listener=listener;
+    }
+
+    public interface DeleteOrderListener {
+        void delete(int i);
     }
 }

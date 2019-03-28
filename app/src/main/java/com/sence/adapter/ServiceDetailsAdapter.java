@@ -1,6 +1,7 @@
 package com.sence.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.sence.R;
 import com.sence.bean.response.PServiceCommendBean;
+import com.sence.net.Urls;
 import com.sence.view.NiceImageView;
 
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class ServiceDetailsAdapter extends RecyclerView.Adapter<ServiceDetailsAdapter.ViewHolder> {
@@ -44,15 +47,31 @@ public class ServiceDetailsAdapter extends RecyclerView.Adapter<ServiceDetailsAd
         holder.mName.setText(list.get(position).getUsername());
         holder.mTime.setText(list.get(position).getTime());
         Glide.with(context)
-                .load(list.get(position).getAvatar())
+                .load(Urls.base_url + list.get(position).getAvatar())
                 .placeholder(R.drawable.hint_img)
                 .fallback(R.drawable.hint_img)
                 .into(holder.mImageView);
         ServiceDetailsImgAdapter mServiceDetailsImgAdapter = new ServiceDetailsImgAdapter(context);
-        GridLayoutManager linearLayoutManager = new GridLayoutManager(context,3);
-        linearLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
-        holder.mRecyclerView.setLayoutManager(linearLayoutManager);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(context,3);
+        gridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
+        holder.mRecyclerView.setLayoutManager(gridLayoutManager);
         holder.mRecyclerView.setAdapter(mServiceDetailsImgAdapter);
+        int i = Integer.parseInt(list.get(position).getStar());
+        Log.i("aaa",i+"=");
+        EnjoyVipImgAdapter mEnjoyVipImgAdapter = new EnjoyVipImgAdapter(context);
+        LinearLayoutManager linearLayoutManagero = new LinearLayoutManager(context);
+        linearLayoutManagero.setOrientation(linearLayoutManagero.HORIZONTAL);
+        holder.mXing.setLayoutManager(linearLayoutManagero);
+        holder.mXing.setAdapter(mEnjoyVipImgAdapter);
+        mEnjoyVipImgAdapter.setList(i,R.drawable.star_orange);
+        if(i<5){
+            EnjoyVipImgAdapter mEnjoyVipImgAdaptert = new EnjoyVipImgAdapter(context);
+            LinearLayoutManager linearLayoutManagert = new LinearLayoutManager(context);
+            linearLayoutManagert.setOrientation(linearLayoutManagert.HORIZONTAL);
+            holder.mBXing.setLayoutManager(linearLayoutManagert);
+            holder.mBXing.setAdapter(mEnjoyVipImgAdaptert);
+            mEnjoyVipImgAdaptert.setList(5-i,R.drawable.star_gray);
+        }
         if(list.get(position).getImgs().size()>0){
             mServiceDetailsImgAdapter.setList(list.get(position).getImgs());
         }else{
@@ -70,7 +89,7 @@ public class ServiceDetailsAdapter extends RecyclerView.Adapter<ServiceDetailsAd
 
         private NiceImageView mImageView;
         private TextView mName,mContent,mTime;
-        private RecyclerView mRecyclerView;
+        private RecyclerView mRecyclerView,mXing,mBXing;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -79,6 +98,8 @@ public class ServiceDetailsAdapter extends RecyclerView.Adapter<ServiceDetailsAd
             mName = itemView.findViewById(R.id.tv_vname_servicedetails);
             mContent = itemView.findViewById(R.id.tv_vcontent_servicedetails);
             mRecyclerView = itemView.findViewById(R.id.recycle_servicedetails_img);
+            mXing = itemView.findViewById(R.id.recycle_xing_servicedetails);
+            mBXing = itemView.findViewById(R.id.recycle_bxing_servicedetails);
         }
     }
 }

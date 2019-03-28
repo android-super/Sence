@@ -1,5 +1,7 @@
 package com.sence.bean.response;
 
+import java.util.List;
+
 public class POrderDetailsBean {
 
     /**
@@ -13,6 +15,9 @@ public class POrderDetailsBean {
      * needpay : 33.00
      * gmoney : 0.00
      * address : {"username":"","phone":"","address":"11111","area":""}
+     * shopname : 风散
+     * goods : [{"price":"12","id":"2","img":"Public/Uploads/Order/2019-03-26//5c99eb1fc12a5.jpg","name":"2号商品","num":"3"}]
+     * fee : 0
      */
 
     private String id;
@@ -25,6 +30,9 @@ public class POrderDetailsBean {
     private String needpay;
     private String gmoney;
     private AddressBean address;
+    private String shopname;
+    private String fee;
+    private List<GoodsBean> goods;
 
     public String getId() {
         return id;
@@ -106,6 +114,30 @@ public class POrderDetailsBean {
         this.address = address;
     }
 
+    public String getShopname() {
+        return shopname;
+    }
+
+    public void setShopname(String shopname) {
+        this.shopname = shopname;
+    }
+
+    public String getFee() {
+        return fee;
+    }
+
+    public void setFee(String fee) {
+        this.fee = fee;
+    }
+
+    public List<GoodsBean> getGoods() {
+        return goods;
+    }
+
+    public void setGoods(List<GoodsBean> goods) {
+        this.goods = goods;
+    }
+
     public static class AddressBean {
         /**
          * username :
@@ -149,6 +181,62 @@ public class POrderDetailsBean {
 
         public void setArea(String area) {
             this.area = area;
+        }
+    }
+
+    public static class GoodsBean {
+        /**
+         * price : 12
+         * id : 2
+         * img : Public/Uploads/Order/2019-03-26//5c99eb1fc12a5.jpg
+         * name : 2号商品
+         * num : 3
+         */
+
+        private String price;
+        private String id;
+        private String img;
+        private String name;
+        private String num;
+
+        public String getPrice() {
+            return price;
+        }
+
+        public void setPrice(String price) {
+            this.price = price;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getImg() {
+            return img;
+        }
+
+        public void setImg(String img) {
+            this.img = img;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getNum() {
+            return num;
+        }
+
+        public void setNum(String num) {
+            this.num = num;
         }
     }
 }

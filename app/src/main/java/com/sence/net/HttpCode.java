@@ -14,4 +14,10 @@ public enum HttpCode {
     SEND_VERIFY_CODE,//发送验证码
     CHECK_VERIFY_CODE,//校验验证码
     REGISTER,//注册
+    SERVE_DETAIL,//服务详情
+    COMMENT_SHOP_LIST,//商品评论列表
+    SERVE_COMMENT_LIST,//服务评论列表
+    ORDER_DETAIL,//订单详情
+    ORDER_DELETE,//取消待付款，待支付订单
+    ENJOY_VIP,//尊享会员
 }

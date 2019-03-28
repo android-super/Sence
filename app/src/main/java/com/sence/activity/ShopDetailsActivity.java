@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -15,6 +13,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -27,9 +26,13 @@ import com.sence.bean.request.RShopDetailsBean;
 import com.sence.bean.response.PShopDetailsBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
+import com.sence.net.Urls;
 import com.sence.net.manager.ApiCallBack;
+import com.sence.utils.NavigationBarUtil;
+import com.sence.utils.StatusBarUtil;
 import com.sence.view.NiceImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.Nullable;
@@ -55,13 +58,22 @@ public class ShopDetailsActivity extends AppCompatActivity {
     private TextView mCprice, mOprice, mDisCount, mVip, mName, mShopName, mShopCommendNum, mGoodCommend;
     private WebSettings settings;
     private View mNotLoad;
+    private RelativeLayout mRelativeLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopdetails);
+        if(NavigationBarUtil.hasNavigationBar(this)){
+            NavigationBarUtil.initActivity(findViewById(android.R.id.content));
+        }
+
+        StatusBarUtil.setTranslucentForCoordinatorLayout(this, 0);
+        StatusBarUtil.setLightMode(this);
         initData();
     }
+
+
 
     private void installListener() {
 
@@ -70,6 +82,7 @@ public class ShopDetailsActivity extends AppCompatActivity {
             public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
                 float alpha = (float) Math.abs(i) / appBarLayout.getTotalScrollRange();
                 mView.setAlpha(alpha);
+//                StatusBarUtil.setTranslucentForCoordinatorLayout(ShopDetailsActivity.this, (int)alpha);
                 if (alpha > 0.8) {
                     mLinearLayout.setVisibility(View.VISIBLE);
                 } else {
@@ -81,7 +94,7 @@ public class ShopDetailsActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        mAppBarLayout = findViewById(R.id.app_bar_layout);
+        mAppBarLayout = findViewById(R.id.app_barlayout_shiodetails);
         mLinearLayout = findViewById(R.id.ll_head_shopdetails);
         findViewById(R.id.ll_shopcommend_shopdetails).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,9 +104,10 @@ public class ShopDetailsActivity extends AppCompatActivity {
         });
         mNotLoad = findViewById(R.id.wb_notload);
         mViewPager = findViewById(R.id.vp_img_shopdetails);
-        ViewGroup.LayoutParams layoutParams = mViewPager.getLayoutParams();
-        layoutParams.height=new DisplayMetrics().widthPixels;
-        mViewPager.setLayoutParams(layoutParams);
+        mRelativeLayout = findViewById(R.id.rl_vp_shiodetails);
+//        ViewGroup.LayoutParams layoutParams = mRelativeLayout.getLayoutParams();
+//        layoutParams.height=new DisplayMetrics().widthPixels;
+//        mRelativeLayout.setLayoutParams(layoutParams);
         mNum = findViewById(R.id.tv_imgnum_shopdetails);
         mCprice = findViewById(R.id.tv_cprice_shopdetails);
         mOprice = findViewById(R.id.tv_oprice_shopdetails);
@@ -114,6 +128,24 @@ public class ShopDetailsActivity extends AppCompatActivity {
                 finish();
             }
         });
+        shopDetailsImgAdapter = new ShopDetailsImgAdapter();
+        mViewPager.setAdapter(shopDetailsImgAdapter);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mNum.setText(++position+ "/" + imgs.size());
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         mShopDetailsCommendAdapter = new ShopDetailsCommendAdapter(ShopDetailsActivity.this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ShopDetailsActivity.this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -122,6 +154,8 @@ public class ShopDetailsActivity extends AppCompatActivity {
         installListener();
         doHttp();
     }
+
+
 
     private void doHttp() {
         HttpManager.getInstance().PlayNetCode(HttpCode.GOOD_DETAIL, new RShopDetailsBean("1", "")).request(new ApiCallBack<PShopDetailsBean>() {
@@ -138,29 +172,24 @@ public class ShopDetailsActivity extends AppCompatActivity {
             @Override
             public void onSuccess(PShopDetailsBean o, String msg) {
                 imgs = o.getImgs();
-                Logger.e("msg==========" + msg + "--" + imgs.size()+"="+imgs.get(0));
+                Logger.e("msg==========" + msg);
                 if (o.getComment().size() > 0) {
                     mShopDetailsCommendAdapter.setList(o.getComment());
                 }
                 if (o.getImgs().size() > 0) {
-                    shopDetailsImgAdapter = new ShopDetailsImgAdapter(ShopDetailsActivity.this, imgs, mViewPager);
-                    mViewPager.setAdapter(shopDetailsImgAdapter);
-                    mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                        @Override
-                        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-                        }
-
-                        @Override
-                        public void onPageSelected(int position) {
-                            mNum.setText(++position + "/" + imgs.size());
-                        }
-
-                        @Override
-                        public void onPageScrollStateChanged(int state) {
-
-                        }
-                    });
+                    mNum.setText("1/" + imgs.size());
+                    List<ImageView> list = new ArrayList<>();
+                    for (int i = 0; i < imgs.size(); i++) {
+                        ImageView imageView = new ImageView(ShopDetailsActivity.this);
+                        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                        Glide.with(ShopDetailsActivity.this)
+                                .load(Urls.base_url + imgs.get(i))
+                                .placeholder(R.drawable.hint_img)
+                                .fallback(R.drawable.hint_img)
+                                .into(imageView);
+                        list.add(imageView);
+                    }
+                    shopDetailsImgAdapter.setList(list);
                 }
                 mOprice.setText(new Integer(o.getPrice()) + new Integer(o.getVprice()) + "");
                 mCprice.setText(o.getPrice());
@@ -172,7 +201,7 @@ public class ShopDetailsActivity extends AppCompatActivity {
                 doData(o.getDescribe());
                 mShopName.setText(o.getUsername());
                 Glide.with(ShopDetailsActivity.this)
-                        .load(o.getAvatar())
+                        .load(Urls.base_url + o.getAvatar())
                         .placeholder(R.drawable.hint_img)
                         .fallback(R.drawable.hint_img)
                         .into(mShopImg);

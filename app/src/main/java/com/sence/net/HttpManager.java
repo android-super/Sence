@@ -4,7 +4,6 @@ import android.widget.Toast;
 
 import com.blankj.utilcode.util.NetworkUtils;
 import com.google.gson.Gson;
-import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 import com.orhanobut.logger.Logger;
 import com.sence.base.BaseApp;
@@ -89,6 +88,12 @@ public class HttpManager<P> {
                 break;
             case ORDER_DETAIL:
                 observable = HttpClientManager.Instance.httpService.OrderDetail(requestBean.getMap());
+                break;
+            case ENJOY_VIP:
+                observable = HttpClientManager.Instance.httpService.EnjoyVip(requestBean.getMap());
+                break;
+            case ORDER_DELETE:
+                observable = HttpClientManager.Instance.httpService.OrderDelete(requestBean.getMap());
                 break;
         }
         observable = observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
