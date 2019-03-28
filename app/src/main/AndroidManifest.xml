@@ -19,6 +19,12 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppThemeNoActionBar">
+        <activity android:name=".activity.OpenVipActivity">
+        </activity>
+        <activity android:name=".activity.SettingActivity">
+        </activity>
+        <activity android:name=".activity.MyNoteActivity">
+        </activity>
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

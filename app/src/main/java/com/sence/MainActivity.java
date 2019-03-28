@@ -88,25 +88,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         Logger.e(view.getTag().toString());
         setSelect((Integer) view.getTag());
-
-
-        HttpManager.getInstance().PlayNetCode(HttpCode.IS_REGISTER, new RRegisterBean("17600183077")).request(new ApiCallBack<String>() {
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void Message(int code, String message) {
-
-            }
-
-            @Override
-            public void onSuccess(String o, String msg) {
-                Logger.e("msg==========" + msg);
-                Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     public void setSelect(int position) {

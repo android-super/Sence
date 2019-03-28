@@ -17,6 +17,14 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sence.R;
 import com.sence.adapter.RecommendAdapter;
+import com.sence.bean.request.RUidListBean;
+import com.sence.bean.response.PMainRecommendBean;
+import com.sence.net.HttpCode;
+import com.sence.net.HttpManager;
+import com.sence.net.manager.ApiCallBack;
+import com.sence.utils.LoginStatus;
+
+import java.util.List;
 
 /**
  * 推荐Fragment
@@ -26,6 +34,8 @@ public class RecommendFragment extends Fragment {
     private RecyclerView recyclerView;
 
     private RecommendAdapter adapter;
+    private int page = 1;
+    private int size = 10;
 
     public RecommendFragment() {
         // Required empty public constructor
@@ -43,6 +53,32 @@ public class RecommendFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initRefresh();
+        initData();
+    }
+
+    private void initData() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.MAIN_RECOMMEND, new RUidListBean(LoginStatus.getUid(), page + ""
+        )).request(new ApiCallBack<List<PMainRecommendBean>>() {
+            @Override
+            public void onFinish() {
+                smartRefreshLayout.finishRefresh();
+                smartRefreshLayout.finishLoadMore();
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(List<PMainRecommendBean> o, String msg) {
+                if (page == 1) {
+                    adapter.setNewData(o);
+                } else {
+                    adapter.addData(o);
+                }
+            }
+        });
     }
 
     public void initRefresh() {
@@ -58,22 +94,16 @@ public class RecommendFragment extends Fragment {
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                smartRefreshLayout.finishLoadMore();
+                page++;
+                initData();
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                smartRefreshLayout.finishRefresh();
+                page = 1;
+                initData();
             }
         });
-        adapter.addData("");
-        adapter.addData("");
-        adapter.addData("");
-        adapter.addData("");
-        adapter.addData("");
-        adapter.addData("");
-        adapter.addData("");
-        adapter.addData("");
     }
 
 }

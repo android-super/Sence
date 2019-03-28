@@ -128,7 +128,6 @@ public class BindPhoneActivity extends AppCompatActivity {
             for (Map.Entry<String, String> entry : map.entrySet()) {
                 String key = entry.getKey();
                 String value = entry.getValue();
-                Logger.e(key + "=====" + value);
             }
             finish();
         }

@@ -32,6 +32,8 @@ public class Urls {
     public static final String USER_SEND_CODE = "/index.php/Api/User/makeCode";//发送验证码
     public static final String USER_LOGIN = "/index.php/Api/User/login";//用户登录
     public static final String USER_SIGN_UP = "/index.php/Api/User/weChatSignUp";//用户注册
+    public static final String USER_VIP = "/index.php/Api/User/getMemberInfo";//Sence会员界面
+    public static final String USER_ENJOY_VIP = "/index.php/Api/User/getEnjoyInfo";//尊享会员界面
     //主页
     public static final String MAIN_NOTE_DETAIL = "/index.php/Api/Notes/getNoteDetail";//笔记详情
     public static final String MAIN_RECOMMEND = "/index.php/Api/Notes/recommendNoteList";//首页--推荐

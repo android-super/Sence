@@ -21,7 +21,15 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sence.R;
 import com.sence.adapter.MainFocusAdapter;
+import com.sence.bean.request.RUidListBean;
+import com.sence.bean.response.PMainFocusBean;
+import com.sence.net.HttpCode;
+import com.sence.net.HttpManager;
+import com.sence.net.manager.ApiCallBack;
+import com.sence.utils.LoginStatus;
 import com.sence.view.GridSpacingItemDecoration;
+
+import java.util.List;
 
 /**
  * 关注Fragment
@@ -31,6 +39,8 @@ public class FocusFragment extends Fragment {
     private RecyclerView recyclerView;
 
     private MainFocusAdapter adapter;
+    private int page = 1;
+    private int size = 10;
 
     public FocusFragment() {
         // Required empty public constructor
@@ -48,6 +58,32 @@ public class FocusFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initRefresh();
+        initData();
+    }
+
+    private void initData() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.MAIN_FOCUS,
+                new RUidListBean(LoginStatus.getUid(), page + "")).request(new ApiCallBack<List<PMainFocusBean>>() {
+            @Override
+            public void onFinish() {
+                smartRefreshLayout.finishRefresh();
+                smartRefreshLayout.finishLoadMore();
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(List<PMainFocusBean> o, String msg) {
+                if (page == 1) {
+                    adapter.setNewData(o);
+                } else {
+                    adapter.addData(o);
+                }
+            }
+        });
     }
 
     public void initRefresh() {
@@ -64,19 +100,15 @@ public class FocusFragment extends Fragment {
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                smartRefreshLayout.finishLoadMore();
+                page++;
+                initData();
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                smartRefreshLayout.finishRefresh();
+                page = 1;
+                initData();
             }
         });
-        adapter.addData("");
-        adapter.addData("");
-        adapter.addData("");
-        adapter.addData("");
-        adapter.addData("");
-        adapter.addData("");
     }
 }
