@@ -11,4 +11,9 @@ public class LoginStatus {
         String uid = SharedPreferencesUtil.getInstance().getString("uid");
         return uid != null && is_login;
     }
+
+    public static String getUid() {
+        String uid = SharedPreferencesUtil.getInstance().getString("uid");
+        return uid == null ? "1" : uid;
+    }
 }

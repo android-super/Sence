@@ -1,34 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:fitsSystemWindows="true"
+              android:orientation="vertical"
               android:layout_height="match_parent">
-    <RelativeLayout
-        android:elevation="1dp"
+    <include
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/white"
-        android:id="@+id/rl_head_manageaddress"
-        >
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/fanhui"
-            android:scaleType="center"
-            android:id="@+id/iv_back_manageaddress"
-            android:layout_gravity="center_vertical"/>
-        <TextView
-            android:text="管理收货地址"
-            android:textSize="18sp"
-            android:gravity="center"
-            android:textColor="@color/black"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </RelativeLayout>
+        layout="@layout/include_title"></include>
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_below="@+id/rl_head_manageaddress"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:id="@+id/rlv_address_manageaddress"/>
     <TextView
         android:layout_width="match_parent"
@@ -41,4 +24,4 @@
         android:text="新增收货地址"
         android:id="@+id/tv_addaddress_manageaddress"
         />
-</RelativeLayout>
+</LinearLayout>

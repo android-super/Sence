@@ -43,64 +43,90 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-    <LinearLayout
+    <RelativeLayout
+            android:layout_width="match_parent"
             android:id="@+id/verify_code_layout"
             android:layout_marginLeft="28dp"
             android:layout_marginRight="28dp"
             android:layout_marginTop="24dp"
             android:layout_below="@+id/verify_number"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="42dp">
 
-        <TextView
-                android:id="@+id/verify_code_one"
-                android:background="@drawable/login_input"
-                android:layout_width="58dp"
-                android:gravity="center"
-                android:text="@string/hint_num"
-                android:layout_height="42dp"/>
-
-        <View
-                android:layout_weight="1"
+        <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent">
 
-        <TextView
-                android:id="@+id/verify_code_two"
-                android:background="@drawable/login_input"
-                android:layout_width="58dp"
-                android:gravity="center"
-                android:text="@string/hint_num"
-                android:layout_height="42dp"/>
+            <TextView
+                    android:id="@+id/verify_code_one"
+                    android:background="@drawable/login_input"
+                    android:layout_width="58dp"
+                    android:gravity="center"
+                    android:textSize="26sp"
+                    android:maxLength="1"
+                    android:inputType="number"
+                    android:nextFocusDown="@id/verify_code_two"
+                    android:layout_height="42dp"/>
 
-        <View
-                android:layout_weight="1"
+            <View
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            <TextView
+                    android:id="@+id/verify_code_two"
+                    android:background="@drawable/login_input"
+                    android:layout_width="58dp"
+                    android:gravity="center"
+                    android:textSize="26sp"
+                    android:maxLength="1"
+                    android:inputType="number"
+                    android:nextFocusDown="@id/verify_code_three"
+                    android:layout_height="42dp"/>
+
+            <View
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            <TextView
+                    android:id="@+id/verify_code_three"
+                    android:background="@drawable/login_input"
+                    android:layout_width="58dp"
+                    android:gravity="center"
+                    android:maxLength="1"
+                    android:inputType="number"
+                    android:nextFocusDown="@id/verify_code_four"
+                    android:textSize="26sp"
+                    android:layout_height="42dp"/>
+
+            <View
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            <TextView
+                    android:id="@+id/verify_code_four"
+                    android:background="@drawable/login_input"
+                    android:layout_width="58dp"
+                    android:gravity="center"
+                    android:maxLength="1"
+                    android:inputType="number"
+                    android:textSize="26sp"
+                    android:layout_height="42dp"/>
+
+        </LinearLayout>
+
+        <EditText
+                android:id="@+id/verify_code"
+                android:cursorVisible="false"
+                android:maxLength="4"
+                android:inputType="number"
+                android:background="@android:color/transparent"
                 android:layout_width="match_parent"
+                android:textColor="@android:color/transparent"
                 android:layout_height="match_parent"/>
-
-        <TextView
-                android:id="@+id/verify_code_three"
-                android:background="@drawable/login_input"
-                android:layout_width="58dp"
-                android:gravity="center"
-                android:text="@string/hint_num"
-                android:layout_height="42dp"/>
-
-        <View
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
-        <TextView
-                android:id="@+id/verify_code_four"
-                android:background="@drawable/login_input"
-                android:layout_width="58dp"
-                android:gravity="center"
-                android:text="@string/hint_num"
-                android:layout_height="42dp"/>
-
-    </LinearLayout>
+    </RelativeLayout>
 
     <TextView
             android:id="@+id/verify_message"
@@ -108,7 +134,6 @@
             android:textSize="10sp"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/verify_code_layout"
-            android:text="验证码错误请从新获取"
             android:textColor="#fc5d7b"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

@@ -9,92 +9,82 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
+        android:descendantFocusability="blocksDescendants"
         android:orientation="vertical">
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="14dp"
-                    android:text="￥"
-                    android:textColor="@color/theme_green"
-                    android:textSize="@dimen/sp_12"/>
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="14dp"
+                        android:text="￥"
+                        android:textColor="@color/theme_green"
+                        android:textSize="@dimen/sp_12"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="100"
+                        android:id="@+id/tv_cprice_shopdetails"
+                        android:textColor="@color/theme_green"
+                        android:textSize="18sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="6dp"
+                        android:text="￥"
+                        android:textColor="#979797"
+                        android:textSize="9sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="100"
+                        android:id="@+id/tv_oprice_shopdetails"
+                        android:textColor="#979797"
+                        android:textSize="12sp"/>
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="100"
-                    android:id="@+id/tv_cprice_shopdetails"
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/shape_shopdetials_labelbg"
+                    android:paddingBottom="3dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="3dp"
+                    android:id="@+id/tv_discount_shopdetails"
+                    android:text="7.0折"
                     android:textColor="@color/theme_green"
-                    android:textSize="18sp"/>
+                    android:textSize="7sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="6dp"
-                    android:text="￥"
-                    android:textColor="#979797"
-                    android:textSize="9sp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="100"
-                    android:id="@+id/tv_oprice_shopdetails"
-                    android:textColor="#979797"
-                    android:textSize="12sp"/>
+                    android:id="@+id/tv_vip_shopdetails"
+                    android:background="@drawable/shape_shopdetials_labelbg"
+                    android:paddingBottom="3dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="3dp"
+                    android:text="会员价"
+                    android:textColor="@color/theme_green"
+                    android:textSize="7sp"/>
             </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:background="@drawable/shape_shopdetials_labelbg"
-                android:paddingBottom="3dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:paddingTop="3dp"
-                android:id="@+id/tv_discount_shopdetails"
-                android:text="7.0折"
-                android:textColor="@color/theme_green"
-                android:textSize="7sp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="6dp"
-                android:id="@+id/tv_vip_shopdetails"
-                android:background="@drawable/shape_shopdetials_labelbg"
-                android:paddingBottom="3dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:paddingTop="3dp"
-                android:text="会员价"
-                android:textColor="@color/theme_green"
-                android:textSize="7sp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp_10"
-            android:background="@color/white"
-            android:orientation="vertical"
-            android:paddingBottom="20dp"
-            >
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -121,6 +111,7 @@
                 android:layout_marginTop="22dp"
                 android:paddingLeft="14dp"
                 android:gravity="center_vertical"
+                android:layout_marginBottom="16dp"
                 android:orientation="horizontal">
 
                 <com.sence.view.NiceImageView
@@ -140,14 +131,11 @@
                     android:textColor="#999999"
                     android:textSize="@dimen/sp_12"/>
             </LinearLayout>
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="vertical">
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_10"
+                android:background="#FCFCFC"></View>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -192,5 +180,4 @@
 
             </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
-    </LinearLayout>
 </androidx.core.widget.NestedScrollView>

@@ -5,27 +5,10 @@
               android:fitsSystemWindows="true"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    <RelativeLayout
-        android:elevation="1dp"
+    <include
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/white"
-        >
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/fanhui"
-            android:scaleType="center"
-            android:id="@+id/iv_back_myorder"
-            android:layout_gravity="center_vertical"/>
-        <TextView
-            android:text="我的订单"
-            android:textSize="18sp"
-            android:gravity="center"
-            android:textColor="@color/black"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </RelativeLayout>
+        layout="@layout/include_title"></include>
     <com.tlz.fucktablayout.FuckTabLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
@@ -36,6 +19,7 @@
         app:fTabInlineLabel="true"
         app:fTabUnboundedRipple="true"
         app:fTabGravity="center"
+        app:fTabMode="fixed"
         android:background="#ffffff"
         android:id="@+id/tl_title_myorder">
 

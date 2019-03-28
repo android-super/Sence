@@ -21,16 +21,28 @@
         android:text="小喵喵"
         android:id="@+id/tv_vname_servicedetails"
         android:layout_marginLeft="14dp"/>
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/star_orange"
-        android:layout_marginTop="7dp"
-        android:id="@+id/iv_vcommend_servicedetails"
-        android:layout_toRightOf="@id/iv_vimg_servicedetails"
-        android:layout_marginLeft="14dp"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="11dp"
+        android:id="@+id/ll_head_servicedetails"
         android:layout_below="@+id/tv_vname_servicedetails"
-        />
+        android:layout_toRightOf="@id/iv_vimg_servicedetails"
+        android:layout_marginTop="7dp"
+        android:layout_marginLeft="14dp">
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/recycle_xing_servicedetails">
+
+        </androidx.recyclerview.widget.RecyclerView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/recycle_xing_servicedetails"
+            android:id="@+id/recycle_bxing_servicedetails">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </RelativeLayout>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,7 +58,7 @@
         android:layout_height="wrap_content"
         android:textSize="14sp"
         android:id="@+id/tv_vcontent_servicedetails"
-        android:layout_below="@+id/iv_vcommend_servicedetails"
+        android:layout_below="@+id/ll_head_servicedetails"
         android:lineSpacingExtra="6dp"
         android:layout_marginLeft="60dp"
         android:maxLines="4"

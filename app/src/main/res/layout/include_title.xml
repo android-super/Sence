@@ -6,7 +6,7 @@
                                    style="@style/NoLeftToolbar"
                                    android:layout_height="50dp">
 
-    <LinearLayout
+    <RelativeLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
             android:layout_height="match_parent">
@@ -22,17 +22,28 @@
                 android:id="@+id/pub_title"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
                 android:text="@string/hint_name"
                 android:textSize="16sp"
                 android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
-        <LinearLayout
-                android:id="@+id/pub_right"
-                android:layout_width="50dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:layout_height="50dp"/>
-    </LinearLayout>
+        <ImageView
+            android:scaleType="center"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:id="@+id/pub_right_img"/>
+        <TextView
+            android:scaleType="center"
+            android:minWidth="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:paddingRight="@dimen/dp_10"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:id="@+id/pub_right_tv"/>
+    </RelativeLayout>
 </androidx.appcompat.widget.Toolbar>

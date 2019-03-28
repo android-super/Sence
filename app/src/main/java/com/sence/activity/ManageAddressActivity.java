@@ -2,6 +2,8 @@ package com.sence.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.sence.R;
 import com.sence.adapter.ManageAddressAdapter;
@@ -18,7 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ManageAddressActivity extends AppCompatActivity implements View.OnClickListener {
+public class ManageAddressActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private ManageAddressAdapter mManageAddressAdapter;
@@ -30,7 +32,15 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_manageaddress);
         StatusBarUtil.setLightMode(this);
         mRecyclerView = findViewById(R.id.rlv_address_manageaddress);
-        findViewById(R.id.iv_back_manageaddress).setOnClickListener(this);
+        TextView mTitle = findViewById(R.id.pub_title);
+        mTitle.setText("管理收货地址");
+        ImageView mBack = findViewById(R.id.pub_back);
+        mBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         mManageAddressAdapter = new ManageAddressAdapter(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -66,12 +76,5 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
         });
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.iv_back_manageaddress:
-                finish();
-                break;
-        }
-    }
+
 }
