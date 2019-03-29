@@ -18,7 +18,16 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sence.R;
 import com.sence.adapter.NoteAdapter;
+import com.sence.bean.request.RUidListBean;
+import com.sence.bean.response.PMainNoteBean;
+import com.sence.bean.response.PMainRecommendBean;
+import com.sence.net.HttpCode;
+import com.sence.net.HttpManager;
+import com.sence.net.manager.ApiCallBack;
+import com.sence.utils.LoginStatus;
 import com.sence.view.GridSpacingItemDecoration;
+
+import java.util.List;
 
 /**
  * 笔记Fragment
@@ -28,6 +37,8 @@ public class NoteFragment extends Fragment {
     private RecyclerView recyclerView;
 
     private NoteAdapter adapter;
+    private int page = 1;
+    private int size = 10;
 
     public NoteFragment() {
         // Required empty public constructor
@@ -45,7 +56,34 @@ public class NoteFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initRefresh();
+        initData();
     }
+
+    private void initData() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.MAIN_NOTE,
+                new RUidListBean(LoginStatus.getUid(), page + "")).request(new ApiCallBack<List<PMainNoteBean>>() {
+            @Override
+            public void onFinish() {
+                smartRefreshLayout.finishRefresh();
+                smartRefreshLayout.finishLoadMore();
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(List<PMainNoteBean> o, String msg) {
+                if (page == 1) {
+                    adapter.setNewData(o);
+                } else {
+                    adapter.addData(o);
+                }
+            }
+        });
+    }
+
 
     public void initRefresh() {
         smartRefreshLayout = getView().findViewById(R.id.smart_refresh);
@@ -62,22 +100,16 @@ public class NoteFragment extends Fragment {
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                smartRefreshLayout.finishLoadMore();
+                page++;
+                initData();
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                smartRefreshLayout.finishRefresh();
+                page = 1;
+                initData();
             }
         });
-        adapter.addData("");
-        adapter.addData("");
-        adapter.addData("");
-        adapter.addData("");
-        adapter.addData("");
-        adapter.addData("");
-        adapter.addData("");
-        adapter.addData("");
 
     }
 

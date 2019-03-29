@@ -16,4 +16,14 @@ public class LoginStatus {
         String uid = SharedPreferencesUtil.getInstance().getString("uid");
         return uid == null ? "1" : uid;
     }
+
+    public static String getAvatar() {
+        String avatar = SharedPreferencesUtil.getInstance().getString("avatar");
+        return avatar;
+    }
+
+    public static String getName() {
+        String name = SharedPreferencesUtil.getInstance().getString("nick_name");
+        return name;
+    }
 }

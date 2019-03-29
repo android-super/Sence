@@ -1,42 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:background="@drawable/shape_bus_bottom"
               android:layout_height="80dp">
-    <TextView
-            android:id="@+id/item_name"
-            android:textSize="14sp"
-            android:textColor="@color/black"
-            android:text="@string/hint_name"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="12dp"
-            android:maxLines="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    <LinearLayout
+
+    <RelativeLayout
             android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            android:paddingBottom="12dp"
-            android:layout_height="wrap_content">
+            android:layout_height="40dp">
+
         <TextView
-                android:id="@+id/item_price"
+                android:id="@+id/item_name_select"
                 android:textSize="14sp"
-                android:text="@string/hint_price"
-                android:textColor="@color/theme_green"
+                android:textColor="@color/black"
+                android:text="@string/hint_name"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/select_bus_all"
+                android:drawablePadding="10dp"
+                android:layout_marginLeft="12dp"
+                android:maxLines="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
+
         <TextView
-                android:id="@+id/item_price_normal"
+                android:id="@+id/item_look"
+                android:text="再逛逛"
                 android:textSize="13sp"
-                android:text="@string/hint_price"
-                android:textColor="#808080"
-                android:layout_marginLeft="6dp"
+                android:textColor="@color/theme_green"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
-    </LinearLayout>
+
+        <TextView
+                android:id="@+id/item_kind_cost"
+                android:text="已免邮费"
+                android:textSize="13sp"
+                android:layout_toLeftOf="@+id/item_look"
+                android:textColor="#191919"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="7dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#f0f0f0"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/item_recycle"
+            android:layout_width="match_parent"
+            android:minHeight="120dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"/>
+
+
+    <RelativeLayout
+            android:id="@+id/item_discount_layout"
+            android:layout_width="match_parent"
+            android:layout_height="35dp">
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="22dp"
+                android:background="#f0f0f0"/>
+
+        <TextView
+                android:id="@+id/item_discount"
+                android:layout_marginRight="15dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="活动优惠:-￥0.00"
+                android:textSize="12sp"
+                android:textColor="#7f7f7f"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+    </RelativeLayout>
 
 </LinearLayout>

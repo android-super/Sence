@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.PhoneUtils;
-import com.orhanobut.logger.Logger;
 import com.sence.bean.request.RRegisterBean;
 import com.sence.bean.request.RUserRegisterBean;
 import com.sence.bean.response.PUserBean;
@@ -175,7 +174,6 @@ public class VerifyActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onSuccess(PVerifyCodeBean o, String msg) {
                 code_id = o.getId();
-                Logger.e("code_id===" + code_id);
                 doLastTime();
             }
         });
@@ -185,8 +183,6 @@ public class VerifyActivity extends AppCompatActivity implements View.OnClickLis
      * 注册
      */
     private void register() {
-        Logger.e(phone + " " + code + " " + code_id + " " + openid + " " + profile_image_url + " " + name + " " + gender +
-                " " + unionid);
         RUserRegisterBean rUserRegisterBean = new RUserRegisterBean(phone, code_id, code, PhoneUtils.getIMEI(),
                 "android"
                 , openid, profile_image_url, name, gender, unionid);
@@ -206,6 +202,7 @@ public class VerifyActivity extends AppCompatActivity implements View.OnClickLis
                 SharedPreferencesUtil.getInstance().putBoolean("is_login", true);
                 SharedPreferencesUtil.getInstance().putString("uid", o.getId());
                 SharedPreferencesUtil.getInstance().putString("user_name", o.getUser_name());
+                SharedPreferencesUtil.getInstance().putString("nick_name", o.getNick_name());
                 SharedPreferencesUtil.getInstance().putString("sex", o.getSex());
                 SharedPreferencesUtil.getInstance().putString("avatar", o.getAvatar());
                 Intent intent = new Intent(VerifyActivity.this, MainActivity.class);

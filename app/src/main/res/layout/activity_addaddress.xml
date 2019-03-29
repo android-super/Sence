@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        layout="@layout/include_title"></include>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingLeft="16dp"
+        android:textSize="@dimen/sp_16"
+        android:textColor="#333333"
+        android:gravity="center_vertical"
+        android:id="@+id/tv_name_addaddress"
+        android:text="张三"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingLeft="16dp"
+        android:textSize="@dimen/sp_16"
+        android:textColor="#333333"
+        android:gravity="center_vertical"
+        android:id="@+id/tv_phone_addaddress"
+        android:text="18735610120"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingLeft="16dp"
+        android:textSize="@dimen/sp_16"
+        android:textColor="#333333"
+        android:gravity="center_vertical"
+        android:id="@+id/tv_address_addaddress"
+        android:text="北京朝阳区高碑店东 "/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingLeft="16dp"
+        android:textSize="@dimen/sp_16"
+        android:textColor="#333333"
+        android:gravity="center_vertical"
+        android:id="@+id/tv_postcode_addaddress"
+        android:text="11011"/>
+
+</LinearLayout>

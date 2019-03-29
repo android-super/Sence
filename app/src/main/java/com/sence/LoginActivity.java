@@ -86,6 +86,35 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+
+    public void Login(String wechat_openid) {
+        HttpManager.getInstance().PlayNetCode(HttpCode.USER_LOGIN, new RLoginBean(wechat_openid, "android",
+                PhoneUtils.getIMEI())).request(new ApiCallBack<PUserBean>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(PUserBean o, String msg) {
+                SharedPreferencesUtil.getInstance().putBoolean("is_login", true);
+                SharedPreferencesUtil.getInstance().putString("uid", o.getId());
+                SharedPreferencesUtil.getInstance().putString("user_name", o.getUser_name());
+                SharedPreferencesUtil.getInstance().putString("nick_name", o.getNick_name());
+                SharedPreferencesUtil.getInstance().putString("sex", o.getSex());
+                SharedPreferencesUtil.getInstance().putString("avatar", o.getAvatar());
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+
     /**
      * 第三方登录回调监听
      */
@@ -98,7 +127,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         @Override
         public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
             if(UMShareAPI.get(LoginActivity.this).isAuthorize(LoginActivity.this,SHARE_MEDIA.WEIXIN)) {
-                
+
             }else{
                 Intent intent = new Intent(LoginActivity.this, BindPhoneActivity.class);
                 for (Map.Entry<String, String> entry : map.entrySet()) {
@@ -108,6 +137,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
                 startActivity(intent);
             }
+            if (UMShareAPI.get(LoginActivity.this).isAuthorize(LoginActivity.this, SHARE_MEDIA.WEIXIN)) {
+                String open_id = map.get("openid");
+                Login(open_id);
+            } else {
+                Intent intent = new Intent(LoginActivity.this, BindPhoneActivity.class);
+                for (Map.Entry<String, String> entry : map.entrySet()) {
+                    String key = entry.getKey();
+                    String value = entry.getValue();
+                    intent.putExtra(key, value);
+                }
+                startActivity(intent);
+            }
+
+
+        }
 
         }
 

@@ -25,6 +25,7 @@
                 android:layout_height="230dp"/>
 
         <TextView
+                android:id="@+id/item_describe"
                 android:layout_marginTop="15dp"
                 android:layout_marginLeft="9dp"
                 android:layout_marginRight="9dp"
@@ -54,6 +55,7 @@
                     android:layout_height="23dp"/>
 
             <TextView
+                    android:id="@+id/item_name"
                     android:text="@string/hint_name"
                     android:layout_marginLeft="5dp"
                     android:textSize="12sp"
@@ -64,13 +66,14 @@
                     android:layout_height="wrap_content"/>
 
             <TextView
+                    android:id="@+id/item_support"
                     android:text="@string/hint_num"
                     android:layout_alignParentRight="true"
                     android:drawablePadding="5dp"
                     android:textSize="12sp"
                     android:textColor="#5f5f5f"
                     android:layout_centerVertical="true"
-                    android:drawableRight="@drawable/main_focus_dianzan_xiantiao"
+                    android:drawableRight="@drawable/selecte_main_support"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
         </RelativeLayout>

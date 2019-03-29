@@ -1,13 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:gravity="bottom|center_horizontal"
-              android:paddingTop="10dp"
-              android:layout_height="80dp">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:gravity="bottom|center_horizontal"
+                android:paddingTop="10dp"
+                android:layout_height="80dp">
 
-    <ImageView
-            android:src="@drawable/bus_gouwuka"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-</LinearLayout>
+    <RelativeLayout
+            android:id="@+id/bus_open_layout"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <ImageView
+                android:src="@drawable/bus_gouwuka"
+                android:layout_centerInParent="true"
+                android:layout_width="match_parent"
+                android:scaleType="fitXY"
+                android:layout_height="match_parent"/>
+
+        <ImageView
+                android:id="@+id/bus_s"
+                android:src="@drawable/bus_s"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/user_price"
+                android:layout_toRightOf="@id/bus_s"
+                android:text="一年预计省￥2356"
+                android:textSize="13sp"
+                android:layout_marginLeft="10dp"
+                android:textColor="#17a5af"
+                android:layout_marginBottom="-5dp"
+                android:layout_alignBottom="@id/bus_s"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:layout_toRightOf="@id/bus_s"
+                android:text="加入Sence会员"
+                android:textSize="13sp"
+                android:layout_alignTop="@id/bus_s"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="-2dp"
+                android:textColor="#17a5af"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <ImageView
+                android:id="@+id/bus_open"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/bus_kaitong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:visibility="visible"
+            android:id="@+id/bus_vip_layout"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <ImageView
+                android:src="@drawable/user_zun"
+                android:layout_centerInParent="true"
+                android:layout_width="match_parent"
+                android:scaleType="fitXY"
+                android:layout_height="match_parent"/>
+
+        <ImageView
+                android:id="@+id/bus_vip_s"
+                android:src="@drawable/user_huiyuan"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <ImageView
+                android:id="@+id/bus_zun"
+                android:layout_toRightOf="@id/bus_vip_s"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/user_yin"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="13dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <ImageView
+                android:layout_toRightOf="@id/bus_vip_s"
+                android:layout_above="@id/bus_zun"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="6dp"
+                android:src="@drawable/user_ziziz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <ImageView
+                android:layout_marginBottom="13dp"
+                android:layout_marginRight="24dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/user_yongjiu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <ImageView
+                android:layout_marginBottom="24dp"
+                android:layout_marginRight="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/sence"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+    </RelativeLayout>
+</RelativeLayout>

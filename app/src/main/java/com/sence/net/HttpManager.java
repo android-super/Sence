@@ -95,6 +95,40 @@ public class HttpManager<P> {
             case ORDER_DELETE:
                 observable = HttpClientManager.Instance.httpService.OrderDelete(requestBean.getMap());
                 break;
+            case USER_INFO:
+                observable = httpService.UserInfo(requestBean.getMap());
+                break;
+            case BUS_GOODS:
+                observable = httpService.BusList(requestBean.getMap());
+                break;
+            case MAIN_NOTE:
+                observable = httpService.MainNote(requestBean.getMap());
+                break;
+            case MAIN_FOCUS:
+                observable = httpService.MainFocus(requestBean.getMap());
+                break;
+            case MAIN_RECOMMEND:
+                observable = httpService.MainRecommend(requestBean.getMap());
+                break;
+            case KIND_GOODS:
+                observable = httpService.GoodKind(requestBean.getMap());
+                break;
+            case KIND_GOODS_LIST:
+                observable = httpService.GoodList(requestBean.getMap());
+                break;
+            case BUS_RECOMMEND:
+                observable = httpService.BusRecommend(requestBean.getMap());
+                break;
+            case USER_VIP:
+                observable = httpService.UserVip(requestBean.getMap());
+                break;
+            case USER_LOGIN:
+                observable = httpService.Login(requestBean.getMap());
+                break;
+            case VIP_MEMBER:
+                break;
+            case CHECK_VERIFY_CODE:
+                break;
         }
         observable = observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
         return this;
