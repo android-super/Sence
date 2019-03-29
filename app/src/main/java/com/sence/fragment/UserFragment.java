@@ -8,14 +8,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sence.LoginActivity;
 import com.sence.R;
 import com.sence.activity.EnjoyVipActivity;
+import com.sence.activity.ManageAddressActivity;
+import com.sence.activity.MyFansActivity;
+import com.sence.activity.MyFocusActivity;
 import com.sence.activity.MyInfoActivity;
+import com.sence.activity.MyNoteActivity;
 import com.sence.activity.MyOrderActivity;
+import com.sence.activity.OpenVipActivity;
+import com.sence.activity.SettingActivity;
 import com.sence.activity.ShopDetailsActivity;
+import com.sence.bean.request.RUidBean;
+import com.sence.bean.response.PUserInfoBean;
+import com.sence.net.HttpCode;
+import com.sence.net.HttpManager;
+import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.LoginStatus;
 import com.sence.view.NiceImageView;
 
@@ -171,13 +183,13 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 }
                 break;
             case R.id.user_focus_layout:
-                startActivity(new Intent(getContext(),MyFocusActivity.class));
+                startActivity(new Intent(getContext(), MyFocusActivity.class));
                 break;
             case R.id.user_fans_layout:
-                startActivity(new Intent(getContext(),MyFansActivity.class));
+                startActivity(new Intent(getContext(), MyFansActivity.class));
                 break;
             case R.id.user_release_layout:
-                startActivity(new Intent(getContext(),MyNoteActivity.class));
+                startActivity(new Intent(getContext(), MyNoteActivity.class));
                 break;
             case R.id.user_all_order:
                 startActivity(new Intent(getContext(), MyOrderActivity.class));
@@ -199,10 +211,10 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 startActivity(new Intent(getContext(), ManageAddressActivity.class));
                 break;
             case R.id.user_set:
-                startActivity(new Intent(getContext(),SettingActivity.class));
+                startActivity(new Intent(getContext(), SettingActivity.class));
                 break;
             case R.id.user_open:
-                startActivity(new Intent(getContext(),OpenVipActivity.class));
+                startActivity(new Intent(getContext(), OpenVipActivity.class));
                 break;
         }
     }

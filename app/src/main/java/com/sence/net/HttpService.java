@@ -1,11 +1,14 @@
 package com.sence.net;
 
 import com.sence.bean.base.BaseResponseBean;
+import com.sence.bean.response.PBusBean;
+import com.sence.bean.response.PBusRecommendBean;
 import com.sence.bean.response.PEnjoyVipBean;
 import com.sence.bean.response.PMainFocusBean;
 import com.sence.bean.response.PMainNoteBean;
 import com.sence.bean.response.PMainRecommendBean;
 import com.sence.bean.response.PManageAddressBean;
+import com.sence.bean.response.PMyInfoBean;
 import com.sence.bean.response.PMyOrderBean;
 import com.sence.bean.response.POrderDetailsBean;
 import com.sence.bean.response.PServiceCommendBean;
@@ -14,6 +17,7 @@ import com.sence.bean.response.PShopCommendBean;
 import com.sence.bean.response.PShopDetailsBean;
 import com.sence.bean.response.PUserBean;
 import com.sence.bean.response.PUserInfoBean;
+import com.sence.bean.response.PUserVipBean;
 import com.sence.bean.response.PVerifyCodeBean;
 
 import java.util.List;
@@ -165,21 +169,38 @@ public interface HttpService {
 
     @FormUrlEncoded
     @POST(Urls.SERVE_COMMENT_ADD)
-    Observable<BaseResponseBean<String>> ServeCommentAdd(@FieldMap Map<String,Object> map);//添加服务评价
+    Observable<BaseResponseBean<String>> ServeCommentAdd(@FieldMap Map<String, Object> map);//添加服务评价
 
     @FormUrlEncoded
     @POST(Urls.GOOD_KIND)
-    Observable<BaseResponseBean<String>> GoodKind(@FieldMap Map<String,Object> map);//商品分类列表
+    Observable<BaseResponseBean<String>> GoodKind(@FieldMap Map<String, Object> map);//商品分类列表
 
     @FormUrlEncoded
     @POST(Urls.GOOD_LIST)
-    Observable<BaseResponseBean<String>> GoodList(@FieldMap Map<String,Object> map);//分类下的商品列表
+    Observable<BaseResponseBean<String>> GoodList(@FieldMap Map<String, Object> map);//分类下的商品列表
+
 
     @FormUrlEncoded
     @POST(Urls.ENJOY_VIP)
-    Observable<BaseResponseBean<PEnjoyVipBean>> EnjoyVip(@FieldMap Map<String,Object> map);//分类下的商品列表
+    Observable<BaseResponseBean<PEnjoyVipBean>> EnjoyVip(@FieldMap Map<String, Object> map);//分类下的商品列表
 
     @FormUrlEncoded
     @POST(Urls.ORDER_DELETE)
-    Observable<BaseResponseBean<String>> OrderDelete(@FieldMap Map<String,Object> map);//分类下的商品列表
+    Observable<BaseResponseBean<String>> OrderDelete(@FieldMap Map<String, Object> map);//分类下的商品列表
+
+    @FormUrlEncoded
+    @POST(Urls.BUS_LIST)
+    Observable<BaseResponseBean<PBusBean>> BusList(@FieldMap Map<String, Object> map);//分类下的商品列表
+
+    @FormUrlEncoded
+    @POST(Urls.BUS_RECOMMEND)
+    Observable<BaseResponseBean<List<PBusRecommendBean>>> BusRecommend(@FieldMap Map<String, Object> map);//分类下的商品列表
+
+    @FormUrlEncoded
+    @POST(Urls.USER_VIP)
+    Observable<BaseResponseBean<PUserVipBean>> UserVip(@FieldMap Map<String, Object> map);//Sence会员
+
+    @FormUrlEncoded
+    @POST(Urls.USER_INFO_DATA)
+    Observable<BaseResponseBean<PMyInfoBean>> UserInfoData(@FieldMap Map<String, Object> map);//我的信息
 }

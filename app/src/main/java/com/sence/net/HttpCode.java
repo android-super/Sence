@@ -32,4 +32,5 @@ public enum HttpCode {
     ORDER_DETAIL,//订单详情
     ORDER_DELETE,//取消待付款，待支付订单
     ENJOY_VIP,//尊享会员
+    USER_INFO_DATA,//我的信息
 }

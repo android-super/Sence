@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -31,9 +30,14 @@
                     android:id="@+id/rl_head_myinfo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/hint_img"
                     >
-
+                    <ImageView
+                        android:id="@+id/iv_head_myinfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="270dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/hint_img"
+                        />
                     <RelativeLayout
                         android:id="@+id/iv_imgbg_myinfo"
                         android:layout_width="match_parent"
@@ -42,7 +46,8 @@
                         android:background="#000000"
                         android:paddingBottom="18dp">
 
-                        <ImageView
+                        <com.sence.view.NiceImageView
+                            app:is_circle="true"
                             android:id="@+id/iv_imgico_myinfo"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
@@ -158,9 +163,10 @@
                     android:elevation="100dp"
                     android:padding="@dimen/dp_10">
 
-                    <ImageView
+                    <com.sence.view.NiceImageView
                         android:id="@+id/iv_img_myinfo"
                         android:layout_width="60dp"
+                        app:corner_radius="3dp"
                         android:layout_height="60dp"
                         android:layout_margin="@dimen/dp_10"
                         android:scaleType="centerCrop"
@@ -187,6 +193,7 @@
                         android:layout_marginTop="13dp"
                         android:layout_toRightOf="@id/iv_img_myinfo"
                         android:text="￥：1000"
+                        android:id="@+id/tv_price_myinfo"
                         android:textColor="@color/theme_green"
                         android:textSize="@dimen/sp_14"/>
                 </RelativeLayout>
@@ -266,6 +273,7 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:id="@+id/ll_fooler_myinfo"
             android:background="@drawable/enjoyvip_chang9"
             android:orientation="vertical"
             >

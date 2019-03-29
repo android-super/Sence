@@ -67,7 +67,10 @@ public class ShopCommendActivity extends AppCompatActivity {
             @Override
             public void onSuccess(List<PShopCommendBean> o, String msg) {
                 Logger.e("msg==========" + msg);
-                mShopCommendAdapter.setList(o);
+                if(o.size()>0){
+                    mShopCommendAdapter.setList(o);
+                }
+
             }
         });
     }

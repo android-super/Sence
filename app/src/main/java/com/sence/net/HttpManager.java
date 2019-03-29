@@ -95,6 +95,9 @@ public class HttpManager<P> {
             case ORDER_DELETE:
                 observable = HttpClientManager.Instance.httpService.OrderDelete(requestBean.getMap());
                 break;
+            case USER_INFO_DATA:
+                observable =  HttpClientManager.Instance.httpService.UserInfoData(requestBean.getMap());
+                break;
             case USER_INFO:
                 observable = httpService.UserInfo(requestBean.getMap());
                 break;
@@ -125,6 +128,7 @@ public class HttpManager<P> {
             case USER_LOGIN:
                 observable = httpService.Login(requestBean.getMap());
                 break;
+
             case VIP_MEMBER:
                 break;
             case CHECK_VERIFY_CODE:

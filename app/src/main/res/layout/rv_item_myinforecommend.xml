@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="wrap_content">
@@ -15,7 +16,8 @@
             android:layout_marginTop="17dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
-            <ImageView
+            <com.sence.view.NiceImageView
+                app:is_circle="true"
                 android:layout_width="@dimen/dp_40"
                 android:layout_height="@dimen/dp_40"
                 android:id="@+id/iv_img_myinforecommend"
@@ -31,11 +33,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="13sp"
+                    android:id="@+id/tv_name_myinforecommend"
                     android:textColor="#040404"
                     android:text="张三"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/tv_time_myinforecommend"
                     android:text="2019.03.22 12:00"
                     android:textColor="#cccccc"
                     android:textSize="11sp"
@@ -46,6 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/sp_16"
+            android:id="@+id/tv_title_myinforecommend"
             android:textColor="#222222"
             android:text="第一次来到一片绿油油的竹林"
             android:layout_marginTop="20dp"/>
@@ -54,29 +59,33 @@
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:textColor="#999999"
+            android:id="@+id/tv_content_myinforecommend"
             android:text="绿竹是禾本科，绿竹属竿较高大，近直立，单丛生；节间圆筒形，竿壁厚。箨鞘质地坚韧，顶端截形或两肩部广圆；箨耳存在，较显著"
             android:lineSpacingExtra="6dp"
             android:layout_marginTop="10dp"
             />
-        <ImageView
+        <com.sence.view.NiceImageView
+            app:corner_radius="5dp"
             android:layout_width="325dp"
             android:layout_height="220dp"
             android:layout_marginTop="11dp"
+            android:id="@+id/iv_imgshop_myinforecommend"
             android:scaleType="fitXY"
             android:src="@drawable/hint_img"
             android:layout_gravity="center_horizontal"/>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="55dp"
             android:orientation="horizontal">
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="55dp">
+                android:layout_height="match_parent">
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:id="@+id/tv_like_myinforecommend"
                     android:drawableLeft="@drawable/myinfo_dianzan"
                     android:drawablePadding="8dp"
                     android:text="639"
@@ -92,11 +101,12 @@
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="55dp">
+                android:layout_height="match_parent">
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:id="@+id/tv_comment_myinforecommend"
                     android:drawableLeft="@drawable/myinfo_pinglun"
                     android:drawablePadding="8dp"
                     android:text="639"
@@ -112,7 +122,8 @@
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="55dp">
+                android:id="@+id/rl_shape_myinforecommend"
+                android:layout_height="match_parent">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

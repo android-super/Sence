@@ -7,7 +7,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.PhoneUtils;
 import com.sence.activity.WebActivity;
+import com.sence.bean.request.RLoginBean;
+import com.sence.bean.response.PUserBean;
+import com.sence.net.HttpCode;
+import com.sence.net.HttpManager;
+import com.sence.net.manager.ApiCallBack;
+import com.sence.utils.SharedPreferencesUtil;
 import com.sence.utils.StatusBarUtil;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
@@ -153,8 +160,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         }
 
-        }
-
         @Override
         public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
 
@@ -164,7 +169,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         public void onCancel(SHARE_MEDIA share_media, int i) {
 
         }
+
     };
+
 
     @Override
     protected void onDestroy() {

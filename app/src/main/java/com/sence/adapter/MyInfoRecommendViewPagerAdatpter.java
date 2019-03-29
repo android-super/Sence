@@ -1,6 +1,7 @@
 package com.sence.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -16,10 +17,13 @@ public class MyInfoRecommendViewPagerAdatpter extends FragmentPagerAdapter {
         this.fragmentList = fragmentList;
         this.list_Title = list_Title;
     }
-
     @Override
     public Fragment getItem(int position) {
-        return fragmentList[position];
+        Fragment fragments = fragmentList[position];
+        Bundle bundle = new Bundle();
+        bundle.putString("type",position+1  +"");
+        fragments.setArguments(bundle);
+        return fragments;
     }
     @Override
     public int getCount() {

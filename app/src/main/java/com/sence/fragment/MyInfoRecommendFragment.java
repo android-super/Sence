@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import com.orhanobut.logger.Logger;
 import com.sence.R;
 import com.sence.adapter.MyInfoRecommendAdapter;
-import com.sence.bean.request.RMyOrderBean;
-import com.sence.bean.response.PMyOrderBean;
+import com.sence.bean.request.RMyInfoBean;
+import com.sence.bean.response.PMyInfoBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
@@ -23,7 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class MyInfoRecommendFragment extends Fragment {
 
     private MyInfoRecommendAdapter myInfoRecommendAdapter;
-    private int page=1;
+    private String type;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,6 +33,8 @@ public class MyInfoRecommendFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Bundle arguments = getArguments();
+        type = arguments.getString("type");
         init();
     }
 
@@ -89,19 +91,20 @@ public class MyInfoRecommendFragment extends Fragment {
         lazyLoad();
     }
 
+
     private void lazyLoad() {
         //这里进行双重标记判断,是因为setUserVisibleHint会多次回调,并且会在onCreateView执行前回调,
         // 必须确保onCreateView加载完毕且页面可见,才加载数据
         if (isViewCreated && isUiVisible) {
-//            loadData();
+            doHttp();
             //数据加载完毕,恢复标记,防止重复加载
             isViewCreated = false;
             isUiVisible = false;
         }
     }
 
-    private void loadData() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_LIST, new RMyOrderBean("1",page+"","10","")).request(new ApiCallBack<PMyOrderBean>() {
+    private void doHttp() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.USER_INFO_DATA, new RMyInfoBean("4","1")).request(new ApiCallBack<PMyInfoBean>() {
             @Override
             public void onFinish() {
 
@@ -113,15 +116,11 @@ public class MyInfoRecommendFragment extends Fragment {
             }
 
             @Override
-            public void onSuccess(PMyOrderBean o, String msg) {
+            public void onSuccess(PMyInfoBean o, String msg) {
                 Logger.e("msg==========" + msg);
-                if(o.getList().size()>0) {
-                    myInfoRecommendAdapter.setList(o.getList());
-                }
-
+                myInfoRecommendAdapter.setList(o.getOther_info());
             }
         });
-
     }
 
     @Override

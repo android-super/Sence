@@ -63,9 +63,11 @@ public class EnjoyVipActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(PEnjoyVipBean o, String msg) {
-                Logger.e("msg==========" + msg+"=="+o.getService().get(0).getImg());
+                Logger.e("msg==========" + msg);
                 mPrice.setText("￥"+o.getMoney());
-                mEnjoyVipAdapter.setList(o.getService());
+                if(o.getService().size()>0){
+                    mEnjoyVipAdapter.setList(o.getService());
+                }
             }
         });
     }
