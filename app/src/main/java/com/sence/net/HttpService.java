@@ -154,6 +154,8 @@ public interface HttpService {
     @POST(Urls.GOOD_LIST)
     Observable<BaseResponseBean<List<PGoodListBean>>> GoodList(@FieldMap Map<String, Object> map);//分类下的商品列表
 
+
+
     @FormUrlEncoded
     @POST(Urls.BUS_LIST)
     Observable<BaseResponseBean<PBusBean>> BusList(@FieldMap Map<String, Object> map);//分类下的商品列表
