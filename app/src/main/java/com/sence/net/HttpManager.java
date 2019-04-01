@@ -90,9 +90,6 @@ public class HttpManager<P> {
             case MAIN_RECOMMEND:
                 observable = httpService.MainRecommend(requestBean.getMap());
                 break;
-            case KIND_GOODS:
-                observable = httpService.GoodKind(requestBean.getMap());
-                break;
             case KIND_GOODS_LIST:
                 observable = httpService.GoodList(requestBean.getMap());
                 break;
@@ -104,6 +101,30 @@ public class HttpManager<P> {
                 break;
             case USER_LOGIN:
                 observable = httpService.Login(requestBean.getMap());
+                break;
+            case KIND_GOODS:
+                observable = httpService.GoodKind(requestBean.getMap());
+                break;
+            case BUS_ADD:
+                observable = httpService.BusAddCut(requestBean.getMap());
+                break;
+            case USER_FANS_LIST:
+                observable = httpService.UserFansList(requestBean.getMap());
+                break;
+            case USER_FOCUS_LIST:
+                observable = httpService.UserFocusList(requestBean.getMap());
+                break;
+            case USER_ACCOUNT:
+                observable = httpService.MyAccount(requestBean.getMap());
+                break;
+            case NOTE_DETAIL:
+                observable = httpService.NoteDetail(requestBean.getMap());
+                break;
+            case CONTENT_DETAIL:
+                observable = httpService.ContentDetail(requestBean.getMap());
+                break;
+            case COMMENT_LIST:
+                observable = httpService.CommentList(requestBean.getMap());
                 break;
             case VIP_MEMBER:
                 break;
@@ -125,6 +146,7 @@ public class HttpManager<P> {
             case GET_SYSTEM_TIME:
                 observable = HttpClientManager.Instance.httpService.getSystemTime();
                 break;
+
         }
         observable = observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
         return this;
@@ -159,6 +181,7 @@ public class HttpManager<P> {
                     }
                     disposable.dispose();
                 }
+                apiCallBack.onFinish();
             }
 
 
@@ -183,6 +206,7 @@ public class HttpManager<P> {
                     Toast.makeText(BaseApp.INSTANCE,
                             "请求失败", Toast.LENGTH_SHORT).show();
                 }
+                apiCallBack.onFinish();
             }
 
             @Override

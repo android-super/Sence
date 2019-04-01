@@ -26,4 +26,10 @@ public enum HttpCode {
     BUS_RECOMMEND,//购物车推荐
     USER_VIP,//Sence会员
     USER_LOGIN,//用户登录
+    USER_FANS_LIST,//我的粉丝列表
+    USER_FOCUS_LIST,//我的关注列表
+    USER_ACCOUNT,//我的账户
+    NOTE_DETAIL,//笔记详情
+    CONTENT_DETAIL,//內容詳情
+    COMMENT_LIST,//评价列表
 }

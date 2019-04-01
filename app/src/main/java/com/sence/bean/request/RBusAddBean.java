@@ -15,6 +15,8 @@ public class RBusAddBean extends BaseRequestBean {
     public RBusAddBean(String gid, String uid) {
         this.gid = gid;
         this.uid = uid;
+        this.num = "1";
+        this.type = "1";
     }
 
     public RBusAddBean(String gid, String uid, String num, String type) {

@@ -84,7 +84,7 @@ public interface HttpService {
 
     @FormUrlEncoded
     @POST(Urls.USER_ACCOUNT)
-    Observable<BaseResponseBean<String>> MyAccount(@FieldMap Map<String, Object> map);//我的账户
+    Observable<BaseResponseBean<PAccountBean>> MyAccount(@FieldMap Map<String, Object> map);//我的账户
 
     @FormUrlEncoded
     @POST(Urls.USER_CARD_LIST)
@@ -96,7 +96,7 @@ public interface HttpService {
 
     @FormUrlEncoded
     @POST(Urls.COMMENT_LIST)
-    Observable<BaseResponseBean<String>> CommentList(@FieldMap Map<String, Object> map);//评论列表
+    Observable<BaseResponseBean<List<PCommentBean>>> CommentList(@FieldMap Map<String, Object> map);//评论列表
 
     @FormUrlEncoded
     @POST(Urls.COMMENT_ADD)
@@ -112,7 +112,7 @@ public interface HttpService {
 
     @FormUrlEncoded
     @POST(Urls.MAIN_NOTE_DETAIL)
-    Observable<BaseResponseBean<String>> NoteDetail(@FieldMap Map<String, Object> map);//笔记详情
+    Observable<BaseResponseBean<PNoteDetailBean>> NoteDetail(@FieldMap Map<String, Object> map);//笔记详情
 
     @FormUrlEncoded
     @POST(Urls.MAIN_RECOMMEND)
@@ -154,8 +154,6 @@ public interface HttpService {
     @POST(Urls.GOOD_LIST)
     Observable<BaseResponseBean<List<PGoodListBean>>> GoodList(@FieldMap Map<String, Object> map);//分类下的商品列表
 
-
-
     @FormUrlEncoded
     @POST(Urls.BUS_LIST)
     Observable<BaseResponseBean<PBusBean>> BusList(@FieldMap Map<String, Object> map);//分类下的商品列表
@@ -167,4 +165,21 @@ public interface HttpService {
     @FormUrlEncoded
     @POST(Urls.USER_VIP)
     Observable<BaseResponseBean<PUserVipBean>> UserVip(@FieldMap Map<String, Object> map);//Sence会员
+
+    @FormUrlEncoded
+    @POST(Urls.BUS_ADD_CUT)
+    Observable<BaseResponseBean<Object>> BusAddCut(@FieldMap Map<String, Object> map);//添加购物车
+
+    @FormUrlEncoded
+    @POST(Urls.USER_FANS_LIST)
+    Observable<BaseResponseBean<Object>> UserFansList(@FieldMap Map<String, Object> map);//我的粉絲列表
+
+    @FormUrlEncoded
+    @POST(Urls.USER_FOCUS_LISt)
+    Observable<BaseResponseBean<Object>> UserFocusList(@FieldMap Map<String, Object> map);//我的关注列表
+
+    @FormUrlEncoded
+    @POST(Urls.MAIN_CONTENT_DETAIL)
+    Observable<BaseResponseBean<PContentDetailBean>> ContentDetail(@FieldMap Map<String, Object> map);//内容详情
+
 }

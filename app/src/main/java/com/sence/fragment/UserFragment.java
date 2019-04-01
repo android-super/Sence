@@ -42,7 +42,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
 
     private TextView user_all_order;
     private TextView user_pay, user_send, user_get, user_comment;
-    private TextView user_pay_point,user_send_point,user_get_point,user_comment_point;
+    private TextView user_pay_point, user_send_point, user_get_point, user_comment_point;
     private RelativeLayout user_flower;
     private TextView user_account, user_address, user_set;
 
@@ -101,24 +101,48 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     }
 
 
-
-
     private void initDataView(PUserInfoBean o) {
-        if (o==null){
+        if (o == null) {
             return;
         }
-        if (o.getIs_kol().equals("1")){
+        if (o.getIs_kol().equals("1")) {
             user_vip_layout.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             user_vip_layout.setVisibility(View.GONE);
         }
         user_name.setText(o.getNick_name());
         user_focus.setText(o.getFollow_num());
         user_fans.setText(o.getFans_num());
         user_release.setText(o.getNote_num());
-        user_price.setText("一年预计省￥"+o.getMoney());
+        user_price.setText("一年预计省￥" + o.getMoney());
+
+        if (o.getOrder_info().getWait_pay().equals("0")) {
+            user_pay_point.setVisibility(View.GONE);
+        } else {
+            user_pay_point.setText(o.getOrder_info().getWait_pay());
+        }
+
+        if (o.getOrder_info().getWait_send().equals("0")) {
+            user_send_point.setVisibility(View.GONE);
+        } else {
+            user_send_point.setText(o.getOrder_info().getWait_send());
+        }
+
+        if (o.getOrder_info().getWait_confirm().equals("0")) {
+            user_get_point.setVisibility(View.GONE);
+        } else {
+            user_get_point.setText(o.getOrder_info().getWait_confirm());
+        }
+
+        if (o.getOrder_info().getWait_evaluate().equals("0")) {
+            user_comment_point.setVisibility(View.GONE);
+        } else {
+            user_comment_point.setText(o.getOrder_info().getWait_evaluate());
+        }
+
 
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -134,7 +158,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initMyInfo() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.USER_INFO,new RUidBean(LoginStatus.getUid())).request(new ApiCallBack<PUserInfoBean>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.USER_INFO, new RUidBean(LoginStatus.getUid())).request(new ApiCallBack<PUserInfoBean>() {
             @Override
             public void onFinish() {
 
@@ -153,10 +177,6 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     }
 
 
-
-
-
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -164,7 +184,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 startActivity(new Intent(getContext(), EnjoyVipActivity.class));
                 break;
             case R.id.user_head:
-                startActivity(new Intent(getContext(),MyInfoActivity.class));
+                startActivity(new Intent(getContext(), MyInfoActivity.class));
                 break;
             case R.id.user_name:
                 if (LoginStatus.isLogin()) {
@@ -174,13 +194,13 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 }
                 break;
             case R.id.user_focus_layout:
-                startActivity(new Intent(getContext(),MyFocusActivity.class));
+                startActivity(new Intent(getContext(), MyFocusActivity.class));
                 break;
             case R.id.user_fans_layout:
-                startActivity(new Intent(getContext(),MyFansActivity.class));
+                startActivity(new Intent(getContext(), MyFansActivity.class));
                 break;
             case R.id.user_release_layout:
-                startActivity(new Intent(getContext(),MyNoteActivity.class));
+                startActivity(new Intent(getContext(), MyNoteActivity.class));
                 break;
             case R.id.user_all_order:
                 startActivity(new Intent(getContext(), MyOrderActivity.class));
@@ -196,16 +216,16 @@ public class UserFragment extends Fragment implements View.OnClickListener {
             case R.id.user_flower:
                 break;
             case R.id.user_account:
-                startActivity(new Intent(getContext(), ShopDetailsActivity.class));
+                startActivity(new Intent(getContext(), MyAccountActivity.class));
                 break;
             case R.id.user_address:
                 startActivity(new Intent(getContext(), ManageAddressActivity.class));
                 break;
             case R.id.user_set:
-                startActivity(new Intent(getContext(),SettingActivity.class));
+                startActivity(new Intent(getContext(), SettingActivity.class));
                 break;
             case R.id.user_open:
-                startActivity(new Intent(getContext(),OpenVipActivity.class));
+                startActivity(new Intent(getContext(), OpenVipActivity.class));
                 break;
         }
     }

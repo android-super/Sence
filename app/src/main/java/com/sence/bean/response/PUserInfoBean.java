@@ -34,6 +34,62 @@ public class PUserInfoBean {
     private String follow_num;
     private String fans_num;
     private String note_num;
+    private OrderInfoBean order_info;
+
+    public OrderInfoBean getOrder_info() {
+        return order_info;
+    }
+
+    public void setOrder_info(OrderInfoBean order_info) {
+        this.order_info = order_info;
+    }
+
+    public static class OrderInfoBean {
+        /**
+         * wait_pay : 0
+         * wait_send : 0
+         * wait_confirm : 0
+         * wait_evaluate : 0
+         */
+
+        private String wait_pay;
+        private String wait_send;
+        private String wait_confirm;
+        private String wait_evaluate;
+
+        public String getWait_pay() {
+            return wait_pay;
+        }
+
+        public void setWait_pay(String wait_pay) {
+            this.wait_pay = wait_pay;
+        }
+
+        public String getWait_send() {
+            return wait_send;
+        }
+
+        public void setWait_send(String wait_send) {
+            this.wait_send = wait_send;
+        }
+
+        public String getWait_confirm() {
+            return wait_confirm;
+        }
+
+        public void setWait_confirm(String wait_confirm) {
+            this.wait_confirm = wait_confirm;
+        }
+
+        public String getWait_evaluate() {
+            return wait_evaluate;
+        }
+
+        public void setWait_evaluate(String wait_evaluate) {
+            this.wait_evaluate = wait_evaluate;
+        }
+    }
+
 
     public String getUid() {
         return uid;

@@ -14,6 +14,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.sence.R;
 import com.sence.activity.NoteDetailActivity;
 import com.sence.bean.response.PMainNoteBean;
+import com.sence.bean.response.PNoteDetailBean;
 import com.sence.net.Urls;
 import com.sence.view.NiceImageView;
 
@@ -22,13 +23,13 @@ import com.sence.view.NiceImageView;
  * package_name is com.sence.adapter
  * 描述:SenceGit
  */
-public class NoteAdapter extends BaseQuickAdapter<PMainNoteBean, BaseViewHolder> {
-    public NoteAdapter(int layoutResId) {
+public class NoteRecommendAdapter extends BaseQuickAdapter<PNoteDetailBean.RecommendNoteBean, BaseViewHolder> {
+    public NoteRecommendAdapter(int layoutResId) {
         super(layoutResId);
     }
 
     @Override
-    protected void convert(final BaseViewHolder helper, final PMainNoteBean item) {
+    protected void convert(final BaseViewHolder helper, final PNoteDetailBean.RecommendNoteBean item) {
         final NiceImageView imageView = helper.getView(R.id.item_img);
         final Activity activity = (Activity) helper.itemView.getContext();
         Glide.with(activity).load(Urls.base_url + item.getAlbum_url()).into(imageView);

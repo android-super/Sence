@@ -86,7 +86,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        Logger.e(view.getTag().toString());
         setSelect((Integer) view.getTag());
     }
 
