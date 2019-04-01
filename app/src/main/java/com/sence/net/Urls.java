@@ -21,6 +21,7 @@ public class Urls {
     public static final String USER_CARD_DELETE = "/index.php/Api/mine/delCard";//删除银行卡
     public static final String USER_CARD_LIST = "/index.php/Api/mine/myCardList";//银行卡列表
     public static final String USER_ACCOUNT = "/index.php/Api/mine/myAccount";//我的账户
+    public static final String USER_INFO_DATA = "/index.php/api/user/personalInfo";//我的信息
     public static final String USER_VERIFY_CHECK = "/index.php/Api/mine/checkCode";//检查验证码
     public static final String USER_GET_REAL_NAME = "/index.php/Api/mine/getRealName";//获取真实姓名
     public static final String USER_UP_HEAD = "/index.php/Api/mine/uploadAvatar";//上传头像
@@ -30,7 +31,7 @@ public class Urls {
     public static final String USER_AUTH = "/index.php/Api/User/realNameAuth";//添加银行卡，视频认证
     public static final String USER_IS_REGISTER = "/index.php/Api/User/isRegister";//用户是否注册
     public static final String USER_SEND_CODE = "/index.php/Api/User/makeCode";//发送验证码
-    public static final String USER_LOGIN = "/index.php/Api/User/login";//用户登录
+    public static final String USER_LOGIN = "/index.php/Api/User/weChatLogin";//用户登录
     public static final String USER_SIGN_UP = "/index.php/Api/User/weChatSignUp";//用户注册
     public static final String USER_VIP = "/index.php/Api/User/getMemberInfo";//Sence会员界面
     public static final String USER_ENJOY_VIP = "/index.php/Api/User/getEnjoyInfo";//尊享会员界面
@@ -42,7 +43,7 @@ public class Urls {
     public static final String NOTE_DELETE = "/index.php/Api/Notes/delUserNote";//删除笔记
     public static final String NOTE_ADD = "/index.php/Api/Notes/addUserNote";//添加笔记
     //商品
-    public static final String ORDER_DETAIL = "/index.php/Api/Goods/getOrderDetail";//订单详情
+    public static final String ORDER_DETAIL = "/index.php/Api/Orders/getOrderDetail";//订单详情
     public static final String BUS_RECOMMEND = "/index.php/Api/Goods/getCommentGoods";//购物车页面推荐商品数据
     public static final String BUS_LIST = "/index.php/Api/Goods/getCartList";//购物车列表
     public static final String ORDER_PAY = "/index.php/Api/Orders/payOrder";//支付订单
@@ -61,7 +62,6 @@ public class Urls {
     public static final String ADDRESS_EDIT = "/index.php/Api/Address/editAddress";//编辑收货地址
     //服务
     public static final String SERVE_DETAIL = "/index.php/Api/Serve/getServeDetail";//服务详情
-    public static final String ENJOY_VIP = "/index.php/Api/User/getEnjoyInfo";//尊享会员
     public static final String SERVE_COMMENT_LIST = "/index.php/Api/Serve/getServiceComments";//服务评论列表
     public static final String SERVE_COMMENT_ADD = "/index.php/Api/Orders/evaluateOrder";//添加服务评价
 }

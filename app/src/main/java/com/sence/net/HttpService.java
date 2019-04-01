@@ -43,8 +43,12 @@ public interface HttpService {
     Observable<BaseResponseBean<String>> IsRegister(@FieldMap Map<String, Object> map);//用户是否注册
 
     @FormUrlEncoded
-    @GET(Urls.ADDRESS_ADD)
+    @POST(Urls.ADDRESS_ADD)
     Observable<BaseResponseBean<String>> AddressAdd(@FieldMap Map<String, Object> map);//添加收货地址
+
+    @FormUrlEncoded
+    @POST(Urls.ADDRESS_EDIT)
+    Observable<BaseResponseBean<String>> AddressEdit(@FieldMap Map<String, Object> map);//编辑收货地址
 
     @FormUrlEncoded
     @POST(Urls.ORDER_LIST)
@@ -76,7 +80,7 @@ public interface HttpService {
 
     @FormUrlEncoded
     @POST(Urls.ORDER_DETAIL)
-    Observable<BaseResponseBean<POrderDetailsBean>> OrderDetail(@FieldMap Map<String, Object> map);//商品评论列表
+    Observable<BaseResponseBean<POrderDetailsBean>> OrderDetail(@FieldMap Map<String, Object> map);//订单详情
 
     @FormUrlEncoded
     @POST(Urls.USER_SEND_CODE)
@@ -181,7 +185,7 @@ public interface HttpService {
 
 
     @FormUrlEncoded
-    @POST(Urls.ENJOY_VIP)
+    @POST(Urls.USER_ENJOY_VIP)
     Observable<BaseResponseBean<PEnjoyVipBean>> EnjoyVip(@FieldMap Map<String, Object> map);//分类下的商品列表
 
     @FormUrlEncoded

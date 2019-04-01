@@ -30,7 +30,6 @@ public class OrderDetailsActivity extends AppCompatActivity implements View.OnCl
     private RecyclerView mRecyclerView;
     private OrderDetailsAdapter orderDetailsAdapter;
     private TextView mTv;
-    private String oId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,7 +85,7 @@ public class OrderDetailsActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void doHttp() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_DETAIL, new ROrderDetailsBean("1","1")).request(new ApiCallBack<POrderDetailsBean>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_DETAIL, new ROrderDetailsBean(id,LoginStatus.getUid())).request(new ApiCallBack<POrderDetailsBean>() {
 
 
 
@@ -97,12 +96,10 @@ public class OrderDetailsActivity extends AppCompatActivity implements View.OnCl
 
             @Override
             public void Message(int code, String message) {
-
             }
 
             @Override
             public void onSuccess(final POrderDetailsBean o, String msg) {
-                oId = o.getId();
                 Logger.e("msg==========" + msg);
                 if(o.getGoods().size()>0){
                     orderDetailsAdapter.setList(o.getGoods());

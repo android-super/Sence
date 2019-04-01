@@ -2,46 +2,114 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
+              android:fitsSystemWindows="true"
               android:layout_height="match_parent">
     <include
         android:layout_width="match_parent"
         android:layout_height="50dp"
         layout="@layout/include_title"></include>
-    <TextView
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingLeft="16dp"
+        android:textSize="@dimen/sp_16"
+        android:background="@color/white"
+        android:textCursorDrawable="@drawable/shape_cursor"
+        android:textColor="#333333"
+        android:gravity="center_vertical"
+        android:id="@+id/et_name_addaddress"
+        android:hint="收货人姓名"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#efefef"></View>
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:paddingLeft="16dp"
         android:textSize="@dimen/sp_16"
         android:textColor="#333333"
+        android:textCursorDrawable="@drawable/shape_cursor"
         android:gravity="center_vertical"
-        android:id="@+id/tv_name_addaddress"
-        android:text="张三"/>
-    <TextView
+        android:background="@color/white"
+        android:id="@+id/et_phone_addaddress"
+        android:hint="手机号码"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#efefef"></View>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:id="@+id/ll_address_addaddress"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:paddingLeft="16dp"
+            android:textSize="@dimen/sp_16"
+            android:textColor="#333333"
+            android:gravity="center_vertical"
+            android:id="@+id/tv_address_addaddress"
+            android:text="省、市、区 "/>
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="18dp"
+            android:src="@drawable/pingjia_jiantou"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#efefef"></View>
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:paddingLeft="16dp"
         android:textSize="@dimen/sp_16"
+        android:background="@color/white"
+        android:textCursorDrawable="@drawable/shape_cursor"
         android:textColor="#333333"
         android:gravity="center_vertical"
-        android:id="@+id/tv_phone_addaddress"
-        android:text="18735610120"/>
-    <TextView
+        android:id="@+id/et_postcode_addaddress"
+        android:hint="邮政编码"/>
+    <View
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="1dp"
+        android:background="#efefef"></View>
+    <EditText
+        android:layout_width="match_parent"
+        android:minHeight="100dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="18dp"
+        android:textCursorDrawable="@drawable/shape_cursor"
         android:paddingLeft="16dp"
         android:textSize="@dimen/sp_16"
+        android:background="@color/white"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:gravity="top"
+        android:inputType="textMultiLine"
+        android:lineSpacingExtra="9dp"
         android:textColor="#333333"
-        android:gravity="center_vertical"
-        android:id="@+id/tv_address_addaddress"
-        android:text="北京朝阳区高碑店东 "/>
-    <TextView
+        android:id="@+id/et_detailsaddress_addaddress"
+        android:hint="详细地址"/>
+    <View
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:paddingLeft="16dp"
-        android:textSize="@dimen/sp_16"
-        android:textColor="#333333"
-        android:gravity="center_vertical"
-        android:id="@+id/tv_postcode_addaddress"
-        android:text="11011"/>
+        android:layout_height="1dp"
+        android:background="#efefef"></View>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:text="保存"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:background="@drawable/shape_addaddress_bg"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:id="@+id/bt_save_addaddress"
+        android:layout_marginTop="25dp"/>
 
 </LinearLayout>

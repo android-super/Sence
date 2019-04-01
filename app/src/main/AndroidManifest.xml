@@ -69,6 +69,8 @@
         <activity android:name=".activity.OrderDetailsActivity"/>
         <activity android:name=".activity.ServiceDetailsActivity"/>
         <activity android:name=".activity.ShopCommendActivity"/>
+        <activity android:name=".activity.AddAddressActivity"></activity>
+        <activity android:name=".activity.ServiceCommentActivity"></activity>
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.sence.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -25,12 +26,19 @@ public class ManageAddressActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private ManageAddressAdapter mManageAddressAdapter;
     private int page=1;
+    private List<PManageAddressBean> list;
+    private TextView mAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manageaddress);
         StatusBarUtil.setLightMode(this);
+        initData();
+
+    }
+
+    private void initData() {
         mRecyclerView = findViewById(R.id.rlv_address_manageaddress);
         TextView mTitle = findViewById(R.id.pub_title);
         mTitle.setText("管理收货地址");
@@ -41,13 +49,31 @@ public class ManageAddressActivity extends AppCompatActivity {
                 finish();
             }
         });
+        mAdd = findViewById(R.id.tv_addaddress_manageaddress);
+        mAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ManageAddressActivity.this,AddAddressActivity.class));
+            }
+        });
         mManageAddressAdapter = new ManageAddressAdapter(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(mManageAddressAdapter);
-        dohttp();
+        mManageAddressAdapter.result(new ManageAddressAdapter.DeleteAddressListener() {
+            @Override
+            public void delete(int i) {
+                list.remove(i);
+                mManageAddressAdapter.setList(list);
+            }
+        });
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        dohttp();
     }
 
     private void dohttp() {
@@ -64,14 +90,12 @@ public class ManageAddressActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(final List<PManageAddressBean> o, String msg) {
-                mManageAddressAdapter.setList(o);
-                mManageAddressAdapter.result(new ManageAddressAdapter.DeleteAddressListener() {
-                    @Override
-                    public void delete(int i) {
-                        o.remove(i);
-                        mManageAddressAdapter.setList(o);
-                    }
-                });
+                if(o.size()>0){
+                    list = o;
+                    mManageAddressAdapter.setList(o);
+                }
+
+
             }
         });
     }

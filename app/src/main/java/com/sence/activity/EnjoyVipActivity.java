@@ -50,7 +50,7 @@ public class EnjoyVipActivity extends AppCompatActivity {
     }
 
     private void doHttp() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.ENJOY_VIP, new RShopCommendBean(LoginStatus.getUid(),page+"","10")).request(new ApiCallBack<PEnjoyVipBean>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.USER_ENJOY_VIP, new RShopCommendBean(LoginStatus.getUid(),page+"","10")).request(new ApiCallBack<PEnjoyVipBean>() {
             @Override
             public void onFinish() {
 

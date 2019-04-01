@@ -68,4 +68,5 @@ dependencies {
     implementation files('libs/umeng-share-wechat-simplify-6.9.4.jar')
     implementation files('libs/umeng-shareboard-widget-6.9.4.jar')
     implementation files('libs/umeng-sharetool-6.9.4.jar')
+    implementation 'liji.library.dev:citypickerview:1.1.0'
 }

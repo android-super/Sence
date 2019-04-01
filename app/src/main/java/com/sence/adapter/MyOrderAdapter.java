@@ -58,13 +58,29 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
             holder.mPprice.setText("￥"+list.get(position).getGoods().getPrice()+".00");
             holder.mPrice.setText("￥"+Integer.parseInt(list.get(position).getGoods().getPrice())*Integer.parseInt(list.get(position).getGoods().getNum())+".00");
         }
+        if(list.get(position).getStatusMsg().equals("等待支付")){
+            holder.mAlipay.setText("立即支付");
+        }else if(list.get(position).getStatusMsg().equals("等待发货")){
+            holder.mAlipay.setText("提醒发货");
+        }else if(list.get(position).getStatusMsg().equals("等待收货")){
+            holder.mAlipay.setText("确认收货");
+        }else if(list.get(position).getStatusMsg().equals("等待评价")){
+            holder.mSevice.setVisibility(View.GONE);
+            holder.mCancel.setText("查看订单");
+            holder.mAlipay.setText("评价");
+        }
+
         holder.mPnum.setText("×"+list.get(position).getGoods().getNum());
         holder.mNum.setText("共"+list.get(position).getGoods().getNum()+"件");
         holder.mState.setText(list.get(position).getStatusMsg());
         holder.mCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+            if(list.get(position).getStatusMsg().equals("等待评价")){
+                Intent intent = new Intent(context, OrderDetailsActivity.class);
+                intent.putExtra("id",list.get(position).getId());
+                context.startActivity(intent);
+            }else {
                 HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_DELETE, new ROrderDetailsBean(list.get(position).getId(), LoginStatus.getUid())).request(new ApiCallBack<String>() {
                     @Override
                     public void onFinish() {
@@ -79,12 +95,12 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
                     @Override
                     public void onSuccess(String o, String msg) {
                         Logger.e("msg==========" + msg);
-                        if(msg.equals("取消成功")){
+                        if (msg.equals("取消成功")) {
                             listener.delete(position);
                         }
                     }
                 });
-
+            }
             }
         });
 

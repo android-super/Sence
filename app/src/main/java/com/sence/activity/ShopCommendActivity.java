@@ -8,11 +8,12 @@ import android.widget.TextView;
 import com.orhanobut.logger.Logger;
 import com.sence.R;
 import com.sence.adapter.ShopCommendAdapter;
-import com.sence.bean.request.RShopCommendBean;
+import com.sence.bean.request.RShopCommentBean;
 import com.sence.bean.response.PShopCommendBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
+import com.sence.utils.LoginStatus;
 import com.sence.utils.StatusBarUtil;
 
 import java.util.List;
@@ -53,7 +54,7 @@ public class ShopCommendActivity extends AppCompatActivity {
     }
 
     private void doHttp() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.COMMENT_SHOP_LIST, new RShopCommendBean("1",page+"","10")).request(new ApiCallBack<List<PShopCommendBean>>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.COMMENT_SHOP_LIST, new RShopCommentBean("1",page+"","10", LoginStatus.getUid())).request(new ApiCallBack<List<PShopCommendBean>>() {
             @Override
             public void onFinish() {
 

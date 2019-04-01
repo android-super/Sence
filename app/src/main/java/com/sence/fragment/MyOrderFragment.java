@@ -1,7 +1,6 @@
 package com.sence.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,7 +64,7 @@ public class MyOrderFragment extends Fragment {
         mSmartRefreshLayout.setRefreshFooter(new ClassicsFooter(getActivity()));
         LinearLayoutManager linearLayout = new LinearLayoutManager(getContext());
         linearLayout.setOrientation(RecyclerView.VERTICAL);
-        Log.i("aaa",status+"");
+        loadData();
         mRecyclerView.setLayoutManager(linearLayout);
         mRecyclerView.setAdapter(mMyOrderAdapter);
         mSmartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -107,56 +106,6 @@ public class MyOrderFragment extends Fragment {
 
 
 
-    private static final String TAG = "LazyFragment";
-    private static final String NAME = "name";
-
-    private String titlename ;
-    //Fragment的View加载完毕的标记
-    private boolean isViewCreated;
-    //Fragment对用户可见的标记
-    private boolean isUiVisible;
-
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        Log.i(TAG, "setUserVisibleHint -- " + isVisibleToUser);
-        if (isVisibleToUser) {
-            isUiVisible = true;
-            lazyLoad();
-        } else {
-            isUiVisible = false;
-        }
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            titlename = getArguments().getString(NAME);
-        }
-    }
-
-
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        Log.i(TAG, "onViewCreated");
-        isViewCreated = true;
-        lazyLoad();
-    }
-
-    private void lazyLoad() {
-        //这里进行双重标记判断,是因为setUserVisibleHint会多次回调,并且会在onCreateView执行前回调,
-        // 必须确保onCreateView加载完毕且页面可见,才加载数据
-        if (isViewCreated && isUiVisible) {
-            loadData();
-            //数据加载完毕,恢复标记,防止重复加载
-            isViewCreated = false;
-            isUiVisible = false;
-        }
-    }
 
     private void loadData() {
         HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_LIST, new RMyOrderBean("1",page+"","10",status+"")).request(new ApiCallBack<PMyOrderBean>() {
@@ -192,14 +141,6 @@ public class MyOrderFragment extends Fragment {
 
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Log.i(TAG, "onDestroyView");
-        //页面销毁,恢复标记
-        isViewCreated = false;
-        isUiVisible = false;
-    }
 
 
 }

@@ -28,6 +28,7 @@ import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.Urls;
 import com.sence.net.manager.ApiCallBack;
+import com.sence.utils.LoginStatus;
 import com.sence.utils.NavigationBarUtil;
 import com.sence.utils.StatusBarUtil;
 import com.sence.view.NiceImageView;
@@ -158,7 +159,7 @@ public class ShopDetailsActivity extends AppCompatActivity {
 
 
     private void doHttp() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.GOOD_DETAIL, new RShopDetailsBean("1", "")).request(new ApiCallBack<PShopDetailsBean>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.GOOD_DETAIL, new RShopDetailsBean("1", LoginStatus.getUid())).request(new ApiCallBack<PShopDetailsBean>() {
             @Override
             public void onFinish() {
 
@@ -172,7 +173,7 @@ public class ShopDetailsActivity extends AppCompatActivity {
             @Override
             public void onSuccess(PShopDetailsBean o, String msg) {
                 imgs = o.getImgs();
-                Logger.e("msg==========" + msg);
+                Logger.e("msg==========" + msg+o.getComment().size());
                 if (o.getComment().size() > 0) {
                     mShopDetailsCommendAdapter.setList(o.getComment());
                 }

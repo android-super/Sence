@@ -42,7 +42,7 @@ public class ShopCommendAdapter extends RecyclerView.Adapter<ShopCommendAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ShopCommendAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ShopCommendAdapter.ViewHolder holder, final int position) {
         holder.mContent.setText(list.get(position).getContent());
         holder.mName.setText(list.get(position).getNickname());
         Glide.with(context)
@@ -59,6 +59,20 @@ public class ShopCommendAdapter extends RecyclerView.Adapter<ShopCommendAdapter.
         }else{
             holder.mCommendImg.setVisibility(View.GONE);
         }
+        holder.mLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(list.get(position).getIsPraise().equals("1")){
+                    CancelLike();
+                    list.get(position).setIsPraise("0");
+                    holder.mLike.setImageResource(R.drawable.myinfo_dianzan);
+                }else if(list.get(position).getIsPraise().equals("0")){
+                    Like();
+                    list.get(position).setIsPraise("1");
+                    holder.mLike.setImageResource(R.drawable.shopcommend_dianzan_y);
+                }
+            }
+        });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,6 +80,14 @@ public class ShopCommendAdapter extends RecyclerView.Adapter<ShopCommendAdapter.
             }
         });
 
+
+    }
+
+    private void CancelLike() {
+
+    }
+
+    private void Like() {
 
     }
 
@@ -77,14 +99,16 @@ public class ShopCommendAdapter extends RecyclerView.Adapter<ShopCommendAdapter.
 
 
         private NiceImageView mImageView;
-        private ImageView mCommendImg;
-        private TextView mName,mContent;
+        private ImageView mCommendImg,mLike;
+        private TextView mName,mContent,mLikeNum;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mImageView = itemView.findViewById(R.id.iv_img_shopcommend);
             mCommendImg = itemView.findViewById(R.id.iv_commendimg_shopcommend);
             mName = itemView.findViewById(R.id.tv_name_shopcommend);
+            mLike = itemView.findViewById(R.id.iv_like_shopcommend);
+            mLikeNum = itemView.findViewById(R.id.tv_likenum_shopcommend);
             mContent = itemView.findViewById(R.id.tv_content_shopcommend);
         }
     }

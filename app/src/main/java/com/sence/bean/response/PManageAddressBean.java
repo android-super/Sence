@@ -1,6 +1,8 @@
 package com.sence.bean.response;
 
-public class PManageAddressBean {
+import java.io.Serializable;
+
+public class PManageAddressBean implements Serializable {
 
 
     private String id;

@@ -1,6 +1,7 @@
 package com.sence.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,11 +10,13 @@ import android.widget.TextView;
 
 import com.orhanobut.logger.Logger;
 import com.sence.R;
+import com.sence.activity.AddAddressActivity;
 import com.sence.bean.request.RAddressDeleteBean;
 import com.sence.bean.response.PManageAddressBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
+import com.sence.utils.LoginStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,19 +46,21 @@ public class ManageAddressAdapter extends RecyclerView.Adapter<ManageAddressAdap
 
     @Override
     public void onBindViewHolder(@NonNull ManageAddressAdapter.ViewHolder holder, final int position) {
-//        holder.name.setText(list.get(position).getUsername());
-//        holder.address.setText(list.get(position).getArea());
-//        holder.phone.setText(list.get(position).getPhone());
+        holder.mName.setText(list.get(position).getUsername());
+        holder.mAddress.setText(list.get(position).getArea());
+        holder.mPhone.setText(list.get(position).getPhone());
         holder.mEditor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(context, AddAddressActivity.class);
+                intent.putExtra("bean",list.get(position));
+                context.startActivity(intent);
             }
         });
         holder.mDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HttpManager.getInstance().PlayNetCode(HttpCode.ADDRESS_DELETE, new RAddressDeleteBean("1",list.get(position).getId())).request(new ApiCallBack<String>() {
+                HttpManager.getInstance().PlayNetCode(HttpCode.ADDRESS_DELETE, new RAddressDeleteBean(LoginStatus.getUid(),list.get(position).getId())).request(new ApiCallBack<String>() {
                     @Override
                     public void onFinish() {
 
@@ -63,14 +68,15 @@ public class ManageAddressAdapter extends RecyclerView.Adapter<ManageAddressAdap
 
                     @Override
                     public void Message(int code, String message) {
-                        if(code==1){
-                            listener.delete(position);
-                        }
+
                     }
 
                     @Override
                     public void onSuccess(String o, String msg) {
                         Logger.e("msg==========" + msg);
+                        if(msg.equals("删除地址成功")){
+                            listener.delete(position);
+                        }
                     }
                 });
             }

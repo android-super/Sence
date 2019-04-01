@@ -59,6 +59,9 @@ public class HttpManager<P> {
             case ADDRESS_ADD:
                 observable = httpService.AddressAdd(requestBean.getMap());
                 break;
+            case ADDRESS_EDIT:
+                observable = httpService.AddressEdit(requestBean.getMap());
+                break;
             case ORDER_LIST:
                 observable = httpService.OrderList(requestBean.getMap());
                 break;
@@ -75,28 +78,28 @@ public class HttpManager<P> {
                 observable = httpService.Register(requestBean.getMap());
                 break;
             case GOOD_DETAIL:
-                observable = HttpClientManager.Instance.httpService.GoodDetail(requestBean.getMap());
+                observable = httpService.GoodDetail(requestBean.getMap());
                 break;
             case SERVE_DETAIL:
-                observable = HttpClientManager.Instance.httpService.ServeDetail(requestBean.getMap());
+                observable = httpService.ServeDetail(requestBean.getMap());
                 break;
             case COMMENT_SHOP_LIST:
-                observable = HttpClientManager.Instance.httpService.CommentShopList(requestBean.getMap());
+                observable = httpService.CommentShopList(requestBean.getMap());
                 break;
             case SERVE_COMMENT_LIST:
-                observable = HttpClientManager.Instance.httpService.ServeCommentList(requestBean.getMap());
+                observable = httpService.ServeCommentList(requestBean.getMap());
                 break;
             case ORDER_DETAIL:
-                observable = HttpClientManager.Instance.httpService.OrderDetail(requestBean.getMap());
+                observable = httpService.OrderDetail(requestBean.getMap());
                 break;
-            case ENJOY_VIP:
-                observable = HttpClientManager.Instance.httpService.EnjoyVip(requestBean.getMap());
+            case USER_ENJOY_VIP:
+                observable = httpService.EnjoyVip(requestBean.getMap());
                 break;
             case ORDER_DELETE:
-                observable = HttpClientManager.Instance.httpService.OrderDelete(requestBean.getMap());
+                observable = httpService.OrderDelete(requestBean.getMap());
                 break;
             case USER_INFO_DATA:
-                observable =  HttpClientManager.Instance.httpService.UserInfoData(requestBean.getMap());
+                observable =  httpService.UserInfoData(requestBean.getMap());
                 break;
             case USER_INFO:
                 observable = httpService.UserInfo(requestBean.getMap());

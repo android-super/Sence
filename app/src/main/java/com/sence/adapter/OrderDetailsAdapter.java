@@ -42,8 +42,8 @@ public class OrderDetailsAdapter extends RecyclerView.Adapter<OrderDetailsAdapte
     public void onBindViewHolder(@NonNull OrderDetailsAdapter.ViewHolder holder, int position) {
 
         holder.mName.setText(list.get(position).getName());
-        holder.mPrice.setText(list.get(position).getPrice());
-        holder.mNum.setText(list.get(position).getNum());
+        holder.mPrice.setText("￥"+list.get(position).getPrice());
+        holder.mNum.setText("х"+list.get(position).getNum());
         Glide.with(context)
                 .load(Urls.base_url + list.get(position).getImg())
                 .placeholder(R.drawable.hint_img)
@@ -60,7 +60,7 @@ public class OrderDetailsAdapter extends RecyclerView.Adapter<OrderDetailsAdapte
 
 
         private NiceImageView mImg;
-        private TextView mName,mStroeName,mPrice,mNum;
+        private TextView mName,mPrice,mNum;
 
         public ViewHolder(View itemView) {
             super(itemView);

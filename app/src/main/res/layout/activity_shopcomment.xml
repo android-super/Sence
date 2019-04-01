@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:fitsSystemWindows="true"
+              android:orientation="vertical">
+
+    <include
+        layout="@layout/include_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"></include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingRight="37dp">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:id="@+id/iv_shopimg_shopcomment"
+            android:src="@drawable/hint_img"
+            android:scaleType="fitXY"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="18dp"
+            android:layout_marginTop="@dimen/dp_10"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/tv_goodcomment_shopcomment"
+            android:drawableLeft="@drawable/comment_haoping"
+            android:drawablePadding="11dp"
+            android:gravity="center_vertical"
+            android:text="好评"
+            android:textColor="#fd5a7c"
+            android:textSize="@dimen/sp_14"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/tv_centrecomment_shopcomment"
+            android:drawableLeft="@drawable/comment_cha"
+            android:drawablePadding="11dp"
+            android:gravity="center_vertical"
+            android:text="中评"
+            android:textSize="@dimen/sp_14"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/tv_gapcomment_shopcomment"
+            android:drawableLeft="@drawable/comment_cha"
+            android:drawablePadding="11dp"
+            android:gravity="center_vertical"
+            android:text="差评"
+            android:textSize="@dimen/sp_14"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:id="@+id/et_content_shopcomment"
+            android:gravity="top"
+            android:hint="宝贝满足您的期望吗？说说它的优点和美中不足的地方吧"
+            android:lineSpacingExtra="10dp"
+            android:paddingLeft="19dp"
+            android:paddingRight="37dp"
+            android:paddingTop="11dp"
+            android:textColor="#333333"
+            android:textColorHint="#999999"
+            android:textSize="@dimen/sp_14"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="20dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginRight="20dp"
+                android:scaleType="fitXY"
+                android:id="@+id/iv_imgone_shopcomment"
+                android:src="@drawable/comment_tianjia"/>
+
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginRight="20dp"
+                android:id="@+id/iv_imgtwe_shopcomment"
+                android:scaleType="fitXY"
+                android:src="@drawable/comment_yi"/>
+
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginRight="20dp"
+                android:id="@+id/iv_imgthress_shopcomment"
+                android:scaleType="fitXY"
+                android:src="@drawable/comment_er"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

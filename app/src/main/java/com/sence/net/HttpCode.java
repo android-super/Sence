@@ -7,6 +7,7 @@ public enum HttpCode {
     GET_SYSTEM_TIME,//获取系统消息
     IS_REGISTER,//是否注册
     ADDRESS_ADD,//添加地址
+    ADDRESS_EDIT,//编辑地址
     ORDER_LIST,//订单列表
     ADDRESS_LIST,//地址列表
     ADDRESS_DELETE,//删除地址
@@ -31,6 +32,6 @@ public enum HttpCode {
     SERVE_COMMENT_LIST,//服务评论列表
     ORDER_DETAIL,//订单详情
     ORDER_DELETE,//取消待付款，待支付订单
-    ENJOY_VIP,//尊享会员
+    USER_ENJOY_VIP,//尊享会员
     USER_INFO_DATA,//我的信息
 }
