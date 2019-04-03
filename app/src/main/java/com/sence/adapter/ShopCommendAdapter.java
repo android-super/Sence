@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.sence.R;
 import com.sence.activity.ServiceDetailsActivity;
 import com.sence.bean.response.PShopCommendBean;
@@ -45,16 +46,14 @@ public class ShopCommendAdapter extends RecyclerView.Adapter<ShopCommendAdapter.
     public void onBindViewHolder(@NonNull final ShopCommendAdapter.ViewHolder holder, final int position) {
         holder.mContent.setText(list.get(position).getContent());
         holder.mName.setText(list.get(position).getNickname());
+        RequestOptions options = new RequestOptions();
+        options.placeholder(R.drawable.hint_img);
         Glide.with(context)
                 .load(Urls.base_url + list.get(position).getAvatar())
-                .placeholder(R.drawable.hint_img)
-                .fallback(R.drawable.hint_img)
                 .into(holder.mImageView);
         if(list.get(position).getImgs().size()>0){
             Glide.with(context)
                     .load(Urls.base_url + list.get(position).getImgs().get(0))
-                    .placeholder(R.drawable.hint_img)
-                    .fallback(R.drawable.hint_img)
                     .into(holder.mCommendImg);
         }else{
             holder.mCommendImg.setVisibility(View.GONE);

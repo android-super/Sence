@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.sence.R;
 import com.sence.bean.response.PUserDetailBean;
 import com.sence.net.Urls;
@@ -41,10 +42,10 @@ public class UserDetailAdapter extends RecyclerView.Adapter<UserDetailAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull UserDetailAdapter.ViewHolder holder, int position) {
+        RequestOptions options = new RequestOptions();
+        options.placeholder(R.drawable.hint_img);
         Glide.with(context)
                 .load(Urls.base_url + list.get(position).getImg())
-                .placeholder(R.drawable.hint_img)
-                .fallback(R.drawable.hint_img)
                 .into(holder.mImg);
         holder.mName.setText(list.get(position).getNote());
         holder.mTime.setText(list.get(position).getAdd_time());

@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.orhanobut.logger.Logger;
 import com.sence.R;
 import com.sence.adapter.ServiceDetailsAdapter;
@@ -96,15 +97,13 @@ public class ServiceDetailsActivity extends AppCompatActivity {
                 mName.setText(o.getTag());
                 mAddress.setText(o.getPosition());
                 mUserName.setText(o.getUsername());
+                RequestOptions options = new RequestOptions();
+                options.placeholder(R.drawable.hint_img);
                 Glide.with(ServiceDetailsActivity.this)
                         .load(Urls.base_url + o.getImg())
-                        .placeholder(R.drawable.hint_img)
-                        .fallback(R.drawable.hint_img)
                         .into(mImg);
                 Glide.with(ServiceDetailsActivity.this)
                         .load(Urls.base_url + o.getAvatar())
-                        .placeholder(R.drawable.hint_img)
-                        .fallback(R.drawable.hint_img)
                         .into(mUserImg);
             }
         });

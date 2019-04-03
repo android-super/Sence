@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.sence.R;
 import com.sence.bean.response.PServiceCommendBean;
 import com.sence.net.Urls;
@@ -46,10 +47,10 @@ public class ServiceDetailsAdapter extends RecyclerView.Adapter<ServiceDetailsAd
         holder.mContent.setText(list.get(position).getContent());
         holder.mName.setText(list.get(position).getUsername());
         holder.mTime.setText(list.get(position).getTime());
+        RequestOptions options = new RequestOptions();
+        options.placeholder(R.drawable.hint_img);
         Glide.with(context)
                 .load(Urls.base_url + list.get(position).getAvatar())
-                .placeholder(R.drawable.hint_img)
-                .fallback(R.drawable.hint_img)
                 .into(holder.mImageView);
         ServiceDetailsImgAdapter mServiceDetailsImgAdapter = new ServiceDetailsImgAdapter(context);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(context,3);

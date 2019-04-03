@@ -8,20 +8,31 @@
             android:layout_height="50dp"
             android:background="@color/white"
             android:gravity="center"
+            android:id="@+id/tv_takephoto"
             android:text="拍照"
             />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#fcfcfc"></View>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/white"
         android:gravity="center"
+        android:id="@+id/tv_photo"
         android:text="相册"
         />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="#fcfcfc"></View>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/white"
         android:gravity="center"
+        android:id="@+id/tv_cancel"
         android:text="取消"
         />
 </LinearLayout>

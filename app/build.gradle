@@ -59,7 +59,7 @@ dependencies {
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
     // Optional, if you use support library fragments:
     debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.3'
-    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    implementation 'com.github.bumptech.glide:glide:4.5.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
     implementation 'com.github.tomlezen:FuckTabLayout:1.0.2'
     api 'com.blankj:utilcode:1.11.1'
@@ -72,5 +72,6 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.1.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.1.0'
 //    implementation 'com.jph.takephoto:takephoto_library:4.0.3'
-    implementation 'com.lcw.library:imagepicker:2.1.1'
+//    implementation 'com.lcw.library:imagepicker:2.1.1'
+    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
 }

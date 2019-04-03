@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.sence.R;
 import com.sence.bean.response.POrderDetailsBean;
 import com.sence.net.Urls;
@@ -44,10 +45,10 @@ public class OrderDetailsAdapter extends RecyclerView.Adapter<OrderDetailsAdapte
         holder.mName.setText(list.get(position).getName());
         holder.mPrice.setText("￥"+list.get(position).getPrice());
         holder.mNum.setText("х"+list.get(position).getNum());
+        RequestOptions options = new RequestOptions();
+        options.placeholder(R.drawable.hint_img);
         Glide.with(context)
                 .load(Urls.base_url + list.get(position).getImg())
-                .placeholder(R.drawable.hint_img)
-                .fallback(R.drawable.hint_img)
                 .into(holder.mImg);
 
     }

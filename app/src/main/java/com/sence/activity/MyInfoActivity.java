@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ConvertUtils;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
 import com.orhanobut.logger.Logger;
@@ -162,10 +163,10 @@ public class MyInfoActivity extends AppCompatActivity implements View.OnClickLis
                 }else {
                     mIsV.setVisibility(View.GONE);
                 }
+                RequestOptions options = new RequestOptions();
+                options.placeholder(R.drawable.hint_img);
                 Glide.with(MyInfoActivity.this)
                         .load(Urls.base_url + o.getAvatar())
-                        .placeholder(R.drawable.hint_img)
-                        .fallback(R.drawable.hint_img)
                         .into(mImageView);
 //                Glide.with(MyInfoActivity.this)
 //                        .load(Urls.base_url + o.getAvatar())
@@ -178,8 +179,6 @@ public class MyInfoActivity extends AppCompatActivity implements View.OnClickLis
                     mShopPrice.setText("￥ "+o.getGoods_info().getPrice());
                     Glide.with(MyInfoActivity.this)
                             .load(Urls.base_url + o.getGoods_info().getImg())
-                            .placeholder(R.drawable.hint_img)
-                            .fallback(R.drawable.hint_img)
                             .into(mImg);
                 }else{
                     mShop.setVisibility(View.GONE);

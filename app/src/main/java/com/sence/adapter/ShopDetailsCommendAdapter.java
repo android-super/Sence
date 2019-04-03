@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.sence.R;
 import com.sence.bean.response.PShopDetailsBean;
 import com.sence.net.Urls;
@@ -43,8 +44,10 @@ public class ShopDetailsCommendAdapter extends RecyclerView.Adapter<ShopDetailsC
     public void onBindViewHolder(@NonNull ShopDetailsCommendAdapter.ViewHolder holder, int position) {
         holder.mName.setText(list.get(position).getNickname());
         holder.mContent.setText(list.get(position).getContent());
-        Glide.with(context).load(Urls.base_url + list.get(position).getImg()).placeholder(R.drawable.hint_img).fallback(R.drawable.hint_img).into(holder.mImageView);
-        Glide.with(context).load(Urls.base_url + list.get(position).getAvatar()).placeholder(R.drawable.hint_img).fallback(R.drawable.hint_img).into(holder.mImg);
+        RequestOptions options = new RequestOptions();
+        options.placeholder(R.drawable.hint_img);
+        Glide.with(context).load(Urls.base_url + list.get(position).getImg()).into(holder.mImageView);
+        Glide.with(context).load(Urls.base_url + list.get(position).getAvatar()).into(holder.mImg);
     }
 
     @Override

@@ -1,16 +1,13 @@
 package com.sence.activity;
 
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import androidx.core.content.ContextCompat;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -20,6 +17,9 @@ import com.bumptech.glide.request.target.Target;
 import com.sence.R;
 import com.sence.view.PictureTagLayout;
 import com.sence.view.PubTitle;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * 添加标签

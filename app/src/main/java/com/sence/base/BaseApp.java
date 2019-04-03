@@ -21,7 +21,6 @@ import androidx.multidex.MultiDex;
  */
 public class BaseApp extends Application {
     public static BaseApp INSTANCE;
-    private static BaseApp mBaseApp;
 
     @Override
     public void onCreate() {
@@ -34,9 +33,6 @@ public class BaseApp extends Application {
         initHttpManager();
         initUM();
         initSharedPreference();
-    }
-    public static BaseApp getContext() {
-        return mBaseApp;
     }
     /**
      * 数据保存

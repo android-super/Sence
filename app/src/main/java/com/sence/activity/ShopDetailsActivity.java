@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.appbar.AppBarLayout;
 import com.orhanobut.logger.Logger;
 import com.sence.R;
@@ -185,10 +186,10 @@ public class ShopDetailsActivity extends AppCompatActivity {
                     for (int i = 0; i < imgs.size(); i++) {
                         ImageView imageView = new ImageView(ShopDetailsActivity.this);
                         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                        RequestOptions options = new RequestOptions();
+                        options.placeholder(R.drawable.hint_img);
                         Glide.with(ShopDetailsActivity.this)
                                 .load(Urls.base_url + imgs.get(i))
-                                .placeholder(R.drawable.hint_img)
-                                .fallback(R.drawable.hint_img)
                                 .into(imageView);
                         list.add(imageView);
                     }
@@ -205,8 +206,6 @@ public class ShopDetailsActivity extends AppCompatActivity {
                 mShopName.setText(o.getUsername());
                 Glide.with(ShopDetailsActivity.this)
                         .load(Urls.base_url + o.getAvatar())
-                        .placeholder(R.drawable.hint_img)
-                        .fallback(R.drawable.hint_img)
                         .into(mShopImg);
                 mShopCommendNum.setText("商品评价(" + o.getCommentNum() + ")");
                 mGoodCommend.setText("好评" + o.getCommentRate() + "%");

@@ -97,7 +97,7 @@
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_marginRight="20dp"
-                android:scaleType="fitXY"
+                android:scaleType="center"
                 android:id="@+id/iv_imgone_shopcomment"
                 android:src="@drawable/comment_tianjia"/>
 
@@ -106,7 +106,7 @@
                 android:layout_height="70dp"
                 android:layout_marginRight="20dp"
                 android:id="@+id/iv_imgtwe_shopcomment"
-                android:scaleType="fitXY"
+                android:scaleType="center"
                 android:src="@drawable/comment_yi"/>
 
             <ImageView
@@ -114,7 +114,7 @@
                 android:layout_height="70dp"
                 android:layout_marginRight="20dp"
                 android:id="@+id/iv_imgthress_shopcomment"
-                android:scaleType="fitXY"
+                android:scaleType="center"
                 android:src="@drawable/comment_er"/>
         </LinearLayout>
     </LinearLayout>

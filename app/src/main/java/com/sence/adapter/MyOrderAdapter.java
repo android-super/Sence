@@ -1,5 +1,6 @@
 package com.sence.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.orhanobut.logger.Logger;
 import com.sence.R;
 import com.sence.activity.ConfirmOrderActivity;
@@ -49,7 +51,9 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull MyOrderAdapter.ViewHolder holder, final int position) {
-        Glide.with(context).load(Urls.base_url + list.get(position).getGoods().getImg()).placeholder(R.drawable.hint_img).fallback(R.drawable.hint_img).into(holder.mImageView);
+        RequestOptions options = new RequestOptions();
+        options.placeholder(R.drawable.hint_img);
+        Glide.with(context).load(Urls.base_url + list.get(position).getGoods().getImg()).into(holder.mImageView);
         holder.mName.setText(list.get(position).getGoods().getName());
         holder.mTime.setText(list.get(position).getAddtime());
         if(list.get(position).getGoods().getPrice().contains(".")){
@@ -82,26 +86,42 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
                 intent.putExtra("id",list.get(position).getId());
                 context.startActivity(intent);
             }else {
-
-                HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_DELETE, new ROrderDetailsBean(list.get(position).getId(), LoginStatus.getUid())).request(new ApiCallBack<String>() {
+                View view = View.inflate(context, R.layout.alter_deleteorder, null);
+                final AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+                alertDialog.setView(view);
+                alertDialog.show();
+                view.findViewById(R.id.tv_cancel_deleteorder).setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onFinish() {
-
-                    }
-
-                    @Override
-                    public void Message(int code, String message) {
-
-                    }
-
-                    @Override
-                    public void onSuccess(String o, String msg) {
-                        Logger.e("msg==========" + msg);
-                        if (msg.equals("取消成功")) {
-                            listener.delete(position);
-                        }
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
                     }
                 });
+                view.findViewById(R.id.tv_confirm_deleteorder).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                        HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_DELETE, new ROrderDetailsBean(list.get(position).getId(), LoginStatus.getUid())).request(new ApiCallBack<String>() {
+                            @Override
+                            public void onFinish() {
+
+                            }
+
+                            @Override
+                            public void Message(int code, String message) {
+
+                            }
+
+                            @Override
+                            public void onSuccess(String o, String msg) {
+                                Logger.e("msg==========" + msg);
+                                if (msg.equals("取消成功")) {
+                                    listener.delete(position);
+                                }
+                            }
+                        });
+                    }
+                });
+
             }
             }
         });
@@ -123,6 +143,7 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
             public void onClick(View v) {
                 Intent intent = new Intent(context, OrderDetailsActivity.class);
                 intent.putExtra("id",list.get(position).getId());
+                intent.putExtra("type",list.get(position).getStatusMsg());
                 context.startActivity(intent);
             }
         });

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.sence.R;
 import com.sence.bean.response.PMyInfoBean;
 import com.sence.net.Urls;
@@ -43,15 +44,13 @@ public class MyInfoNoteAdapter extends RecyclerView.Adapter<MyInfoNoteAdapter.Vi
         holder.mName.setText(list.get(position).getNick_name());
         holder.mContent.setText(list.get(position).getContent());
         holder.mLike.setText(list.get(position).getPraise_count());
+        RequestOptions options = new RequestOptions();
+        options.placeholder(R.drawable.hint_img);
         Glide.with(context)
                 .load(Urls.base_url + list.get(position).getAvatar())
-                .placeholder(R.drawable.hint_img)
-                .fallback(R.drawable.hint_img)
                 .into(holder.mImageView);
         Glide.with(context)
                 .load(Urls.base_url + list.get(position).getAlbum_url())
-                .placeholder(R.drawable.hint_img)
-                .fallback(R.drawable.hint_img)
                 .into(holder.mImg);
     }
 

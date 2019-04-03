@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.sence.R;
 import com.sence.net.Urls;
 
@@ -38,10 +39,10 @@ public class ServiceDetailsImgAdapter extends RecyclerView.Adapter<ServiceDetail
 
     @Override
     public void onBindViewHolder(@NonNull ServiceDetailsImgAdapter.ViewHolder holder, int position) {
+        RequestOptions options = new RequestOptions();
+        options.placeholder(R.drawable.hint_img);
         Glide.with(context)
                 .load(Urls.base_url + list.get(position))
-                .placeholder(R.drawable.hint_img)
-                .fallback(R.drawable.hint_img)
                 .into(holder.mImageView);
     }
 
