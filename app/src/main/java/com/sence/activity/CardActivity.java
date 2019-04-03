@@ -1,8 +1,10 @@
 package com.sence.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+
 import com.sence.R;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * 银行卡界面

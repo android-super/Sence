@@ -31,50 +31,77 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     >
+
                     <ImageView
                         android:id="@+id/iv_head_myinfo"
                         android:layout_width="match_parent"
-                        android:layout_height="270dp"
+                        android:layout_height="259dp"
                         android:scaleType="fitXY"
                         android:src="@drawable/hint_img"
+
                         />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="259dp"
+                        android:alpha="0.6"
+                        android:background="#000000"/>
+
                     <RelativeLayout
                         android:id="@+id/iv_imgbg_myinfo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:alpha="0.6"
-                        android:background="#000000"
                         android:paddingBottom="18dp">
 
                         <com.sence.view.NiceImageView
-                            app:is_circle="true"
                             android:id="@+id/iv_imgico_myinfo"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
                             android:layout_alignParentRight="true"
                             android:layout_marginRight="25dp"
                             android:layout_marginTop="88dp"
+                            app:border_width="1dp"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/hint_img"/>
+                            android:src="@drawable/hint_img"
+                            app:is_circle="true"/>
 
-                        <TextView
-                            android:id="@+id/tv_name_myinfo"
+                        <RelativeLayout
+                            android:id="@+id/rl_name_myinfo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="25dp"
-                            android:layout_marginTop="71dp"
-                            android:text="o糖兜兜"
-                            android:textColor="@color/white"
-                            android:textSize="29dp"
-                            android:textStyle="bold"/>
+                            android:layout_marginTop="72dp">
+
+                            <TextView
+                                android:id="@+id/tv_name_myinfo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="26dp"
+                                android:text="o糖兜兜"
+                                android:layout_centerVertical="true"
+                                android:textColor="@color/white"
+                                android:textSize="29dp"
+                                android:textStyle="bold"/>
+
+                            <com.sence.view.NiceImageView
+                                android:id="@+id/iv_isv_myinfo"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                app:border_width="1dp"
+                                app:is_circle="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="@dimen/dp_10"
+                                android:layout_toRightOf="@+id/tv_name_myinfo"
+                                android:src="@drawable/main_recommend_v"/>
+
+                        </RelativeLayout>
 
                         <TextView
                             android:id="@+id/tv_address_myinfo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/tv_name_myinfo"
-                            android:layout_marginLeft="25dp"
-                            android:layout_marginTop="16dp"
+                            android:layout_below="@id/rl_name_myinfo"
+                            android:layout_marginLeft="26dp"
+                            android:layout_marginTop="17dp"
                             android:text="东方福唐文化传媒有限公司"
                             android:textColor="#cfdfe0"/>
 
@@ -83,7 +110,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/tv_address_myinfo"
-                            android:layout_marginTop="16dp">
+                            android:layout_marginTop="15dp">
 
                             <TextView
                                 android:id="@+id/tv_focus_myinfo"
@@ -141,12 +168,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/rl_num_myinfo"
-                            android:layout_marginBottom="18dp"
                             android:layout_marginLeft="25dp"
-                            android:layout_marginTop="27dp"
+                            android:layout_marginTop="25dp"
                             android:text="TA 还没有什么想说的"
                             android:textColor="@color/white"
                             android:textSize="15sp"/>
+
                     </RelativeLayout>
 
 
@@ -158,7 +185,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/rl_head_myinfo"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="-28dp"
+                    android:layout_marginTop="-25dp"
                     android:background="@drawable/enjoyvip_chang"
                     android:elevation="100dp"
                     android:padding="@dimen/dp_10">
@@ -166,11 +193,13 @@
                     <com.sence.view.NiceImageView
                         android:id="@+id/iv_img_myinfo"
                         android:layout_width="60dp"
-                        app:corner_radius="3dp"
                         android:layout_height="60dp"
-                        android:layout_margin="@dimen/dp_10"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="@dimen/dp_10"
+                        android:layout_marginLeft="@dimen/dp_10"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/hint_img"/>
+                        android:src="@drawable/hint_img"
+                        app:corner_radius="3dp"/>
 
                     <TextView
                         android:id="@+id/tv_shopname_myinfo"
@@ -187,16 +216,43 @@
                         />
 
                     <TextView
+                        android:id="@+id/tv_price_myinfo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tv_shopname_myinfo"
                         android:layout_marginTop="13dp"
                         android:layout_toRightOf="@id/iv_img_myinfo"
                         android:text="￥：1000"
-                        android:id="@+id/tv_price_myinfo"
                         android:textColor="@color/theme_green"
                         android:textSize="@dimen/sp_14"/>
                 </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_group_myinfo"
+                    android:layout_width="60dp"
+                    android:layout_height="22dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="35dp"
+                    android:layout_marginTop="180dp"
+                    android:background="@drawable/shape_qunbg_myinfo"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="13dp"
+                        android:background="@drawable/main_wode"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="3dp"
+                        android:gravity="center"
+                        android:text="群聊"
+                        android:textColor="#16A5AF"
+                        android:textSize="@dimen/sp_12"
+                        />
+                </LinearLayout>
 
             </RelativeLayout>
 
@@ -242,61 +298,38 @@
                         android:textSize="@dimen/sp_16"
                         />
 
-                    <com.google.android.material.tabs.TabLayout
-                        android:id="@+id/tl_tab_myinfo"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginTop="15dp"
-                        android:layout_toLeftOf="@+id/tv_deditor_myinfo"
-                        android:layout_toRightOf="@+id/iv_back_myinfo"
-                        android:visibility="gone"
-                        app:tabGravity="fill"
-                        app:tabIndicatorColor="@color/theme_green"
-                        app:tabIndicatorFullWidth="false"
-                        app:tabInlineLabel="true"
-                        app:tabSelectedTextColor="@color/theme_green"
-                        app:tabTextColor="#050505"
-                        app:tabUnboundedRipple="true"
-                        >
-
-                    </com.google.android.material.tabs.TabLayout>
 
                 </RelativeLayout>
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/white"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tl_tabhid_myinfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            app:tabIndicatorColor="@color/theme_green"
+            app:tabIndicatorFullWidth="false"
+            app:tabSelectedTextColor="@color/theme_green"
+            app:tabTextColor="#050505"
+            />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vp_content_myinfo"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/ll_fooler_myinfo"
-            android:background="@drawable/enjoyvip_chang9"
-            android:orientation="vertical"
-            >
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tl_tabhid_myinfo"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:fillViewport="true"
-                android:background="@color/white"
-                app:tabGravity="fill"
-                app:tabIndicatorColor="@color/theme_green"
-                app:tabIndicatorFullWidth="false"
-                app:tabInlineLabel="true"
-                app:tabSelectedTextColor="@color/theme_green"
-                app:tabTextColor="#050505"
-                app:tabUnboundedRipple="true"
-                />
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/vp_content_myinfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
+            android:layout_height="wrap_content"
 
-        </LinearLayout>
+            />
+
+    </LinearLayout>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

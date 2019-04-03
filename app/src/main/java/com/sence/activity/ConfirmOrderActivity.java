@@ -9,7 +9,9 @@ import com.sence.R;
 import com.sence.utils.StatusBarUtil;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+/**
+ * 确认订单
+ */
 public class ConfirmOrderActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView mAddress,mPhone,mName,mShopname,mPrice,mNum,mShopNum,mPostPrice,mShopPrice,mMaxPrice,mSprice;

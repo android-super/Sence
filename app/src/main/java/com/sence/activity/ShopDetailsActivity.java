@@ -41,7 +41,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
-
+/**
+ * 商品详情
+ */
 public class ShopDetailsActivity extends AppCompatActivity {
 
     private AppBarLayout mAppBarLayout;

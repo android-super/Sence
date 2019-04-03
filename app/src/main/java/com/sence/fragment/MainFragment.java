@@ -1,13 +1,16 @@
 package com.sence.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.google.android.material.tabs.TabLayout;
 import com.sence.R;
+import com.sence.activity.SearchActivity;
 import com.sence.adapter.pager.CustomViewPagerAdapter;
 import com.sence.fragment.main.FocusFragment;
 import com.sence.fragment.main.NoteFragment;
@@ -27,6 +30,7 @@ public class MainFragment extends Fragment {
     private CustomViewPagerAdapter pagerAdapter;
 
     private String[] titles = {"关注", "推荐", "笔记"};
+    private RelativeLayout mSearch;
 
     public MainFragment() {
 
@@ -44,10 +48,17 @@ public class MainFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         tab_layout = getView().findViewById(R.id.tab_layout);
         viewPager = getView().findViewById(R.id.view_pager);
+        mSearch = getView().findViewById(R.id.rl_search);
         initTabLayout();
     }
 
     private void initTabLayout() {
+        mSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), SearchActivity.class));
+            }
+        });
         final Fragment[] fragments = {new FocusFragment(), new RecommendFragment(), new NoteFragment()};
         pagerAdapter = new CustomViewPagerAdapter(getChildFragmentManager(), getActivity());
         for (int i = 0; i < titles.length; i++) {

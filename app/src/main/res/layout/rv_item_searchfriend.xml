@@ -1,7 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="70dp">
+    <com.sence.view.NiceImageView
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        app:is_circle="true"
+        android:src="@drawable/hint_img"
+        android:scaleType="fitXY"
+        android:id="@+id/iv_img_searchfriend"
+        android:layout_marginTop="11dp"
+        android:layout_marginBottom="11dp"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="12dp"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_centerVertical="true">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="糖兜兜你说啥是啥"
+                android:textColor="#000000"
+                android:drawablePadding="8dp"
+                android:id="@+id/tv_name_searchfriend"
+                android:drawableRight="@drawable/main_recommend_v"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:id="@+id/tv_signer_searchfriend"
+                android:layout_below="@+id/tv_name_searchfriend"
+                android:layout_marginTop="11dp"
+                android:text="生而为人 请不要忘记善良"
+                android:textColor="#999999"
+                />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="+  关注"
+            android:gravity="center"
+            android:background="@drawable/shape_searchconcern_bg"
+            android:textSize="13sp"
+            android:id="@+id/tv_focus_searchfriend"
+            android:textColor="#16A5AF"
+            android:layout_marginRight="12dp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#EEEEEE"
+            android:layout_alignParentBottom="true"></View>
+    </RelativeLayout>
 
 </LinearLayout>

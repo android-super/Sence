@@ -10,7 +10,9 @@ import com.sence.utils.StatusBarUtil;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
+/**
+ * 服务评论
+ */
 public class ServiceCommentActivity extends AppCompatActivity {
 
     private TextView mTitle,mGoodComment,mGapComment,mCentreComment;

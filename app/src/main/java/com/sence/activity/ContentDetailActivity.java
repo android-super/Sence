@@ -2,19 +2,18 @@ package com.sence.activity;
 
 import android.annotation.TargetApi;
 import android.os.Build;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
-import android.widget.*;
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import androidx.core.widget.NestedScrollView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
 import com.blankj.utilcode.util.ConvertUtils;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.orhanobut.logger.Logger;
 import com.sence.R;
 import com.sence.adapter.CommentAdapter;
 import com.sence.adapter.ContentGoodAdapter;
@@ -27,6 +26,11 @@ import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.LoginStatus;
 import com.sence.utils.StatusBarUtil;
 import com.sence.view.NiceImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * 内容详情

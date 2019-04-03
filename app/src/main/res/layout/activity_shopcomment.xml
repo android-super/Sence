@@ -14,8 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:background="@color/white"
-        android:orientation="horizontal"
-        android:paddingRight="37dp">
+        android:orientation="horizontal">
 
         <ImageView
             android:layout_width="50dp"
@@ -27,40 +26,77 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="18dp"
             android:layout_marginTop="@dimen/dp_10"/>
-
-        <TextView
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:id="@+id/tv_goodcomment_shopcomment"
-            android:drawableLeft="@drawable/comment_haoping"
-            android:drawablePadding="11dp"
+            android:layout_height="match_parent"
+            android:id="@+id/ll_good_shopcomment"
             android:gravity="center_vertical"
-            android:text="好评"
-            android:textColor="#fd5a7c"
-            android:textSize="@dimen/sp_14"/>
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/iv_goodimg_shopcomment"
+                android:src="@drawable/comment_haoping"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_goodcomment_shopcomment"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="11dp"
+                android:text="好评"
+                android:textColor="#fd5a7c"
+                android:textSize="@dimen/sp_14"/>
+        </LinearLayout>
 
-        <TextView
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:id="@+id/tv_centrecomment_shopcomment"
-            android:drawableLeft="@drawable/comment_cha"
-            android:drawablePadding="11dp"
+            android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:text="中评"
-            android:textSize="@dimen/sp_14"/>
+            android:id="@+id/ll_centre_shopcomment"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/comment_cha"
+                android:id="@+id/iv_centreimg_shopcomment"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_centrecomment_shopcomment"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="11dp"
+                android:textColor="#aaabbb"
+                android:text="中评"
+                android:textSize="@dimen/sp_14"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:id="@+id/ll_gap_shopcomment"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/comment_cha"
+                android:id="@+id/iv_gapimg_shopcomment"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#aaabbb"
+                android:id="@+id/tv_gapcomment_shopcomment"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="11dp"
+                android:text="差评"
+                android:textSize="@dimen/sp_14"/>
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:id="@+id/tv_gapcomment_shopcomment"
-            android:drawableLeft="@drawable/comment_cha"
-            android:drawablePadding="11dp"
-            android:gravity="center_vertical"
-            android:text="差评"
-            android:textSize="@dimen/sp_14"/>
     </LinearLayout>
 
     <LinearLayout

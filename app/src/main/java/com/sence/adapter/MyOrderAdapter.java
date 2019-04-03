@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.orhanobut.logger.Logger;
 import com.sence.R;
 import com.sence.activity.ConfirmOrderActivity;
+import com.sence.activity.OrderCommentActivity;
 import com.sence.activity.OrderDetailsActivity;
 import com.sence.bean.request.ROrderDetailsBean;
 import com.sence.bean.response.PMyOrderBean;
@@ -81,6 +82,7 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
                 intent.putExtra("id",list.get(position).getId());
                 context.startActivity(intent);
             }else {
+
                 HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_DELETE, new ROrderDetailsBean(list.get(position).getId(), LoginStatus.getUid())).request(new ApiCallBack<String>() {
                     @Override
                     public void onFinish() {
@@ -107,6 +109,12 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
         holder.mAlipay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(list.get(position).getStatusMsg().equals("等待评价")){
+                    Intent intent = new Intent(context, OrderCommentActivity.class);
+                    intent.putExtra("url",list.get(position).getGoods().getImg());
+                    context.startActivity(intent);
+                    return;
+                }
                 context.startActivity(new Intent(context, ConfirmOrderActivity.class));
             }
         });

@@ -99,13 +99,19 @@ public class HttpManager<P> {
                 observable = httpService.OrderDelete(requestBean.getMap());
                 break;
             case USER_INFO_DATA:
-                observable =  httpService.UserInfoData(requestBean.getMap());
+                observable = httpService.UserInfoData(requestBean.getMap());
+                break;
+            case USER_INFO_DATA_SERVICE:
+                observable = httpService.UserInfoDataService(requestBean.getMap());
                 break;
             case USER_INFO:
                 observable = httpService.UserInfo(requestBean.getMap());
                 break;
             case BUS_GOODS:
                 observable = httpService.BusList(requestBean.getMap());
+                break;
+            case USER_DETAIL:
+                observable = httpService.UserDetail(requestBean.getMap());
                 break;
             case MAIN_NOTE:
                 observable = httpService.MainNote(requestBean.getMap());

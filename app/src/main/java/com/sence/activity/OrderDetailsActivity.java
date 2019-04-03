@@ -22,7 +22,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+/**
+ * 订单详情
+ */
 public class OrderDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView mState,mNumber,mTime,mName,mPhone,mAddress,mCoupon,mStroeName,mPostPrice,mTaxPrice,mMoney,mSprice,mShopPrice;

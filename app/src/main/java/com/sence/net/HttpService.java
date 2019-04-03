@@ -1,21 +1,28 @@
 package com.sence.net;
 
 import com.sence.bean.base.BaseResponseBean;
+import com.sence.bean.response.PAccountBean;
 import com.sence.bean.response.PBusBean;
 import com.sence.bean.response.PBusRecommendBean;
+import com.sence.bean.response.PCommentBean;
+import com.sence.bean.response.PContentDetailBean;
 import com.sence.bean.response.PEnjoyVipBean;
+import com.sence.bean.response.PGoodListBean;
 import com.sence.bean.response.PMainFocusBean;
 import com.sence.bean.response.PMainNoteBean;
 import com.sence.bean.response.PMainRecommendBean;
 import com.sence.bean.response.PManageAddressBean;
 import com.sence.bean.response.PMyInfoBean;
+import com.sence.bean.response.PMyInfoServiceBean;
 import com.sence.bean.response.PMyOrderBean;
+import com.sence.bean.response.PNoteDetailBean;
 import com.sence.bean.response.POrderDetailsBean;
 import com.sence.bean.response.PServiceCommendBean;
 import com.sence.bean.response.PServiceeDetails;
 import com.sence.bean.response.PShopCommendBean;
 import com.sence.bean.response.PShopDetailsBean;
 import com.sence.bean.response.PUserBean;
+import com.sence.bean.response.PUserDetailBean;
 import com.sence.bean.response.PUserInfoBean;
 import com.sence.bean.response.PUserVipBean;
 import com.sence.bean.response.PVerifyCodeBean;
@@ -179,10 +186,6 @@ public interface HttpService {
     @POST(Urls.GOOD_KIND)
     Observable<BaseResponseBean<String>> GoodKind(@FieldMap Map<String, Object> map);//商品分类列表
 
-    @FormUrlEncoded
-    @POST(Urls.GOOD_LIST)
-    Observable<BaseResponseBean<String>> GoodList(@FieldMap Map<String, Object> map);//分类下的商品列表
-
 
     @FormUrlEncoded
     @POST(Urls.USER_ENJOY_VIP)
@@ -222,8 +225,15 @@ public interface HttpService {
     @POST(Urls.MAIN_CONTENT_DETAIL)
     Observable<BaseResponseBean<PContentDetailBean>> ContentDetail(@FieldMap Map<String, Object> map);//内容详情
 
-
     @FormUrlEncoded
     @POST(Urls.USER_INFO_DATA)
     Observable<BaseResponseBean<PMyInfoBean>> UserInfoData(@FieldMap Map<String, Object> map);//我的信息
+
+    @FormUrlEncoded
+    @POST(Urls.USER_INFO_DATA)
+    Observable<BaseResponseBean<PMyInfoServiceBean>> UserInfoDataService(@FieldMap Map<String, Object> map);//我的信息
+
+    @FormUrlEncoded
+    @POST(Urls.USER_DETAIL)
+    Observable<BaseResponseBean<List<PUserDetailBean>>> UserDetail(@FieldMap Map<String, Object> map);//我的信息
 }

@@ -1,5 +1,6 @@
 package com.sence.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,7 +20,9 @@ import com.sence.utils.StatusBarUtil;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+/**
+ * 尊享会员
+ */
 public class EnjoyVipActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private EnjoyVipAdapter mEnjoyVipAdapter;
@@ -30,6 +33,11 @@ public class EnjoyVipActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enjoyvip);
         StatusBarUtil.setLightMode(this);
+        initData();
+
+    }
+
+    private void initData() {
         TextView mTitle = findViewById(R.id.pub_title);
         mTitle.setText("尊享会员");
         ImageView mBack = findViewById(R.id.pub_back);
@@ -41,6 +49,12 @@ public class EnjoyVipActivity extends AppCompatActivity {
         });
         mRecyclerView = findViewById(R.id.recycle_enjoyvip);
         mPrice = findViewById(R.id.tv_price_enjoyvip);
+        mPrice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(EnjoyVipActivity.this,UserDetailActivity.class));
+            }
+        });
         mEnjoyVipAdapter = new EnjoyVipAdapter(this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
         gridLayoutManager.setOrientation(RecyclerView.VERTICAL);

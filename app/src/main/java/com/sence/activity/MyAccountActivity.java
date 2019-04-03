@@ -1,18 +1,20 @@
 package com.sence.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
+
 import com.sence.R;
-import com.sence.bean.response.PAccountBean;
 import com.sence.bean.request.RUidBean;
+import com.sence.bean.response.PAccountBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.LoginStatus;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * 我的账户

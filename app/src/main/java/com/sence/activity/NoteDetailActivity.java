@@ -1,25 +1,15 @@
 package com.sence.activity;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import androidx.appcompat.widget.Toolbar;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.content.ContextCompat;
-import androidx.core.widget.NestedScrollView;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.orhanobut.logger.Logger;
 import com.sence.R;
-import com.sence.adapter.NoteAdapter;
 import com.sence.adapter.NoteRecommendAdapter;
 import com.sence.bean.request.RNoteDetailBean;
 import com.sence.bean.response.PNoteDetailBean;
@@ -31,6 +21,10 @@ import com.sence.utils.LoginStatus;
 import com.sence.utils.StatusBarUtil;
 import com.sence.view.GridSpacingItemDecoration;
 import com.sence.view.NiceImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * 笔记详情

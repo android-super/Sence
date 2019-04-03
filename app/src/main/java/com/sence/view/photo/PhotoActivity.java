@@ -1,4 +1,4 @@
-package com.sence.activity;
+package com.sence.view.photo;
 
 import android.content.Intent;
 import android.os.Bundle;

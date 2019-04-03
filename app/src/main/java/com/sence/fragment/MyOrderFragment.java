@@ -114,7 +114,8 @@ public class MyOrderFragment extends Fragment {
 
             @Override
             public void onFinish() {
-
+                mSmartRefreshLayout.finishRefresh();
+                mSmartRefreshLayout.finishLoadMore();
             }
 
             @Override
@@ -124,7 +125,6 @@ public class MyOrderFragment extends Fragment {
 
             @Override
             public void onSuccess(PMyOrderBean o, String msg) {
-                mSmartRefreshLayout.finishRefresh();
                 Logger.e("msg==========" + msg);
                 ((MyOrderActivity)getActivity()).setTitleNum(o.getAllNum(),o.getWaitPay(),o.getWaitSend(),o.getWaitConfirm(),o.getWaitEvlua());
                 listBeans = o.getList();

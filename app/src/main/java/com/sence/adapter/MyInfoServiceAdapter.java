@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.sence.R;
-import com.sence.bean.response.PEnjoyVipBean;
+import com.sence.bean.response.PMyInfoServiceBean;
 import com.sence.net.Urls;
 import com.sence.view.NiceImageView;
 
@@ -19,28 +19,28 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class EnjoyVipAdapter extends RecyclerView.Adapter<EnjoyVipAdapter.ViewHolder> {
+public class MyInfoServiceAdapter extends RecyclerView.Adapter<MyInfoServiceAdapter.ViewHolder> {
     private Context context;
-    private List<PEnjoyVipBean.ServiceBean> list = new ArrayList<>();
+    private List<PMyInfoServiceBean.OtherInfoBean> list = new ArrayList<>();
 
-    public EnjoyVipAdapter(Context context){
+    public MyInfoServiceAdapter(Context context){
         this.context = context;
     }
-    public void setList(List<PEnjoyVipBean.ServiceBean> list){
+    public void setList(List<PMyInfoServiceBean.OtherInfoBean> list){
         this.list = list;
         notifyDataSetChanged();
     }
 
     @NonNull
     @Override
-    public EnjoyVipAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyInfoServiceAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.rv_item_enjoyvip,parent,false);
         return new ViewHolder(view);
 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull EnjoyVipAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyInfoServiceAdapter.ViewHolder holder, int position) {
         Glide.with(context)
                 .load(Urls.base_url + list.get(position).getImg())
                 .placeholder(R.drawable.hint_img)
