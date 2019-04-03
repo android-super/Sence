@@ -21,10 +21,6 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppThemeNoActionBar">
-        <activity android:name=".base.BaseAbsActivity">
-        </activity>
-        <activity android:name=".base.BaseActivity">
-        </activity>
         <activity android:name=".activity.EditInfoActivity">
         </activity>
         <activity android:name=".activity.AddTagActivity">
@@ -89,9 +85,10 @@
         <activity android:name=".activity.UserDetailActivity"></activity>
         <activity android:name=".activity.SearchActivity"></activity>
         <activity android:name=".activity.PhotoSelectActivity"></activity>
-        <activity android:name=".view.photo.PhotoActivity"
-                  android:screenOrientation="portrait"
-                  android:configChanges="orientation|keyboardHidden|screenSize"/>
+        <activity
+                android:name=".view.photo.PhotoActivity"
+                android:screenOrientation="portrait"
+                android:configChanges="orientation|keyboardHidden|screenSize"/>
         <activity android:name=".view.photo.ResultActivity"></activity>
     </application>
 

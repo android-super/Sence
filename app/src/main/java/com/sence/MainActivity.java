@@ -1,28 +1,18 @@
 package com.sence;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
-
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import com.blankj.utilcode.util.SPUtils;
-import com.orhanobut.logger.Logger;
-import com.sence.bean.request.RRegisterBean;
-import com.sence.fragment.BusFragment;
-import com.sence.fragment.KindFragment;
-import com.sence.fragment.MainFragment;
-import com.sence.fragment.UserFragment;
-import com.sence.fragment.VipFragment;
+import com.sence.base.BaseActivity;
+import com.sence.fragment.*;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.StatusBarUtil;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
     private LinearLayout main_home, main_vip, main_kind, main_bus, main_user;
     private LinearLayout[] mains;
     private MainFragment mainFragment;
@@ -34,9 +24,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public int onActLayout() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    public void initView() {
         StatusBarUtil.setLightMode(this);
         main_home = findViewById(R.id.main_home);
         main_vip = findViewById(R.id.main_vip);
@@ -62,7 +55,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mains = new LinearLayout[]{main_home, main_vip, main_kind, main_bus, main_user};
 
         setSelect(0);
+        getSystemTime();
+    }
 
+    private void getSystemTime() {
         HttpManager.getInstance().PlayNetCode(HttpCode.GET_SYSTEM_TIME).request(new ApiCallBack<String>() {
             @Override
             public void onFinish() {
@@ -105,4 +101,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
+
+
 }

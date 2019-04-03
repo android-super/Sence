@@ -10,19 +10,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import com.sence.LoginActivity;
 import com.sence.R;
-import com.sence.activity.EnjoyVipActivity;
-import com.sence.activity.ManageAddressActivity;
-import com.sence.activity.MyAccountActivity;
-import com.sence.activity.MyFansActivity;
-import com.sence.activity.MyFocusActivity;
-import com.sence.activity.MyInfoActivity;
-import com.sence.activity.MyNoteActivity;
-import com.sence.activity.MyOrderActivity;
-import com.sence.activity.OpenVipActivity;
-import com.sence.activity.SettingActivity;
+import com.sence.activity.*;
 import com.sence.bean.request.RUidBean;
 import com.sence.bean.response.PUserInfoBean;
 import com.sence.net.HttpCode;
@@ -30,9 +22,6 @@ import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.LoginStatus;
 import com.sence.view.NiceImageView;
-
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 /**
  * A simple {@link Fragment} subclass.

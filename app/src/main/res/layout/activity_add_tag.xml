@@ -10,6 +10,16 @@
 
     <include layout="@layout/include_title"/>
 
+    <com.sence.view.PubTitle
+            android:id="@+id/title"
+            style="@style/NoLeftToolbar"
+            app:tool_cover_background="@color/white"
+            app:tool_cover_right_img="@drawable/main_biji"
+            app:is_back="true"
+            app:tool_cover_title="測試標題"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
+
     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="400dp">

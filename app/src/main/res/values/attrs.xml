@@ -1,18 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="NiceImageView">
-        <attr name="is_circle" format="boolean" />
-        <attr name="is_cover_src" format="boolean" />
-        <attr name="corner_radius" format="dimension" />
-        <attr name="corner_top_left_radius" format="dimension" />
-        <attr name="corner_top_right_radius" format="dimension" />
-        <attr name="corner_bottom_left_radius" format="dimension" />
-        <attr name="corner_bottom_right_radius" format="dimension" />
-        <attr name="border_width" format="dimension" />
-        <attr name="border_color" format="color" />
-        <attr name="inner_border_width" format="dimension" />
-        <attr name="inner_border_color" format="color" />
-        <attr name="mask_color" format="color" />
+        <attr name="is_circle" format="boolean"/>
+        <attr name="is_cover_src" format="boolean"/>
+        <attr name="corner_radius" format="dimension"/>
+        <attr name="corner_top_left_radius" format="dimension"/>
+        <attr name="corner_top_right_radius" format="dimension"/>
+        <attr name="corner_bottom_left_radius" format="dimension"/>
+        <attr name="corner_bottom_right_radius" format="dimension"/>
+        <attr name="border_width" format="dimension"/>
+        <attr name="border_color" format="color"/>
+        <attr name="inner_border_width" format="dimension"/>
+        <attr name="inner_border_color" format="color"/>
+        <attr name="mask_color" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="PubTitle">
+        <attr name="is_back" format="boolean"/>
+        <attr name="is_animator_back" format="boolean"/>
+        <attr name="tool_cover_background" format="color"/>
+        <attr name="tool_cover_title" format="string"/>
+        <attr name="tool_cover_right_img" format="reference"/>
+        <attr name="tool_cover_right_text" format="string"/>
+        <attr name="tool_cover_right_color" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="BigMidSmallTextView">
+        <attr name="left_text" format="string"/>
+        <attr name="right_text" format="string"/>
+        <attr name="mid_text" format="string"/>
+        <attr name="left_size" format="dimension"/>
+        <attr name="right_size" format="dimension"/>
+        <attr name="mid_size" format="dimension"/>
+        <attr name="left_color" format="color"/>
+        <attr name="right_color" format="color"/>
+        <attr name="mid_color" format="color"/>
+        <attr name="left_bold" format="boolean"/>
+        <attr name="right_bold" format="boolean"/>
+        <attr name="mid_bold" format="boolean"/>
     </declare-styleable>
 
 

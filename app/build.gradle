@@ -69,7 +69,7 @@ dependencies {
     implementation files('libs/umeng-shareboard-widget-6.9.4.jar')
     implementation files('libs/umeng-sharetool-6.9.4.jar')
     implementation 'liji.library.dev:citypickerview:1.1.0'
-    implementation ('com.jph.takephoto:takephoto_library:4.0.3') {
-        exclude group: 'com.github.bumptech.glide'
-    }
+    implementation 'com.jakewharton:butterknife:8.1.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.1.0'
+    implementation 'com.jph.takephoto:takephoto_library:4.0.3'
 }
