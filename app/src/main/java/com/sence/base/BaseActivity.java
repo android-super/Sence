@@ -47,18 +47,4 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseInte
     public void initData() {
 
     }
-
-    @Override
-    public void onBack(boolean isBack) {
-        if (isBack) {
-            this.finish();
-        }
-    }
-
-    @Override
-    public void onBack(View.OnClickListener onClickListener) {
-        if (onClickListener == null) {
-            return;
-        }
-    }
 }

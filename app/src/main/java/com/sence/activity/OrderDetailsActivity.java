@@ -3,14 +3,16 @@ package com.sence.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-
+import android.widget.*;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.blankj.utilcode.util.ToastUtils;
 import com.orhanobut.logger.Logger;
 import com.sence.R;
 import com.sence.adapter.OrderDetailsAdapter;
+import com.sence.base.BaseActivity;
 import com.sence.bean.request.ROrderDetailsBean;
 import com.sence.bean.response.POrderDetailsBean;
 import com.sence.net.HttpCode;
@@ -18,84 +20,75 @@ import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.LoginStatus;
 import com.sence.utils.StatusBarUtil;
+import com.sence.view.PubTitle;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 /**
  * 订单详情
  */
-public class OrderDetailsActivity extends AppCompatActivity implements View.OnClickListener {
+public class OrderDetailsActivity extends BaseActivity implements View.OnClickListener {
+    @BindView(R.id.tv_state_orderdetails)
+    TextView tvStateOrderdetails;
+    @BindView(R.id.tv_number_orderdetails)
+    TextView tvNumberOrderdetails;
+    @BindView(R.id.tv_time_orderdetails)
+    TextView tvTimeOrderdetails;
+    @BindView(R.id.tv_name_orderdetails)
+    TextView tvNameOrderdetails;
+    @BindView(R.id.tv_phone_orderdetails)
+    TextView tvPhoneOrderdetails;
+    @BindView(R.id.tv_address_orderdetails)
+    TextView tvAddressOrderdetails;
+    @BindView(R.id.rl_address_orderdetails)
+    RelativeLayout rlAddressOrderdetails;
+    @BindView(R.id.tv_stroename_orderdetails)
+    TextView tvStroenameOrderdetails;
+    @BindView(R.id.recycle_orderdetails)
+    RecyclerView recycleOrderdetails;
+    @BindView(R.id.tv_shopprice_orderdetails)
+    TextView tvShoppriceOrderdetails;
+    @BindView(R.id.tv_coupon_orderdetails)
+    TextView tvCouponOrderdetails;
+    @BindView(R.id.tv_postprice_orderdetails)
+    TextView tvPostpriceOrderdetails;
+    @BindView(R.id.tv_taxprice_orderdetails)
+    TextView tvTaxpriceOrderdetails;
+    @BindView(R.id.tv_money_orderdetails)
+    TextView tvMoneyOrderdetails;
+    @BindView(R.id.tv_sprice_orderdetails)
+    TextView tvSpriceOrderdetails;
+    @BindView(R.id.bt_submint_orderdetails)
+    Button btSubmintOrderdetails;
 
-    private TextView mState,mNumber,mTime,mName,mPhone,mAddress,mCoupon,mStroeName,mPostPrice,mTaxPrice,mMoney,mSprice,mShopPrice;
-    private String id;
-    private RecyclerView mRecyclerView;
     private OrderDetailsAdapter orderDetailsAdapter;
-    private TextView mTv;
+
+    private String id;
     private String type;
-    private Button mSubmint;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_orderdetails);
+    public int onActLayout() {
+        return R.layout.activity_orderdetails;
+    }
+
+    @Override
+    public void initView() {
         StatusBarUtil.setLightMode(this);
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
         type = intent.getStringExtra("type");
-        initData();
 
-    }
-
-    private void initData() {
-        findViewById(R.id.rl_address_orderdetails).setOnClickListener(this);
-        TextView mTitle = findViewById(R.id.pub_title);
-        mTitle.setText("订单详情");
-        ImageView mBack = findViewById(R.id.pub_back);
-        mTv = findViewById(R.id.pub_right_tv);
-        mBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        mTv.setText("取消订单");
-        mTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CancelOreder();
-            }
-        });
-        mRecyclerView = findViewById(R.id.recycle_orderdetails);
-        mState = findViewById(R.id.tv_state_orderdetails);
-        mNumber = findViewById(R.id.tv_number_orderdetails);
-        mTime = findViewById(R.id.tv_time_orderdetails);
-        mName = findViewById(R.id.tv_name_orderdetails);
-        mPhone = findViewById(R.id.tv_phone_orderdetails);
-        mAddress = findViewById(R.id.tv_address_orderdetails);
-        mCoupon = findViewById(R.id.tv_coupon_orderdetails);
-        mPostPrice = findViewById(R.id.tv_postprice_orderdetails);
-        mTaxPrice = findViewById(R.id.tv_taxprice_orderdetails);
-        mShopPrice = findViewById(R.id.tv_shopprice_orderdetails);
-        mStroeName = findViewById(R.id.tv_stroename_orderdetails);
-        mMoney = findViewById(R.id.tv_money_orderdetails);
-        mSubmint = findViewById(R.id.bt_submint_orderdetails);
-        mSprice = findViewById(R.id.tv_sprice_orderdetails);
+        rlAddressOrderdetails.setOnClickListener(this);
         orderDetailsAdapter = new OrderDetailsAdapter(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
-        mRecyclerView.setLayoutManager(linearLayoutManager);
-        mRecyclerView.setAdapter(orderDetailsAdapter);
-        if(type.equals("等待评价")){
-            mSubmint.setText("评价");
+        recycleOrderdetails.setLayoutManager(linearLayoutManager);
+        recycleOrderdetails.setAdapter(orderDetailsAdapter);
+        if (type.equals("等待评价")) {
+            btSubmintOrderdetails.setText("评价");
         }
-        doHttp();
     }
 
-    private void doHttp() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_DETAIL, new ROrderDetailsBean(id,LoginStatus.getUid())).request(new ApiCallBack<POrderDetailsBean>() {
-
+    public void initData() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_DETAIL, new ROrderDetailsBean(id, LoginStatus.getUid())).request(new ApiCallBack<POrderDetailsBean>() {
 
 
             @Override
@@ -110,31 +103,31 @@ public class OrderDetailsActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onSuccess(final POrderDetailsBean o, String msg) {
                 Logger.e("msg==========" + msg);
-                if(o.getGoods().size()>0){
+                if (o.getGoods().size() > 0) {
                     orderDetailsAdapter.setList(o.getGoods());
                 }
-                mState.setText(o.getStatus());
-                mNumber.setText(o.getOid());
-                mTime.setText(o.getAddtime());
-                mStroeName.setText(o.getShopname());
-                mName.setText(o.getAddress().getUsername());
-                mPhone.setText(o.getAddress().getPhone());
-                mAddress.setText(o.getAddress().getAddress());
-                mShopPrice.setText("￥"+o.getGmoney());
-                mCoupon.setText("-￥"+o.getCmoney());
-                mPostPrice.setText("+￥"+o.getPmoney());
-                mTaxPrice.setText("+￥"+o.getFee());
-                mMoney.setText("￥"+o.getNeedpay());
-                mSprice.setText("￥"+o.getNeedpay());
+                tvStateOrderdetails.setText(o.getStatus());
+                tvNumberOrderdetails.setText(o.getOid());
+                tvTimeOrderdetails.setText(o.getAddtime());
+                tvStroenameOrderdetails.setText(o.getShopname());
+                tvNameOrderdetails.setText(o.getAddress().getUsername());
+                tvPhoneOrderdetails.setText(o.getAddress().getPhone());
+                tvAddressOrderdetails.setText(o.getAddress().getAddress());
+                tvShoppriceOrderdetails.setText("￥" + o.getGmoney());
+                tvCouponOrderdetails.setText("-￥" + o.getCmoney());
+                tvPostpriceOrderdetails.setText("+￥" + o.getPmoney());
+                tvTaxpriceOrderdetails.setText("+￥" + o.getFee());
+                tvMoneyOrderdetails.setText("￥" + o.getNeedpay());
+                tvSpriceOrderdetails.setText("￥" + o.getNeedpay());
             }
         });
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.rl_address_orderdetails:
-                startActivity(new Intent(OrderDetailsActivity.this,ManageAddressActivity.class));
+                startActivity(new Intent(OrderDetailsActivity.this, ManageAddressActivity.class));
                 break;
         }
     }
@@ -155,12 +148,11 @@ public class OrderDetailsActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onSuccess(String o, String msg) {
                 Logger.e("msg==========" + msg);
-                if(msg.equals("取消成功")){
+                if (msg.equals("取消成功")) {
                     ToastUtils.showShort("订单取消成功");
-                    mTv.setText("取消成功");
-                    mTv.setClickable(false);
-                    mState.setText("订单已取消");
-
+//                    mTv.setText("取消成功");
+//                    mTv.setClickable(false);
+                    tvStateOrderdetails.setText("订单已取消");
                 }
             }
         });

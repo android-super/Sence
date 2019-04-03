@@ -2,13 +2,11 @@ package com.sence.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -18,19 +16,17 @@ import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.sence.R;
+import com.sence.base.BaseActivity;
 import com.sence.net.Urls;
 import com.sence.utils.StatusBarUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 /**
  * 订单评论
  */
-public class OrderCommentActivity extends AppCompatActivity implements View.OnClickListener {
+public class OrderCommentActivity extends BaseActivity implements View.OnClickListener {
 
     private TextView mTitle, mGoodComment, mGapComment, mCentreComment;
     private ImageView mImg, mImgOne, mImgTwe, mImgThress, mImgGood, mImgCentre, mImgGap;
@@ -41,29 +37,18 @@ public class OrderCommentActivity extends AppCompatActivity implements View.OnCl
     private EditText mContent;
     private List<LocalMedia> selectList = new ArrayList<>();
     private BottomSheetDialog mBottomSheetDialog;
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shopcomment);
+    public int onActLayout() {
+        return R.layout.activity_shopcomment;
+    }
+
+    @Override
+    public void initView() {
         StatusBarUtil.setLightMode(this);
         Intent intent = getIntent();
         url = intent.getStringExtra("url");
-        initData();
-    }
 
-    private void initData() {
-        mTitle = findViewById(R.id.pub_title);
-        mTitle.setText("发表评论");
-        ImageView mBack = findViewById(R.id.pub_back);
-        mSubmit = findViewById(R.id.pub_right_tv);
-        mSubmit.setText("提交");
-        mSubmit.setTextColor(Color.parseColor("#66ced1"));
-        mBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
         mContent = findViewById(R.id.et_content_shopcomment);
         mImg = findViewById(R.id.iv_shopimg_shopcomment);
         mImgOne = findViewById(R.id.iv_imgone_shopcomment);
@@ -90,7 +75,7 @@ public class OrderCommentActivity extends AppCompatActivity implements View.OnCl
         mSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                doHttp();
+                initData();
             }
         });
         View view = View.inflate(this, R.layout.bottom_dialog, null);
@@ -104,13 +89,14 @@ public class OrderCommentActivity extends AppCompatActivity implements View.OnCl
         mBottomSheetDialog.setContentView(view);
     }
 
-    private void doHttp() {
+    public void initData() {
         String content = mContent.getText().toString().trim();
         if (content.length() < 5) {
             ToastUtils.showShort("请您至少输入5个字");
             return;
         }
     }
+
 
 
     @Override

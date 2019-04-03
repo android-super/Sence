@@ -1,17 +1,14 @@
 package com.sence.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 import com.sence.R;
+import com.sence.base.BaseActivity;
 
 /**
  * WebView页面
  */
-public class WebActivity extends AppCompatActivity {
-
+public class WebActivity extends BaseActivity {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_web);
+    public int onActLayout() {
+        return R.layout.activity_web;
     }
 }

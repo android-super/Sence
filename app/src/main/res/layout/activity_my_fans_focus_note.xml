@@ -9,7 +9,13 @@
         android:background="@color/white"
         tools:context=".activity.MyFansFocusNoteActivity">
 
-    <include layout="@layout/include_title"/>
+    <com.sence.view.PubTitle
+            app:is_back="true"
+            style="@style/NoLeftToolbar"
+            app:tool_cover_background="@color/white"
+            app:tool_cover_title="我的粉丝"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycle_title"

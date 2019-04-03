@@ -1,56 +1,49 @@
 package com.sence.activity;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.sence.R;
 import com.sence.adapter.MyFNAdapter;
 import com.sence.adapter.pager.ViewPagerAdapter;
-import com.sence.bean.request.RFansBean;
-import com.sence.bean.request.RFocusBean;
+import com.sence.base.BaseActivity;
 import com.sence.fragment.my.MyFansFragment;
 import com.sence.fragment.my.MyFocusFragment;
 import com.sence.fragment.my.MyNoteFragment;
-import com.sence.net.HttpCode;
-import com.sence.net.HttpManager;
-import com.sence.net.manager.ApiCallBack;
-import com.sence.utils.LoginStatus;
 
 /**
  * 我的关注，粉丝，笔记
  */
-public class MyFansFocusNoteActivity extends AppCompatActivity {
+public class MyFansFocusNoteActivity extends BaseActivity {
+    @BindView(R.id.recycle_title)
+    RecyclerView recycleTitle;
+    @BindView(R.id.search_layout)
+    LinearLayout searchLayout;
+    @BindView(R.id.view_pager)
+    ViewPager viewPager;
     private String titles[] = {"粉丝", "关注", "笔记"};
-
-
-    private RecyclerView recycle_title;
-    private LinearLayout search_layout;
-    private ViewPager viewPager;
 
     private MyFNAdapter fnAdapter;
     private ViewPagerAdapter pagerAdapter;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_fans_focus_note);
-        initView();
+    public int onActLayout() {
+        return R.layout.activity_my_fans_focus_note;
     }
 
-    private void initView() {
-        recycle_title = findViewById(R.id.recycle_title);
-        search_layout = findViewById(R.id.search_layout);
-        viewPager = findViewById(R.id.view_pager);
+    public void initView() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
-        recycle_title.setLayoutManager(linearLayoutManager);
+        recycleTitle.setLayoutManager(linearLayoutManager);
         fnAdapter = new MyFNAdapter(R.layout.rv_item_fn_top);
-        recycle_title.setAdapter(fnAdapter);
+        recycleTitle.setAdapter(fnAdapter);
 
         fnAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -80,15 +73,11 @@ public class MyFansFocusNoteActivity extends AppCompatActivity {
 
             }
         });
-        search_layout.setOnClickListener(new View.OnClickListener() {
+        searchLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
         });
     }
-
-
-
-
 }

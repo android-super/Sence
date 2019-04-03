@@ -5,15 +5,15 @@ import android.os.Bundle;
 import com.sence.R;
 
 import androidx.appcompat.app.AppCompatActivity;
+import com.sence.base.BaseActivity;
 
 /**
  * 银行卡界面
  */
-public class CardActivity extends AppCompatActivity {
+public class CardActivity extends BaseActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_card);
+    public int onActLayout() {
+        return R.layout.activity_card;
     }
 }

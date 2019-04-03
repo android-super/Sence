@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.sence.R;
+import com.sence.base.BaseActivity;
 import com.sence.bean.request.RUidBean;
 import com.sence.bean.response.PAccountBean;
 import com.sence.net.HttpCode;
@@ -14,31 +16,27 @@ import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.LoginStatus;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 /**
  * 我的账户
  */
-public class MyAccountActivity extends AppCompatActivity implements View.OnClickListener {
-    private ImageView account_back;
-    private TextView account_detail;
-    private TextView account_used;
-    private TextView account_benefit;
+public class MyAccountActivity extends BaseActivity implements View.OnClickListener {
+    @BindView(R.id.account_back)
+    ImageView accountBack;
+    @BindView(R.id.account_detail)
+    TextView accountDetail;
+    @BindView(R.id.account_used)
+    TextView accountUsed;
+    @BindView(R.id.account_benefit)
+    TextView accountBenefit;
+    @BindView(R.id.account_recharge)
+    TextView accountRecharge;
+    @BindView(R.id.account_cash)
+    TextView accountCash;
+    @BindView(R.id.account_card)
+    TextView accountCard;
 
-    private TextView account_recharge;
-    private TextView account_cash;
-    private TextView account_card;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_account);
-        initView();
-        initData();
-    }
-
-    private void initData() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.USER_ACCOUNT,new RUidBean(LoginStatus.getUid())).request(new ApiCallBack<PAccountBean>() {
+    public void initData() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.USER_ACCOUNT, new RUidBean(LoginStatus.getUid())).request(new ApiCallBack<PAccountBean>() {
             @Override
             public void onFinish() {
 
@@ -51,27 +49,24 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
 
             @Override
             public void onSuccess(PAccountBean o, String msg) {
-                account_used.setText(o.getMoney());
-                account_benefit.setText(o.getPartnerIncome());
+                accountUsed.setText(o.getMoney());
+                accountBenefit.setText(o.getPartnerIncome());
             }
         });
     }
 
-    private void initView() {
-        account_back = findViewById(R.id.account_back);
-        account_detail = findViewById(R.id.account_detail);
-        account_used = findViewById(R.id.account_used);
-        account_benefit = findViewById(R.id.account_benefit);
+    @Override
+    public int onActLayout() {
+        return R.layout.activity_my_account;
+    }
 
-        account_recharge = findViewById(R.id.account_recharge);
-        account_cash = findViewById(R.id.account_cash);
-        account_card = findViewById(R.id.account_card);
+    public void initView() {
 
-        account_back.setOnClickListener(this);
-        account_detail.setOnClickListener(this);
-        account_recharge.setOnClickListener(this);
-        account_cash.setOnClickListener(this);
-        account_card.setOnClickListener(this);
+        accountBack.setOnClickListener(this);
+        accountDetail.setOnClickListener(this);
+        accountRecharge.setOnClickListener(this);
+        accountCash.setOnClickListener(this);
+        accountCard.setOnClickListener(this);
     }
 
     @Override
@@ -81,16 +76,16 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                 finish();
                 break;
             case R.id.account_detail:
-                startActivity(new Intent(MyAccountActivity.this,AccountDetailActivity.class));
+                startActivity(new Intent(MyAccountActivity.this, AccountDetailActivity.class));
                 break;
             case R.id.account_recharge:
-                startActivity(new Intent(MyAccountActivity.this,RechargeActivity.class));
+                startActivity(new Intent(MyAccountActivity.this, RechargeActivity.class));
                 break;
             case R.id.account_cash:
-                startActivity(new Intent(MyAccountActivity.this,CashActivity.class));
+                startActivity(new Intent(MyAccountActivity.this, CashActivity.class));
                 break;
             case R.id.account_card:
-                startActivity(new Intent(MyAccountActivity.this,CardActivity.class));
+                startActivity(new Intent(MyAccountActivity.this, CardActivity.class));
                 break;
         }
     }

@@ -1,69 +1,56 @@
 package com.sence.activity;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.sence.R;
+import com.sence.base.BaseActivity;
 import com.sence.utils.StatusBarUtil;
 
 /**
  * 开通Vip页面
  */
-public class OpenVipActivity extends AppCompatActivity implements View.OnClickListener {
-    private ImageView pub_back;
-    private TextView pub_title;
+public class OpenVipActivity extends BaseActivity implements View.OnClickListener {
+    @BindView(R.id.pay_vip)
+    TextView payVip;
+    @BindView(R.id.pay_make)
+    TextView payMake;
+    @BindView(R.id.pay_share)
+    TextView payShare;
+    @BindView(R.id.pay_active)
+    TextView payActive;
+    @BindView(R.id.pay_ali)
+    ImageView payAli;
+    @BindView(R.id.pay_wx)
+    ImageView payWx;
+    @BindView(R.id.pay_commit)
+    TextView payCommit;
+    @BindView(R.id.pay_protocol)
+    TextView payProtocol;
 
-    private TextView pay_vip, pay_make, pay_share, pay_active;
-    private ImageView pay_ali, pay_wx;
-    private TextView pay_commit;
-    private TextView pay_protocol;
+    public void initView() {
+        StatusBarUtil.setLightMode(this);
+        payVip.setOnClickListener(this);
+        payMake.setOnClickListener(this);
+        payShare.setOnClickListener(this);
+        payActive.setOnClickListener(this);
+        payAli.setOnClickListener(this);
+        payWx.setOnClickListener(this);
+        payCommit.setOnClickListener(this);
+        payProtocol.setOnClickListener(this);
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_open_vip);
-        StatusBarUtil.setLightMode(this);
-        initTitle();
-        initView();
-    }
-
-    private void initTitle() {
-        pub_back = findViewById(R.id.pub_back);
-        pub_title = findViewById(R.id.pub_title);
-        pub_title.setText("开通会员");
-        pub_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-    }
-
-    private void initView() {
-        pay_vip = findViewById(R.id.pay_vip);
-        pay_make = findViewById(R.id.pay_make);
-        pay_share = findViewById(R.id.pay_share);
-        pay_active = findViewById(R.id.pay_active);
-        pay_ali = findViewById(R.id.pay_ali);
-        pay_wx = findViewById(R.id.pay_wx);
-        pay_commit = findViewById(R.id.pay_commit);
-        pay_protocol = findViewById(R.id.pay_protocol);
-
-        pay_vip.setOnClickListener(this);
-        pay_make.setOnClickListener(this);
-        pay_share.setOnClickListener(this);
-        pay_active.setOnClickListener(this);
-        pay_ali.setOnClickListener(this);
-        pay_wx.setOnClickListener(this);
-        pay_commit.setOnClickListener(this);
-        pay_protocol.setOnClickListener(this);
+    public int onActLayout() {
+        return R.layout.activity_open_vip;
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.pay_vip:
                 break;
             case R.id.pay_make:

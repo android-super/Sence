@@ -2,14 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:background="@color/white"
               android:fitsSystemWindows="true"
               android:orientation="vertical">
 
-    <include
-        layout="@layout/include_title"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"></include>
+    <com.sence.view.PubTitle
+            app:is_back="true"
+            style="@style/NoLeftToolbar"
+            app:tool_cover_background="@color/white"
+            app:tool_cover_title="服务评价"
+            app:tool_cover_right_text="提交"
+            app:tool_cover_right_size="15sp"
+            app:tool_cover_right_color="@color/theme_green"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -38,6 +38,7 @@ public class PubTitle extends Toolbar {
     private Drawable tool_cover_right_img;
     private String tool_cover_right_text;
     private int tool_cover_right_color = 0xffffff;
+    private int tool_cover_right_size = 14;
 
     public PubTitle(Context context) {
         this(context, null);
@@ -60,6 +61,8 @@ public class PubTitle extends Toolbar {
         tool_cover_right_text = array.getString(R.styleable.PubTitle_tool_cover_right_text);
         tool_cover_right_color = array.getColor(R.styleable.PubTitle_tool_cover_right_color,
                 tool_cover_right_color);
+        tool_cover_right_size = array.getDimensionPixelSize(R.styleable.PubTitle_tool_cover_right_size,
+                tool_cover_right_size);
         array.recycle();
         setBackgroundColor(tool_cover_background);
         addRelativeLayout();
@@ -88,7 +91,7 @@ public class PubTitle extends Toolbar {
         layoutParams.rightMargin = ConvertUtils.dp2px(15);
         right_text.setGravity(Gravity.CENTER);
         right_text.setLayoutParams(layoutParams);
-        right_text.setTextSize(14);
+        right_text.setTextSize(tool_cover_right_size);
         right_text.setTextColor(tool_cover_right_color);
         right_text.setText(tool_cover_right_text);
         parent.addView(right_text);

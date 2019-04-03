@@ -1,15 +1,18 @@
 package com.sence.activity;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.orhanobut.logger.Logger;
 import com.sence.R;
 import com.sence.adapter.ServiceDetailsAdapter;
+import com.sence.base.BaseActivity;
 import com.sence.bean.request.RShopCommendBean;
 import com.sence.bean.request.RShopDetailsBean;
 import com.sence.bean.response.PServiceCommendBean;
@@ -24,62 +27,43 @@ import com.sence.view.NiceImageView;
 
 import java.util.List;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 /**
  * 服务详情
  */
-public class ServiceDetailsActivity extends AppCompatActivity {
+public class ServiceDetailsActivity extends BaseActivity {
+    @BindView(R.id.iv_img_servicedetails)
+    ImageView ivImgServicedetails;
+    @BindView(R.id.tv_name_servicedetails)
+    TextView tvNameServicedetails;
+    @BindView(R.id.tv_address_servicedetails)
+    TextView tvAddressServicedetails;
+    @BindView(R.id.iv_userimg_servicedetails)
+    NiceImageView ivUserimgServicedetails;
+    @BindView(R.id.tv_username_servicedetails)
+    TextView tvUsernameServicedetails;
+    @BindView(R.id.recycle_servicedetails)
+    RecyclerView recycleServicedetails;
 
-    private RecyclerView mRecyclerView;
     private ServiceDetailsAdapter mServiceDetailsAdapter;
-    private ImageView mImg;
-    private TextView mName,mAddress,mUserName;
-    private NiceImageView mUserImg;
-    private int page=1;
+    private int page = 1;
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-      setContentView(R.layout.activity_servicedetails);
-      StatusBarUtil.setLightMode(this);
-      initData();
+    public int onActLayout() {
+        return R.layout.activity_servicedetails;
     }
 
-    private void initData() {
-        mRecyclerView = findViewById(R.id.recycle_servicedetails);
-        mImg = findViewById(R.id.iv_img_servicedetails);
-        mName = findViewById(R.id.tv_name_servicedetails);
-        mAddress = findViewById(R.id.tv_address_servicedetails);
-        mUserImg = findViewById(R.id.iv_userimg_servicedetails);
-        mUserName = findViewById(R.id.tv_username_servicedetails);
+    @Override
+    public void initView() {
+        StatusBarUtil.setLightMode(this);
+
         mServiceDetailsAdapter = new ServiceDetailsAdapter(ServiceDetailsActivity.this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ServiceDetailsActivity.this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
-        mRecyclerView.setLayoutManager(linearLayoutManager);
-        mRecyclerView.setAdapter(mServiceDetailsAdapter);
-        TextView mTitle = findViewById(R.id.pub_title);
-        mTitle.setText("服务详情");
-        ImageView mBack = findViewById(R.id.pub_back);
-        ImageView mImg = findViewById(R.id.pub_right_img);
-        mBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        mImg.setImageResource(R.drawable.servicedetails_pingjia);
-        mImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        doHttp();
+        recycleServicedetails.setLayoutManager(linearLayoutManager);
+        recycleServicedetails.setAdapter(mServiceDetailsAdapter);
     }
 
-    private void doHttp() {
+    public void initData() {
         HttpManager.getInstance().PlayNetCode(HttpCode.SERVE_DETAIL, new RShopDetailsBean("1", LoginStatus.getUid())).request(new ApiCallBack<PServiceeDetails>() {
             @Override
             public void onFinish() {
@@ -94,20 +78,21 @@ public class ServiceDetailsActivity extends AppCompatActivity {
             @Override
             public void onSuccess(PServiceeDetails o, String msg) {
                 Logger.e("msg==========" + msg);
-                mName.setText(o.getTag());
-                mAddress.setText(o.getPosition());
-                mUserName.setText(o.getUsername());
+                tvNameServicedetails.setText(o.getTag());
+                tvAddressServicedetails.setText(o.getPosition());
+                tvUsernameServicedetails.setText(o.getUsername());
                 RequestOptions options = new RequestOptions();
                 options.placeholder(R.drawable.hint_img);
                 Glide.with(ServiceDetailsActivity.this)
                         .load(Urls.base_url + o.getImg())
-                        .into(mImg);
+                        .into(ivImgServicedetails);
                 Glide.with(ServiceDetailsActivity.this)
                         .load(Urls.base_url + o.getAvatar())
-                        .into(mUserImg);
+                        .into(ivUserimgServicedetails);
             }
         });
-        HttpManager.getInstance().PlayNetCode(HttpCode.SERVE_COMMENT_LIST, new RShopCommendBean("1",page+"","10")).request(new ApiCallBack<List<PServiceCommendBean>>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.SERVE_COMMENT_LIST,
+                new RShopCommendBean("1", page + "", "10")).request(new ApiCallBack<List<PServiceCommendBean>>() {
             @Override
             public void onFinish() {
 
@@ -121,7 +106,7 @@ public class ServiceDetailsActivity extends AppCompatActivity {
             @Override
             public void onSuccess(List<PServiceCommendBean> o, String msg) {
                 Logger.e("msg==========" + msg);
-                if(o.size()>0){
+                if (o.size() > 0) {
                     mServiceDetailsAdapter.setList(o);
                 }
 

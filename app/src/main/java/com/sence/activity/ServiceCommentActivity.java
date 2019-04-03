@@ -13,6 +13,7 @@ import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.sence.R;
+import com.sence.base.BaseActivity;
 import com.sence.utils.StatusBarUtil;
 
 import java.util.ArrayList;
@@ -20,33 +21,24 @@ import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
 /**
  * 服务评论
  */
-public class ServiceCommentActivity extends AppCompatActivity implements View.OnClickListener {
-
-    private TextView mTitle,mGoodComment,mGapComment,mCentreComment;
-    private ImageView mImg,mImgOne,mImgTwe,mImgThress;
+public class ServiceCommentActivity extends BaseActivity implements View.OnClickListener {
+    private TextView mTitle, mGoodComment, mGapComment, mCentreComment;
+    private ImageView mImg, mImgOne, mImgTwe, mImgThress;
     private BottomSheetDialog mBottomSheetDialog;
     private List<LocalMedia> selectList = new ArrayList<>();
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_servicecomment);
-        StatusBarUtil.setLightMode(this);
-        initData();
+    public int onActLayout() {
+        return R.layout.activity_servicecomment;
     }
 
-    private void initData() {
-        mTitle = findViewById(R.id.pub_title);
-        mTitle.setText("服务评价");
-        ImageView mBack = findViewById(R.id.pub_back);
-        mBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+    @Override
+    public void initView() {
+        StatusBarUtil.setLightMode(this);
         mImg = findViewById(R.id.iv_shopimg_shopcomment);
         mImgOne = findViewById(R.id.iv_imgone_shopcomment);
         mImgTwe = findViewById(R.id.iv_imgtwe_shopcomment);
@@ -67,6 +59,11 @@ public class ServiceCommentActivity extends AppCompatActivity implements View.On
         mBottomSheetDialog = new BottomSheetDialog(this);
         mBottomSheetDialog.setContentView(view);
     }
+
+    public void initData() {
+
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -102,7 +99,7 @@ public class ServiceCommentActivity extends AppCompatActivity implements View.On
                     break;
                 case PictureConfig.REQUEST_CAMERA:
                     List<LocalMedia> localMediat = PictureSelector.obtainMultipleResult(data);
-                    if(selectList.size()==3){
+                    if (selectList.size() == 3) {
                         selectList.remove(2);
                     }
                     selectList.addAll(localMediat);
@@ -159,7 +156,8 @@ public class ServiceCommentActivity extends AppCompatActivity implements View.On
         //从照片选择并裁剪
         PictureSelector.create(ServiceCommentActivity.this)
                 .openGallery(PictureMimeType.ofAll())//全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
-//                                        .theme()//主题样式(不设置为默认样式) 也可参考demo values/styles下 例如：R.style.picture.white.style
+//                                        .theme()//主题样式(不设置为默认样式) 也可参考demo values/styles下 例如：R.style.picture.white
+// .style
                 .maxSelectNum(3)// 最大图片选择数量 int
                 .minSelectNum(1)// 最小选择数量 int
                 .imageSpanCount(4)// 每行显示个数 int

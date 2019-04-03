@@ -19,6 +19,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.orhanobut.logger.Logger;
 import com.sence.R;
 import com.sence.adapter.MyInfoRecommendViewPagerAdatpter;
+import com.sence.base.BaseActivity;
 import com.sence.bean.request.RMyInfoBean;
 import com.sence.bean.response.PMyInfoBean;
 import com.sence.fragment.MyInfoRecommendFragment;
@@ -40,11 +41,8 @@ import androidx.viewpager.widget.ViewPager;
 /**
  * 个人信息
  */
-public class MyInfoActivity extends AppCompatActivity implements View.OnClickListener {
-
+public class MyInfoActivity extends BaseActivity implements View.OnClickListener {
     private ViewPager mViewPager;
-    private MyInfoRecommendViewPagerAdatpter mMyInfoRecommendViewPagerAdatpter;
-    private String[] list = {"推荐","笔记","共享"};
     private AppBarLayout mAppBarLayout;
     private TabLayout mTabLayoutButtom;
     private ImageView mBack;
@@ -54,21 +52,23 @@ public class MyInfoActivity extends AppCompatActivity implements View.OnClickLis
     private RelativeLayout mShop;
     private ImageView mHead;
     private NiceImageView mIsV;
+
+    private MyInfoRecommendViewPagerAdatpter mMyInfoRecommendViewPagerAdatpter;
+    private String[] list = {"推荐","笔记","共享"};
     private int scaleRatio;
+    @Override
+    public int onActLayout() {
+        return R.layout.activity_myinfo;
+    }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_myinfo);
+    public void initView() {
         if(NavigationBarUtil.hasNavigationBar(this)){
             NavigationBarUtil.initActivity(findViewById(android.R.id.content));
         }
         StatusBarUtil.setTranslucentForCoordinatorLayout(this, 0);
         StatusBarUtil.setLightMode(this);
-        initData();
-    }
 
-    private void initData() {
         mAppBarLayout = findViewById(R.id.al_appbar_myinfo);
         mDeditor = findViewById(R.id.tv_deditor_myinfo);
         mTabLayoutButtom = findViewById(R.id.tl_tabhid_myinfo);
@@ -107,9 +107,7 @@ public class MyInfoActivity extends AppCompatActivity implements View.OnClickLis
                 }
             }
         });
-        doHttp();
     }
-
     private void dim(final  String url) {
 
         new Thread(new Runnable() {
@@ -138,7 +136,7 @@ public class MyInfoActivity extends AppCompatActivity implements View.OnClickLis
         }
     };
 
-    private void doHttp() {
+    public void initData() {
         HttpManager.getInstance().PlayNetCode(HttpCode.USER_INFO_DATA, new RMyInfoBean("4","1")).request(new ApiCallBack<PMyInfoBean>() {
             @Override
             public void onFinish() {
@@ -189,7 +187,6 @@ public class MyInfoActivity extends AppCompatActivity implements View.OnClickLis
 
 
     public void Scale(View view, float scaleY){
-
         view.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, Math.round(ConvertUtils.dp2px(100)*scaleY)));
     }
 

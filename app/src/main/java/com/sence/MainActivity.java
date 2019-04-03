@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import butterknife.BindView;
 import com.blankj.utilcode.util.SPUtils;
 import com.sence.base.BaseActivity;
 import com.sence.fragment.*;
@@ -13,7 +14,17 @@ import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.StatusBarUtil;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
-    private LinearLayout main_home, main_vip, main_kind, main_bus, main_user;
+    @BindView(R.id.main_home)
+    LinearLayout mainHome;
+    @BindView(R.id.main_vip)
+    LinearLayout mainVip;
+    @BindView(R.id.main_kind)
+    LinearLayout mainKind;
+    @BindView(R.id.main_bus)
+    LinearLayout mainBus;
+    @BindView(R.id.main_user)
+    LinearLayout mainUser;
+
     private LinearLayout[] mains;
     private MainFragment mainFragment;
     private VipFragment vipFragment;
@@ -31,28 +42,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void initView() {
         StatusBarUtil.setLightMode(this);
-        main_home = findViewById(R.id.main_home);
-        main_vip = findViewById(R.id.main_vip);
-        main_kind = findViewById(R.id.main_kind);
-        main_bus = findViewById(R.id.main_bus);
-        main_user = findViewById(R.id.main_user);
-        main_home.setTag(0);
-        main_vip.setTag(1);
-        main_kind.setTag(2);
-        main_bus.setTag(3);
-        main_user.setTag(4);
-        main_home.setOnClickListener(this);
-        main_vip.setOnClickListener(this);
-        main_kind.setOnClickListener(this);
-        main_bus.setOnClickListener(this);
-        main_user.setOnClickListener(this);
+        mainHome.setTag(0);
+        mainVip.setTag(1);
+        mainKind.setTag(2);
+        mainBus.setTag(3);
+        mainUser.setTag(4);
+        mainHome.setOnClickListener(this);
+        mainVip.setOnClickListener(this);
+        mainKind.setOnClickListener(this);
+        mainBus.setOnClickListener(this);
+        mainUser.setOnClickListener(this);
         mainFragment = new MainFragment();
         vipFragment = new VipFragment();
         kindFragment = new KindFragment();
         busFragment = new BusFragment();
         userFragment = new UserFragment();
         fragments = new Fragment[]{mainFragment, vipFragment, kindFragment, busFragment, userFragment};
-        mains = new LinearLayout[]{main_home, main_vip, main_kind, main_bus, main_user};
+        mains = new LinearLayout[]{mainHome, mainVip, mainKind, mainBus, mainUser};
 
         setSelect(0);
         getSystemTime();
@@ -101,6 +107,4 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             }
         }
     }
-
-
 }

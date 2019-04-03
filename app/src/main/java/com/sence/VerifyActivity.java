@@ -8,8 +8,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.blankj.utilcode.util.PhoneUtils;
+import com.sence.base.BaseActivity;
 import com.sence.bean.request.RRegisterBean;
 import com.sence.bean.request.RUserRegisterBean;
 import com.sence.bean.response.PUserBean;
@@ -19,10 +21,6 @@ import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.SharedPreferencesUtil;
 import com.sence.utils.StatusBarUtil;
-
-import java.util.concurrent.TimeUnit;
-
-import androidx.appcompat.app.AppCompatActivity;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
@@ -30,16 +28,30 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * 验证码
  */
-public class VerifyActivity extends AppCompatActivity implements View.OnClickListener {
-    private ImageView verify_back;
-    private TextView verify_number;
-    private EditText verify_code;
-    private TextView verify_code_one, verify_code_two, verify_code_three, verify_code_four;
-    private TextView verify_message;
-    private TextView verify_get_code;
+public class VerifyActivity extends BaseActivity implements View.OnClickListener {
+    @BindView(R.id.verify_back)
+    ImageView verifyBack;
+    @BindView(R.id.verify_number)
+    TextView verifyNumber;
+    @BindView(R.id.verify_code_one)
+    TextView verifyCodeOne;
+    @BindView(R.id.verify_code_two)
+    TextView verifyCodeTwo;
+    @BindView(R.id.verify_code_three)
+    TextView verifyCodeThree;
+    @BindView(R.id.verify_code_four)
+    TextView verifyCodeFour;
+    @BindView(R.id.verify_code)
+    EditText verifyCode;
+    @BindView(R.id.verify_message)
+    TextView verifyMessage;
+    @BindView(R.id.verify_get_code)
+    TextView verifyGetCode;
 
     private TextView[] textViews;
 
@@ -58,10 +70,13 @@ public class VerifyActivity extends AppCompatActivity implements View.OnClickLis
 
     private Disposable mDisposable;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_verify);
+    public int onActLayout() {
+        return R.layout.activity_verify;
+    }
+
+    public void initView() {
         StatusBarUtil.setLightMode(this);
         phone = this.getIntent().getStringExtra("phone");
         unionid = this.getIntent().getStringExtra("unionid");
@@ -72,33 +87,19 @@ public class VerifyActivity extends AppCompatActivity implements View.OnClickLis
         screen_name = this.getIntent().getStringExtra("screen_name");
         iconurl = this.getIntent().getStringExtra("iconurl");
 
-        initView();
-    }
+        textViews = new TextView[]{verifyCodeOne, verifyCodeTwo, verifyCodeThree, verifyCodeFour};
 
-    private void initView() {
-        verify_back = findViewById(R.id.verify_back);
-        verify_number = findViewById(R.id.verify_number);
-        verify_code = findViewById(R.id.verify_code);
-        verify_code_one = findViewById(R.id.verify_code_one);
-        verify_code_two = findViewById(R.id.verify_code_two);
-        verify_code_three = findViewById(R.id.verify_code_three);
-        verify_code_four = findViewById(R.id.verify_code_four);
-        verify_message = findViewById(R.id.verify_message);
-        verify_get_code = findViewById(R.id.verify_get_code);
+        verifyCodeOne.setOnClickListener(this);
+        verifyCodeTwo.setOnClickListener(this);
+        verifyCodeThree.setOnClickListener(this);
+        verifyCodeFour.setOnClickListener(this);
+        verifyBack.setOnClickListener(this);
+        verifyGetCode.setOnClickListener(this);
 
-        textViews = new TextView[]{verify_code_one, verify_code_two, verify_code_three, verify_code_four};
-
-        verify_code_one.setOnClickListener(this);
-        verify_code_two.setOnClickListener(this);
-        verify_code_three.setOnClickListener(this);
-        verify_code_four.setOnClickListener(this);
-        verify_back.setOnClickListener(this);
-        verify_get_code.setOnClickListener(this);
-
-        verify_number.setText(phone);
+        verifyNumber.setText(phone);
 
 
-        verify_code.addTextChangedListener(new TextWatcher() {
+        verifyCode.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -194,7 +195,7 @@ public class VerifyActivity extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public void Message(int code, String message) {
-                verify_message.setText(message);
+                verifyMessage.setText(message);
             }
 
             @Override
@@ -222,14 +223,14 @@ public class VerifyActivity extends AppCompatActivity implements View.OnClickLis
                     @Override
                     public void accept(@NonNull Long aLong) {
                         if (60 - aLong <= 0) {
-                            verify_get_code.setText("重新获取");
+                            verifyGetCode.setText("重新获取");
                             mDisposable.dispose();
-                            verify_get_code.setEnabled(true);
-                            verify_get_code.setSelected(true);
+                            verifyGetCode.setEnabled(true);
+                            verifyGetCode.setSelected(true);
                         } else {
-                            verify_get_code.setEnabled(false);
-                            verify_get_code.setSelected(false);
-                            verify_get_code.setText("重新获取(" + (60 - aLong) + "s)");
+                            verifyGetCode.setEnabled(false);
+                            verifyGetCode.setSelected(false);
+                            verifyGetCode.setText("重新获取(" + (60 - aLong) + "s)");
                         }
                     }
                 });
@@ -242,6 +243,4 @@ public class VerifyActivity extends AppCompatActivity implements View.OnClickLis
             mDisposable.dispose();
         }
     }
-
-
 }

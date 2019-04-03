@@ -5,10 +5,13 @@
               android:fitsSystemWindows="true"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    <include
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        layout="@layout/include_title"></include>
+    <com.sence.view.PubTitle
+            app:is_back="true"
+            app:tool_cover_background="@color/white"
+            style="@style/NoLeftToolbar"
+            app:tool_cover_title="我的订单"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
     <com.tlz.fucktablayout.FuckTabLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"

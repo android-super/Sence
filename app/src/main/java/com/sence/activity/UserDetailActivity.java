@@ -1,16 +1,17 @@
 package com.sence.activity;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.orhanobut.logger.Logger;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.sence.R;
 import com.sence.adapter.UserDetailAdapter;
+import com.sence.base.BaseActivity;
 import com.sence.bean.request.RUserDetailBean;
 import com.sence.bean.response.PUserDetailBean;
 import com.sence.net.HttpCode;
@@ -20,55 +21,37 @@ import com.sence.utils.StatusBarUtil;
 
 import java.util.List;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 /**
  * 用户明细
  */
-public class UserDetailActivity extends AppCompatActivity {
+public class UserDetailActivity extends BaseActivity {
 
-    private RecyclerView mRecyclerView;
-    private SmartRefreshLayout mSmartRefreshLayout;
+    @BindView(R.id.recycle_userdetail)
+    RecyclerView recycleUserdetail;
+    @BindView(R.id.srl_userdetail)
+    SmartRefreshLayout srlUserdetail;
+
     private UserDetailAdapter mUserDetailAdapter;
     private int page = 1;
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_userdetail);
-        StatusBarUtil.setLightMode(this);
-        initData();
-    }
 
-    private void initData() {
-        TextView mTitle = findViewById(R.id.pub_title);
-        mTitle.setText("明细");
-        ImageView mBack = findViewById(R.id.pub_back);
-        mBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        mRecyclerView = findViewById(R.id.recycle_userdetail);
-        mSmartRefreshLayout = findViewById(R.id.srl_userdetail);
-        mSmartRefreshLayout.setRefreshHeader(new ClassicsHeader(UserDetailActivity.this));
-        mSmartRefreshLayout.setRefreshFooter(new ClassicsFooter(UserDetailActivity.this));
+    @Override
+    public void initView() {
+        StatusBarUtil.setLightMode(this);
+        srlUserdetail.setRefreshHeader(new ClassicsHeader(UserDetailActivity.this));
+        srlUserdetail.setRefreshFooter(new ClassicsFooter(UserDetailActivity.this));
         mUserDetailAdapter = new UserDetailAdapter(UserDetailActivity.this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(UserDetailActivity.this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
-        mRecyclerView.setLayoutManager(linearLayoutManager);
-        mRecyclerView.setAdapter(mUserDetailAdapter);
-        doHttp();
+        recycleUserdetail.setLayoutManager(linearLayoutManager);
+        recycleUserdetail.setAdapter(mUserDetailAdapter);
     }
 
-    private void doHttp() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.USER_DETAIL, new RUserDetailBean( "4",page+"","10")).request(new ApiCallBack<List<PUserDetailBean>>() {
+    public void initData() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.USER_DETAIL, new RUserDetailBean("4", page + "", "10")).request(new ApiCallBack<List<PUserDetailBean>>() {
             @Override
             public void onFinish() {
-                mSmartRefreshLayout.finishLoadMore();
-                mSmartRefreshLayout.finishRefresh();
+                srlUserdetail.finishLoadMore();
+                srlUserdetail.finishRefresh();
             }
 
             @Override
@@ -78,9 +61,14 @@ public class UserDetailActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(List<PUserDetailBean> o, String msg) {
-                Logger.e("msg==========" + msg+o.get(0).getImg());
+                Logger.e("msg==========" + msg + o.get(0).getImg());
                 mUserDetailAdapter.setList(o);
             }
         });
+    }
+
+    @Override
+    public int onActLayout() {
+        return R.layout.activity_userdetail;
     }
 }

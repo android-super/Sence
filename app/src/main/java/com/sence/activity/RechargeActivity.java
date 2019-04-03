@@ -5,15 +5,14 @@ import android.os.Bundle;
 import com.sence.R;
 
 import androidx.appcompat.app.AppCompatActivity;
+import com.sence.base.BaseActivity;
 
 /**
  * 充值界面
  */
-public class RechargeActivity extends AppCompatActivity {
-
+public class RechargeActivity extends BaseActivity {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recharge);
+    public int onActLayout() {
+        return R.layout.activity_recharge;
     }
 }

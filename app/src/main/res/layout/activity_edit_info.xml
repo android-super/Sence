@@ -9,7 +9,15 @@
         android:background="@color/white"
         tools:context=".activity.EditInfoActivity">
 
-    <include layout="@layout/include_title"/>
+    <com.sence.view.PubTitle
+            app:is_back="true"
+            style="@style/NoLeftToolbar"
+            app:tool_cover_title="个人信息"
+            app:tool_cover_right_text="完成"
+            app:tool_cover_right_color="@color/black"
+            app:tool_cover_background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
 
     <RelativeLayout
             android:layout_marginTop="30dp"

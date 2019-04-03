@@ -2,14 +2,20 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:background="#f6f6f6"
                 android:fitsSystemWindows="true">
 
-    <include
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        layout="@layout/include_title"
-        android:id="@+id/layout_head"></include>
+    <com.sence.view.PubTitle
+            app:is_back="true"
+            android:id="@+id/layout_head"
+            app:tool_cover_background="@color/white"
+            app:tool_cover_title="订单详情"
+            app:tool_cover_right_text="取消订单"
+            app:tool_cover_right_size="14sp"
+            app:tool_cover_right_color="#999999"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
     <LinearLayout
         android:id="@+id/rl_number_orderdetails"
         android:layout_width="match_parent"

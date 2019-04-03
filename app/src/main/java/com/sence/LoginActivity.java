@@ -6,9 +6,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.blankj.utilcode.util.PhoneUtils;
 import com.sence.activity.WebActivity;
+import com.sence.base.BaseActivity;
 import com.sence.bean.request.RLoginBean;
 import com.sence.bean.response.PUserBean;
 import com.sence.net.HttpCode;
@@ -22,57 +24,53 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.util.Map;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 /**
  * 登录页
  */
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
-    private TextView login_cancel;
-    private ImageView login_check;
-    private TextView login_agree;
-    private TextView login_protocol;
-    private TextView login_rule;
-    private TextView login_look;
-    private LinearLayout login_wx;
+public class LoginActivity extends BaseActivity implements View.OnClickListener {
+    @BindView(R.id.login_cancel)
+    TextView loginCancel;
+    @BindView(R.id.login_check)
+    ImageView loginCheck;
+    @BindView(R.id.login_agree)
+    TextView loginAgree;
+    @BindView(R.id.login_protocol)
+    TextView loginProtocol;
+    @BindView(R.id.login_rule)
+    TextView loginRule;
+    @BindView(R.id.login_look)
+    TextView loginLook;
+    @BindView(R.id.login_wx)
+    LinearLayout loginWx;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+    public int onActLayout() {
+        return R.layout.activity_login;
+    }
+
+    public void initView() {
         StatusBarUtil.setTranslucent(this, 0);
         StatusBarUtil.setDarkMode(this);
-        initView();
+
+        loginCancel.setOnClickListener(this);
+        loginCheck.setOnClickListener(this);
+        loginWx.setOnClickListener(this);
+        loginAgree.setOnClickListener(this);
+        loginProtocol.setOnClickListener(this);
+        loginLook.setOnClickListener(this);
+        loginRule.setOnClickListener(this);
     }
 
-    private void initView() {
-        login_cancel = findViewById(R.id.login_cancel);
-        login_check = findViewById(R.id.login_check);
-        login_agree = findViewById(R.id.login_agree);
-        login_protocol = findViewById(R.id.login_protocol);
-        login_rule = findViewById(R.id.login_rule);
-        login_look = findViewById(R.id.login_look);
-        login_wx = findViewById(R.id.login_wx);
-
-        login_cancel.setOnClickListener(this);
-        login_check.setOnClickListener(this);
-        login_wx.setOnClickListener(this);
-        login_agree.setOnClickListener(this);
-        login_protocol.setOnClickListener(this);
-        login_look.setOnClickListener(this);
-        login_rule.setOnClickListener(this);
-        login_wx.setOnClickListener(this);
-    }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login_check:
             case R.id.login_agree:
-                if (login_check.isSelected()) {
-                    login_check.setSelected(false);
+                if (loginCheck.isSelected()) {
+                    loginCheck.setSelected(false);
                 } else {
-                    login_check.setSelected(true);
+                    loginCheck.setSelected(true);
                 }
                 break;
             case R.id.login_cancel:
@@ -133,9 +131,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         @Override
         public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
-            if(UMShareAPI.get(LoginActivity.this).isAuthorize(LoginActivity.this,SHARE_MEDIA.WEIXIN)) {
+            if (UMShareAPI.get(LoginActivity.this).isAuthorize(LoginActivity.this, SHARE_MEDIA.WEIXIN)) {
 
-            }else{
+            } else {
                 Intent intent = new Intent(LoginActivity.this, BindPhoneActivity.class);
                 for (Map.Entry<String, String> entry : map.entrySet()) {
                     String key = entry.getKey();

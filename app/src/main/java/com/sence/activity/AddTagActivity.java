@@ -7,7 +7,8 @@ import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -17,9 +18,6 @@ import com.bumptech.glide.request.target.Target;
 import com.sence.R;
 import com.sence.view.PictureTagLayout;
 import com.sence.view.PubTitle;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * 添加标签
@@ -31,19 +29,11 @@ public class AddTagActivity extends AppCompatActivity {
     private int height;
     private int width;
 
-    private PubTitle title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_tag);
-        title = findViewById(R.id.title);
-        title.setRightOnClick(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtils.showShort("點擊了右側按鈕");
-            }
-        });
         tag_img = findViewById(R.id.tag_img);
         tag_layout = findViewById(R.id.tag_layout);
         Glide.with(this).asBitmap()

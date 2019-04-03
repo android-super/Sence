@@ -3,50 +3,64 @@ package com.sence.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.sence.R;
+import com.sence.base.BaseActivity;
 import com.sence.utils.StatusBarUtil;
 
-import androidx.appcompat.app.AppCompatActivity;
 /**
  * 确认订单
  */
-public class ConfirmOrderActivity extends AppCompatActivity implements View.OnClickListener {
-
-    private TextView mAddress,mPhone,mName,mShopname,mPrice,mNum,mShopNum,mPostPrice,mShopPrice,mMaxPrice,mSprice;
+public class ConfirmOrderActivity extends BaseActivity implements View.OnClickListener {
+    @BindView(R.id.tv_address_confirmorder)
+    TextView tvAddressConfirmorder;
+    @BindView(R.id.tv_phone_confirmorder)
+    TextView tvPhoneConfirmorder;
+    @BindView(R.id.tv_name_confirmorder)
+    TextView tvNameConfirmorder;
+    @BindView(R.id.rl_address_confirmorder)
+    RelativeLayout rlAddressConfirmorder;
+    @BindView(R.id.tv_shopname_confirmorder)
+    TextView tvShopnameConfirmorder;
+    @BindView(R.id.tv_price_confirmorder)
+    TextView tvPriceConfirmorder;
+    @BindView(R.id.tv_num_confirmorder)
+    TextView tvNumConfirmorder;
+    @BindView(R.id.tv_shopprice_confirmorder)
+    TextView tvShoppriceConfirmorder;
+    @BindView(R.id.tv_postprice_confirmorder)
+    TextView tvPostpriceConfirmorder;
+    @BindView(R.id.tv_shopnum_confirmorder)
+    TextView tvShopnumConfirmorder;
+    @BindView(R.id.tv_maxprice_confirmorder)
+    TextView tvMaxpriceConfirmorder;
+    @BindView(R.id.tv_sprice_confrimorder)
+    TextView tvSpriceConfrimorder;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_confirmorder);
-        StatusBarUtil.setLightMode(this);
-        mAddress = findViewById(R.id.tv_address_confirmorder);
-        mPhone = findViewById(R.id.tv_phone_confirmorder);
-        mName = findViewById(R.id.tv_name_confirmorder);
-        mShopname = findViewById(R.id.tv_shopname_confirmorder);
-        mPrice = findViewById(R.id.tv_price_confirmorder);
-        mNum = findViewById(R.id.tv_num_confirmorder);
-        mShopPrice = findViewById(R.id.tv_shopprice_confirmorder);
-        mPostPrice = findViewById(R.id.tv_postprice_confirmorder);
-        mShopNum = findViewById(R.id.tv_shopnum_confirmorder);
-        mMaxPrice = findViewById(R.id.tv_maxprice_confirmorder);
-        mSprice = findViewById(R.id.tv_sprice_confrimorder);
-        findViewById(R.id.rl_address_confirmorder).setOnClickListener(this);
-        findViewById(R.id.iv_back_confirmorder).setOnClickListener(this);
-        dohttp();
+    public int onActLayout() {
+        return R.layout.activity_confirmorder;
     }
-    private void dohttp() {
+
+    @Override
+    public void initView() {
+        StatusBarUtil.setLightMode(this);
+        rlAddressConfirmorder.setOnClickListener(this);
+    }
+
+    @Override
+    public void initData() {
 
     }
+
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.rl_address_confirmorder:
-                startActivity(new Intent(ConfirmOrderActivity.this,ManageAddressActivity.class));
-                break;
-            case R.id.iv_back_confirmorder:
-                finish();
+                startActivity(new Intent(ConfirmOrderActivity.this, ManageAddressActivity.class));
                 break;
         }
     }

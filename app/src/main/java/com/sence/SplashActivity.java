@@ -34,7 +34,7 @@ public class SplashActivity extends AppCompatActivity {
                         @Override
                         public void accept(Long aLong) {
                             disposable.dispose();
-                            startActivity(new Intent(SplashActivity.this, AddTagActivity.class));
+                            startActivity(new Intent(SplashActivity.this, MainActivity.class));
                             finish();
                         }
                     });

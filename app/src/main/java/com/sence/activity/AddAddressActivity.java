@@ -7,15 +7,18 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.lljjcoder.citypickerview.widget.CityPicker;
 import com.orhanobut.logger.Logger;
 import com.sence.R;
+import com.sence.base.BaseActivity;
 import com.sence.bean.request.RAddAddressBean;
 import com.sence.bean.request.REditroAddressBean;
 import com.sence.bean.response.PManageAddressBean;
@@ -25,58 +28,57 @@ import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.LoginStatus;
 import com.sence.utils.StatusBarUtil;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 /**
  * 添加收货地址
  */
-public class AddAddressActivity extends AppCompatActivity {
+public class AddAddressActivity extends BaseActivity {
+    @BindView(R.id.et_name_addaddress)
+    EditText etNameAddaddress;
+    @BindView(R.id.et_phone_addaddress)
+    EditText etPhoneAddaddress;
+    @BindView(R.id.tv_address_addaddress)
+    TextView tvAddressAddaddress;
+    @BindView(R.id.ll_address_addaddress)
+    LinearLayout llAddressAddaddress;
+    @BindView(R.id.et_postcode_addaddress)
+    EditText etPostcodeAddaddress;
+    @BindView(R.id.et_detailsaddress_addaddress)
+    EditText etDetailsaddressAddaddress;
+    @BindView(R.id.bt_save_addaddress)
+    Button btSaveAddaddress;
 
-    private TextView mTitle;
-    private ImageView mBack;
-    private EditText mName, mPhone, mDetailsAddress, mPostCode;
+    private CityPicker cityPicker;
+
     private String name;
     private String phone;
     private String detailsAddress;
-    private String postCode,address;
-    private CityPicker cityPicker;
-    private TextView mAddress;
+    private String postCode, address;
+
     private PManageAddressBean bean = null;
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_addaddress);
-        StatusBarUtil.setLightMode(this);
-        Intent intent = getIntent();
-        bean = (PManageAddressBean)intent.getSerializableExtra("bean");
-        initData();
 
+    @Override
+    public int onActLayout() {
+        return R.layout.activity_addaddress;
     }
 
-    private void initData() {
-        mTitle = findViewById(R.id.pub_title);
-        mTitle.setText("新增收货地址");
-        mBack = findViewById(R.id.pub_back);
-        mBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        mName = findViewById(R.id.et_name_addaddress);
-        mPhone = findViewById(R.id.et_phone_addaddress);
-        mAddress = findViewById(R.id.tv_address_addaddress);
-        mDetailsAddress = findViewById(R.id.et_detailsaddress_addaddress);
-        mPostCode = findViewById(R.id.et_postcode_addaddress);
-        if(bean!=null){
-            mName.setText(bean.getUsername());
-            mPhone.setText(bean.getPhone());
-            mAddress.setText(bean.getArea());
-            mDetailsAddress.setText(bean.getAddress());
-            mPostCode.setText(bean.getZipcode());
+    @Override
+    public void initView() {
+        StatusBarUtil.setLightMode(this);
+        Intent intent = getIntent();
+        bean = (PManageAddressBean) intent.getSerializableExtra("bean");
+        initCityPicker();
+    }
+
+    public void initData() {
+        if (bean != null) {
+            etNameAddaddress.setText(bean.getUsername());
+            etPhoneAddaddress.setText(bean.getPhone());
+            tvAddressAddaddress.setText(bean.getArea());
+            etDetailsaddressAddaddress.setText(bean.getAddress());
+            etPostcodeAddaddress.setText(bean.getZipcode());
         }
-        findViewById(R.id.ll_address_addaddress).setOnClickListener(new View.OnClickListener() {
+        llAddressAddaddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 hideSoftKeyboard(AddAddressActivity.this);
@@ -86,7 +88,7 @@ public class AddAddressActivity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.bt_save_addaddress).setOnClickListener(new View.OnClickListener() {
+        btSaveAddaddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 doHttp();
@@ -94,8 +96,10 @@ public class AddAddressActivity extends AppCompatActivity {
         });
     }
 
+
     private void initCityPicker() {
-        cityPicker = new CityPicker.Builder(AddAddressActivity.this).textSize(20)//滚轮文字的大小.title("地址选择").backgroundPop(0xa0000000)
+        cityPicker = new CityPicker.Builder(AddAddressActivity.this).textSize(20)//滚轮文字的大小.title("地址选择")
+                // .backgroundPop(0xa0000000)
                 .titleBackgroundColor("#0CB6CA")
                 .titleTextColor("#000000")
                 .backgroundPop(0xa0000000)
@@ -125,7 +129,7 @@ public class AddAddressActivity extends AppCompatActivity {
                 //邮编
                 String code = citySelected[3];
 
-                mAddress.setText(province + city + district);
+                tvAddressAddaddress.setText(province + city + district);
             }
 
             @Override
@@ -136,16 +140,16 @@ public class AddAddressActivity extends AppCompatActivity {
     }
 
     private void doHttp() {
-        name = mName.getText().toString().trim();
-        phone = mPhone.getText().toString().trim();
-        detailsAddress = mDetailsAddress.getText().toString().trim();
-        address = mAddress.getText().toString().trim();
-        postCode = mPostCode.getText().toString().trim();
+        name = etNameAddaddress.getText().toString().trim();
+        phone = etPhoneAddaddress.getText().toString().trim();
+        detailsAddress = etDetailsaddressAddaddress.getText().toString().trim();
+        address = tvAddressAddaddress.getText().toString().trim();
+        postCode = etPostcodeAddaddress.getText().toString().trim();
         if (TextUtils.isEmpty(name)) {
             ToastUtils.showShort("请输入您的姓名");
             return;
         }
-        if(!RegexUtils.isMobileExact(phone)){
+        if (!RegexUtils.isMobileExact(phone)) {
             ToastUtils.showShort("请输入正确的手机号码");
             return;
         }
@@ -162,15 +166,16 @@ public class AddAddressActivity extends AppCompatActivity {
             ToastUtils.showShort("请输入当地邮政编码");
             return;
         }
-        if(bean==null){
+        if (bean == null) {
             addAddress();
-        }else{
+        } else {
             editorAddress();
         }
     }
 
     private void editorAddress() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.ADDRESS_EDIT, new REditroAddressBean(LoginStatus.getUid(),bean.getId(),detailsAddress,address,phone,postCode,name)).request(new ApiCallBack<String>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.ADDRESS_EDIT, new REditroAddressBean(LoginStatus.getUid(),
+                bean.getId(), detailsAddress, address, phone, postCode, name)).request(new ApiCallBack<String>() {
             @Override
             public void onFinish() {
 
@@ -185,7 +190,7 @@ public class AddAddressActivity extends AppCompatActivity {
             public void onSuccess(String o, String msg) {
                 Logger.e("msg==========" + msg);
                 ToastUtils.showShort(msg);
-                if(msg.equals("编辑地址成功")){
+                if (msg.equals("编辑地址成功")) {
                     finish();
                 }
             }
@@ -193,7 +198,8 @@ public class AddAddressActivity extends AppCompatActivity {
     }
 
     private void addAddress() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.ADDRESS_ADD, new RAddAddressBean(LoginStatus.getUid(),detailsAddress,address,phone,postCode,name)).request(new ApiCallBack<String>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.ADDRESS_ADD, new RAddAddressBean(LoginStatus.getUid(),
+                detailsAddress, address, phone, postCode, name)).request(new ApiCallBack<String>() {
             @Override
             public void onFinish() {
 
@@ -208,7 +214,7 @@ public class AddAddressActivity extends AppCompatActivity {
             public void onSuccess(String o, String msg) {
                 Logger.e("msg==========" + msg);
                 ToastUtils.showShort(msg);
-                if(msg.equals("添加地址成功")){
+                if (msg.equals("添加地址成功")) {
                     finish();
                 }
             }
@@ -218,8 +224,10 @@ public class AddAddressActivity extends AppCompatActivity {
     public static void hideSoftKeyboard(Activity activity) {
         View view = activity.getCurrentFocus();
         if (view != null) {
-            InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+            InputMethodManager inputMethodManager =
+                    (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
     }
+
 }
