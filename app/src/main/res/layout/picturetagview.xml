@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:gravity="center_vertical"
+              android:orientation="horizontal" >
+
+    <LinearLayout
+            android:id="@+id/loTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:background="@drawable/note_tag_you" >
+
+        <TextView
+                android:id="@+id/tvPictureTagLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:gravity="center"
+                android:text="点击编辑"
+                android:singleLine="true"
+                android:maxLength="8"
+                android:textColor="#2d2d2d"
+                android:textSize="11dp"/>
+
+        <ImageView
+                android:id="@+id/tag_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:background="@drawable/note_biaoqian"
+                android:visibility="visible" />
+    </LinearLayout>
+
+</LinearLayout>

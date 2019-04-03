@@ -30,13 +30,38 @@ public class PCommentBean {
     private String p_uid;
     private String uid;
     private String content;
-    private String add_time;
+
+    public long getAdd_time() {
+        return add_time;
+    }
+
+    public void setAdd_time(long add_time) {
+        this.add_time = add_time;
+    }
+
+    public long getNow_time() {
+        return now_time;
+    }
+
+    public void setNow_time(long now_time) {
+        this.now_time = now_time;
+    }
+
+    public long getDiff_time() {
+        return diff_time;
+    }
+
+    public void setDiff_time(long diff_time) {
+        this.diff_time = diff_time;
+    }
+
+    private long add_time;
     private String pid;
     private String state;
     private UserBean user;
     private ReplyBean reply;
-    private String now_time;
-    private String diff_time;
+    private long now_time;
+    private long diff_time;
     private String is_like;
     private String like_num;
     private String old_message;
@@ -81,13 +106,6 @@ public class PCommentBean {
         this.content = content;
     }
 
-    public String getAdd_time() {
-        return add_time;
-    }
-
-    public void setAdd_time(String add_time) {
-        this.add_time = add_time;
-    }
 
     public String getPid() {
         return pid;
@@ -121,21 +139,6 @@ public class PCommentBean {
         this.reply = reply;
     }
 
-    public String getNow_time() {
-        return now_time;
-    }
-
-    public void setNow_time(String now_time) {
-        this.now_time = now_time;
-    }
-
-    public String getDiff_time() {
-        return diff_time;
-    }
-
-    public void setDiff_time(String diff_time) {
-        this.diff_time = diff_time;
-    }
 
     public String getIs_like() {
         return is_like;

@@ -1,6 +1,7 @@
 package com.sence.activity;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.blankj.utilcode.util.ConvertUtils;
+import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.orhanobut.logger.Logger;
@@ -21,17 +23,21 @@ import com.sence.adapter.ContentGoodAdapter;
 import com.sence.adapter.GoodsAdapter;
 import com.sence.bean.request.RContentDetailBean;
 import com.sence.bean.response.PContentDetailBean;
+import com.sence.fragment.CommentFragment;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
+import com.sence.net.Urls;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.LoginStatus;
 import com.sence.utils.StatusBarUtil;
 import com.sence.view.NiceImageView;
 
+import java.util.List;
+
 /**
  * 内容详情
  */
-public class ContentDetailActivity extends AppCompatActivity {
+public class ContentDetailActivity extends AppCompatActivity implements View.OnClickListener {
     private AppBarLayout app_bar_layout;
     private View tool_view;
     private ImageView tool_back;
@@ -49,6 +55,7 @@ public class ContentDetailActivity extends AppCompatActivity {
     private TextView content_comment;
     private TextView content_buy;
     private TextView content_buy_num;
+    private TextView content_title;
 
     private NiceImageView content_head;
     private TextView content_focus_tv;
@@ -58,10 +65,48 @@ public class ContentDetailActivity extends AppCompatActivity {
 
     private WebView content_web;
     private RecyclerView content_recycle;
-    private FrameLayout content_frame;
 
     private String nid;
     private ContentGoodAdapter adapter;
+
+    private List<PContentDetailBean.NoteInfoBean.GoodsInfoBean> goodsInfoBeans;
+
+    private void initDataView(PContentDetailBean o) {
+        if (o == null) {
+            return;
+        }
+        PContentDetailBean.NoteInfoBean noteInfoBean = o.getNote_info();
+        Glide.with(this).load(Urls.base_url + noteInfoBean.getAvatar()).into(tool_head);
+        tool_name.setText(noteInfoBean.getNick_name());
+        Glide.with(this).load(Urls.base_url + noteInfoBean.getAvatar()).into(content_head);
+        content_name.setText(noteInfoBean.getNick_name());
+        content_describe.setText(noteInfoBean.getAutograph());
+        content_title.setText(noteInfoBean.getTitle());
+
+        if (noteInfoBean.getIs_like().equals("1")) {
+            content_support.setImageResource(R.drawable.recommend_dianzan_y);
+        } else {
+            content_support.setImageResource(R.drawable.recommend_dianzan);
+        }
+        if (noteInfoBean.getIs_focus().equals("1")) {
+            tool_focus.setVisibility(View.VISIBLE);
+            tool_content_focus.setVisibility(View.GONE);
+            content_focus.setVisibility(View.VISIBLE);
+            content_focus_tv.setVisibility(View.GONE);
+        } else {
+            tool_focus.setVisibility(View.GONE);
+            tool_content_focus.setVisibility(View.VISIBLE);
+            content_focus.setVisibility(View.GONE);
+            content_focus_tv.setVisibility(View.VISIBLE);
+        }
+        content_support_num.setText("赞·" + noteInfoBean.getPraise_count());
+        content_comment.setText("评论·" + noteInfoBean.getMessage_count());
+
+        content_buy_num.setText(noteInfoBean.getGoods_info().size() + "");
+        goodsInfoBeans = noteInfoBean.getGoods_info();
+        adapter.setNewData(noteInfoBean.getGoods_info());
+        content_web.loadData(noteInfoBean.getContent(), "text/html; charset=UTF-8", null);
+    }
 
 
     @Override
@@ -78,7 +123,7 @@ public class ContentDetailActivity extends AppCompatActivity {
 
     private void initData() {
         HttpManager.getInstance().PlayNetCode(HttpCode.CONTENT_DETAIL,
-                new RContentDetailBean(LoginStatus.getUid(),nid)).request(new ApiCallBack<PContentDetailBean>() {
+                new RContentDetailBean(LoginStatus.getUid(), nid)).request(new ApiCallBack<PContentDetailBean>() {
             @Override
             public void onFinish() {
 
@@ -96,12 +141,6 @@ public class ContentDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void initDataView(PContentDetailBean o) {
-        if (o==null){
-            return;
-        }
-
-    }
 
     private void initView() {
         content_support = findViewById(R.id.content_support);
@@ -116,21 +155,47 @@ public class ContentDetailActivity extends AppCompatActivity {
         content_describe = findViewById(R.id.content_describe);
         content_comment = findViewById(R.id.content_comment);
 
+        content_title = findViewById(R.id.content_title);
         content_web = findViewById(R.id.content_web);
         content_recycle = findViewById(R.id.content_recycle);
-        content_frame = findViewById(R.id.content_frame);
 
         content_recycle.setLayoutManager(new LinearLayoutManager(ContentDetailActivity.this));
         adapter = new ContentGoodAdapter(R.layout.rv_item_goods);
         content_recycle.setAdapter(adapter);
 
-        content_comment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, CommentFragment.newInstance(nid,
+                "2")).commit();
+
+        content_comment.setOnClickListener(this);
+        content_head.setOnClickListener(this);
+        tool_head.setOnClickListener(this);
+        content_support_num.setOnClickListener(this);
+        content_support.setOnClickListener(this);
+        content_buy.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.content_comment:
                 showCommentDialog();
+                break;
+            case R.id.content_head:
+                startActivity(new Intent(this, MyInfoActivity.class));
+                break;
+            case R.id.tool_head:
+                startActivity(new Intent(this, MyInfoActivity.class));
+                break;
+            case R.id.content_support_num:
+
+                break;
+            case R.id.content_support:
+
+                break;
+            case R.id.content_buy:
                 showGoodDialog();
-            }
-        });
+                break;
+        }
     }
 
 
@@ -146,8 +211,7 @@ public class ContentDetailActivity extends AppCompatActivity {
         tool_head = findViewById(R.id.tool_head);
         tool_name = findViewById(R.id.tool_name);
         tool_focus = findViewById(R.id.tool_focus);
-        tool_content_focus =findViewById(R.id.tool_content_focus);
-
+        tool_content_focus = findViewById(R.id.tool_content_focus);
 
         tool_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,8 +245,6 @@ public class ContentDetailActivity extends AppCompatActivity {
     }
 
 
-
-
     public void showCommentDialog() {
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
         View view = LayoutInflater.from(this).inflate(R.layout.bottom_sheet_comment, null);
@@ -198,8 +260,12 @@ public class ContentDetailActivity extends AppCompatActivity {
         View view = LayoutInflater.from(this).inflate(R.layout.bottom_sheet_goods, null);
         RecyclerView recycle_view = view.findViewById(R.id.recycle_view);
         GoodsAdapter adapter = new GoodsAdapter(R.layout.rv_item_goods);
+        recycle_view.setLayoutManager(new LinearLayoutManager(this));
         recycle_view.setAdapter(adapter);
+        adapter.setNewData(goodsInfoBeans);
         bottomSheetDialog.setContentView(view);
         bottomSheetDialog.show();
     }
+
+
 }

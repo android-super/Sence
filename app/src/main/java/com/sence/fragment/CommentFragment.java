@@ -1,24 +1,17 @@
 package com.sence.fragment;
 
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.widget.TextView;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.TextView;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
-import com.scwang.smartrefresh.layout.header.ClassicsHeader;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sence.R;
+import com.sence.activity.ContentDetailActivity;
 import com.sence.adapter.CommentAdapter;
 import com.sence.bean.request.RCommentListBean;
 import com.sence.bean.response.PCommentBean;
@@ -39,8 +32,7 @@ public class CommentFragment extends Fragment {
     private TextView comment_num;
     private TextView comment_write;
     private RecyclerView comment_recycle;
-    private SmartRefreshLayout content_smart;
-
+    private TextView comment_look;
 
     private String rid;
     private String type;
@@ -83,26 +75,22 @@ public class CommentFragment extends Fragment {
         comment_num = getView().findViewById(R.id.comment_num);
         comment_write = getView().findViewById(R.id.comment_write);
         comment_recycle = getView().findViewById(R.id.comment_recycle);
-        content_smart = getView().findViewById(R.id.content_smart);
-
-        content_smart.setRefreshHeader(new ClassicsHeader(getActivity()));
-        content_smart.setRefreshFooter(new ClassicsFooter(getActivity()));
+        comment_look = getView().findViewById(R.id.comment_look);
 
         comment_recycle.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new CommentAdapter(R.layout.rv_item_comment);
         comment_recycle.setAdapter(adapter);
 
-        content_smart.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+        comment_write.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                page++;
-                initData();
+            public void onClick(View v) {
+                ((ContentDetailActivity) getActivity()).showCommentDialog();
             }
-
+        });
+        comment_look.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                page = 1;
-                initData();
+            public void onClick(View v) {
+                ((ContentDetailActivity) getActivity()).showCommentDialog();
             }
         });
 

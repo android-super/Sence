@@ -23,6 +23,7 @@
             android:orientation="vertical">
 
         <TextView
+                android:id="@+id/item_content"
                 android:layout_marginLeft="10dp"
                 android:text="@string/hint_content"
                 android:textSize="13sp"
@@ -33,6 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         <TextView
+                android:id="@+id/item_discount"
                 android:background="@drawable/shape_round_theme_green_kuang"
                 android:text="两件5折"
                 android:textSize="10sp"
@@ -60,6 +62,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             <TextView
+                    android:id="@+id/item_price"
                     android:text="409"
                     android:textSize="11sp"
                     android:layout_marginBottom="5dp"
@@ -76,6 +79,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             <TextView
+                    android:id="@+id/item_pre_price"
                     android:layout_width="wrap_content"
                     android:text="409"
                     android:textSize="11sp"
@@ -84,6 +88,7 @@
                     android:textColor="@color/main_gray"
                     android:layout_height="wrap_content"/>
             <ImageView
+                    android:id="@+id/item_bus"
                     android:layout_gravity="right"
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="5dp"

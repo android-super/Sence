@@ -203,13 +203,13 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 }
                 break;
             case R.id.user_focus_layout:
-                startActivity(new Intent(getContext(), MyFocusActivity.class));
+                startActivity(new Intent(getContext(), MyFansFocusNoteActivity.class));
                 break;
             case R.id.user_fans_layout:
-                startActivity(new Intent(getContext(), MyFansActivity.class));
+                startActivity(new Intent(getContext(), MyFansFocusNoteActivity.class));
                 break;
             case R.id.user_release_layout:
-                startActivity(new Intent(getContext(), MyNoteActivity.class));
+                startActivity(new Intent(getContext(), MyFansFocusNoteActivity.class));
                 break;
             case R.id.user_all_order:
                 startActivity(new Intent(getContext(), MyOrderActivity.class));

@@ -6,38 +6,36 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:fitsSystemWindows="true"
-        tools:context=".activity.MyFocusActivity">
+        android:background="@color/white"
+        tools:context=".activity.MyFansFocusNoteActivity">
 
     <include layout="@layout/include_title"/>
 
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycle_title"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"/>
+
     <LinearLayout
+            android:id="@+id/search_layout"
             android:background="@drawable/shape_fans_search"
             android:layout_width="match_parent"
-            android:gravity="center"
-            android:layout_height="45dp">
+            android:gravity="center_vertical"
+            android:layout_height="50dp">
 
         <TextView
                 android:layout_width="wrap_content"
                 android:text="搜索"
-                android:gravity="center"
                 android:drawablePadding="5dp"
                 android:textSize="13sp"
-                android:textColor="#999999"
-                android:drawableLeft="@drawable/main_sousuo"
+                android:layout_marginLeft="35dp"
+                android:textColor="#c2c2c2"
+                android:drawableLeft="@drawable/search_light"
                 android:layout_height="wrap_content"/>
     </LinearLayout>
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+    <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager"
             android:layout_width="match_parent"
-            android:id="@+id/smart_refresh"
-            android:background="@color/white"
-            app:srlEnableLoadMoreWhenContentNotFull="false"
-            android:layout_height="match_parent">
-
-        <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycle_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+            android:layout_height="match_parent"/>
 </LinearLayout>

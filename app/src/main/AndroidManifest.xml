@@ -19,6 +19,16 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppThemeNoActionBar">
+        <activity android:name=".base.BaseAbsActivity">
+        </activity>
+        <activity android:name=".base.BaseActivity">
+        </activity>
+        <activity android:name=".activity.EditInfoActivity">
+        </activity>
+        <activity android:name=".activity.AddTagActivity">
+        </activity>
+        <activity android:name=".activity.MyFansFocusNoteActivity">
+        </activity>
         <activity android:name=".activity.AccountDetailActivity">
         </activity>
         <activity android:name=".activity.CardActivity">
@@ -30,8 +40,6 @@
         <activity android:name=".activity.OpenVipActivity">
         </activity>
         <activity android:name=".activity.SettingActivity">
-        </activity>
-        <activity android:name=".activity.MyNoteActivity">
         </activity>
         <activity android:name=".SplashActivity">
             <intent-filter>
@@ -50,10 +58,6 @@
         <activity android:name=".activity.MemberActivity">
         </activity>
         <activity android:name=".activity.CommentReleaseActivity">
-        </activity>
-        <activity android:name=".activity.MyFocusActivity">
-        </activity>
-        <activity android:name=".activity.MyFansActivity">
         </activity>
         <activity android:name=".VerifyActivity">
         </activity>

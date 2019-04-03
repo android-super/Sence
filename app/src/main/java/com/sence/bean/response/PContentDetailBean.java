@@ -62,6 +62,34 @@ public class PContentDetailBean {
         private String autograph;
         private String praise_count;
         private String message_count;
+
+        public String getIs_kol() {
+            return is_kol;
+        }
+
+        public void setIs_kol(String is_kol) {
+            this.is_kol = is_kol;
+        }
+
+        public String getIs_like() {
+            return is_like;
+        }
+
+        public void setIs_like(String is_like) {
+            this.is_like = is_like;
+        }
+
+        public String getIs_focus() {
+            return is_focus;
+        }
+
+        public void setIs_focus(String is_focus) {
+            this.is_focus = is_focus;
+        }
+
+        private String is_kol;
+        private String is_like;
+        private String is_focus;
         private List<AlbumsBean> albums;
         private List<GoodsInfoBean> goods_info;
 
