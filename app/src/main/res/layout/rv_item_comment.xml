@@ -19,6 +19,7 @@
                 android:layout_height="45dp"/>
 
         <TextView
+                android:id="@+id/item_name"
                 android:layout_toRightOf="@id/item_img"
                 android:layout_alignTop="@id/item_img"
                 android:layout_marginTop="2dp"
@@ -29,6 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         <TextView
+                android:id="@+id/item_time"
                 android:layout_toRightOf="@id/item_img"
                 android:layout_alignBottom="@id/item_img"
                 android:layout_marginBottom="3dp"
@@ -44,10 +46,11 @@
                 android:layout_marginRight="15dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/note_dianzan"
+                android:src="@drawable/selecte_main_support"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         <TextView
+                android:id="@+id/item_support"
                 android:layout_toLeftOf="@id/item_support_img"
                 android:layout_marginRight="4dp"
                 android:text="@string/hint_num"
@@ -58,7 +61,8 @@
                 android:layout_height="wrap_content"/>
     </RelativeLayout>
     <!--#507daf回复人名字颜色-->
-    <TextView
+    <com.sence.view.MyTextView
+            android:id="@+id/item_content"
             android:layout_marginLeft="68dp"
             android:text="@string/hint_content"
             android:textSize="15sp"
@@ -66,7 +70,8 @@
             android:textColor="#323234"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-    <TextView
+    <com.sence.view.MyTextView
+            android:id="@+id/item_replay_content"
             android:layout_marginLeft="68dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="10dp"

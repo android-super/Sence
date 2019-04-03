@@ -6,6 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -16,6 +23,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sence.R;
 import com.sence.adapter.BusBottomAdapter;
 import com.sence.adapter.BusTopAdapter;
+import com.sence.adapter.KindRightAdapter;
 import com.sence.bean.request.RUidBean;
 import com.sence.bean.request.RUidListBean;
 import com.sence.bean.response.PBusBean;
@@ -28,13 +36,6 @@ import com.sence.view.GridSpacingItemDecoration;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -42,6 +43,10 @@ public class BusFragment extends Fragment {
     private SmartRefreshLayout smart_refresh;
     private RecyclerView recycle_view;
     private RecyclerView recycle_view_bottom;
+
+    private TextView bus_all_select;
+    private TextView bus_commit;
+    private TextView bus_all_price;
 
     private BusTopAdapter topAdapter;
     private BusBottomAdapter bottomAdapter;
@@ -66,6 +71,11 @@ public class BusFragment extends Fragment {
         smart_refresh = getView().findViewById(R.id.smart_refresh);
         recycle_view = getView().findViewById(R.id.recycle_view);
         recycle_view_bottom = getView().findViewById(R.id.recycle_view_bottom);
+
+        bus_all_select = getView().findViewById(R.id.bus_all_select);
+        bus_commit = getView().findViewById(R.id.bus_commit);
+        bus_all_price = getView().findViewById(R.id.bus_all_price);
+
         smart_refresh.setRefreshHeader(new ClassicsHeader(getActivity()));
         smart_refresh.setRefreshFooter(new ClassicsFooter(getActivity()));
         recycle_view.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -108,6 +118,19 @@ public class BusFragment extends Fragment {
                 }
             }
         });
+        bus_commit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        bus_all_select.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
 
         initBusData();
         initRecommendData();

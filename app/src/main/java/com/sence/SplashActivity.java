@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.sence.activity.AddTagActivity;
 import com.sence.utils.PermissionUtil;
 
 import java.util.concurrent.TimeUnit;
@@ -33,7 +34,7 @@ public class SplashActivity extends AppCompatActivity {
                         @Override
                         public void accept(Long aLong) {
                             disposable.dispose();
-                            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                            startActivity(new Intent(SplashActivity.this, AddTagActivity.class));
                             finish();
                         }
                     });

@@ -77,8 +77,9 @@ public class KindFragment extends Fragment {
                 leftAdapter.setNewData(o);
                 if (leftAdapter.getData().size() > 0) {
                     id = leftAdapter.getData().get(0).getId();
+                    leftAdapter.setPosition(0);
+                    initGoodList();
                 }
-
             }
         });
     }
@@ -139,7 +140,6 @@ public class KindFragment extends Fragment {
                 }
             }
         });
-//        initGoodList();
     }
 
     /**

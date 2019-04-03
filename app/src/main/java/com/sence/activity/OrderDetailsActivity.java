@@ -3,6 +3,7 @@ package com.sence.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,6 +33,8 @@ public class OrderDetailsActivity extends AppCompatActivity implements View.OnCl
     private RecyclerView mRecyclerView;
     private OrderDetailsAdapter orderDetailsAdapter;
     private TextView mTv;
+    private String type;
+    private Button mSubmint;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,6 +43,7 @@ public class OrderDetailsActivity extends AppCompatActivity implements View.OnCl
         StatusBarUtil.setLightMode(this);
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
+        type = intent.getStringExtra("type");
         initData();
 
     }
@@ -76,13 +80,16 @@ public class OrderDetailsActivity extends AppCompatActivity implements View.OnCl
         mShopPrice = findViewById(R.id.tv_shopprice_orderdetails);
         mStroeName = findViewById(R.id.tv_stroename_orderdetails);
         mMoney = findViewById(R.id.tv_money_orderdetails);
+        mSubmint = findViewById(R.id.bt_submint_orderdetails);
         mSprice = findViewById(R.id.tv_sprice_orderdetails);
         orderDetailsAdapter = new OrderDetailsAdapter(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(orderDetailsAdapter);
-
+        if(type.equals("等待评价")){
+            mSubmint.setText("评价");
+        }
         doHttp();
     }
 
