@@ -22,6 +22,7 @@ public enum HttpCode {
     KIND_GOODS,//分类
     KIND_GOODS_LIST,//分类下商品列表
     BUS_GOODS,//购物车
+    USER_DETAIL,//账户明细
     USER_INFO,//我的
     BUS_ADD,//加入购物车
     BUS_RECOMMEND,//购物车推荐
@@ -34,6 +35,7 @@ public enum HttpCode {
     ORDER_DELETE,//取消待付款，待支付订单
     USER_ENJOY_VIP,//尊享会员
     USER_INFO_DATA,//我的信息
+    USER_INFO_DATA_SERVICE,//我的信息服务
     USER_FANS_LIST,//我的粉丝列表
     USER_FOCUS_LIST,//我的关注列表
     USER_ACCOUNT,//我的账户

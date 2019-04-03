@@ -23,6 +23,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * 商品评论
+ */
 public class ShopCommendActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private ShopCommendAdapter mShopCommendAdapter;

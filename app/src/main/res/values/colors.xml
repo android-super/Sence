@@ -11,4 +11,5 @@
     <color name="theme_green">#16a5af</color>
     <color name="theme_blue">#3F51B5</color>
     <color name="green">#16a5af</color>
+    <color name="multiple_image_select_primaryDark">#212121</color>
 </resources>

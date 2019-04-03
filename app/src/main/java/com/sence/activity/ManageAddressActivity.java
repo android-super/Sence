@@ -13,6 +13,7 @@ import com.sence.bean.response.PManageAddressBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
+import com.sence.utils.LoginStatus;
 import com.sence.utils.StatusBarUtil;
 
 import java.util.List;
@@ -20,7 +21,9 @@ import java.util.List;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+/**
+ * 管理收货地址
+ */
 public class ManageAddressActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
@@ -77,7 +80,7 @@ public class ManageAddressActivity extends AppCompatActivity {
     }
 
     private void dohttp() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.ADDRESS_LIST, new RManageAddressBean("1",page+"","10")).request(new ApiCallBack<List<PManageAddressBean>>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.ADDRESS_LIST, new RManageAddressBean(LoginStatus.getUid(),page+"","10")).request(new ApiCallBack<List<PManageAddressBean>>() {
             @Override
             public void onFinish() {
 

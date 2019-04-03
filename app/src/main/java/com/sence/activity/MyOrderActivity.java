@@ -16,7 +16,9 @@ import com.tlz.fucktablayout.FuckTabLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
-
+/**
+ * 订单列表
+ */
 public class MyOrderActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private FuckTabLayout mFuckTabLayout;

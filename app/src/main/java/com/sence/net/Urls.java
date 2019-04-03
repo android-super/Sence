@@ -43,6 +43,7 @@ public class Urls {
     public static final String USER_RECHARGE_WX = "/index.php/api/EscrowOrders/wxPrepay";//微信充值
     public static final String USER_CLIENT_BIND = "/index.php/api/link/bind";//用户绑定Client_id
     public static final String USER_VIP_OPEN = "/index.php/api/user/openSenceKol";//开通会员
+    public static final String USER_DETAIL = "/index.php/Api/mine/accountDetail";//账户明细
     //主页
     public static final String MAIN_CONTENT_DETAIL = "/index.php/api/notes/getArticleDetail";//
     public static final String MAIN_NOTE_DETAIL = "/index.php/Api/Notes/getNoteDetail";//笔记详情
@@ -55,7 +56,7 @@ public class Urls {
     public static final String ORDER_COMMENT_SUPPORT = "/index.php/Api/Orders/praise";//订单评论点赞
     public static final String ORDER_CANCEL = "/index.php/Api/Orders/cancelOrder";//订单取消
     public static final String ORDER_COMMENT_LIST = "/index.php/Api/Goods/getGoodsCommentList";//商品评价列表
-    public static final String ORDER_NOTE_GOODS= "/index.php/Api/Goods/getNotesGoods";//笔记立即购买 所有商品数据
+    public static final String ORDER_NOTE_GOODS = "/index.php/Api/Goods/getNotesGoods";//笔记立即购买 所有商品数据
     public static final String ORDER_DETAIL = "/index.php/Api/Goods/getOrderDetail";//订单详情
     public static final String BUS_RECOMMEND = "/index.php/Api/Goods/getCommendGoods";//购物车页面推荐商品数据
     public static final String BUS_LIST = "/index.php/Api/Goods/getCartList";//购物车列表

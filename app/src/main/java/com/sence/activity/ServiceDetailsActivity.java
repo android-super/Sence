@@ -27,7 +27,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+/**
+ * 服务详情
+ */
 public class ServiceDetailsActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;

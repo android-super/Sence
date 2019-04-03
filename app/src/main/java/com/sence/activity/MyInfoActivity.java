@@ -1,7 +1,10 @@
 package com.sence.activity;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,10 +22,12 @@ import com.sence.bean.request.RMyInfoBean;
 import com.sence.bean.response.PMyInfoBean;
 import com.sence.fragment.MyInfoRecommendFragment;
 import com.sence.fragment.MyOrderFragment;
+import com.sence.fragment.main.NoteFragment;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.Urls;
 import com.sence.net.manager.ApiCallBack;
+import com.sence.utils.FastBlurUtil;
 import com.sence.utils.NavigationBarUtil;
 import com.sence.utils.StatusBarUtil;
 import com.sence.view.NiceImageView;
@@ -31,7 +36,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
-
+/**
+ * 个人信息
+ */
 public class MyInfoActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ViewPager mViewPager;
@@ -39,13 +46,14 @@ public class MyInfoActivity extends AppCompatActivity implements View.OnClickLis
     private String[] list = {"推荐","笔记","共享"};
     private AppBarLayout mAppBarLayout;
     private TabLayout mTabLayoutButtom;
-    private TabLayout mTabLayout;
     private ImageView mBack;
     private View mView;
     private TextView mDeditor,mName,mAddress,mFocusNum,mFansNum,mSigner,mShopName,mShopPrice;
     private NiceImageView  mImg,mImageView;
     private RelativeLayout mShop;
     private ImageView mHead;
+    private NiceImageView mIsV;
+    private int scaleRatio;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,7 +68,6 @@ public class MyInfoActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void initData() {
-        mTabLayout = findViewById(R.id.tl_tab_myinfo);
         mAppBarLayout = findViewById(R.id.al_appbar_myinfo);
         mDeditor = findViewById(R.id.tv_deditor_myinfo);
         mTabLayoutButtom = findViewById(R.id.tl_tabhid_myinfo);
@@ -77,26 +84,19 @@ public class MyInfoActivity extends AppCompatActivity implements View.OnClickLis
         mShopPrice = findViewById(R.id.tv_price_myinfo);
         mImageView = findViewById(R.id.iv_imgico_myinfo);
         mViewPager = findViewById(R.id.vp_content_myinfo);
+        mIsV = findViewById(R.id.iv_isv_myinfo);
         mBack = findViewById(R.id.iv_back_myinfo);
         mBack.setOnClickListener(this);
-        final Fragment[] fragmentList = {new MyInfoRecommendFragment(), new MyInfoRecommendFragment(), new MyInfoRecommendFragment(), new MyOrderFragment(), new MyOrderFragment()};
+
+        final Fragment[] fragmentList = {new MyInfoRecommendFragment(), new NoteFragment(), new MyInfoRecommendFragment(), new MyOrderFragment(), new MyOrderFragment()};
         mMyInfoRecommendViewPagerAdatpter = new MyInfoRecommendViewPagerAdatpter(getSupportFragmentManager(),this,fragmentList,list);
         mViewPager.setAdapter(mMyInfoRecommendViewPagerAdatpter);
-        mTabLayout.setupWithViewPager(mViewPager);
         mTabLayoutButtom.setupWithViewPager(mViewPager);
         mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
                 float alpha = (float) Math.abs(i) / appBarLayout.getTotalScrollRange();
                 mView.setAlpha(alpha);
-                mTabLayout.setAlpha(alpha);
-                mTabLayoutButtom.setAlpha(1-alpha);
-                Scale(mTabLayoutButtom,1-alpha);
-                if(alpha>=1){
-                    mTabLayout.setVisibility(View.VISIBLE);
-                }else{
-                    mTabLayout.setVisibility(View.GONE);
-                }
                 if (alpha > 0.8) {
                     mBack.setImageResource(R.drawable.login_fanhui);
                     mDeditor.setTextColor(Color.parseColor("#222222"));
@@ -108,6 +108,34 @@ public class MyInfoActivity extends AppCompatActivity implements View.OnClickLis
         });
         doHttp();
     }
+
+    private void dim(final  String url) {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                scaleRatio = 5;
+                //  下面的这个方法必须在子线程中执行
+                 Bitmap blurBitmap = FastBlurUtil.GetUrlBitmap(url, scaleRatio);
+                Message message = new Message();
+                message.obj=blurBitmap;
+                handler.sendMessage(message);
+                //                        刷新ui必须在主线程中执行
+
+            }
+        }).start();
+
+
+    }
+    private Handler handler = new Handler(){
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Bitmap blurBitmap = (Bitmap) msg.obj;
+            mHead.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            mHead.setImageBitmap(blurBitmap);
+            handler.removeCallbacksAndMessages(null);
+        }
+    };
 
     private void doHttp() {
         HttpManager.getInstance().PlayNetCode(HttpCode.USER_INFO_DATA, new RMyInfoBean("4","1")).request(new ApiCallBack<PMyInfoBean>() {
@@ -129,16 +157,22 @@ public class MyInfoActivity extends AppCompatActivity implements View.OnClickLis
                 mFocusNum.setText(o.getFocus_num());
                 mFansNum.setText(o.getFans_num());
                 mSigner.setText(o.getAutograph());
+                if(o.getIs_kol().equals("1")){
+                    mIsV.setVisibility(View.VISIBLE);
+                }else {
+                    mIsV.setVisibility(View.GONE);
+                }
                 Glide.with(MyInfoActivity.this)
                         .load(Urls.base_url + o.getAvatar())
                         .placeholder(R.drawable.hint_img)
                         .fallback(R.drawable.hint_img)
                         .into(mImageView);
-                Glide.with(MyInfoActivity.this)
-                        .load(Urls.base_url + o.getAvatar())
-                        .placeholder(R.drawable.hint_img)
-                        .fallback(R.drawable.hint_img)
-                        .into(mHead);
+//                Glide.with(MyInfoActivity.this)
+//                        .load(Urls.base_url + o.getAvatar())
+//                        .placeholder(R.drawable.hint_img)
+//                        .fallback(R.drawable.hint_img)
+//                        .into(mHead);
+                dim(Urls.base_url + o.getAvatar());
                 if(o.getIs_kol().equals("1")){
                     mShopName.setText(o.getGoods_info().getName());
                     mShopPrice.setText("￥ "+o.getGoods_info().getPrice());
@@ -169,5 +203,6 @@ public class MyInfoActivity extends AppCompatActivity implements View.OnClickLis
                 break;
         }
     }
+
 
 }

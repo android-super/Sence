@@ -27,7 +27,9 @@ import com.sence.utils.StatusBarUtil;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
+/**
+ * 添加收货地址
+ */
 public class AddAddressActivity extends AppCompatActivity {
 
     private TextView mTitle;
@@ -39,7 +41,7 @@ public class AddAddressActivity extends AppCompatActivity {
     private String postCode,address;
     private CityPicker cityPicker;
     private TextView mAddress;
-    private PManageAddressBean bean;
+    private PManageAddressBean bean = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,7 +69,7 @@ public class AddAddressActivity extends AppCompatActivity {
         mAddress = findViewById(R.id.tv_address_addaddress);
         mDetailsAddress = findViewById(R.id.et_detailsaddress_addaddress);
         mPostCode = findViewById(R.id.et_postcode_addaddress);
-        if(!TextUtils.isEmpty(bean.getUsername())){
+        if(bean!=null){
             mName.setText(bean.getUsername());
             mPhone.setText(bean.getPhone());
             mAddress.setText(bean.getArea());
@@ -160,7 +162,7 @@ public class AddAddressActivity extends AppCompatActivity {
             ToastUtils.showShort("请输入当地邮政编码");
             return;
         }
-        if(TextUtils.isEmpty(bean.getUsername())){
+        if(bean==null){
             addAddress();
         }else{
             editorAddress();

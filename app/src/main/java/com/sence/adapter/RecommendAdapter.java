@@ -2,14 +2,11 @@ package com.sence.adapter;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Build;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
-import androidx.annotation.RequiresApi;
-import androidx.core.app.ActivityOptionsCompat;
+
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -18,6 +15,8 @@ import com.sence.activity.ContentDetailActivity;
 import com.sence.bean.response.PMainRecommendBean;
 import com.sence.net.Urls;
 import com.sence.view.NiceImageView;
+
+import androidx.core.app.ActivityOptionsCompat;
 
 /**
  * Created by zwy on 2019/3/21.

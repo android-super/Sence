@@ -10,6 +10,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+
 
     <application
             android:name=".base.BaseApp"
@@ -83,6 +85,14 @@
         <activity android:name=".activity.ShopCommendActivity"/>
         <activity android:name=".activity.AddAddressActivity"></activity>
         <activity android:name=".activity.ServiceCommentActivity"></activity>
+        <activity android:name=".activity.OrderCommentActivity"></activity>
+        <activity android:name=".activity.UserDetailActivity"></activity>
+        <activity android:name=".activity.SearchActivity"></activity>
+        <activity android:name=".activity.PhotoSelectActivity"></activity>
+        <activity android:name=".view.photo.PhotoActivity"
+                  android:screenOrientation="portrait"
+                  android:configChanges="orientation|keyboardHidden|screenSize"/>
+        <activity android:name=".view.photo.ResultActivity"></activity>
     </application>
 
 </manifest>

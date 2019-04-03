@@ -4,7 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -41,18 +42,16 @@ public class MyInfoRecommendAdapter extends RecyclerView.Adapter<MyInfoRecommend
 
     @Override
     public void onBindViewHolder(@NonNull MyInfoRecommendAdapter.ViewHolder holder, int position) {
+        if(list.get(position).getIs_kol().equals("1")){
+            holder.mTag.setVisibility(View.VISIBLE);
+        }else{
+            holder.mTag.setVisibility(View.GONE);
+        }
         holder.mName.setText(list.get(position).getNick_name());
-        holder.mTime.setText(list.get(position).getAdd_time());
         holder.mTitle.setText(list.get(position).getTitle());
         holder.mContent.setText(list.get(position).getContent());
         holder.mComment.setText(list.get(position).getMessage_count());
         holder.mLike.setText(list.get(position).getPraise_count());
-        holder.mShape.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
         Glide.with(context)
                 .load(Urls.base_url + list.get(position).getAvatar())
                 .placeholder(R.drawable.hint_img)
@@ -73,20 +72,22 @@ public class MyInfoRecommendAdapter extends RecyclerView.Adapter<MyInfoRecommend
 
 
         private NiceImageView mImageView,mImg;
-        private TextView mName,mTitle,mTime,mContent,mLike,mComment;
-        private RelativeLayout mShape;
+        private TextView mName,mTitle,mContent,mLike,mComment;
+        private LinearLayout mLikeL,mCommentL;
+        private ImageView mTag;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mTitle = itemView.findViewById(R.id.tv_title_myinforecommend);
             mImageView = itemView.findViewById(R.id.iv_img_myinforecommend);
             mName = itemView.findViewById(R.id.tv_name_myinforecommend);
-            mTime = itemView.findViewById(R.id.tv_time_myinforecommend);
             mContent = itemView.findViewById(R.id.tv_content_myinforecommend);
             mImg = itemView.findViewById(R.id.iv_imgshop_myinforecommend);
+            mTag = itemView.findViewById(R.id.iv_tag_myinforecommend);
             mLike = itemView.findViewById(R.id.tv_like_myinforecommend);
             mComment = itemView.findViewById(R.id.tv_comment_myinforecommend);
-            mShape = itemView.findViewById(R.id.rl_shape_myinforecommend);
+            mCommentL = itemView.findViewById(R.id.ll_comment_myinforecommend);
+            mLikeL = itemView.findViewById(R.id.ll_like_myinforecommend);
         }
     }
 }
