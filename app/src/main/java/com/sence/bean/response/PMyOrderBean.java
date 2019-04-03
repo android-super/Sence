@@ -5,6 +5,15 @@ import java.util.List;
 public class PMyOrderBean {
 
 
+    /**
+     * allNum : 2
+     * waitPay : 2
+     * waitSend : 0
+     * waitConfirm : 0
+     * waitEvlua : 0
+     * list : [{"statusMsg":"等待支付","id":"2","addtime":"2019-03-18 17:28:46","needpay":"8","goods":{"gid":"1","price":"4","num":"2","name":"一号商品","img":""},"custom":{"nick_name":"hhhh","avatar":"","id":"1","name":"hhhh"}},{"id":"1","addtime":"2019-03-18 17:28:46","needpay":"12","goods":{"gid":"2","price":"4","num":"3","name":"2号商品","img":""},"custom":{"nick_name":"hhhh","avatar":"","id":"1","name":"hhhh"}}]
+     */
+
     private String allNum;
     private String waitPay;
     private String waitSend;
@@ -62,16 +71,17 @@ public class PMyOrderBean {
 
     public static class ListBean {
         /**
-         * id : 1
+         * statusMsg : 等待支付
+         * id : 2
          * addtime : 2019-03-18 17:28:46
-         * needpay : 12
-         * goods : {"gid":"2","price":"4","num":"3","name":"2号商品","img":""}
+         * needpay : 8
+         * goods : {"gid":"1","price":"4","num":"2","name":"一号商品","img":""}
          * custom : {"nick_name":"hhhh","avatar":"","id":"1","name":"hhhh"}
          */
 
+        private String statusMsg;
         private String id;
         private String addtime;
-        private String statusMsg;
         private String needpay;
         private GoodsBean goods;
         private CustomBean custom;
@@ -83,6 +93,7 @@ public class PMyOrderBean {
         public void setStatusMsg(String statusMsg) {
             this.statusMsg = statusMsg;
         }
+
         public String getId() {
             return id;
         }
@@ -125,10 +136,10 @@ public class PMyOrderBean {
 
         public static class GoodsBean {
             /**
-             * gid : 2
+             * gid : 1
              * price : 4
-             * num : 3
-             * name : 2号商品
+             * num : 2
+             * name : 一号商品
              * img :
              */
 
@@ -224,6 +235,5 @@ public class PMyOrderBean {
                 this.name = name;
             }
         }
-
     }
 }

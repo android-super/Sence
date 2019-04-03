@@ -82,13 +82,10 @@
         <activity android:name=".activity.ShopCommendActivity"/>
         <activity android:name=".activity.AddAddressActivity"></activity>
         <activity android:name=".activity.ServiceCommentActivity"></activity>
-        <activity android:name=".activity.OrderCommentActivity"></activity>
+        <activity android:name=".activity.OrderCommentActivity"
+                  android:screenOrientation="portrait"
+                  android:configChanges="orientation|keyboardHidden|screenSize"></activity>
         <activity android:name=".activity.UserDetailActivity"></activity>
         <activity android:name=".activity.SearchActivity"></activity>
-        <activity android:name=".activity.PhotoSelectActivity"></activity>
-        <activity android:name=".view.photo.PhotoActivity"
-                  android:screenOrientation="portrait"
-                  android:configChanges="orientation|keyboardHidden|screenSize"/>
-        <activity android:name=".view.photo.ResultActivity"></activity>
     </application>
 </manifest>

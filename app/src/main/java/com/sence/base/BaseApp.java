@@ -2,7 +2,7 @@ package com.sence.base;
 
 import android.app.Application;
 import android.content.Context;
-import androidx.multidex.MultiDex;
+
 import com.blankj.utilcode.util.Utils;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
@@ -12,6 +12,8 @@ import com.squareup.leakcanary.LeakCanary;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
 
+import androidx.multidex.MultiDex;
+
 /**
  * Created by zwy on 2019/3/19.
  * package_name is com.sence.base
@@ -19,6 +21,7 @@ import com.umeng.socialize.PlatformConfig;
  */
 public class BaseApp extends Application {
     public static BaseApp INSTANCE;
+    private static BaseApp mBaseApp;
 
     @Override
     public void onCreate() {
@@ -32,7 +35,9 @@ public class BaseApp extends Application {
         initUM();
         initSharedPreference();
     }
-
+    public static BaseApp getContext() {
+        return mBaseApp;
+    }
     /**
      * 数据保存
      */

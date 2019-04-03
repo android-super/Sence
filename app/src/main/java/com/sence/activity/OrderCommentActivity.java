@@ -1,5 +1,7 @@
 package com.sence.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,16 +13,21 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
+import com.lcw.library.imagepicker.ImagePicker;
 import com.sence.R;
 import com.sence.net.Urls;
 import com.sence.utils.StatusBarUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
 /**
  * 订单评论
  */
-public class OrderCommentActivity extends AppCompatActivity {
+public class OrderCommentActivity extends AppCompatActivity  {
 
     private TextView mTitle,mGoodComment,mGapComment,mCentreComment;
     private ImageView mImg,mImgOne,mImgTwe,mImgThress,mImgGood,mImgCentre,mImgGap;
@@ -29,6 +36,8 @@ public class OrderCommentActivity extends AppCompatActivity {
     private String url;
     private TextView mSubmit;
     private EditText mContent;
+    private static final int REQUEST_SELECT_IMAGES_CODE=0*01;
+    private List<String> mImagePaths = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,6 +47,7 @@ public class OrderCommentActivity extends AppCompatActivity {
         Intent intent = getIntent();
         url = intent.getStringExtra("url");
         initData();
+        addListener();
     }
 
     private void initData() {
@@ -67,14 +77,6 @@ public class OrderCommentActivity extends AppCompatActivity {
         mGood = findViewById(R.id.ll_good_shopcomment);
         mCentre = findViewById(R.id.ll_centre_shopcomment);
         mGap = findViewById(R.id.ll_gap_shopcomment);
-        mImgOne.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(OrderCommentActivity.this, PhotoSelectActivity.class);
-                intent.putExtra("flag",3);
-                startActivity(intent);
-            }
-        });
         Glide.with(this)
                 .load(Urls.base_url + url)
                 .placeholder(R.drawable.hint_img)
@@ -131,4 +133,57 @@ public class OrderCommentActivity extends AppCompatActivity {
             return;
         }
     }
+    public void addListener(){
+        mImgOne.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //弹出框框
+                AlertDialog.Builder builder = new AlertDialog.Builder(OrderCommentActivity.this,android.R.style.Theme_Holo_Light_Dialog);
+//                builder.setIcon(R.drawable.ic_choice_pic);
+                builder.setTitle("选择");
+                String[] choices = {"拍照","从相机里选择"};
+                builder.setItems(choices, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case 0:
+                                //拍照并裁剪
+//                                takePhoto.onPickFromCaptureWithCrop(uri, cropOptions);
+                                break;
+                            case 1:
+                                //从照片选择并裁剪
+//                                startActivity(new Intent(OrderCommentActivity.this,GlideLoader.class));
+                                ImagePicker.getInstance()
+                                        .setTitle("标题")//设置标题
+                                        .showCamera(true)//设置是否显示拍照按钮
+                                        .showImage(true)//设置是否展示图片
+                                        .showVideo(true)//设置是否展示视频
+                                        .setMaxCount(3)//设置最大选择图片数目(默认为1，单选)
+                                        .setImageLoader(new GlideLoader())//设置自定义图片加载器
+                                        .start(OrderCommentActivity.this, REQUEST_SELECT_IMAGES_CODE);//REQEST_SELECT_IMAGES_CODE为Intent调用的requestCode
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                });
+                builder.show();
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_SELECT_IMAGES_CODE && resultCode == RESULT_OK) {
+            mImagePaths = data.getStringArrayListExtra(ImagePicker.EXTRA_SELECT_IMAGES);
+            StringBuffer stringBuffer = new StringBuffer();
+            stringBuffer.append("当前选中图片路径：\n\n");
+            for (int i = 0; i < mImagePaths.size(); i++) {
+                Glide.with(OrderCommentActivity.this).load(mImagePaths.get(i)).into(mImgOne);
+                stringBuffer.append(mImagePaths.get(i) + "\n\n");
+            }
+            ToastUtils.showShort(stringBuffer.toString());
+        }
+    }
+
 }

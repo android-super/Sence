@@ -38,10 +38,11 @@
             android:id="@+id/pub_right_img"/>
         <TextView
             android:scaleType="center"
-            android:minWidth="50dp"
+            android:width="50dp"
             android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:paddingRight="@dimen/dp_10"
+            android:textSize="@dimen/sp_14"
             android:layout_height="50dp"
             android:gravity="center"
             android:id="@+id/pub_right_tv"/>
