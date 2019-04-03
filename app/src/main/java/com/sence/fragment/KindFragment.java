@@ -22,6 +22,7 @@ import com.sence.R;
 import com.sence.adapter.KindLeftAdapter;
 import com.sence.adapter.KindRightAdapter;
 import com.sence.bean.request.RBusAddBean;
+import com.sence.bean.request.REmptyBean;
 import com.sence.bean.request.RIdListBean;
 import com.sence.bean.response.PGoodListBean;
 import com.sence.bean.response.PKindBean;
@@ -59,7 +60,7 @@ public class KindFragment extends Fragment {
 
     private void initKindList() {
         leftAdapter = new KindLeftAdapter(R.layout.rv_item_kind_left);
-        HttpManager.getInstance().PlayNetCode(HttpCode.KIND_GOODS).request(new ApiCallBack<List<PKindBean>>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.KIND_GOODS,new REmptyBean()).request(new ApiCallBack<List<PKindBean>>() {
             @Override
             public void onFinish() {
 
@@ -100,6 +101,7 @@ public class KindFragment extends Fragment {
         recycle_view_horizontal.setLayoutManager(new LinearLayoutManager(getActivity()));
         recycle_view_vertical.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+
         recycle_view_horizontal.setAdapter(leftAdapter);
         rightAdapter = new KindRightAdapter(R.layout.rv_item_kind_right);
         recycle_view_vertical.setAdapter(rightAdapter);
@@ -124,6 +126,7 @@ public class KindFragment extends Fragment {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 leftAdapter.setPosition(position);
                 page = 1;
+                id = leftAdapter.getData().get(position).getId();
                 initGoodList();
             }
         });
@@ -135,7 +138,7 @@ public class KindFragment extends Fragment {
                 }
             }
         });
-        initGoodList();
+//        initGoodList();
     }
 
     /**

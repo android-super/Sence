@@ -27,6 +27,7 @@
                     android:layout_height="23dp"/>
 
             <TextView
+                    android:id="@+id/note_name"
                     android:layout_toRightOf="@id/note_head"
                     android:layout_marginLeft="7dp"
                     android:text="@string/hint_name"
@@ -37,8 +38,9 @@
                     android:layout_height="wrap_content"/>
 
             <TextView
+                    android:id="@+id/note_support"
                     android:layout_alignParentRight="true"
-                    android:drawableRight="@drawable/note_dianzan"
+                    android:drawableRight="@drawable/selecte_main_support"
                     android:layout_centerVertical="true"
                     android:drawablePadding="5dp"
                     android:text="@string/hint_num"
@@ -46,6 +48,7 @@
                     android:layout_height="wrap_content"/>
 
             <TextView
+                    android:id="@+id/note_look"
                     android:layout_alignParentRight="true"
                     android:drawableRight="@drawable/note_yuedu"
                     android:layout_centerVertical="true"
@@ -56,6 +59,7 @@
                     android:layout_height="wrap_content"/>
 
             <TextView
+                    android:id="@+id/note_comment"
                     android:layout_alignParentRight="true"
                     android:drawableRight="@drawable/note_pinglun"
                     android:layout_centerVertical="true"
@@ -67,6 +71,7 @@
         </RelativeLayout>
 
         <TextView
+                android:id="@+id/note_content"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:text="@string/hint_content"
@@ -90,7 +95,7 @@
                 android:layout_height="wrap_content"/>
 
         <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycle_view"
+                android:id="@+id/note_recycle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
     </LinearLayout>

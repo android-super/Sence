@@ -34,4 +34,10 @@ public enum HttpCode {
     ORDER_DELETE,//取消待付款，待支付订单
     USER_ENJOY_VIP,//尊享会员
     USER_INFO_DATA,//我的信息
+    USER_FANS_LIST,//我的粉丝列表
+    USER_FOCUS_LIST,//我的关注列表
+    USER_ACCOUNT,//我的账户
+    NOTE_DETAIL,//笔记详情
+    CONTENT_DETAIL,//內容詳情
+    COMMENT_LIST,//评价列表
 }

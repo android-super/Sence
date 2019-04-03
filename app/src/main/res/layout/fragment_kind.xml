@@ -68,6 +68,7 @@
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
                 android:layout_width="285dp"
                 android:id="@+id/smart_refresh"
+                app:srlEnableLoadMoreWhenContentNotFull="false"
                 android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView

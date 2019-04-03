@@ -51,7 +51,7 @@
                 android:orientation="vertical"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="15dp"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
@@ -60,6 +60,7 @@
                     android:textSize="14sp"
                     android:textColor="#4c4c4c"
                     android:text="@string/hint_num"
+                    android:gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -80,7 +81,7 @@
                 android:orientation="vertical"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="15dp"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
@@ -89,6 +90,7 @@
                     android:textSize="14sp"
                     android:textColor="#4c4c4c"
                     android:text="@string/hint_num"
+                    android:gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -109,7 +111,7 @@
                 android:id="@+id/user_release_layout"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="15dp"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
@@ -118,6 +120,7 @@
                     android:textSize="14sp"
                     android:textColor="#4c4c4c"
                     android:text="@string/hint_num"
+                    android:gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -341,6 +344,7 @@
                     android:textSize="14sp"
                     android:textColor="#4c4c4c"
                     android:layout_height="wrap_content"/>
+
             <TextView
                     android:id="@+id/user_send_point"
                     android:text="9"
@@ -372,6 +376,7 @@
                     android:textSize="14sp"
                     android:textColor="#4c4c4c"
                     android:layout_height="wrap_content"/>
+
             <TextView
                     android:id="@+id/user_get_point"
                     android:text="9"
@@ -403,6 +408,7 @@
                     android:textSize="14sp"
                     android:textColor="#4c4c4c"
                     android:layout_height="wrap_content"/>
+
             <TextView
                     android:id="@+id/user_comment_point"
                     android:text="9"
@@ -419,6 +425,7 @@
                     android:layout_height="15dp"/>
         </RelativeLayout>
     </LinearLayout>
+
     <RelativeLayout
             android:id="@+id/user_flower"
             android:layout_width="match_parent"
@@ -427,12 +434,14 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/user_wodehuayuan"
             android:layout_height="wrap_content">
+
         <ImageView
                 android:src="@drawable/user_zi"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="25dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
+
         <ImageView
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"

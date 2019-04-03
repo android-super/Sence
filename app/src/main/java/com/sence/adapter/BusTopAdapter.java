@@ -20,7 +20,7 @@ public class BusTopAdapter extends BaseQuickAdapter<PBusBean.CartBean, BaseViewH
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, PBusBean.CartBean item) {
+    protected void convert(BaseViewHolder helper, final PBusBean.CartBean item) {
         helper.addOnClickListener(R.id.item_name_select);
         helper.setText(R.id.item_name_select, item.getShopname());
         if (item.getActive().equals("0")) {
@@ -36,11 +36,14 @@ public class BusTopAdapter extends BaseQuickAdapter<PBusBean.CartBean, BaseViewH
         } else {
             helper.setText(R.id.item_kind_cost, "还差些钱才能免邮");
         }
+        final TextView item_name_select = helper.getView(R.id.item_name_select);
         if (item.isSelect()) {
+            item_name_select.setSelected(true);
             for (int i = 0; i < item.getGoods().size(); i++) {
                 item.getGoods().get(i).setSelect(true);
             }
         } else {
+            item_name_select.setSelected(false);
             for (int i = 0; i < item.getGoods().size(); i++) {
                 item.getGoods().get(i).setSelect(false);
             }
@@ -70,6 +73,7 @@ public class BusTopAdapter extends BaseQuickAdapter<PBusBean.CartBean, BaseViewH
                     goodAdapter.notifyDataSetChanged();
                 } else if (view.getId() == R.id.item_select) {
                     if (goodAdapter.getData().get(position).isSelect()) {
+                        item_name_select.setSelected(false);
                         goodAdapter.getData().get(position).setSelect(false);
                     } else {
                         goodAdapter.getData().get(position).setSelect(true);

@@ -30,7 +30,7 @@ public class RecommendAdapter extends BaseQuickAdapter<PMainRecommendBean, BaseV
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, PMainRecommendBean item) {
+    protected void convert(BaseViewHolder helper, final PMainRecommendBean item) {
         final NiceImageView item_img = helper.getView(R.id.item_img);
         final Activity activity = (Activity) helper.itemView.getContext();
         Glide.with(activity).load(Urls.base_url + item.getAlbum_url()).into(item_img);
@@ -57,7 +57,9 @@ public class RecommendAdapter extends BaseQuickAdapter<PMainRecommendBean, BaseV
             public void onClick(View v) {
                 ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(activity,
                         item_img, activity.getResources().getString(R.string.translation_recommend_name));
-                activity.startActivity(new Intent(activity, ContentDetailActivity.class), activityOptions.toBundle());
+                Intent intent = new Intent(activity,ContentDetailActivity.class);
+                intent.putExtra("nid",item.getNid());
+                activity.startActivity(intent, activityOptions.toBundle());
             }
         });
     }

@@ -35,7 +35,16 @@ public class Urls {
     public static final String USER_SIGN_UP = "/index.php/Api/User/weChatSignUp";//用户注册
     public static final String USER_VIP = "/index.php/Api/User/getMemberInfo";//Sence会员界面
     public static final String USER_ENJOY_VIP = "/index.php/Api/User/getEnjoyInfo";//尊享会员界面
+    public static final String USER_FANS_LIST = "/index.php/api/user/myFansList";//我的粉丝
+    public static final String USER_FOCUS_LISt = "/index.php/api/user/myFocusList";//我的关注
+    public static final String USER_FOCUS_CANCEL = "/index.php/api/user/unFocus";//取消关注
+    public static final String USER_FOCUS = "/index.php/api/user/focus";//关注
+    public static final String USER_CASH = "/index.php/api/mine/withdraw";//提现
+    public static final String USER_RECHARGE_WX = "/index.php/api/EscrowOrders/wxPrepay";//微信充值
+    public static final String USER_CLIENT_BIND = "/index.php/api/link/bind";//用户绑定Client_id
+    public static final String USER_VIP_OPEN = "/index.php/api/user/openSenceKol";//开通会员
     //主页
+    public static final String MAIN_CONTENT_DETAIL = "/index.php/api/notes/getArticleDetail";//
     public static final String MAIN_NOTE_DETAIL = "/index.php/Api/Notes/getNoteDetail";//笔记详情
     public static final String MAIN_RECOMMEND = "/index.php/Api/Notes/recommendNoteList";//首页--推荐
     public static final String MAIN_FOCUS = "/index.php/Api/Notes/focusNoteList";//首页--关注
@@ -43,8 +52,12 @@ public class Urls {
     public static final String NOTE_DELETE = "/index.php/Api/Notes/delUserNote";//删除笔记
     public static final String NOTE_ADD = "/index.php/Api/Notes/addUserNote";//添加笔记
     //商品
-    public static final String ORDER_DETAIL = "/index.php/Api/Orders/getOrderDetail";//订单详情
-    public static final String BUS_RECOMMEND = "/index.php/Api/Goods/getCommentGoods";//购物车页面推荐商品数据
+    public static final String ORDER_COMMENT_SUPPORT = "/index.php/Api/Orders/praise";//订单评论点赞
+    public static final String ORDER_CANCEL = "/index.php/Api/Orders/cancelOrder";//订单取消
+    public static final String ORDER_COMMENT_LIST = "/index.php/Api/Goods/getGoodsCommentList";//商品评价列表
+    public static final String ORDER_NOTE_GOODS= "/index.php/Api/Goods/getNotesGoods";//笔记立即购买 所有商品数据
+    public static final String ORDER_DETAIL = "/index.php/Api/Goods/getOrderDetail";//订单详情
+    public static final String BUS_RECOMMEND = "/index.php/Api/Goods/getCommendGoods";//购物车页面推荐商品数据
     public static final String BUS_LIST = "/index.php/Api/Goods/getCartList";//购物车列表
     public static final String ORDER_PAY = "/index.php/Api/Orders/payOrder";//支付订单
     public static final String COMMENT_SHOP_LIST = "/index.php/Api/Goods/getGoodsCommentList";//商品评论列表

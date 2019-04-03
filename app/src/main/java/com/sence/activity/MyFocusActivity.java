@@ -13,6 +13,12 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sence.R;
 import com.sence.adapter.FansAdapter;
 import com.sence.adapter.FocusAdapter;
+import com.sence.bean.request.RFansBean;
+import com.sence.bean.request.RFocusBean;
+import com.sence.net.HttpCode;
+import com.sence.net.HttpManager;
+import com.sence.net.manager.ApiCallBack;
+import com.sence.utils.LoginStatus;
 import com.sence.utils.StatusBarUtil;
 
 /**
@@ -23,6 +29,7 @@ public class MyFocusActivity extends AppCompatActivity {
     private RecyclerView recycle_view;
 
     private FocusAdapter adapter;
+    private String keyword = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +37,29 @@ public class MyFocusActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_focus);
         StatusBarUtil.setLightMode(this);
         initView();
+        initData();
+    }
+
+    /**
+     * 我的粉丝数据
+     */
+    private void initData() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.USER_FOCUS_LIST,new RFocusBean(LoginStatus.getUid(),keyword)).request(new ApiCallBack() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(Object o, String msg) {
+
+            }
+        });
     }
 
     private void initView() {

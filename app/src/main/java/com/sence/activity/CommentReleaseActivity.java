@@ -9,14 +9,10 @@ import com.sence.utils.StatusBarUtil;
  * 发布评论
  */
 public class CommentReleaseActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment_release);
         StatusBarUtil.setLightMode(this);
-
-
-        
     }
 }

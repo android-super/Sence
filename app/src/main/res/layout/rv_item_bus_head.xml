@@ -2,16 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:gravity="bottom|center_horizontal"
-                android:paddingTop="10dp"
                 android:layout_height="80dp">
 
     <RelativeLayout
+            android:layout_marginTop="10dp"
             android:id="@+id/bus_open_layout"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="70dp">
 
         <ImageView
                 android:src="@drawable/bus_gouwuka"
@@ -29,7 +28,6 @@
                 android:layout_height="wrap_content"/>
 
         <TextView
-                android:id="@+id/user_price"
                 android:layout_toRightOf="@id/bus_s"
                 android:text="一年预计省￥2356"
                 android:textSize="13sp"
@@ -62,12 +60,13 @@
     </RelativeLayout>
 
     <RelativeLayout
+            android:layout_marginTop="10dp"
             android:visibility="visible"
             android:id="@+id/bus_vip_layout"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="70dp">
 
         <ImageView
                 android:src="@drawable/user_zun"

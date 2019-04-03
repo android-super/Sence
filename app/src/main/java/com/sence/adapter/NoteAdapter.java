@@ -28,7 +28,7 @@ public class NoteAdapter extends BaseQuickAdapter<PMainNoteBean, BaseViewHolder>
     }
 
     @Override
-    protected void convert(final BaseViewHolder helper, PMainNoteBean item) {
+    protected void convert(final BaseViewHolder helper, final PMainNoteBean item) {
         final NiceImageView imageView = helper.getView(R.id.item_img);
         final Activity activity = (Activity) helper.itemView.getContext();
         Glide.with(activity).load(Urls.base_url + item.getAlbum_url()).into(imageView);
@@ -49,7 +49,9 @@ public class NoteAdapter extends BaseQuickAdapter<PMainNoteBean, BaseViewHolder>
                 ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(activity,
                         imageView,
                         activity.getResources().getString(R.string.translation_note_name));
-                activity.startActivity(new Intent(activity, NoteDetailActivity.class), activityOptions.toBundle());
+                Intent intent = new Intent(activity, NoteDetailActivity.class);
+                intent.putExtra("nid", item.getNid());
+                activity.startActivity(intent, activityOptions.toBundle());
             }
         });
     }

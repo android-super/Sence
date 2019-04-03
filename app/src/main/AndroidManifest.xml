@@ -19,6 +19,14 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppThemeNoActionBar">
+        <activity android:name=".activity.AccountDetailActivity">
+        </activity>
+        <activity android:name=".activity.CardActivity">
+        </activity>
+        <activity android:name=".activity.CashActivity">
+        </activity>
+        <activity android:name=".activity.RechargeActivity">
+        </activity>
         <activity android:name=".activity.OpenVipActivity">
         </activity>
         <activity android:name=".activity.SettingActivity">
