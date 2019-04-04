@@ -140,6 +140,9 @@ public class HttpManager<P> {
             case BUS_ADD:
                 observable = httpService.BusAddCut(requestBean.getMap());
                 break;
+            case MAIN_SEARCH:
+                observable = httpService.Search(requestBean.getMap());
+                break;
             case USER_FANS_LIST:
                 observable = httpService.UserFansList(requestBean.getMap());
                 break;

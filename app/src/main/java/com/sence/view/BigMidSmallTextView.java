@@ -2,15 +2,14 @@ package com.sence.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
-import android.util.TypedValue;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import androidx.annotation.Nullable;
+
 import com.sence.R;
+
+import androidx.annotation.Nullable;
 
 /**
  * Created by zwy on 2019/4/3.
@@ -44,6 +43,7 @@ public class BigMidSmallTextView extends LinearLayout {
 
     public BigMidSmallTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.context =context;
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.BigMidSmallTextView);
         left_text = array.getString(R.styleable.BigMidSmallTextView_left_text);
         mid_text = array.getString(R.styleable.BigMidSmallTextView_mid_text);
@@ -58,6 +58,7 @@ public class BigMidSmallTextView extends LinearLayout {
         is_mid_bold = array.getBoolean(R.styleable.BigMidSmallTextView_mid_bold,false);
         is_right_bold = array.getBoolean(R.styleable.BigMidSmallTextView_right_bold,false);
         array.recycle();
+        removeAllViews();
         setOrientation(HORIZONTAL);
         addLeftText();
         addMidText();
@@ -72,7 +73,7 @@ public class BigMidSmallTextView extends LinearLayout {
         textView.setLayoutParams(new LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         textView.setText(left_text);
         textView.setTextColor(left_color);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP,left_size);
+        textView.getPaint().setTextSize(left_size);
         if (is_left_bold){
             textView.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         }
@@ -87,7 +88,7 @@ public class BigMidSmallTextView extends LinearLayout {
         textView.setLayoutParams(new LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         textView.setText(mid_text);
         textView.setTextColor(mid_color);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP,mid_size);
+        textView.getPaint().setTextSize(mid_size);
         if (is_mid_bold){
             textView.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         }
@@ -102,7 +103,7 @@ public class BigMidSmallTextView extends LinearLayout {
         textView.setLayoutParams(new LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         textView.setText(right_text);
         textView.setTextColor(right_color);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP,right_size);
+        textView.getPaint().setTextSize(right_size);
         if (is_right_bold){
             textView.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         }

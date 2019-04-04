@@ -4,20 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.net.http.SslError;
-import android.os.Bundle;
 import android.view.View;
-import android.webkit.*;
+import android.webkit.SslErrorHandler;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.widget.NestedScrollView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.appbar.AppBarLayout;
@@ -39,6 +35,12 @@ import com.sence.view.NiceImageView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+import butterknife.BindView;
 
 /**
  * 商品详情
@@ -90,6 +92,7 @@ public class ShopDetailsActivity extends BaseActivity {
 
     private WebSettings settings;
     private List<String> imgs;
+    private String id;
 
     @Override
     public int onActLayout() {
@@ -103,6 +106,8 @@ public class ShopDetailsActivity extends BaseActivity {
         }
         StatusBarUtil.setTranslucentForCoordinatorLayout(this, 0);
         StatusBarUtil.setLightMode(this);
+        Intent intent = getIntent();
+        id = intent.getStringExtra("id");
         llShopcommendShopdetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,7 +168,7 @@ public class ShopDetailsActivity extends BaseActivity {
     }
 
     public void initData() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.GOOD_DETAIL, new RShopDetailsBean("1", LoginStatus.getUid())).request(new ApiCallBack<PShopDetailsBean>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.GOOD_DETAIL, new RShopDetailsBean(id, LoginStatus.getUid())).request(new ApiCallBack<PShopDetailsBean>() {
             @Override
             public void onFinish() {
 

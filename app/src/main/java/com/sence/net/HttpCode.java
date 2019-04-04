@@ -37,6 +37,7 @@ public enum HttpCode {
     USER_INFO_DATA,//我的信息
     USER_INFO_DATA_SERVICE,//我的信息服务
     USER_FANS_LIST,//我的粉丝列表
+    MAIN_SEARCH,//首页搜索
     USER_FOCUS_LIST,//我的关注列表
     USER_ACCOUNT,//我的账户
     NOTE_DETAIL,//笔记详情

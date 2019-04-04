@@ -31,12 +31,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHolder> {
+    private static final int FOOTER = 2;
     private Context context;
     private List<PMyOrderBean.ListBean> list = new ArrayList<>();
-    public MyOrderAdapter(Context context){
+
+    public MyOrderAdapter(Context context) {
         this.context = context;
     }
-    public void setList(List<PMyOrderBean.ListBean> list){
+
+    public void setList(List<PMyOrderBean.ListBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -44,9 +47,8 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
     @NonNull
     @Override
     public MyOrderAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.rv_item_myorder,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.rv_item_myorder, parent, false);
         return new ViewHolder(view);
-
     }
 
     @Override
@@ -56,82 +58,82 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
         Glide.with(context).load(Urls.base_url + list.get(position).getGoods().getImg()).into(holder.mImageView);
         holder.mName.setText(list.get(position).getGoods().getName());
         holder.mTime.setText(list.get(position).getAddtime());
-        if(list.get(position).getGoods().getPrice().contains(".")){
-            holder.mPprice.setText("￥"+list.get(position).getGoods().getPrice());
-            holder.mPrice.setText("￥"+Integer.parseInt(list.get(position).getGoods().getPrice())*Integer.parseInt(list.get(position).getGoods().getNum()));
-        }else{
-            holder.mPprice.setText("￥"+list.get(position).getGoods().getPrice()+".00");
-            holder.mPrice.setText("￥"+Integer.parseInt(list.get(position).getGoods().getPrice())*Integer.parseInt(list.get(position).getGoods().getNum())+".00");
+        if (list.get(position).getGoods().getPrice().contains(".")) {
+            holder.mPprice.setText("￥" + list.get(position).getGoods().getPrice());
+            holder.mPrice.setText("￥" + Integer.parseInt(list.get(position).getGoods().getPrice()) * Integer.parseInt(list.get(position).getGoods().getNum()));
+        } else {
+            holder.mPprice.setText("￥" + list.get(position).getGoods().getPrice() + ".00");
+            holder.mPrice.setText("￥" + Integer.parseInt(list.get(position).getGoods().getPrice()) * Integer.parseInt(list.get(position).getGoods().getNum()) + ".00");
         }
-        if(list.get(position).getStatusMsg().equals("等待支付")){
+        if (list.get(position).getStatusMsg().equals("等待支付")) {
             holder.mAlipay.setText("立即支付");
-        }else if(list.get(position).getStatusMsg().equals("等待发货")){
+        } else if (list.get(position).getStatusMsg().equals("等待发货")) {
             holder.mAlipay.setText("提醒发货");
-        }else if(list.get(position).getStatusMsg().equals("等待收货")){
+        } else if (list.get(position).getStatusMsg().equals("等待收货")) {
             holder.mAlipay.setText("确认收货");
-        }else if(list.get(position).getStatusMsg().equals("等待评价")){
+        } else if (list.get(position).getStatusMsg().equals("等待评价")) {
             holder.mSevice.setVisibility(View.GONE);
             holder.mCancel.setText("查看订单");
             holder.mAlipay.setText("评价");
         }
 
-        holder.mPnum.setText("×"+list.get(position).getGoods().getNum());
-        holder.mNum.setText("共"+list.get(position).getGoods().getNum()+"件");
+        holder.mPnum.setText("×" + list.get(position).getGoods().getNum());
+        holder.mNum.setText("共" + list.get(position).getGoods().getNum() + "件");
         holder.mState.setText(list.get(position).getStatusMsg());
         holder.mCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            if(list.get(position).getStatusMsg().equals("等待评价")){
-                Intent intent = new Intent(context, OrderDetailsActivity.class);
-                intent.putExtra("id",list.get(position).getId());
-                context.startActivity(intent);
-            }else {
-                View view = View.inflate(context, R.layout.alter_deleteorder, null);
-                final AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-                alertDialog.setView(view);
-                alertDialog.show();
-                view.findViewById(R.id.tv_cancel_deleteorder).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        alertDialog.dismiss();
-                    }
-                });
-                view.findViewById(R.id.tv_confirm_deleteorder).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        alertDialog.dismiss();
-                        HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_DELETE, new ROrderDetailsBean(list.get(position).getId(), LoginStatus.getUid())).request(new ApiCallBack<String>() {
-                            @Override
-                            public void onFinish() {
+                if (list.get(position).getStatusMsg().equals("等待评价")) {
+                    Intent intent = new Intent(context, OrderDetailsActivity.class);
+                    intent.putExtra("id", list.get(position).getId());
+                    context.startActivity(intent);
+                } else {
+                    View view = View.inflate(context, R.layout.alter_deleteorder, null);
+                    final AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+                    alertDialog.setView(view);
+                    alertDialog.show();
+                    view.findViewById(R.id.tv_cancel_deleteorder).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            alertDialog.dismiss();
+                        }
+                    });
+                    view.findViewById(R.id.tv_confirm_deleteorder).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            alertDialog.dismiss();
+                            HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_DELETE, new ROrderDetailsBean(list.get(position).getId(), LoginStatus.getUid())).request(new ApiCallBack<String>() {
+                                @Override
+                                public void onFinish() {
 
-                            }
-
-                            @Override
-                            public void Message(int code, String message) {
-
-                            }
-
-                            @Override
-                            public void onSuccess(String o, String msg) {
-                                Logger.e("msg==========" + msg);
-                                if (msg.equals("取消成功")) {
-                                    listener.delete(position);
                                 }
-                            }
-                        });
-                    }
-                });
 
-            }
+                                @Override
+                                public void Message(int code, String message) {
+
+                                }
+
+                                @Override
+                                public void onSuccess(String o, String msg) {
+                                    Logger.e("msg==========" + msg);
+                                    if (msg.equals("取消成功")) {
+                                        listener.delete(position);
+                                    }
+                                }
+                            });
+                        }
+                    });
+
+                }
             }
         });
 
         holder.mAlipay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(list.get(position).getStatusMsg().equals("等待评价")){
+                if (list.get(position).getStatusMsg().equals("等待评价")) {
                     Intent intent = new Intent(context, OrderCommentActivity.class);
-                    intent.putExtra("url",list.get(position).getGoods().getImg());
+                    intent.putExtra("url", list.get(position).getGoods().getImg());
                     context.startActivity(intent);
                     return;
                 }
@@ -142,8 +144,8 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, OrderDetailsActivity.class);
-                intent.putExtra("id",list.get(position).getId());
-                intent.putExtra("type",list.get(position).getStatusMsg());
+                intent.putExtra("id", list.get(position).getId());
+                intent.putExtra("type", list.get(position).getStatusMsg());
                 context.startActivity(intent);
             }
         });
@@ -153,11 +155,12 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
     public int getItemCount() {
         return list.size();
     }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
 
         private ImageView mImageView;
-        private TextView mName,mPrice,mPnum,mState,mNum,mSevice,mCancel,mAlipay,mTime,mPprice;
+        private TextView mName, mPrice, mPnum, mState, mNum, mSevice, mCancel, mAlipay, mTime, mPprice;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -174,10 +177,11 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
             mAlipay = itemView.findViewById(R.id.tv_alipay_myorder);
         }
     }
+
     private DeleteOrderListener listener;
 
-    public void result( DeleteOrderListener listener){
-        this.listener=listener;
+    public void result(DeleteOrderListener listener) {
+        this.listener = listener;
     }
 
     public interface DeleteOrderListener {

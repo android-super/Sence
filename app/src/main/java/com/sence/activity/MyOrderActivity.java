@@ -2,20 +2,17 @@ package com.sence.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import com.sence.R;
 import com.sence.adapter.MyOrderViewPagerAdatpter;
 import com.sence.base.BaseActivity;
 import com.sence.fragment.MyOrderFragment;
 import com.sence.utils.StatusBarUtil;
 import com.tlz.fucktablayout.FuckTabLayout;
+
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+import butterknife.BindView;
 
 /**
  * 订单列表
@@ -91,6 +88,14 @@ public class MyOrderActivity extends BaseActivity {
         }
         if (evlua > 0) {
             tlTitleMyorder.addNumberBadge(4, evlua, Color.parseColor("#16a5af"), Color.parseColor("#FFFFFF"), 30);
+        }
+    }
+
+    public void setTitlen(int i, int size) {
+        if(size>0){
+            tlTitleMyorder.addNumberBadge(i, size, Color.parseColor("#16a5af"), Color.parseColor("#FFFFFF"), 30);
+        }else{
+            tlTitleMyorder.removeBadge(i);
         }
     }
 }

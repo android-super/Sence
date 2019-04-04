@@ -72,12 +72,12 @@ public class OrderCommentActivity extends BaseActivity implements View.OnClickLi
                 .load(Urls.base_url + url)
                 .into(mImg);
 
-        mSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                initData();
-            }
-        });
+//        mSubmit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                initData();
+//            }
+//        });
         View view = View.inflate(this, R.layout.bottom_dialog, null);
         TextView mTakePhoto = (TextView) view.findViewById(R.id.tv_takephoto);
         TextView mPhoto = (TextView) view.findViewById(R.id.tv_photo);

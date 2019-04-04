@@ -52,6 +52,7 @@ public class Urls {
     public static final String MAIN_NOTE = "/index.php/Api/Notes/getNoteList";//首页--笔记
     public static final String NOTE_DELETE = "/index.php/Api/Notes/delUserNote";//删除笔记
     public static final String NOTE_ADD = "/index.php/Api/Notes/addUserNote";//添加笔记
+    public static final String MAIN_SEARCH = "/index.php/Api/Public/homeSearchList";//主页搜索
     //商品
     public static final String ORDER_COMMENT_SUPPORT = "/index.php/Api/Orders/praise";//订单评论点赞
     public static final String ORDER_CANCEL = "/index.php/Api/Orders/cancelOrder";//订单取消

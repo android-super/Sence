@@ -7,8 +7,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.sence.R;
-import com.sence.bean.response.PMyInfoBean;
+import com.sence.bean.response.PSearchBean;
+import com.sence.net.Urls;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +21,12 @@ import io.reactivex.annotations.NonNull;
 
 public class SearchShopAdapter extends RecyclerView.Adapter<SearchShopAdapter.ViewHolder> {
     private Context context;
-    private List<PMyInfoBean.OtherInfoBean> list = new ArrayList<>();
+    private List<PSearchBean.GoodsListBean> list = new ArrayList<>();
 
     public SearchShopAdapter(Context context){
         this.context = context;
     }
-    public void setList(List<PMyInfoBean.OtherInfoBean> list){
+    public void setList(List<PSearchBean.GoodsListBean> list){
         this.list = list;
         notifyDataSetChanged();
     }
@@ -38,18 +41,18 @@ public class SearchShopAdapter extends RecyclerView.Adapter<SearchShopAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull SearchShopAdapter.ViewHolder holder, int position) {
-//        holder.mName.setText(list.get(position).getNick_name());
-//        holder.mPrice.setText(list.get(position).getContent());
-//        Glide.with(context)
-//                .load(Urls.base_url + list.get(position).getAlbum_url())
-//                .placeholder(R.drawable.hint_img)
-//                .fallback(R.drawable.hint_img)
-//                .into(holder.mImg);
+        holder.mName.setText(list.get(position).getName());
+        holder.mPrice.setText("￥"+list.get(position).getPrice());
+        RequestOptions options = new RequestOptions();
+        options.placeholder(R.drawable.hint_img);
+        Glide.with(context)
+                .load(Urls.base_url + list.get(position).getImg())
+                .into(holder.mImg);
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return list.size();
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
 

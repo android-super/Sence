@@ -1,7 +1,7 @@
 package com.sence.base;
 
 import android.os.Bundle;
-import android.view.View;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.ButterKnife;
@@ -47,4 +47,5 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseInte
     public void initData() {
 
     }
+
 }

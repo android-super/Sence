@@ -1,27 +1,36 @@
 package com.sence.activity;
 
 import android.graphics.Color;
-import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+import com.orhanobut.logger.Logger;
 import com.sence.R;
 import com.sence.adapter.SearchFriendAdapter;
 import com.sence.adapter.SearchShopAdapter;
 import com.sence.base.BaseActivity;
+import com.sence.bean.request.RSearchBean;
+import com.sence.bean.response.PSearchBean;
+import com.sence.net.HttpCode;
+import com.sence.net.HttpManager;
+import com.sence.net.manager.ApiCallBack;
+import com.sence.utils.LoginStatus;
 import com.sence.utils.StatusBarUtil;
 import com.sence.view.FlowLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
 
 /**
  * 搜索
@@ -35,15 +44,18 @@ public class SearchActivity extends BaseActivity {
     TextView tvCancelSearch;
     @BindView(R.id.fl_flow_search)
     FlowLayout flFlowSearch;
-    @BindView(R.id.ll_flow_service)
-    LinearLayout llFlowService;
+    @BindView(R.id.ll_flow_search)
+    LinearLayout llFlowSearch;
     @BindView(R.id.recycle_searchfriend)
     RecyclerView recycleSearchfriend;
     @BindView(R.id.recycle_searchshop)
     RecyclerView recycleSearchshop;
-    @BindView(R.id.ll_result_service)
-    LinearLayout llResultService;
-
+    @BindView(R.id.ll_result_search)
+    LinearLayout llResultSearch;
+    @BindView(R.id.ll_shop_search)
+    LinearLayout llShopSearch;
+    @BindView(R.id.ll_friend_search)
+    LinearLayout llFriendSearch;
     private List<String> list = new ArrayList<>();
     private SearchFriendAdapter mSearchFriendAdapter;
     private SearchShopAdapter mSearchShopAdapter;
@@ -59,6 +71,32 @@ public class SearchActivity extends BaseActivity {
     }
 
     public void initData() {
+        etContentSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String content = etContentSearch.getText().toString().trim();
+                if (!TextUtils.isEmpty(content)) {
+                    list.add(0,content);
+                    addList();
+                    llFlowSearch.setVisibility(View.GONE);
+                    llResultSearch.setVisibility(View.VISIBLE);
+                    doHttp(content);
+                }else{
+                    llFlowSearch.setVisibility(View.VISIBLE);
+                    llResultSearch.setVisibility(View.GONE);
+                }
+            }
+        });
         tvCancelSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,14 +106,7 @@ public class SearchActivity extends BaseActivity {
         ivSearchSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String content = etContentSearch.getText().toString().trim();
-                if (!TextUtils.isEmpty(content)) {
-                    list.add(content);
-                    addList();
-                    flFlowSearch.setVisibility(View.GONE);
-                    llResultService.setVisibility(View.VISIBLE);
-                    doHttp();
-                }
+
             }
         });
         for (int i = 0; i < 10; i++) {
@@ -97,16 +128,43 @@ public class SearchActivity extends BaseActivity {
             @Override
             public void gettext(String data) {
                 etContentSearch.setText(data);
-                llFlowService.setVisibility(View.GONE);
-                llResultService.setVisibility(View.VISIBLE);
+                llFlowSearch.setVisibility(View.GONE);
+                llResultSearch.setVisibility(View.VISIBLE);
             }
         });
 
     }
 
 
-    private void doHttp() {
+    private void doHttp(String content) {
+        HttpManager.getInstance().PlayNetCode(HttpCode.MAIN_SEARCH, new RSearchBean(content, LoginStatus.getUid())).request(new ApiCallBack<PSearchBean>() {
+            @Override
+            public void onFinish() {
 
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(PSearchBean o, String msg) {
+                Logger.e("msg==========" + msg);
+                if(o.getGoodsList().size()>0){
+                    llShopSearch.setVisibility(View.VISIBLE);
+                    mSearchShopAdapter.setList(o.getGoodsList());
+                }else{
+                    llShopSearch.setVisibility(View.GONE);
+                }
+                if(o.getUserList().size()>0){
+                    llFriendSearch.setVisibility(View.VISIBLE);
+                    mSearchFriendAdapter.setList(o.getUserList());
+                }else{
+                    llFriendSearch.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     private void addList() {

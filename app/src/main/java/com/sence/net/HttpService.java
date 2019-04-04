@@ -17,6 +17,7 @@ import com.sence.bean.response.PMyInfoServiceBean;
 import com.sence.bean.response.PMyOrderBean;
 import com.sence.bean.response.PNoteDetailBean;
 import com.sence.bean.response.POrderDetailsBean;
+import com.sence.bean.response.PSearchBean;
 import com.sence.bean.response.PServiceCommendBean;
 import com.sence.bean.response.PServiceeDetails;
 import com.sence.bean.response.PShopCommendBean;
@@ -172,6 +173,10 @@ public interface HttpService {
     @FormUrlEncoded
     @POST(Urls.NOTE_ADD)
     Observable<BaseResponseBean<String>> NoteAdd(@FieldMap Map<String, Object> map);//添加笔记
+
+    @FormUrlEncoded
+    @POST(Urls.MAIN_SEARCH)
+    Observable<BaseResponseBean<PSearchBean>> Search(@FieldMap Map<String, Object> map);//添加笔记
 
     @FormUrlEncoded
     @POST(Urls.MAIN_NOTE)

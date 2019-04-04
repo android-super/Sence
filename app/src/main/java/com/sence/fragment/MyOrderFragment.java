@@ -65,6 +65,7 @@ public class MyOrderFragment extends Fragment {
         LinearLayoutManager linearLayout = new LinearLayoutManager(getContext());
         linearLayout.setOrientation(RecyclerView.VERTICAL);
         loadData();
+        mSmartRefreshLayout.setEnableLoadMoreWhenContentNotFull(false);
         mRecyclerView.setLayoutManager(linearLayout);
         mRecyclerView.setAdapter(mMyOrderAdapter);
         mSmartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -99,6 +100,7 @@ public class MyOrderFragment extends Fragment {
                 listBeans.remove(i);
                 mMyOrderAdapter.setList(listBeans);
                 ToastUtils.showShort("取消成功");
+                ((MyOrderActivity)getActivity()).setTitlen(i,listBeans.size());
             }
         });
 
@@ -128,11 +130,8 @@ public class MyOrderFragment extends Fragment {
                 Logger.e("msg==========" + msg);
                 ((MyOrderActivity)getActivity()).setTitleNum(o.getAllNum(),o.getWaitPay(),o.getWaitSend(),o.getWaitConfirm(),o.getWaitEvlua());
                 listBeans = o.getList();
-                if(listBeans.size()>0){
+                if(listBeans.size()>0) {
                     mMyOrderAdapter.setList(listBeans);
-                    mMore.setVisibility(View.VISIBLE);
-                }else{
-                    mMore.setVisibility(View.GONE);
                 }
 
 

@@ -7,18 +7,19 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.blankj.utilcode.util.ConvertUtils;
+import com.sence.R;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
-import com.blankj.utilcode.util.ConvertUtils;
-import com.sence.R;
 
 /**
  * Created by zwy on 2019/4/3.
@@ -92,7 +93,7 @@ public class PubTitle extends Toolbar {
         layoutParams.rightMargin = ConvertUtils.dp2px(15);
         right_text.setGravity(Gravity.CENTER);
         right_text.setLayoutParams(layoutParams);
-        right_text.setTextSize(TypedValue.COMPLEX_UNIT_SP,tool_cover_right_size);
+        right_text.getPaint().setTextSize(tool_cover_right_size);
         right_text.setTextColor(tool_cover_right_color);
         right_text.setText(tool_cover_right_text);
         parent.addView(right_text);

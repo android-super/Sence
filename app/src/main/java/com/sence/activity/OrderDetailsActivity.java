@@ -3,12 +3,14 @@ package com.sence.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.*;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
 import com.blankj.utilcode.util.ToastUtils;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.orhanobut.logger.Logger;
 import com.sence.R;
 import com.sence.adapter.OrderDetailsAdapter;
@@ -22,10 +24,16 @@ import com.sence.utils.LoginStatus;
 import com.sence.utils.StatusBarUtil;
 import com.sence.view.PubTitle;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * 订单详情
  */
-public class OrderDetailsActivity extends BaseActivity implements View.OnClickListener {
+public class OrderDetailsActivity extends BaseActivity {
     @BindView(R.id.tv_state_orderdetails)
     TextView tvStateOrderdetails;
     @BindView(R.id.tv_number_orderdetails)
@@ -58,11 +66,40 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
     TextView tvSpriceOrderdetails;
     @BindView(R.id.bt_submint_orderdetails)
     Button btSubmintOrderdetails;
+    @BindView(R.id.layout_head)
+    PubTitle layoutHead;
+    @BindView(R.id.rl_number_orderdetails)
+    LinearLayout rlNumberOrderdetails;
+    @BindView(R.id.iv_toaddress_orderdetails)
+    ImageView ivToaddressOrderdetails;
+    @BindView(R.id.ll_order_orderdetails)
+    LinearLayout llOrderOrderdetails;
+    @BindView(R.id.ll_buttom_orderdetails)
+    LinearLayout llButtomOrderdetails;
+    @BindView(R.id.tv_price_pay)
+    TextView tvPricePay;
+    @BindView(R.id.tv_time_pay)
+    TextView tvTimePay;
+    @BindView(R.id.tv_minute_pay)
+    TextView tvMinutePay;
+    @BindView(R.id.tv_second_pay)
+    TextView tvSecondPay;
+    @BindView(R.id.iv_zhi_pay)
+    ImageView ivZhiPay;
+    @BindView(R.id.iv_wei_pay)
+    ImageView ivWeiPay;
+    @BindView(R.id.bt_pay_pay)
+    Button btPayPay;
+    @BindView(R.id.iv_back_pay)
+    ImageView ivBackPay;
 
     private OrderDetailsAdapter orderDetailsAdapter;
 
     private String id;
     private String type;
+    private BottomSheetDialog mBottomSheetDialog;
+    private POrderDetailsBean bean;
+    private TextView mPrice;
 
     @Override
     public int onActLayout() {
@@ -76,7 +113,6 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
         id = intent.getStringExtra("id");
         type = intent.getStringExtra("type");
 
-        rlAddressOrderdetails.setOnClickListener(this);
         orderDetailsAdapter = new OrderDetailsAdapter(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -85,6 +121,9 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
         if (type.equals("等待评价")) {
             btSubmintOrderdetails.setText("评价");
         }
+        View mView = View.inflate(this, R.layout.bottom_pay_layout, null);
+        mBottomSheetDialog = new BottomSheetDialog(this);
+        mBottomSheetDialog.setContentView(mView);
     }
 
     public void initData() {
@@ -103,9 +142,11 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onSuccess(final POrderDetailsBean o, String msg) {
                 Logger.e("msg==========" + msg);
+                bean = o;
                 if (o.getGoods().size() > 0) {
                     orderDetailsAdapter.setList(o.getGoods());
                 }
+                mPrice.setText("￥" + o.getNeedpay());
                 tvStateOrderdetails.setText(o.getStatus());
                 tvNumberOrderdetails.setText(o.getOid());
                 tvTimeOrderdetails.setText(o.getAddtime());
@@ -123,14 +164,6 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
         });
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.rl_address_orderdetails:
-                startActivity(new Intent(OrderDetailsActivity.this, ManageAddressActivity.class));
-                break;
-        }
-    }
 
     private void CancelOreder() {
 
@@ -157,5 +190,45 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
             }
         });
 
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+
+    @OnClick({R.id.rl_address_orderdetails, R.id.bt_submint_orderdetails})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.rl_address_orderdetails:
+                startActivity(new Intent(OrderDetailsActivity.this, ManageAddressActivity.class));
+                break;
+            case R.id.bt_submint_orderdetails:
+                mBottomSheetDialog.show();
+                break;
+        }
+    }
+
+    @OnClick({R.id.iv_zhi_pay, R.id.iv_wei_pay, R.id.bt_pay_pay,R.id.iv_back_pay})
+    public void onViewClickedo(View view) {
+        switch (view.getId()) {
+            case R.id.iv_zhi_pay:
+                ivZhiPay.setImageResource(R.drawable.xuanzhong);
+                ivWeiPay.setImageResource(R.drawable.weixuan);
+                break;
+            case R.id.iv_wei_pay:
+                ivWeiPay.setImageResource(R.drawable.xuanzhong);
+                ivZhiPay.setImageResource(R.drawable.weixuan);
+                break;
+            case R.id.bt_pay_pay:
+                mBottomSheetDialog.dismiss();
+                break;
+            case R.id.iv_back_pay:
+
+                break;
+        }
     }
 }

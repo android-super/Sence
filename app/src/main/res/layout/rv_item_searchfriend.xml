@@ -21,24 +21,36 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_centerVertical="true">
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:text="糖兜兜你说啥是啥"
-                android:textColor="#000000"
-                android:drawablePadding="8dp"
-                android:id="@+id/tv_name_searchfriend"
-                android:drawableRight="@drawable/main_recommend_v"
-                />
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:id="@+id/ll_contene_searchfridend">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:text="糖兜兜你说啥是啥"
+                    android:textColor="#000000"
+                    android:id="@+id/tv_name_searchfriend"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/iv_isv_searchfriend"
+                    android:visibility="gone"
+                    android:src="@drawable/main_recommend_v"
+                    android:layout_marginLeft="8dp"/>
+            </LinearLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:id="@+id/tv_signer_searchfriend"
-                android:layout_below="@+id/tv_name_searchfriend"
+                android:layout_below="@+id/ll_contene_searchfridend"
                 android:layout_marginTop="11dp"
                 android:text="生而为人 请不要忘记善良"
                 android:textColor="#999999"

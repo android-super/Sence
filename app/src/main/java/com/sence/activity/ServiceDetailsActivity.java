@@ -1,12 +1,9 @@
 package com.sence.activity;
 
-import android.os.Bundle;
+import android.content.Intent;
 import android.widget.ImageView;
 import android.widget.TextView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.orhanobut.logger.Logger;
@@ -27,6 +24,10 @@ import com.sence.view.NiceImageView;
 
 import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+
 /**
  * 服务详情
  */
@@ -46,6 +47,7 @@ public class ServiceDetailsActivity extends BaseActivity {
 
     private ServiceDetailsAdapter mServiceDetailsAdapter;
     private int page = 1;
+    private String id;
 
     @Override
     public int onActLayout() {
@@ -55,7 +57,8 @@ public class ServiceDetailsActivity extends BaseActivity {
     @Override
     public void initView() {
         StatusBarUtil.setLightMode(this);
-
+        Intent intent = getIntent();
+        id = intent.getStringExtra("id");
         mServiceDetailsAdapter = new ServiceDetailsAdapter(ServiceDetailsActivity.this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ServiceDetailsActivity.this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -64,7 +67,7 @@ public class ServiceDetailsActivity extends BaseActivity {
     }
 
     public void initData() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.SERVE_DETAIL, new RShopDetailsBean("1", LoginStatus.getUid())).request(new ApiCallBack<PServiceeDetails>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.SERVE_DETAIL, new RShopDetailsBean(id, LoginStatus.getUid())).request(new ApiCallBack<PServiceeDetails>() {
             @Override
             public void onFinish() {
 
