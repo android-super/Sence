@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.sence.R;
 import com.sence.base.BaseActivity;
+import com.sence.utils.DataCleanManager;
 import com.sence.utils.StatusBarUtil;
 import com.sence.view.PubTitle;
 
@@ -32,6 +33,8 @@ public class SettingActivity extends BaseActivity {
     LinearLayout llAboutSetting;
     @BindView(R.id.tv_quit_setting)
     TextView tvQuitSetting;
+    @BindView(R.id.tv_cache_setting)
+    TextView tvCacheSetting;
 
     @Override
     public int onActLayout() {
@@ -48,21 +51,34 @@ public class SettingActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
+        try {
+            String totalCacheSize = DataCleanManager.getTotalCacheSize(this);
+            tvCacheSetting.setText(totalCacheSize);
+        } catch (Exception e) {
+
+        }
     }
 
     @OnClick({R.id.ll_autonym_setting, R.id.ll_clear_setting, R.id.ll_policy_setting, R.id.ll_about_setting, R.id.tv_quit_setting})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_autonym_setting:
-                startActivity(new Intent(SettingActivity.this,AutonymActivity.class));
+                startActivity(new Intent(SettingActivity.this, AutonymActivity.class));
                 break;
             case R.id.ll_clear_setting:
+                DataCleanManager.clearAllCache(SettingActivity.this);
+                try {
+                    String totalCacheSize = DataCleanManager.getTotalCacheSize(this);
+                    tvCacheSetting.setText(totalCacheSize);
+                } catch (Exception e) {
+
+                }
                 break;
             case R.id.ll_policy_setting:
-                startActivity(new Intent(SettingActivity.this,AutonymActivity.class));
+                startActivity(new Intent(SettingActivity.this, WebActivity.class));
                 break;
             case R.id.ll_about_setting:
-                startActivity(new Intent(SettingActivity.this,AboutActivity.class));
+                startActivity(new Intent(SettingActivity.this, AboutActivity.class));
                 break;
             case R.id.tv_quit_setting:
                 break;

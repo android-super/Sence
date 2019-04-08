@@ -10,11 +10,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+
 import com.sence.LoginActivity;
 import com.sence.R;
-import com.sence.activity.*;
+import com.sence.activity.EnjoyVipActivity;
+import com.sence.activity.ManageAddressActivity;
+import com.sence.activity.MyAccountActivity;
+import com.sence.activity.MyFansFocusNoteActivity;
+import com.sence.activity.MyInfoActivity;
+import com.sence.activity.MyOrderActivity;
+import com.sence.activity.OpenVipActivity;
+import com.sence.activity.SettingActivity;
 import com.sence.bean.request.RUidBean;
 import com.sence.bean.response.PUserInfoBean;
 import com.sence.net.HttpCode;
@@ -22,6 +28,9 @@ import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.LoginStatus;
 import com.sence.view.NiceImageView;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -201,7 +210,9 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 startActivity(new Intent(getContext(), MyFansFocusNoteActivity.class));
                 break;
             case R.id.user_all_order:
-                startActivity(new Intent(getContext(), MyOrderActivity.class));
+                Intent intentall = new Intent(getContext(), MyOrderActivity.class);
+                intentall.putExtra("type",0);
+                startActivity(intentall);
                 break;
             case R.id.user_pay:
                 Intent intentPay = new Intent(getContext(), MyOrderActivity.class);

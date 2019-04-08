@@ -9,6 +9,7 @@ public enum HttpCode {
     ADDRESS_ADD,//添加地址
     ADDRESS_EDIT,//编辑地址
     ORDER_LIST,//订单列表
+    ORDER_COMMENT,//评价订单
     ADDRESS_LIST,//地址列表
     ADDRESS_DELETE,//删除地址
     GOOD_DETAIL,//商品详情
@@ -34,6 +35,9 @@ public enum HttpCode {
     ORDER_DETAIL,//订单详情
     ORDER_DELETE,//取消待付款，待支付订单
     USER_ENJOY_VIP,//尊享会员
+    USER_FOCUS_CANCEL,//取消关注
+    USER_FOCUS,//关注
+    USER_AUTH,//实名认证
     USER_INFO_DATA,//我的信息
     USER_INFO_DATA_SERVICE,//我的信息服务
     USER_FANS_LIST,//我的粉丝列表

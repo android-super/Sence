@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.net.http.SslError;
+import android.os.Bundle;
 import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
@@ -12,16 +13,20 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.appbar.AppBarLayout;
 import com.orhanobut.logger.Logger;
+import com.sence.MainActivity;
 import com.sence.R;
 import com.sence.adapter.ShopDetailsCommendAdapter;
 import com.sence.adapter.ShopDetailsImgAdapter;
 import com.sence.base.BaseActivity;
+import com.sence.bean.request.RBusAddBean;
 import com.sence.bean.request.RShopDetailsBean;
 import com.sence.bean.response.PShopDetailsBean;
 import com.sence.net.HttpCode;
@@ -37,10 +42,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 商品详情
@@ -86,6 +94,22 @@ public class ShopDetailsActivity extends BaseActivity {
     LinearLayout llShopcommendShopdetails;
     @BindView(R.id.recycle_shopdetails)
     RecyclerView recycleShopdetails;
+    @BindView(R.id.rl_vp_shiodetails)
+    RelativeLayout rlVpShiodetails;
+    @BindView(R.id.ll_service_shopdetails)
+    LinearLayout llServiceShopdetails;
+    @BindView(R.id.ll_shop_shopdetails)
+    LinearLayout llShopShopdetails;
+    @BindView(R.id.tv_addshop_shopdetails)
+    TextView tvAddshopShopdetails;
+    @BindView(R.id.tv_buy_shopdetails)
+    TextView tvBuyShopdetails;
+    @BindView(R.id.ll_fooler_shopdetails)
+    LinearLayout llFoolerShopdetails;
+    @BindView(R.id.nsv_content_shopdetails)
+    NestedScrollView nsvContentShopdetails;
+    @BindView(R.id.tv_shopnum_shopdetails)
+    TextView tvShopnumShopdetails;
 
     private ShopDetailsImgAdapter shopDetailsImgAdapter;
     private ShopDetailsCommendAdapter mShopDetailsCommendAdapter;
@@ -93,6 +117,7 @@ public class ShopDetailsActivity extends BaseActivity {
     private WebSettings settings;
     private List<String> imgs;
     private String id;
+    private PShopDetailsBean bean = null;
 
     @Override
     public int onActLayout() {
@@ -183,6 +208,7 @@ public class ShopDetailsActivity extends BaseActivity {
             public void onSuccess(PShopDetailsBean o, String msg) {
                 imgs = o.getImgs();
                 Logger.e("msg==========" + msg + o.getComment().size());
+                bean = o;
                 if (o.getComment().size() > 0) {
                     mShopDetailsCommendAdapter.setList(o.getComment());
                 }
@@ -266,5 +292,50 @@ public class ShopDetailsActivity extends BaseActivity {
         });
         wvContentShopdetails.loadUrl(url);
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+    @OnClick({R.id.tv_addshop_shopdetails, R.id.tv_buy_shopdetails,R.id.ll_service_shopdetails, R.id.ll_shop_shopdetails})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.tv_addshop_shopdetails:
+                addShop();
+                break;
+            case R.id.tv_buy_shopdetails:
+                startActivity(new Intent(ShopDetailsActivity.this, ConfirmOrderActivity.class));
+                break;
+            case R.id.ll_service_shopdetails:
+
+                break;
+            case R.id.ll_shop_shopdetails:
+                startActivity(new Intent(ShopDetailsActivity.this, MainActivity.class));
+                break;
+        }
+    }
+
+    private void addShop() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.BUS_ADD, new RBusAddBean(bean.getUid(), LoginStatus.getUid())).request(new ApiCallBack() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(Object o, String msg) {
+                ToastUtils.showShort("成功加入购物车");
+            }
+        });
+    }
+
 }
 

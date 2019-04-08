@@ -1,13 +1,11 @@
 package com.sence;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import com.blankj.utilcode.util.PhoneUtils;
 import com.sence.activity.WebActivity;
 import com.sence.base.BaseActivity;
@@ -23,6 +21,8 @@ import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.util.Map;
+
+import butterknife.BindView;
 
 /**
  * 登录页
@@ -113,6 +113,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 SharedPreferencesUtil.getInstance().putString("nick_name", o.getNick_name());
                 SharedPreferencesUtil.getInstance().putString("sex", o.getSex());
                 SharedPreferencesUtil.getInstance().putString("avatar", o.getAvatar());
+                SharedPreferencesUtil.getInstance().putString("real_name", o.getReal_name().toString());
+                SharedPreferencesUtil.getInstance().putString("id_card", o.getNick_name());
+                SharedPreferencesUtil.getInstance().putString("id_status", o.getId_status());
+                SharedPreferencesUtil.getInstance().putString("img_status", o.getImg_status());
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
             }

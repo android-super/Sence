@@ -102,7 +102,6 @@
             layout="@layout/shop_buttom_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             ></include>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

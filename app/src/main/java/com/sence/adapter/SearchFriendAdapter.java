@@ -2,17 +2,25 @@ package com.sence.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.orhanobut.logger.Logger;
 import com.sence.R;
+import com.sence.bean.request.RCancelFocusBean;
 import com.sence.bean.response.PSearchBean;
+import com.sence.net.HttpCode;
+import com.sence.net.HttpManager;
 import com.sence.net.Urls;
+import com.sence.net.manager.ApiCallBack;
+import com.sence.utils.LoginStatus;
 import com.sence.view.NiceImageView;
 
 import java.util.ArrayList;
@@ -42,9 +50,11 @@ public class SearchFriendAdapter extends RecyclerView.Adapter<SearchFriendAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SearchFriendAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SearchFriendAdapter.ViewHolder holder, final int position) {
         holder.mName.setText(list.get(position).getUsername());
-        holder.mContent.setText(list.get(position).getAutograph());
+        if(!TextUtils.isEmpty(list.get(position).getAutograph())){
+            holder.mContent.setText(list.get(position).getAutograph());
+        }
         if(list.get(position).getIsVip().equals("1")){
             holder.mIsv.setVisibility(View.VISIBLE);
         }
@@ -52,13 +62,70 @@ public class SearchFriendAdapter extends RecyclerView.Adapter<SearchFriendAdapte
             holder.mFocus.setText("已关注");
             holder.mFocus.setTextColor(Color.parseColor("#999999"));
             holder.mFocus.setBackgroundResource(R.drawable.shape_searchconcern_yetbg);
+        }else{
+            holder.mFocus.setText("+  关注");
+            holder.mFocus.setTextColor(Color.parseColor("#16A5AF"));
+            holder.mFocus.setBackgroundResource(R.drawable.shape_searchconcern_bg);
         }
-
+        holder.mFocus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(list.get(position).getIsFollow().equals("1")){
+                    cancelFocus(position);
+                }else{
+                    focus(position);
+                }
+            }
+        });
         RequestOptions options = new RequestOptions();
         options.placeholder(R.drawable.hint_img);
         Glide.with(context)
                 .load(Urls.base_url + list.get(position).getAvatar())
                 .into(holder.mImg);
+    }
+
+    private void focus(final int position) {
+        HttpManager.getInstance().PlayNetCode(HttpCode.USER_FOCUS, new RCancelFocusBean(LoginStatus.getUid(),list.get(position).getId())).request(new ApiCallBack<String>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(String o, String msg) {
+                Logger.e("msg==========" + msg);
+                ToastUtils.showShort(msg);
+                list.get(position).setIsFollow("1");
+                notifyDataSetChanged();
+            }
+        });
+    }
+
+    private void cancelFocus(final int position) {
+        HttpManager.getInstance().PlayNetCode(HttpCode.USER_FOCUS_CANCEL, new RCancelFocusBean(LoginStatus.getUid(),list.get(position).getId())).request(new ApiCallBack<String>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(String o, String msg) {
+                Logger.e("msg==========" + msg);
+                ToastUtils.showShort(msg);
+                list.get(position).setIsFollow("2");
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @Override

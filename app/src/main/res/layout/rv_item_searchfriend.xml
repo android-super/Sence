@@ -52,7 +52,7 @@
                 android:id="@+id/tv_signer_searchfriend"
                 android:layout_below="@+id/ll_contene_searchfridend"
                 android:layout_marginTop="11dp"
-                android:text="生而为人 请不要忘记善良"
+                android:text="Ta还没有设置签名"
                 android:textColor="#999999"
                 />
         </RelativeLayout>

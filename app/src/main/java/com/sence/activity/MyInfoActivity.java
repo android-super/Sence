@@ -2,16 +2,13 @@ package com.sence.activity;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.ConvertUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.appbar.AppBarLayout;
@@ -25,6 +22,7 @@ import com.sence.bean.response.PMyInfoBean;
 import com.sence.fragment.MyInfoRecommendFragment;
 import com.sence.fragment.MyOrderFragment;
 import com.sence.fragment.main.NoteFragment;
+import com.sence.fragment.main.RecommendFragment;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.Urls;
@@ -34,8 +32,6 @@ import com.sence.utils.NavigationBarUtil;
 import com.sence.utils.StatusBarUtil;
 import com.sence.view.NiceImageView;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 /**
@@ -89,7 +85,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         mBack = findViewById(R.id.iv_back_myinfo);
         mBack.setOnClickListener(this);
 
-        final Fragment[] fragmentList = {new MyInfoRecommendFragment(), new NoteFragment(), new MyInfoRecommendFragment(), new MyOrderFragment(), new MyOrderFragment()};
+        final Fragment[] fragmentList = {new RecommendFragment(), new NoteFragment(), new MyInfoRecommendFragment(), new MyOrderFragment(), new MyOrderFragment()};
         mMyInfoRecommendViewPagerAdatpter = new MyInfoRecommendViewPagerAdatpter(getSupportFragmentManager(),this,fragmentList,list);
         mViewPager.setAdapter(mMyInfoRecommendViewPagerAdatpter);
         mTabLayoutButtom.setupWithViewPager(mViewPager);
@@ -186,9 +182,6 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     }
 
 
-    public void Scale(View view, float scaleY){
-        view.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, Math.round(ConvertUtils.dp2px(100)*scaleY)));
-    }
 
 
     @Override

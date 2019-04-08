@@ -13,7 +13,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.orhanobut.logger.Logger;
 import com.sence.R;
-import com.sence.activity.ConfirmOrderActivity;
 import com.sence.activity.OrderCommentActivity;
 import com.sence.activity.OrderDetailsActivity;
 import com.sence.bean.request.ROrderDetailsBean;
@@ -116,9 +115,7 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
                                 @Override
                                 public void onSuccess(String o, String msg) {
                                     Logger.e("msg==========" + msg);
-                                    if (msg.equals("取消成功")) {
-                                        listener.delete(position);
-                                    }
+                                    listener.delete(position);
                                 }
                             });
                         }
@@ -136,8 +133,13 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
                     intent.putExtra("url", list.get(position).getGoods().getImg());
                     context.startActivity(intent);
                     return;
+                }else{
+                    Intent intent = new Intent(context, OrderDetailsActivity.class);
+                    intent.putExtra("id", list.get(position).getId());
+                    intent.putExtra("type", list.get(position).getStatusMsg());
+                    context.startActivity(intent);
                 }
-                context.startActivity(new Intent(context, ConfirmOrderActivity.class));
+
             }
         });
         holder.itemView.setOnClickListener(new View.OnClickListener() {

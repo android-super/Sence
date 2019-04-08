@@ -37,11 +37,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
+            android:id="@+id/iv_xingone_servicecomment"
             android:src="@drawable/servicecomment_xing"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/iv_xingtwe_servicecomment"
+            android:src="@drawable/servicecomment_xing"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/iv_xingthress_servicecomment"
+            android:src="@drawable/servicecomment_xing"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iv_xingfour_servicecomment"
             android:layout_marginLeft="10dp"
             android:src="@drawable/servicecomment_xing"/>
 
@@ -49,18 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:src="@drawable/servicecomment_xing"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/servicecomment_xing"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:id="@+id/iv_xingfive_servicecomment"
             android:src="@drawable/servicecomment_xing"/>
 
         <TextView
@@ -84,6 +89,7 @@
             android:paddingLeft="33dp"
             android:paddingRight="20dp"
             android:paddingTop="21dp"
+            android:id="@+id/et_content_servicecomment"
             android:layout_weight="1"
             android:background="@null"
             android:gravity="top"
@@ -95,34 +101,66 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:layout_marginTop="@dimen/dp_10"
             android:layout_marginBottom="30dp"
             android:layout_marginLeft="20dp"
             android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginRight="20dp"
-                android:scaleType="center"
-                android:id="@+id/iv_imgone_shopcomment"
-                android:src="@drawable/comment_tianjia"/>
-
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginRight="20dp"
-                android:id="@+id/iv_imgtwe_shopcomment"
-                android:scaleType="center"
-                android:src="@drawable/comment_yi"/>
-
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginRight="20dp"
-                android:id="@+id/iv_imgthress_shopcomment"
-                android:scaleType="center"
-                android:src="@drawable/comment_er"/>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginRight="20dp"
+                    android:scaleType="center"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/iv_imgone_servicecomment"
+                    android:src="@drawable/comment_tianjia"/>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:id="@+id/iv_closeone_servicecomment"
+                    android:visibility="gone"
+                    android:src="@drawable/comment_guanbi"
+                    android:layout_marginLeft="60dp"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/iv_imgtwe_servicecomment"
+                    android:scaleType="center"
+                    android:src="@drawable/comment_yi"/>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:id="@+id/iv_closetwe_servicecomment"
+                    android:visibility="gone"
+                    android:src="@drawable/comment_guanbi"
+                    android:layout_marginLeft="60dp"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/iv_imgthress_servicecomment"
+                    android:scaleType="center"
+                    android:src="@drawable/comment_er"/>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:id="@+id/iv_closethress_servicecomment"
+                    android:visibility="gone"
+                    android:src="@drawable/comment_guanbi"
+                    android:layout_marginLeft="60dp"/>
+            </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

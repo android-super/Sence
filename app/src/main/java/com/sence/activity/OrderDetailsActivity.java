@@ -1,5 +1,6 @@
 package com.sence.activity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -33,7 +34,7 @@ import butterknife.OnClick;
 /**
  * 订单详情
  */
-public class OrderDetailsActivity extends BaseActivity {
+public class OrderDetailsActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.tv_state_orderdetails)
     TextView tvStateOrderdetails;
     @BindView(R.id.tv_number_orderdetails)
@@ -76,22 +77,6 @@ public class OrderDetailsActivity extends BaseActivity {
     LinearLayout llOrderOrderdetails;
     @BindView(R.id.ll_buttom_orderdetails)
     LinearLayout llButtomOrderdetails;
-    @BindView(R.id.tv_price_pay)
-    TextView tvPricePay;
-    @BindView(R.id.tv_time_pay)
-    TextView tvTimePay;
-    @BindView(R.id.tv_minute_pay)
-    TextView tvMinutePay;
-    @BindView(R.id.tv_second_pay)
-    TextView tvSecondPay;
-    @BindView(R.id.iv_zhi_pay)
-    ImageView ivZhiPay;
-    @BindView(R.id.iv_wei_pay)
-    ImageView ivWeiPay;
-    @BindView(R.id.bt_pay_pay)
-    Button btPayPay;
-    @BindView(R.id.iv_back_pay)
-    ImageView ivBackPay;
 
     private OrderDetailsAdapter orderDetailsAdapter;
 
@@ -100,6 +85,10 @@ public class OrderDetailsActivity extends BaseActivity {
     private BottomSheetDialog mBottomSheetDialog;
     private POrderDetailsBean bean;
     private TextView mPrice;
+    private TextView tvPricePay, tvTimePay, tvMinutePay, tvSecondPay;
+    private ImageView ivZhiPay, ivWeiPay, ivBackPay;
+    private Button btPayPay;
+
 
     @Override
     public int onActLayout() {
@@ -118,12 +107,70 @@ public class OrderDetailsActivity extends BaseActivity {
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         recycleOrderdetails.setLayoutManager(linearLayoutManager);
         recycleOrderdetails.setAdapter(orderDetailsAdapter);
-        if (type.equals("等待评价")) {
-            btSubmintOrderdetails.setText("评价");
+        if (!"等待支付".equals(type)) {
+//            btSubmintOrderdetails.setText("评价");
+            layoutHead.setRigthText("");
         }
+        bottomSheetDialog();
+        layoutHead.setRightOnClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View view = View.inflate(OrderDetailsActivity.this, R.layout.alter_deleteorder, null);
+                final AlertDialog alertDialog = new AlertDialog.Builder(OrderDetailsActivity.this).create();
+                alertDialog.setView(view);
+                alertDialog.show();
+                view.findViewById(R.id.tv_cancel_deleteorder).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                    }
+                });
+                view.findViewById(R.id.tv_confirm_deleteorder).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                        HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_DELETE, new ROrderDetailsBean(bean.getOid(), LoginStatus.getUid())).request(new ApiCallBack<String>() {
+                            @Override
+                            public void onFinish() {
+
+                            }
+
+                            @Override
+                            public void Message(int code, String message) {
+
+                            }
+
+                            @Override
+                            public void onSuccess(String o, String msg) {
+                                Logger.e("msg==========" + msg);
+                                ToastUtils.showShort(msg);
+                                finish();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+    }
+
+    private void bottomSheetDialog() {
         View mView = View.inflate(this, R.layout.bottom_pay_layout, null);
         mBottomSheetDialog = new BottomSheetDialog(this);
         mBottomSheetDialog.setContentView(mView);
+        tvPricePay = mView.findViewById(R.id.tv_price_pay);
+        tvTimePay = mView.findViewById(R.id.tv_time_pay);
+        tvMinutePay = mView.findViewById(R.id.tv_minute_pay);
+        tvSecondPay = mView.findViewById(R.id.tv_second_pay);
+        ivZhiPay = mView.findViewById(R.id.iv_zhi_pay);
+        ivWeiPay = mView.findViewById(R.id.iv_wei_pay);
+        ivBackPay = mView.findViewById(R.id.iv_back_pay);
+        btPayPay = mView.findViewById(R.id.bt_pay_pay);
+        ivZhiPay.setOnClickListener(this);
+        ivWeiPay.setOnClickListener(this);
+        ivBackPay.setOnClickListener(this);
+        btPayPay.setOnClickListener(this);
+
     }
 
     public void initData() {
@@ -160,6 +207,7 @@ public class OrderDetailsActivity extends BaseActivity {
                 tvTaxpriceOrderdetails.setText("+￥" + o.getFee());
                 tvMoneyOrderdetails.setText("￥" + o.getNeedpay());
                 tvSpriceOrderdetails.setText("￥" + o.getNeedpay());
+                tvPricePay.setText("￥" + o.getNeedpay());
             }
         });
     }
@@ -192,13 +240,6 @@ public class OrderDetailsActivity extends BaseActivity {
 
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
-
 
     @OnClick({R.id.rl_address_orderdetails, R.id.bt_submint_orderdetails})
     public void onViewClicked(View view) {
@@ -212,9 +253,10 @@ public class OrderDetailsActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.iv_zhi_pay, R.id.iv_wei_pay, R.id.bt_pay_pay,R.id.iv_back_pay})
-    public void onViewClickedo(View view) {
-        switch (view.getId()) {
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
             case R.id.iv_zhi_pay:
                 ivZhiPay.setImageResource(R.drawable.xuanzhong);
                 ivWeiPay.setImageResource(R.drawable.weixuan);
@@ -230,5 +272,12 @@ public class OrderDetailsActivity extends BaseActivity {
 
                 break;
         }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

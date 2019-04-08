@@ -67,6 +67,10 @@ public interface HttpService {
     Observable<BaseResponseBean<List<PManageAddressBean>>> AddressList(@FieldMap Map<String, Object> map);//用户地址列表
 
     @FormUrlEncoded
+    @POST(Urls.ORDER_COMMENT)
+    Observable<BaseResponseBean<String>> OrderComment(@FieldMap Map<String, Object> map);//评价订单
+
+    @FormUrlEncoded
     @POST(Urls.ADDRESS_DELETE)
     Observable<BaseResponseBean<String>> AddressDelete(@FieldMap Map<String, Object> map);//删除收货地址
 
@@ -95,8 +99,20 @@ public interface HttpService {
     Observable<BaseResponseBean<PVerifyCodeBean>> SendVerifyCode(@FieldMap Map<String, Object> map);//发送验证码
 
     @FormUrlEncoded
+    @POST(Urls.USER_FOCUS_CANCEL)
+    Observable<BaseResponseBean<String>> UserFocusCancel(@FieldMap Map<String, Object> map);//取消关注
+
+    @FormUrlEncoded
+    @POST(Urls.USER_FOCUS)
+    Observable<BaseResponseBean<String>> UserFocus(@FieldMap Map<String, Object> map);//关注
+
+    @FormUrlEncoded
     @POST(Urls.USER_LOGIN)
     Observable<BaseResponseBean<PUserBean>> Login(@FieldMap Map<String, Object> map);//登录
+
+    @FormUrlEncoded
+    @POST(Urls.USER_AUTH)
+    Observable<BaseResponseBean<String>> RealAutonym(@FieldMap Map<String, Object> map);//添加银行卡，实名认证
 
     @FormUrlEncoded
     @POST(Urls.USER_SIGN_UP)

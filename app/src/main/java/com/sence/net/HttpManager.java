@@ -65,6 +65,9 @@ public class HttpManager<P> {
             case ORDER_LIST:
                 observable = httpService.OrderList(requestBean.getMap());
                 break;
+            case ORDER_COMMENT:
+                observable = httpService.OrderComment(requestBean.getMap());
+                break;
             case ADDRESS_LIST:
                 observable = httpService.AddressList(requestBean.getMap());
                 break;
@@ -95,8 +98,17 @@ public class HttpManager<P> {
             case USER_ENJOY_VIP:
                 observable = httpService.EnjoyVip(requestBean.getMap());
                 break;
+            case USER_FOCUS:
+                observable = httpService.UserFocus(requestBean.getMap());
+                break;
+            case USER_FOCUS_CANCEL:
+                observable = httpService.UserFocusCancel(requestBean.getMap());
+                break;
             case ORDER_DELETE:
                 observable = httpService.OrderDelete(requestBean.getMap());
+                break;
+            case USER_AUTH:
+                observable = httpService.RealAutonym(requestBean.getMap());
                 break;
             case USER_INFO_DATA:
                 observable = httpService.UserInfoData(requestBean.getMap());

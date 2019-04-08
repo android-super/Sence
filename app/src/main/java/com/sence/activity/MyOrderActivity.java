@@ -46,23 +46,6 @@ public class MyOrderActivity extends BaseActivity {
                 list, type);
         vpContentMyorder.setAdapter(mMyOrderViewPagerAdatpter);
         tlTitleMyorder.setupWithViewPager(vpContentMyorder);
-
-        vpContentMyorder.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
         vpContentMyorder.setCurrentItem(type);
     }
 
@@ -74,7 +57,7 @@ public class MyOrderActivity extends BaseActivity {
         int confirm = Integer.parseInt(waitConfirm);
         int evlua = Integer.parseInt(waitEvlua);
         if (num > 0) {
-            tlTitleMyorder.addNumberBadge(0, pay + send + confirm + evlua, Color.parseColor("#16a5af"),
+            tlTitleMyorder.addNumberBadge(0, num, Color.parseColor("#16a5af"),
                     Color.parseColor("#FFFFFF"), 30);
         }
         if (pay > 0) {

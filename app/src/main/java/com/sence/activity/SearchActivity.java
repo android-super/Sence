@@ -86,14 +86,10 @@ public class SearchActivity extends BaseActivity {
             public void afterTextChanged(Editable s) {
                 String content = etContentSearch.getText().toString().trim();
                 if (!TextUtils.isEmpty(content)) {
-                    list.add(0,content);
-                    addList();
                     llFlowSearch.setVisibility(View.GONE);
-                    llResultSearch.setVisibility(View.VISIBLE);
                     doHttp(content);
                 }else{
                     llFlowSearch.setVisibility(View.VISIBLE);
-                    llResultSearch.setVisibility(View.GONE);
                 }
             }
         });
@@ -129,7 +125,7 @@ public class SearchActivity extends BaseActivity {
             public void gettext(String data) {
                 etContentSearch.setText(data);
                 llFlowSearch.setVisibility(View.GONE);
-                llResultSearch.setVisibility(View.VISIBLE);
+                doHttp(data);
             }
         });
 
@@ -152,12 +148,14 @@ public class SearchActivity extends BaseActivity {
             public void onSuccess(PSearchBean o, String msg) {
                 Logger.e("msg==========" + msg);
                 if(o.getGoodsList().size()>0){
+                    llResultSearch.setVisibility(View.VISIBLE);
                     llShopSearch.setVisibility(View.VISIBLE);
                     mSearchShopAdapter.setList(o.getGoodsList());
                 }else{
                     llShopSearch.setVisibility(View.GONE);
                 }
                 if(o.getUserList().size()>0){
+                    llResultSearch.setVisibility(View.VISIBLE);
                     llFriendSearch.setVisibility(View.VISIBLE);
                     mSearchFriendAdapter.setList(o.getUserList());
                 }else{

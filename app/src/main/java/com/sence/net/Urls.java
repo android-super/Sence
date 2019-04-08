@@ -28,7 +28,7 @@ public class Urls {
     public static final String USER_PAY_PW_CHANGE = "/index.php/Api/mine/modPayPwd";//修改支付密码
     public static final String USER_PW_CHANGE = "/index.php/Api/mine/editLoginPwd";//修改登录密码，忘记密码
     public static final String USER_INFO = "/index.php/Api/mine/mine";//我的
-    public static final String USER_AUTH = "/index.php/Api/User/realNameAuth";//添加银行卡，视频认证
+    public static final String USER_AUTH = "/index.php/Api/User/realNameAuth";//添加银行卡，实名认证
     public static final String USER_IS_REGISTER = "/index.php/Api/User/isRegister";//用户是否注册
     public static final String USER_SEND_CODE = "/index.php/Api/User/makeCode";//发送验证码
     public static final String USER_LOGIN = "/index.php/Api/User/weChatLogin";//用户登录

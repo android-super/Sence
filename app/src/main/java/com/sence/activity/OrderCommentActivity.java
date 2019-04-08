@@ -2,12 +2,13 @@ package com.sence.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.blankj.utilcode.util.ToastUtils;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -23,20 +24,53 @@ import com.sence.utils.StatusBarUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * 订单评论
  */
 public class OrderCommentActivity extends BaseActivity implements View.OnClickListener {
 
-    private TextView mTitle, mGoodComment, mGapComment, mCentreComment;
-    private ImageView mImg, mImgOne, mImgTwe, mImgThress, mImgGood, mImgCentre, mImgGap;
-    private String star = null;
-    private LinearLayout mGood, mCentre, mGap;
+    @BindView(R.id.iv_shopimg_shopcomment)
+    ImageView ivShopimgShopcomment;
+    @BindView(R.id.iv_goodimg_shopcomment)
+    ImageView ivGoodimgShopcomment;
+    @BindView(R.id.tv_goodcomment_shopcomment)
+    TextView tvGoodcommentShopcomment;
+    @BindView(R.id.ll_good_shopcomment)
+    LinearLayout llGoodShopcomment;
+    @BindView(R.id.iv_centreimg_shopcomment)
+    ImageView ivCentreimgShopcomment;
+    @BindView(R.id.tv_centrecomment_shopcomment)
+    TextView tvCentrecommentShopcomment;
+    @BindView(R.id.ll_centre_shopcomment)
+    LinearLayout llCentreShopcomment;
+    @BindView(R.id.iv_gapimg_shopcomment)
+    ImageView ivGapimgShopcomment;
+    @BindView(R.id.tv_gapcomment_shopcomment)
+    TextView tvGapcommentShopcomment;
+    @BindView(R.id.ll_gap_shopcomment)
+    LinearLayout llGapShopcomment;
+    @BindView(R.id.et_content_shopcomment)
+    EditText etContentShopcomment;
+    @BindView(R.id.iv_imgone_shopcomment)
+    ImageView ivImgoneShopcomment;
+    @BindView(R.id.iv_closeone_shopcomment)
+    ImageView ivCloseoneShopcomment;
+    @BindView(R.id.iv_imgtwe_shopcomment)
+    ImageView ivImgtweShopcomment;
+    @BindView(R.id.iv_closetwe_shopcomment)
+    ImageView ivClosetweShopcomment;
+    @BindView(R.id.iv_imgthress_shopcomment)
+    ImageView ivImgthressShopcomment;
+    @BindView(R.id.iv_closethress_shopcomment)
+    ImageView ivClosethressShopcomment;
     private String url;
-    private TextView mSubmit;
-    private EditText mContent;
     private List<LocalMedia> selectList = new ArrayList<>();
     private BottomSheetDialog mBottomSheetDialog;
+    private String star;
 
     @Override
     public int onActLayout() {
@@ -49,28 +83,11 @@ public class OrderCommentActivity extends BaseActivity implements View.OnClickLi
         Intent intent = getIntent();
         url = intent.getStringExtra("url");
 
-        mContent = findViewById(R.id.et_content_shopcomment);
-        mImg = findViewById(R.id.iv_shopimg_shopcomment);
-        mImgOne = findViewById(R.id.iv_imgone_shopcomment);
-        mImgTwe = findViewById(R.id.iv_imgtwe_shopcomment);
-        mImgThress = findViewById(R.id.iv_imgthress_shopcomment);
-        mImgGood = findViewById(R.id.iv_goodimg_shopcomment);
-        mImgCentre = findViewById(R.id.iv_centreimg_shopcomment);
-        mImgGap = findViewById(R.id.iv_gapimg_shopcomment);
-        mGoodComment = findViewById(R.id.tv_goodcomment_shopcomment);
-        mGapComment = findViewById(R.id.tv_gapcomment_shopcomment);
-        mCentreComment = findViewById(R.id.tv_centrecomment_shopcomment);
-        mGood = findViewById(R.id.ll_good_shopcomment);
-        mCentre = findViewById(R.id.ll_centre_shopcomment);
-        mGap = findViewById(R.id.ll_gap_shopcomment);
-        mImgOne.setOnClickListener(this);
-        mImgTwe.setOnClickListener(this);
-        mImgThress.setOnClickListener(this);
         RequestOptions options = new RequestOptions();
         options.placeholder(R.drawable.hint_img);
         Glide.with(this)
                 .load(Urls.base_url + url)
-                .into(mImg);
+                .into(ivShopimgShopcomment);
 
 //        mSubmit.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -90,13 +107,12 @@ public class OrderCommentActivity extends BaseActivity implements View.OnClickLi
     }
 
     public void initData() {
-        String content = mContent.getText().toString().trim();
-        if (content.length() < 5) {
-            ToastUtils.showShort("请您至少输入5个字");
-            return;
-        }
+//        String content = mContent.getText().toString().trim();
+//        if (content.length() < 5) {
+//            ToastUtils.showShort("请您至少输入5个字");
+//            return;
+//        }
     }
-
 
 
     @Override
@@ -112,86 +128,60 @@ public class OrderCommentActivity extends BaseActivity implements View.OnClickLi
                     // 2.media.getCutPath();为裁剪后path，需判断media.isCut();是否为true  注意：音视频除外
                     // 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true  注意：音视频除外
                     // 如果裁剪并压缩了，以取压缩路径为准，因为是先裁剪后压缩的
-                    mImgOne.setImageResource(R.drawable.comment_tianjia);
-                    mImgTwe.setImageResource(R.drawable.comment_yi);
-                    mImgThress.setImageResource(R.drawable.comment_er);
                     selectList.clear();
                     selectList.addAll(localMedia);
-                     if (selectList.size() == 1) {
-                        Glide.with(OrderCommentActivity.this).load(localMedia.get(0).getPath()).into(mImgOne);
-                    } else if (selectList.size() == 2) {
-                        Glide.with(OrderCommentActivity.this).load(localMedia.get(0).getPath()).into(mImgOne);
-                        Glide.with(OrderCommentActivity.this).load(localMedia.get(1).getPath()).into(mImgTwe);
-                    } else if (selectList.size() == 3) {
-                        Glide.with(OrderCommentActivity.this).load(localMedia.get(0).getPath()).into(mImgOne);
-                        Glide.with(OrderCommentActivity.this).load(localMedia.get(1).getPath()).into(mImgTwe);
-                        Glide.with(OrderCommentActivity.this).load(localMedia.get(2).getPath()).into(mImgThress);
-                    }
-
+                    imgAss();
 //                    adapter.setList(selectList);
 //                    adapter.notifyDataSetChanged();
                     break;
                 case PictureConfig.REQUEST_CAMERA:
                     List<LocalMedia> localMediat = PictureSelector.obtainMultipleResult(data);
-                    if(selectList.size()==3){
+                    if (selectList.size() == 3) {
                         selectList.remove(2);
                     }
                     selectList.addAll(localMediat);
-                    if (selectList.size() == 1) {
-                        Glide.with(OrderCommentActivity.this).load(selectList.get(0).getPath()).into(mImgOne);
-                    } else if (selectList.size() == 2) {
-                        Glide.with(OrderCommentActivity.this).load(selectList.get(0).getPath()).into(mImgOne);
-                        Glide.with(OrderCommentActivity.this).load(selectList.get(1).getPath()).into(mImgTwe);
-                    } else if (selectList.size() == 3) {
-                        Glide.with(OrderCommentActivity.this).load(selectList.get(0).getPath()).into(mImgOne);
-                        Glide.with(OrderCommentActivity.this).load(selectList.get(1).getPath()).into(mImgTwe);
-                        Glide.with(OrderCommentActivity.this).load(selectList.get(2).getPath()).into(mImgThress);
-                    }
+                    imgAss();
 
                     break;
             }
         }
     }
 
+    private void imgAss() {
+        if (selectList.size() == 0) {
+            ivImgoneShopcomment.setImageResource(R.drawable.comment_tianjia);
+            ivImgtweShopcomment.setImageResource(R.drawable.comment_yi);
+            ivImgthressShopcomment.setImageResource(R.drawable.comment_er);
+            ivCloseoneShopcomment.setVisibility(View.GONE);
+            ivClosetweShopcomment.setVisibility(View.GONE);
+            ivClosethressShopcomment.setVisibility(View.GONE);
+        } else if (selectList.size() == 1) {
+            ivImgtweShopcomment.setImageResource(R.drawable.comment_yi);
+            ivImgthressShopcomment.setImageResource(R.drawable.comment_er);
+            Glide.with(OrderCommentActivity.this).load(selectList.get(0).getPath()).into(ivImgoneShopcomment);
+            ivCloseoneShopcomment.setVisibility(View.VISIBLE);
+            ivClosetweShopcomment.setVisibility(View.GONE);
+            ivClosethressShopcomment.setVisibility(View.GONE);
+        } else if (selectList.size() == 2) {
+            ivImgthressShopcomment.setImageResource(R.drawable.comment_er);
+            Glide.with(OrderCommentActivity.this).load(selectList.get(0).getPath()).into(ivImgoneShopcomment);
+            Glide.with(OrderCommentActivity.this).load(selectList.get(1).getPath()).into(ivImgtweShopcomment);
+            ivCloseoneShopcomment.setVisibility(View.VISIBLE);
+            ivClosetweShopcomment.setVisibility(View.VISIBLE);
+            ivClosethressShopcomment.setVisibility(View.GONE);
+        } else if (selectList.size() == 3) {
+            Glide.with(OrderCommentActivity.this).load(selectList.get(0).getPath()).into(ivImgoneShopcomment);
+            Glide.with(OrderCommentActivity.this).load(selectList.get(1).getPath()).into(ivImgtweShopcomment);
+            Glide.with(OrderCommentActivity.this).load(selectList.get(2).getPath()).into(ivImgthressShopcomment);
+            ivCloseoneShopcomment.setVisibility(View.VISIBLE);
+            ivClosetweShopcomment.setVisibility(View.VISIBLE);
+            ivClosethressShopcomment.setVisibility(View.VISIBLE);
+        }
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_imgone_shopcomment:
-                mBottomSheetDialog.show();
-                break;
-            case R.id.iv_imgtwe_shopcomment:
-                mBottomSheetDialog.show();
-                break;
-            case R.id.iv_imgthress_shopcomment:
-                mBottomSheetDialog.show();
-                break;
-            case R.id.ll_good_shopcomment:
-                mGoodComment.setTextColor(Color.parseColor("#fd5c7a"));
-                mImgGood.setImageResource(R.drawable.comment_haoping);
-                mCentreComment.setTextColor(Color.parseColor("#aaabbb"));
-                mImgCentre.setImageResource(R.drawable.comment_cha);
-                mGapComment.setTextColor(Color.parseColor("#aaabbb"));
-                mImgGap.setImageResource(R.drawable.comment_cha);
-                star = "1";
-                break;
-            case R.id.ll_centre_shopcomment:
-                mCentreComment.setTextColor(Color.parseColor("#fd5c7a"));
-                mImgGood.setImageResource(R.drawable.comment_hao);
-                mGoodComment.setTextColor(Color.parseColor("#aaabbb"));
-                mImgCentre.setImageResource(R.drawable.comment_zhong);
-                mGapComment.setTextColor(Color.parseColor("#aaabbb"));
-                mImgGap.setImageResource(R.drawable.comment_cha);
-                star = "2";
-                break;
-            case R.id.ll_gap_shopcomment:
-                mGapComment.setTextColor(Color.parseColor("#fd5c7a"));
-                mImgGood.setImageResource(R.drawable.comment_hao);
-                mCentreComment.setTextColor(Color.parseColor("#aaabbb"));
-                mImgCentre.setImageResource(R.drawable.comment_cha);
-                mGoodComment.setTextColor(Color.parseColor("#aaabbb"));
-                mImgGap.setImageResource(R.drawable.comment_zhong);
-                star = "3";
-                break;
             case R.id.tv_takephoto:
                 mBottomSheetDialog.dismiss();
                 takePhoto();
@@ -213,7 +203,6 @@ public class OrderCommentActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void photo() {
-
         //从照片选择并裁剪
         PictureSelector.create(OrderCommentActivity.this)
                 .openGallery(PictureMimeType.ofAll())//全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
@@ -257,5 +246,85 @@ public class OrderCommentActivity extends BaseActivity implements View.OnClickLi
                 .isDragFrame(true)// 是否可拖动裁剪框(固定)
                 .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
 
+    }
+
+    private void doHttp() {
+//        HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_COMMENT, new ROrderDetailsBean(LoginStatus.getUid(),star,etContentShopcomment.getText().toString().trim(),)).request(new ApiCallBack<String>() {
+//            @Override
+//            public void onFinish() {
+//            }
+//
+//            @Override
+//            public void Message(int code, String message) {
+//
+//            }
+//
+//            @Override
+//            public void onSuccess(String o, String msg) {
+//                Logger.e("msg==========" + msg);
+//            }
+//        });
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+    @OnClick({R.id.ll_good_shopcomment, R.id.ll_centre_shopcomment, R.id.ll_gap_shopcomment, R.id.iv_imgone_shopcomment, R.id.iv_closeone_shopcomment, R.id.iv_imgtwe_shopcomment, R.id.iv_closetwe_shopcomment, R.id.iv_imgthress_shopcomment, R.id.iv_closethress_shopcomment})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.ll_good_shopcomment:
+                tvGoodcommentShopcomment.setTextColor(Color.parseColor("#fd5c7a"));
+                ivGoodimgShopcomment.setImageResource(R.drawable.comment_haoping);
+                tvCentrecommentShopcomment.setTextColor(Color.parseColor("#aaabbb"));
+                ivCentreimgShopcomment.setImageResource(R.drawable.comment_cha);
+                tvGapcommentShopcomment.setTextColor(Color.parseColor("#aaabbb"));
+                ivGapimgShopcomment.setImageResource(R.drawable.comment_cha);
+                star = "1";
+                break;
+            case R.id.ll_centre_shopcomment:
+                tvCentrecommentShopcomment.setTextColor(Color.parseColor("#fd5c7a"));
+                ivGoodimgShopcomment.setImageResource(R.drawable.comment_hao);
+                tvGoodcommentShopcomment.setTextColor(Color.parseColor("#aaabbb"));
+                ivCentreimgShopcomment.setImageResource(R.drawable.comment_zhong);
+                tvGapcommentShopcomment.setTextColor(Color.parseColor("#aaabbb"));
+                ivGapimgShopcomment.setImageResource(R.drawable.comment_cha);
+                star = "2";
+                break;
+            case R.id.ll_gap_shopcomment:
+                tvGapcommentShopcomment.setTextColor(Color.parseColor("#fd5c7a"));
+                ivGoodimgShopcomment.setImageResource(R.drawable.comment_hao);
+                tvCentrecommentShopcomment.setTextColor(Color.parseColor("#aaabbb"));
+                ivCentreimgShopcomment.setImageResource(R.drawable.comment_cha);
+                tvGoodcommentShopcomment.setTextColor(Color.parseColor("#aaabbb"));
+                ivGapimgShopcomment.setImageResource(R.drawable.comment_zhong);
+                star = "3";
+                break;
+            case R.id.iv_imgone_shopcomment:
+                mBottomSheetDialog.show();
+                break;
+            case R.id.iv_closeone_shopcomment:
+                selectList.remove(0);
+                imgAss();
+
+                break;
+            case R.id.iv_imgtwe_shopcomment:
+                mBottomSheetDialog.show();
+                break;
+            case R.id.iv_closetwe_shopcomment:
+                selectList.remove(1);
+                imgAss();
+                break;
+            case R.id.iv_imgthress_shopcomment:
+                mBottomSheetDialog.show();
+                break;
+            case R.id.iv_closethress_shopcomment:
+                selectList.remove(2);
+                imgAss();
+                break;
+        }
     }
 }

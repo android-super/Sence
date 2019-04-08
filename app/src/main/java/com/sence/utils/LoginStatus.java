@@ -26,4 +26,24 @@ public class LoginStatus {
         String name = SharedPreferencesUtil.getInstance().getString("nick_name");
         return name;
     }
+
+    public static String getIdStatus() {
+        String status = SharedPreferencesUtil.getInstance().getString("id_status");
+        return status;
+    }
+
+    public static String getRealName() {
+        String name = SharedPreferencesUtil.getInstance().getString("real_name");
+        return name;
+    }
+
+    public static String getIdentity() {
+        String card = SharedPreferencesUtil.getInstance().getString("id_card");
+        return card;
+    }
+
+    public static String getImgStatus() {
+        String status = SharedPreferencesUtil.getInstance().getString("img_status");
+        return status;
+    }
 }

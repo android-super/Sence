@@ -111,9 +111,6 @@ public class MyOrderFragment extends Fragment {
 
     private void loadData() {
         HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_LIST, new RMyOrderBean("1",page+"","10",status+"")).request(new ApiCallBack<PMyOrderBean>() {
-
-
-
             @Override
             public void onFinish() {
                 mSmartRefreshLayout.finishRefresh();

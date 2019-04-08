@@ -99,6 +99,13 @@ public class PubTitle extends Toolbar {
         parent.addView(right_text);
     }
 
+    public  void setRigthText(String content){
+        if(right_text!=null) {
+            right_text.setText(content);
+            invalidate();
+        }
+    }
+
     private void addRightImage(RelativeLayout parent) {
         if (tool_cover_right_img == null) {
             return;

@@ -67,6 +67,7 @@
             android:layout_gravity="center_vertical"
             android:padding="15dp"
             android:textSize="15sp"
+            android:id="@+id/tv_cache_setting"
             android:textColor="#999999"
             android:drawableRight="@drawable/shezhi_zk"
             android:text="0.36M"

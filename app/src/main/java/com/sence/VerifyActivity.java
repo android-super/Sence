@@ -1,15 +1,13 @@
 package com.sence;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import com.blankj.utilcode.util.PhoneUtils;
 import com.sence.base.BaseActivity;
 import com.sence.bean.request.RRegisterBean;
@@ -21,14 +19,16 @@ import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.SharedPreferencesUtil;
 import com.sence.utils.StatusBarUtil;
+
+import java.util.concurrent.TimeUnit;
+
+import butterknife.BindView;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * 验证码
@@ -206,6 +206,10 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
                 SharedPreferencesUtil.getInstance().putString("nick_name", o.getNick_name());
                 SharedPreferencesUtil.getInstance().putString("sex", o.getSex());
                 SharedPreferencesUtil.getInstance().putString("avatar", o.getAvatar());
+                SharedPreferencesUtil.getInstance().putString("real_name", o.getReal_name().toString());
+                SharedPreferencesUtil.getInstance().putString("id_card", o.getNick_name());
+                SharedPreferencesUtil.getInstance().putString("id_status", o.getId_status());
+                SharedPreferencesUtil.getInstance().putString("img_status", o.getImg_status());
                 Intent intent = new Intent(VerifyActivity.this, MainActivity.class);
                 startActivity(intent);
             }

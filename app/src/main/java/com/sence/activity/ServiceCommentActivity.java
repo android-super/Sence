@@ -2,10 +2,13 @@ package com.sence.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.luck.picture.lib.PictureSelector;
@@ -19,17 +22,41 @@ import com.sence.utils.StatusBarUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 服务评论
  */
 public class ServiceCommentActivity extends BaseActivity implements View.OnClickListener {
-    private TextView mTitle, mGoodComment, mGapComment, mCentreComment;
-    private ImageView mImg, mImgOne, mImgTwe, mImgThress;
+    @BindView(R.id.iv_xingone_servicecomment)
+    ImageView ivXingoneServicecomment;
+    @BindView(R.id.iv_xingtwe_servicecomment)
+    ImageView ivXingtweServicecomment;
+    @BindView(R.id.iv_xingthress_servicecomment)
+    ImageView ivXingthressServicecomment;
+    @BindView(R.id.iv_xingfour_servicecomment)
+    ImageView ivXingfourServicecomment;
+    @BindView(R.id.iv_xingfive_servicecomment)
+    ImageView ivXingfiveServicecomment;
+    @BindView(R.id.et_content_servicecomment)
+    EditText etContentServicecomment;
+    @BindView(R.id.iv_imgone_servicecomment)
+    ImageView ivImgoneServicecomment;
+    @BindView(R.id.iv_closeone_servicecomment)
+    ImageView ivCloseoneServicecomment;
+    @BindView(R.id.iv_imgtwe_servicecomment)
+    ImageView ivImgtweServicecomment;
+    @BindView(R.id.iv_closetwe_servicecomment)
+    ImageView ivClosetweServicecomment;
+    @BindView(R.id.iv_imgthress_servicecomment)
+    ImageView ivImgthressServicecomment;
+    @BindView(R.id.iv_closethress_servicecomment)
+    ImageView ivClosethressServicecomment;
     private BottomSheetDialog mBottomSheetDialog;
     private List<LocalMedia> selectList = new ArrayList<>();
+    private String star;
 
     @Override
     public int onActLayout() {
@@ -39,16 +66,6 @@ public class ServiceCommentActivity extends BaseActivity implements View.OnClick
     @Override
     public void initView() {
         StatusBarUtil.setLightMode(this);
-        mImg = findViewById(R.id.iv_shopimg_shopcomment);
-        mImgOne = findViewById(R.id.iv_imgone_shopcomment);
-        mImgTwe = findViewById(R.id.iv_imgtwe_shopcomment);
-        mImgThress = findViewById(R.id.iv_imgthress_shopcomment);
-        mGoodComment = findViewById(R.id.tv_goodcomment_shopcomment);
-        mGapComment = findViewById(R.id.tv_gapcomment_shopcomment);
-        mCentreComment = findViewById(R.id.tv_centrecomment_shopcomment);
-        mImgOne.setOnClickListener(this);
-        mImgTwe.setOnClickListener(this);
-        mImgThress.setOnClickListener(this);
         View view = View.inflate(this, R.layout.bottom_dialog, null);
         TextView mTakePhoto = (TextView) view.findViewById(R.id.tv_takephoto);
         TextView mPhoto = (TextView) view.findViewById(R.id.tv_photo);
@@ -61,9 +78,65 @@ public class ServiceCommentActivity extends BaseActivity implements View.OnClick
     }
 
     public void initData() {
+    }
+
+    private void doHttp() {
+        String content = etContentServicecomment.getText().toString();
+        if (TextUtils.isEmpty(content)) {
+            ToastUtils.showShort("亲，你不准备说点什么吗？");
+            return;
+        }
+//        HttpManager.getInstance().PlayNetCode(HttpCode.COMMENT_ADD, new RCommentBean(LoginStatus.getUid(), star,
+//                content)).request(new ApiCallBack() {
+//            @Override
+//            public void onFinish() {
+//
+//            }
+//
+//            @Override
+//            public void Message(int code, String message) {
+//
+//            }
+//
+//            @Override
+//            public void onSuccess(Object o, String msg) {
+//
+//            }
+//        });
 
     }
 
+    private void imgAss() {
+        if (selectList.size() == 0) {
+            ivImgoneServicecomment.setImageResource(R.drawable.comment_tianjia);
+            ivImgtweServicecomment.setImageResource(R.drawable.comment_yi);
+            ivImgthressServicecomment.setImageResource(R.drawable.comment_er);
+            ivCloseoneServicecomment.setVisibility(View.GONE);
+            ivClosetweServicecomment.setVisibility(View.GONE);
+            ivClosethressServicecomment.setVisibility(View.GONE);
+        } else if (selectList.size() == 1) {
+            ivImgtweServicecomment.setImageResource(R.drawable.comment_yi);
+            ivImgthressServicecomment.setImageResource(R.drawable.comment_er);
+            Glide.with(ServiceCommentActivity.this).load(selectList.get(0).getPath()).into(ivImgoneServicecomment);
+            ivCloseoneServicecomment.setVisibility(View.VISIBLE);
+            ivClosetweServicecomment.setVisibility(View.GONE);
+            ivClosethressServicecomment.setVisibility(View.GONE);
+        } else if (selectList.size() == 2) {
+            ivImgthressServicecomment.setImageResource(R.drawable.comment_er);
+            Glide.with(ServiceCommentActivity.this).load(selectList.get(0).getPath()).into(ivImgoneServicecomment);
+            Glide.with(ServiceCommentActivity.this).load(selectList.get(1).getPath()).into(ivImgtweServicecomment);
+            ivCloseoneServicecomment.setVisibility(View.VISIBLE);
+            ivClosetweServicecomment.setVisibility(View.VISIBLE);
+            ivClosethressServicecomment.setVisibility(View.GONE);
+        } else if (selectList.size() == 3) {
+            Glide.with(ServiceCommentActivity.this).load(selectList.get(0).getPath()).into(ivImgoneServicecomment);
+            Glide.with(ServiceCommentActivity.this).load(selectList.get(1).getPath()).into(ivImgtweServicecomment);
+            Glide.with(ServiceCommentActivity.this).load(selectList.get(2).getPath()).into(ivImgthressServicecomment);
+            ivCloseoneServicecomment.setVisibility(View.VISIBLE);
+            ivClosetweServicecomment.setVisibility(View.VISIBLE);
+            ivClosethressServicecomment.setVisibility(View.VISIBLE);
+        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -78,21 +151,8 @@ public class ServiceCommentActivity extends BaseActivity implements View.OnClick
                     // 2.media.getCutPath();为裁剪后path，需判断media.isCut();是否为true  注意：音视频除外
                     // 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true  注意：音视频除外
                     // 如果裁剪并压缩了，以取压缩路径为准，因为是先裁剪后压缩的
-                    mImgOne.setImageResource(R.drawable.comment_tianjia);
-                    mImgTwe.setImageResource(R.drawable.comment_yi);
-                    mImgThress.setImageResource(R.drawable.comment_er);
                     selectList.clear();
                     selectList.addAll(localMedia);
-                    if (selectList.size() == 1) {
-                        Glide.with(ServiceCommentActivity.this).load(localMedia.get(0).getPath()).into(mImgOne);
-                    } else if (selectList.size() == 2) {
-                        Glide.with(ServiceCommentActivity.this).load(localMedia.get(0).getPath()).into(mImgOne);
-                        Glide.with(ServiceCommentActivity.this).load(localMedia.get(1).getPath()).into(mImgTwe);
-                    } else if (selectList.size() == 3) {
-                        Glide.with(ServiceCommentActivity.this).load(localMedia.get(0).getPath()).into(mImgOne);
-                        Glide.with(ServiceCommentActivity.this).load(localMedia.get(1).getPath()).into(mImgTwe);
-                        Glide.with(ServiceCommentActivity.this).load(localMedia.get(2).getPath()).into(mImgThress);
-                    }
 
 //                    adapter.setList(selectList);
 //                    adapter.notifyDataSetChanged();
@@ -103,16 +163,6 @@ public class ServiceCommentActivity extends BaseActivity implements View.OnClick
                         selectList.remove(2);
                     }
                     selectList.addAll(localMediat);
-                    if (selectList.size() == 1) {
-                        Glide.with(ServiceCommentActivity.this).load(selectList.get(0).getPath()).into(mImgOne);
-                    } else if (selectList.size() == 2) {
-                        Glide.with(ServiceCommentActivity.this).load(selectList.get(0).getPath()).into(mImgOne);
-                        Glide.with(ServiceCommentActivity.this).load(selectList.get(1).getPath()).into(mImgTwe);
-                    } else if (selectList.size() == 3) {
-                        Glide.with(ServiceCommentActivity.this).load(selectList.get(0).getPath()).into(mImgOne);
-                        Glide.with(ServiceCommentActivity.this).load(selectList.get(1).getPath()).into(mImgTwe);
-                        Glide.with(ServiceCommentActivity.this).load(selectList.get(2).getPath()).into(mImgThress);
-                    }
 
                     break;
             }
@@ -122,15 +172,6 @@ public class ServiceCommentActivity extends BaseActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_imgone_shopcomment:
-                mBottomSheetDialog.show();
-                break;
-            case R.id.iv_imgtwe_shopcomment:
-                mBottomSheetDialog.show();
-                break;
-            case R.id.iv_imgthress_shopcomment:
-                mBottomSheetDialog.show();
-                break;
             case R.id.tv_takephoto:
                 mBottomSheetDialog.dismiss();
                 takePhoto();
@@ -197,5 +238,79 @@ public class ServiceCommentActivity extends BaseActivity implements View.OnClick
                 .isDragFrame(true)// 是否可拖动裁剪框(固定)
                 .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
 
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+    @OnClick({R.id.iv_xingone_servicecomment, R.id.iv_xingtwe_servicecomment, R.id.iv_xingthress_servicecomment, R.id.iv_xingfour_servicecomment, R.id.iv_xingfive_servicecomment, R.id.iv_imgone_servicecomment, R.id.iv_closeone_servicecomment, R.id.iv_imgtwe_servicecomment, R.id.iv_closetwe_servicecomment, R.id.iv_imgthress_servicecomment, R.id.iv_closethress_servicecomment})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_xingone_servicecomment:
+                ivXingoneServicecomment.setImageResource(R.drawable.servicecomment_xingimg);
+                ivXingtweServicecomment.setImageResource(R.drawable.servicecomment_xing);
+                ivXingthressServicecomment.setImageResource(R.drawable.servicecomment_xing);
+                ivXingfourServicecomment.setImageResource(R.drawable.servicecomment_xing);
+                ivXingfiveServicecomment.setImageResource(R.drawable.servicecomment_xing);
+                star = "1";
+                break;
+            case R.id.iv_xingtwe_servicecomment:
+                ivXingoneServicecomment.setImageResource(R.drawable.servicecomment_xingimg);
+                ivXingtweServicecomment.setImageResource(R.drawable.servicecomment_xingimg);
+                ivXingthressServicecomment.setImageResource(R.drawable.servicecomment_xing);
+                ivXingfourServicecomment.setImageResource(R.drawable.servicecomment_xing);
+                ivXingfiveServicecomment.setImageResource(R.drawable.servicecomment_xing);
+                star = "2";
+                break;
+            case R.id.iv_xingthress_servicecomment:
+                ivXingoneServicecomment.setImageResource(R.drawable.servicecomment_xingimg);
+                ivXingtweServicecomment.setImageResource(R.drawable.servicecomment_xingimg);
+                ivXingthressServicecomment.setImageResource(R.drawable.servicecomment_xingimg);
+                ivXingfourServicecomment.setImageResource(R.drawable.servicecomment_xing);
+                ivXingfiveServicecomment.setImageResource(R.drawable.servicecomment_xing);
+                star = "3";
+                break;
+            case R.id.iv_xingfour_servicecomment:
+                ivXingoneServicecomment.setImageResource(R.drawable.servicecomment_xingimg);
+                ivXingtweServicecomment.setImageResource(R.drawable.servicecomment_xingimg);
+                ivXingthressServicecomment.setImageResource(R.drawable.servicecomment_xingimg);
+                ivXingfourServicecomment.setImageResource(R.drawable.servicecomment_xingimg);
+                ivXingfiveServicecomment.setImageResource(R.drawable.servicecomment_xing);
+                star = "4";
+                break;
+            case R.id.iv_xingfive_servicecomment:
+                ivXingoneServicecomment.setImageResource(R.drawable.servicecomment_xingimg);
+                ivXingtweServicecomment.setImageResource(R.drawable.servicecomment_xingimg);
+                ivXingthressServicecomment.setImageResource(R.drawable.servicecomment_xingimg);
+                ivXingfourServicecomment.setImageResource(R.drawable.servicecomment_xingimg);
+                ivXingfiveServicecomment.setImageResource(R.drawable.servicecomment_xingimg);
+                star = "5";
+                break;
+            case R.id.iv_imgone_servicecomment:
+                mBottomSheetDialog.show();
+                break;
+            case R.id.iv_closeone_servicecomment:
+                selectList.remove(0);
+                imgAss();
+                break;
+            case R.id.iv_imgtwe_servicecomment:
+                mBottomSheetDialog.show();
+                break;
+            case R.id.iv_closetwe_servicecomment:
+                selectList.remove(1);
+                imgAss();
+                break;
+            case R.id.iv_imgthress_servicecomment:
+                mBottomSheetDialog.show();
+                break;
+            case R.id.iv_closethress_servicecomment:
+                selectList.remove(2);
+                imgAss();
+                break;
+        }
     }
 }
