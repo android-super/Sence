@@ -3,25 +3,43 @@
               android:orientation="vertical"
               android:layout_width="125dp"
               android:layout_height="wrap_content">
-    <ImageView
-            android:id="@+id/item_img"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
-            android:src="@drawable/hint_img"
-            android:scaleType="centerCrop"/>
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <ImageView
+                android:id="@+id/item_img"
+                android:layout_width="match_parent"
+                android:layout_height="125dp"
+                android:src="@drawable/hint_img"
+                android:scaleType="centerCrop"/>
+
+        <ImageView
+                android:id="@+id/item_img_vip"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="7dp"
+                android:src="@drawable/vip_huiyuanzhuanshu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
     <TextView
             android:id="@+id/item_name"
             android:text="@string/hint_name"
             android:textColor="#222222"
             android:textSize="13sp"
+            android:maxLines="1"
             android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+
     <LinearLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
             android:layout_marginTop="10dp"
             android:layout_height="wrap_content">
+
         <TextView
                 android:id="@+id/item_now_price"
                 android:text="@string/hint_price"
@@ -29,6 +47,7 @@
                 android:textSize="14sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
+
         <TextView
                 android:id="@+id/item_pre_price"
                 android:layout_width="wrap_content"
@@ -38,6 +57,7 @@
                 android:textColor="@color/white"
                 android:paddingLeft="2dp"
                 android:paddingRight="2dp"
+                android:textSize="12sp"
                 android:background="@drawable/shape_rect_theme_green"/>
     </LinearLayout>
 

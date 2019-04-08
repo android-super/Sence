@@ -12,11 +12,11 @@ public class RFansBean extends BaseRequestBean {
     private String page;
     private String pagesize;
 
-    public RFansBean(String uid, String keyword) {
+    public RFansBean(String uid, String keyword, String page) {
         this.uid = uid;
         this.keyword = keyword;
-        this.page = "1";
-        this.pagesize ="10";
+        this.page = page;
+        this.pagesize = "10";
     }
 
     public String getUid() {

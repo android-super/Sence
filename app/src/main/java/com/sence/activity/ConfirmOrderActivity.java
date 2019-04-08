@@ -1,12 +1,10 @@
 package com.sence.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.sence.R;
 import com.sence.base.BaseActivity;
 import com.sence.utils.StatusBarUtil;

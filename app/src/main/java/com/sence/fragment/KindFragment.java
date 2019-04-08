@@ -1,11 +1,13 @@
 package com.sence.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.LinearLayout;
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -14,6 +16,8 @@ import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sence.R;
+import com.sence.activity.SearchActivity;
+import com.sence.activity.ShopDetailsActivity;
 import com.sence.adapter.KindLeftAdapter;
 import com.sence.adapter.KindRightAdapter;
 import com.sence.bean.request.RBusAddBean;
@@ -41,6 +45,7 @@ public class KindFragment extends Fragment {
     private RecyclerView recycle_view_horizontal;
     private RecyclerView recycle_view_vertical;
     private SmartRefreshLayout smart_refresh;
+    private LinearLayout kind_search;
 
     private KindLeftAdapter leftAdapter;
     private KindRightAdapter rightAdapter;
@@ -87,7 +92,6 @@ public class KindFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_kind, container, false);
     }
 
@@ -99,6 +103,7 @@ public class KindFragment extends Fragment {
         smart_refresh.setRefreshFooter(new ClassicsFooter(getActivity()));
         recycle_view_horizontal = getView().findViewById(R.id.recycle_view_horizontal);
         recycle_view_vertical = getView().findViewById(R.id.recycle_view_vertical);
+        kind_search = getView().findViewById(R.id.kind_search);
 
         recycle_view_horizontal.setLayoutManager(new LinearLayoutManager(getActivity()));
         recycle_view_vertical.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -132,12 +137,27 @@ public class KindFragment extends Fragment {
                 initGoodList();
             }
         });
+        rightAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent intent = new Intent(getActivity(), ShopDetailsActivity.class);
+                intent.putExtra("id",rightAdapter.getData().get(position).getId());
+                startActivity(intent);
+            }
+        });
         rightAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 if (view.getId() == R.id.item_bus) {
                     addBus(rightAdapter.getData().get(position).getId());
                 }
+            }
+        });
+        kind_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
+                startActivity(intent);
             }
         });
     }

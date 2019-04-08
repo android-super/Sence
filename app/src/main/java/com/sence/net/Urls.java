@@ -36,7 +36,8 @@ public class Urls {
     public static final String USER_VIP = "/index.php/Api/User/getMemberInfo";//Sence会员界面
     public static final String USER_ENJOY_VIP = "/index.php/Api/User/getEnjoyInfo";//尊享会员界面
     public static final String USER_FANS_LIST = "/index.php/api/user/myFansList";//我的粉丝
-    public static final String USER_FOCUS_LISt = "/index.php/api/user/myFocusList";//我的关注
+    public static final String USER_FOCUS_LIST = "/index.php/api/user/myFocusList";//我的关注
+    public static final String USER_NOTE_LIST = "/index.php/Api/mine/myNoteList";//我的笔记列表
     public static final String USER_FOCUS_CANCEL = "/index.php/api/user/unFocus";//取消关注
     public static final String USER_FOCUS = "/index.php/api/user/focus";//关注
     public static final String USER_CASH = "/index.php/api/mine/withdraw";//提现
@@ -44,6 +45,9 @@ public class Urls {
     public static final String USER_CLIENT_BIND = "/index.php/api/link/bind";//用户绑定Client_id
     public static final String USER_VIP_OPEN = "/index.php/api/user/openSenceKol";//开通会员
     public static final String USER_DETAIL = "/index.php/Api/mine/accountDetail";//账户明细
+    public static final String USER_EDIT = "/index.php/api/mine/modUserInfo";//编辑个人资料
+    public static final String USER_GOOD_LIST = "/index.php/Api/User/getMemberGoodsList";//更多会员商品列表
+    public static final String USER_SERVE_LIST = "/index.php/Api/User/getVipServiceList";//更多Vip服务列表
     //主页
     public static final String MAIN_CONTENT_DETAIL = "/index.php/api/notes/getArticleDetail";//
     public static final String MAIN_NOTE_DETAIL = "/index.php/Api/Notes/getNoteDetail";//笔记详情
@@ -52,6 +56,7 @@ public class Urls {
     public static final String MAIN_NOTE = "/index.php/Api/Notes/getNoteList";//首页--笔记
     public static final String NOTE_DELETE = "/index.php/Api/Notes/delUserNote";//删除笔记
     public static final String NOTE_ADD = "/index.php/Api/Notes/addUserNote";//添加笔记
+    public static final String SUPPORT_NOTE_RECOMMEND = "/index.php/api/notes/giveNoteLike";//笔记点赞，取消点赞
     //商品
     public static final String ORDER_COMMENT_SUPPORT = "/index.php/Api/Orders/praise";//订单评论点赞
     public static final String ORDER_CANCEL = "/index.php/Api/Orders/cancelOrder";//订单取消

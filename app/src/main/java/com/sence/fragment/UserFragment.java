@@ -205,25 +205,26 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.user_pay:
                 Intent intentPay = new Intent(getContext(), MyOrderActivity.class);
-                intentPay.putExtra("type",1);
+                intentPay.putExtra("type", 1);
                 startActivity(intentPay);
                 break;
             case R.id.user_send:
                 Intent intentSend = new Intent(getContext(), MyOrderActivity.class);
-                intentSend.putExtra("type",2);
+                intentSend.putExtra("type", 2);
                 startActivity(intentSend);
                 break;
             case R.id.user_get:
                 Intent intentGet = new Intent(getContext(), MyOrderActivity.class);
-                intentGet.putExtra("type",3);
+                intentGet.putExtra("type", 3);
                 startActivity(intentGet);
                 break;
             case R.id.user_comment:
                 Intent intentComment = new Intent(getContext(), MyOrderActivity.class);
-                intentComment.putExtra("type",4);
+                intentComment.putExtra("type", 4);
                 startActivity(intentComment);
                 break;
             case R.id.user_flower:
+                startActivity(new Intent(getContext(), WebActivity.class));
                 break;
             case R.id.user_account:
                 startActivity(new Intent(getContext(), MyAccountActivity.class));

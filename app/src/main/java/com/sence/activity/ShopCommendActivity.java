@@ -1,10 +1,8 @@
 package com.sence.activity;
 
-import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.orhanobut.logger.Logger;
 import com.sence.R;
 import com.sence.adapter.ShopCommendAdapter;

@@ -38,8 +38,17 @@ public enum HttpCode {
     USER_INFO_DATA_SERVICE,//我的信息服务
     USER_FANS_LIST,//我的粉丝列表
     USER_FOCUS_LIST,//我的关注列表
+    USER_NOTE_LIST,//我的笔记列表
     USER_ACCOUNT,//我的账户
     NOTE_DETAIL,//笔记详情
     CONTENT_DETAIL,//內容詳情
     COMMENT_LIST,//评价列表
+    SUPPORT_NOTE_RECOMMEND,//推荐 笔记点赞
+    USER_FOCUS,//关注
+    BANK_CARD,//银行卡列表
+    USER_CASH,//提现
+    COMMENT_ADD,//添加评论（订单）
+    USER_EDIT,//用戶信息修改
+    USER_GOOD_LIST,//会员商品列表
+    USER_SERVE_LIST,//会员vip服务列表
 }

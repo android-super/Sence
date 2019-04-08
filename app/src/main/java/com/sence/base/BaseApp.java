@@ -27,7 +27,7 @@ public class BaseApp extends Application {
         super.onCreate();
         INSTANCE = this;
         MultiDex.install(this);
-        initLeakCanary();
+//        initLeakCanary();
         initLogger();
         initUtil();
         initHttpManager();

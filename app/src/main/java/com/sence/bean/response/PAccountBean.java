@@ -15,7 +15,7 @@ public class PAccountBean {
 
     private String uid;
     private String money;
-    private int partnerIncome;
+    private String partnerIncome;
 
     public String getUid() {
         return uid;
@@ -33,11 +33,11 @@ public class PAccountBean {
         this.money = money;
     }
 
-    public int getPartnerIncome() {
+    public String getPartnerIncome() {
         return partnerIncome;
     }
 
-    public void setPartnerIncome(int partnerIncome) {
+    public void setPartnerIncome(String partnerIncome) {
         this.partnerIncome = partnerIncome;
     }
 }

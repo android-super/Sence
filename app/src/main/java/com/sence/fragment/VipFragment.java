@@ -20,8 +20,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.sence.R;
-import com.sence.activity.EnjoyVipActivity;
+import com.sence.activity.*;
 import com.sence.adapter.VipBottomAdapter;
 import com.sence.adapter.VipTopAdapter;
 import com.sence.bean.request.RUidBean;
@@ -113,13 +114,16 @@ public class VipFragment extends Fragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.vip_info_layout:
-
+                intent = new Intent(getActivity(), OpenVipActivity.class);
+                startActivity(intent);
                 break;
             case R.id.vip_exclusive_more:
-
+                intent = new Intent(getActivity(), GoodListActivity.class);
+                startActivity(intent);
                 break;
             case R.id.vip_share_more:
-
+                intent = new Intent(getActivity(), ServeListActivity.class);
+                startActivity(intent);
                 break;
         }
     }
@@ -139,6 +143,23 @@ public class VipFragment extends Fragment implements View.OnClickListener {
         recycle_view_top.setAdapter(topAdapter);
         bottomAdapter = new VipBottomAdapter(R.layout.rv_item_vip_bottom);
         recycle_view_bottom.setAdapter(bottomAdapter);
+        topAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent intent = new Intent(getActivity(), ShopDetailsActivity.class);
+                intent.putExtra("id",topAdapter.getData().get(position).getId());
+                startActivity(intent);
+            }
+        });
+        bottomAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent intent = new Intent(getActivity(), ServiceDetailsActivity.class);
+                intent.putExtra("id",bottomAdapter.getData().get(position).getId());
+                startActivity(intent);
+            }
+        });
+
     }
 
 

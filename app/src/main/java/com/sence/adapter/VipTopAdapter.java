@@ -22,7 +22,7 @@ public class VipTopAdapter extends BaseQuickAdapter<PUserVipBean.GoodsBean, Base
     protected void convert(BaseViewHolder helper, PUserVipBean.GoodsBean item) {
         Glide.with(helper.itemView.getContext()).load(Urls.base_url+item.getImg()).into((ImageView) helper.getView(R.id.item_img));
         helper.setText(R.id.item_name,item.getName());
-        helper.setText(R.id.item_now_price,item.getPrice());
-        helper.setText(R.id.item_pre_price,item.getSaveMoney());
+        helper.setText(R.id.item_now_price,"￥"+item.getPrice());
+        helper.setText(R.id.item_pre_price,"省￥"+item.getSaveMoney());
     }
 }

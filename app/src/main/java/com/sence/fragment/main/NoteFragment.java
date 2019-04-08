@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.blankj.utilcode.util.ConvertUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
@@ -18,6 +19,7 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sence.R;
 import com.sence.adapter.NoteAdapter;
+import com.sence.bean.request.RNidBean;
 import com.sence.bean.request.RUidListBean;
 import com.sence.bean.response.PMainNoteBean;
 import com.sence.bean.response.PMainRecommendBean;
@@ -38,7 +40,6 @@ public class NoteFragment extends Fragment {
 
     private NoteAdapter adapter;
     private int page = 1;
-    private int size = 10;
 
     public NoteFragment() {
         // Required empty public constructor
@@ -110,7 +111,49 @@ public class NoteFragment extends Fragment {
                 initData();
             }
         });
-
+        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
+                if (view.getId() == R.id.item_support) {
+                    support(position, adapter.getData().get(position).getNid());
+                }
+            }
+        });
     }
 
+    /**
+     * 点赞
+     *
+     * @param position
+     * @param nid
+     */
+    public void support(final int position, String nid) {
+        HttpManager.getInstance().PlayNetCode(HttpCode.SUPPORT_NOTE_RECOMMEND, new RNidBean(LoginStatus.getUid(),
+                nid)).request(new ApiCallBack() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(Object o, String msg) {
+                int support_num = Integer.parseInt(adapter.getData().get(position).getPraise_count());
+                if (adapter.getData().get(position).getIs_like().equals("0")) {
+                    adapter.getData().get(position).setIs_like("1");
+                    support_num = support_num + 1;
+                } else {
+                    adapter.getData().get(position).setIs_like("0");
+                    support_num = support_num - 1;
+                }
+                adapter.getData().get(position).setPraise_count(support_num + "");
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+    }
 }

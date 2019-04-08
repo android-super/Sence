@@ -3,21 +3,19 @@ package com.sence.bean.request;
 import com.sence.bean.base.BaseRequestBean;
 
 /**
- * Created by zwy on 2019/3/29.
+ * Created by zwy on 2019/4/4.
  * package_name is com.sence.bean.request
  * 描述:SenceGit
  */
 public class RFocusBean extends BaseRequestBean {
     private String uid;
-    private String page;
-    private String pagesize;
 
-    public RFocusBean(String uid, String keyword) {
+    public RFocusBean(String uid, String u_to) {
         this.uid = uid;
-        this.keyword = keyword;
-        this.page = "1";
-        this.pagesize ="10";
+        this.u_to = u_to;
     }
+
+    private String u_to;
 
     public String getUid() {
         return uid;
@@ -27,29 +25,12 @@ public class RFocusBean extends BaseRequestBean {
         this.uid = uid;
     }
 
-    public String getPage() {
-        return page;
+    public String getU_to() {
+        return u_to;
     }
 
-    public void setPage(String page) {
-        this.page = page;
+    public void setU_to(String u_to) {
+        this.u_to = u_to;
     }
-
-    public String getPagesize() {
-        return pagesize;
-    }
-
-    public void setPagesize(String pagesize) {
-        this.pagesize = pagesize;
-    }
-
-    public String getKeyword() {
-        return keyword;
-    }
-
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
-    }
-
-    private String keyword;
 }
+

@@ -1,5 +1,6 @@
 package com.sence.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -16,6 +17,9 @@ import com.sence.base.BaseActivity;
 import com.sence.fragment.my.MyFansFragment;
 import com.sence.fragment.my.MyFocusFragment;
 import com.sence.fragment.my.MyNoteFragment;
+import com.sence.utils.StatusBarUtil;
+
+import java.util.Arrays;
 
 /**
  * 我的关注，粉丝，笔记
@@ -39,11 +43,13 @@ public class MyFansFocusNoteActivity extends BaseActivity {
     }
 
     public void initView() {
+        StatusBarUtil.setLightMode(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
         recycleTitle.setLayoutManager(linearLayoutManager);
         fnAdapter = new MyFNAdapter(R.layout.rv_item_fn_top);
         recycleTitle.setAdapter(fnAdapter);
+        fnAdapter.setNewData(Arrays.asList(titles));
 
         fnAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -76,7 +82,8 @@ public class MyFansFocusNoteActivity extends BaseActivity {
         searchLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(MyFansFocusNoteActivity.this, SearchActivity.class);
+                startActivity(intent);
             }
         });
     }
