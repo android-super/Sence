@@ -22,6 +22,10 @@
             android:supportsRtl="true"
             android:theme="@style/AppThemeNoActionBar"
             tools:replace="android:theme">
+        <activity android:name=".activity.CardListActivity">
+        </activity>
+        <activity android:name=".activity.CardAddActivity">
+        </activity>
         <activity android:name=".activity.ServeListActivity">
         </activity>
         <activity android:name=".activity.GoodListActivity">

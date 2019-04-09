@@ -43,7 +43,6 @@ public class FocusFragment extends Fragment {
 
     private MainFocusAdapter adapter;
     private int page = 1;
-    private int size = 10;
 
     public FocusFragment() {
         // Required empty public constructor

@@ -20,6 +20,7 @@ public class Urls {
     //用户
     public static final String USER_CARD_DELETE = "/index.php/Api/mine/delCard";//删除银行卡
     public static final String USER_CARD_LIST = "/index.php/Api/mine/myCardList";//银行卡列表
+    public static final String USER_BANK_CARD_LIST = "/index.php/Api/public/bankList";//获取银行列表
     public static final String USER_ACCOUNT = "/index.php/Api/mine/myAccount";//我的账户
     public static final String USER_INFO_DATA = "/index.php/api/user/personalInfo";//我的信息
     public static final String USER_VERIFY_CHECK = "/index.php/Api/mine/checkCode";//检查验证码

@@ -1,6 +1,7 @@
 package com.sence.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,17 +11,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.orhanobut.logger.Logger;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sence.R;
+import com.sence.activity.ConfirmOrderActivity;
+import com.sence.activity.ShopDetailsActivity;
 import com.sence.adapter.BusBottomAdapter;
 import com.sence.adapter.BusTopAdapter;
 import com.sence.adapter.KindRightAdapter;
@@ -31,9 +36,13 @@ import com.sence.bean.response.PBusRecommendBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
+import com.sence.utils.Arith;
 import com.sence.utils.LoginStatus;
+import com.sence.view.DividerSpacingItemDecoration;
 import com.sence.view.GridSpacingItemDecoration;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -52,6 +61,8 @@ public class BusFragment extends Fragment {
     private BusBottomAdapter bottomAdapter;
 
     private int page = 1;
+
+    private String isMember;//是否是会员
 
     public BusFragment() {
         // Required empty public constructor
@@ -81,6 +92,8 @@ public class BusFragment extends Fragment {
         recycle_view.setLayoutManager(new LinearLayoutManager(getActivity()));
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         recycle_view_bottom.setLayoutManager(gridLayoutManager);
+        recycle_view.addItemDecoration(new DividerSpacingItemDecoration(DividerSpacingItemDecoration.VERTICAL,
+                ConvertUtils.dp2px(13), true));
         topAdapter = new BusTopAdapter(R.layout.rv_item_bus_top);
         recycle_view.setAdapter(topAdapter);
         bottomAdapter = new BusBottomAdapter(R.layout.rv_item_bus_bottom);
@@ -104,6 +117,23 @@ public class BusFragment extends Fragment {
                 initRecommendData();
             }
         });
+        bottomAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent intent = new Intent(getActivity(), ShopDetailsActivity.class);
+                intent.putExtra("id", bottomAdapter.getData().get(position).getId());
+                startActivity(intent);
+            }
+        });
+
+        topAdapter.setListener(new BusTopAdapter.SelectChangeListener() {
+            @Override
+            public void selectChanged(int position) {
+                getItemAllSelect(position - 1);
+                getAllSelect();
+                getValue();
+            }
+        });
 
         topAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
@@ -111,30 +141,169 @@ public class BusFragment extends Fragment {
                 if (view.getId() == R.id.item_name_select) {
                     if (topAdapter.getData().get(position).isSelect()) {
                         topAdapter.getData().get(position).setSelect(false);
+                        changeItemAllSelect(position, false);
                     } else {
                         topAdapter.getData().get(position).setSelect(true);
+                        changeItemAllSelect(position, true);
                     }
                     topAdapter.notifyDataSetChanged();
+                    getAllSelect();
+                    getValue();
                 }
             }
         });
         bus_commit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getActivity(), ConfirmOrderActivity.class);
+                intent.putExtra("data", (Serializable) getAllSelectBean());
+                intent.putExtra("isMember", isMember);
+                startActivity(intent);
             }
         });
         bus_all_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (bus_all_select.isSelected()) {
+                    bus_all_select.setSelected(false);
+                    setSelect(false);
+                } else {
+                    bus_all_select.setSelected(true);
+                    setSelect(true);
+                }
+                getValue();
             }
         });
 
-
         initBusData();
         initRecommendData();
+    }
 
+    /**
+     * 更改Item內部选中状态
+     *
+     * @param position
+     * @param isSelect
+     */
+    public void changeItemAllSelect(int position, boolean isSelect) {
+        List<PBusBean.CartBean.GoodsBean> goodsBeans = topAdapter.getData().get(position).getGoods();
+        for (int j = 0; j < goodsBeans.size(); j++) {
+            goodsBeans.get(j).setSelect(isSelect);
+        }
+    }
+
+    public void getItemAllSelect(int position) {
+        List<PBusBean.CartBean.GoodsBean> goodsBeans = topAdapter.getData().get(position).getGoods();
+        for (int j = 0; j < goodsBeans.size(); j++) {
+            if (!goodsBeans.get(j).isSelect()) {
+                topAdapter.getData().get(position).setSelect(false);
+                topAdapter.notifyDataSetChanged();
+                return;
+            }
+        }
+        topAdapter.getData().get(position).setSelect(true);
+        topAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 获取得到的Bean
+     *
+     * @return
+     */
+    public void getValue() {
+        int all_count = 0;
+        double all_count_money = 0;
+        for (int i = 0; i < topAdapter.getData().size(); i++) {
+            List<PBusBean.CartBean.GoodsBean> goodsBeans = topAdapter.getData().get(i).getGoods();
+            int all_num = 0;
+            double all_price = 0;
+            for (int j = 0; j < goodsBeans.size(); j++) {
+                if (goodsBeans.get(j).isSelect()) {
+                    double one_price;
+                    int num;
+                    one_price = Double.parseDouble(goodsBeans.get(j).getPrice());
+                    num = goodsBeans.get(j).getNum();
+                    Arith.mul(one_price, num);
+                    all_price = Arith.add(Arith.mul(one_price, num), all_price);
+                    all_num = all_num + num;
+                }
+            }
+            all_count = all_count + all_num;
+            all_count_money = Arith.add(all_count_money, all_price);
+        }
+
+        bus_all_price.setText("￥" + all_count_money);
+        bus_commit.setText("结算(" + all_count + ")");
+    }
+
+    public List<PBusBean.CartBean> getAllSelectBean() {
+        List<PBusBean.CartBean> cartBeans = new ArrayList<>();
+        for (int i = 0; i < topAdapter.getData().size(); i++) {
+            double all_price = 0;
+            double all_postage = 0;
+            double all_money;
+            int all_num = 0;
+            PBusBean.CartBean cartBean = topAdapter.getItem(i);
+            List<PBusBean.CartBean.GoodsBean> goodsBeans = topAdapter.getData().get(i).getGoods();
+            List<PBusBean.CartBean.GoodsBean> newGoodsBeans = new ArrayList<>();
+            for (int j = 0; j < goodsBeans.size(); j++) {
+                if (goodsBeans.get(j).isSelect()) {
+                    double one_postage;
+                    double one_price;
+                    int num;
+                    one_price = Double.parseDouble(goodsBeans.get(j).getPrice());
+                    num = goodsBeans.get(j).getNum();
+                    one_postage = Double.parseDouble(goodsBeans.get(j).getPostage());
+                    Arith.mul(one_price, num);
+                    all_price = Arith.add(Arith.mul(one_price, num), all_price);
+                    newGoodsBeans.add(goodsBeans.get(j));
+                    all_postage = Arith.add(all_postage, one_postage);
+                    all_num = all_num + num;
+                }
+            }
+            all_price = Arith.sub(all_price, Double.parseDouble(cartBean.getFavourable()));
+            all_money = Arith.add(all_price, all_postage);
+            cartBean.setAll_price(all_price + "");
+            cartBean.setAll_postage(all_postage + "");
+            cartBean.setAll_num(all_num + "");
+            cartBean.setAll_money(all_money + "");
+            cartBean.setGoods(newGoodsBeans);
+            cartBeans.add(cartBean);
+        }
+        return cartBeans;
+    }
+
+
+    /**
+     * 是否全部选中
+     */
+    public void getAllSelect() {
+        for (int i = 0; i < topAdapter.getData().size(); i++) {
+            List<PBusBean.CartBean.GoodsBean> goodsBeans = topAdapter.getData().get(i).getGoods();
+            for (int j = 0; j < goodsBeans.size(); j++) {
+                if (!goodsBeans.get(j).isSelect()) {
+                    bus_all_select.setSelected(false);
+                    return;
+                }
+            }
+        }
+        bus_all_select.setSelected(true);
+    }
+
+    /**
+     * 全选
+     *
+     * @param isSelect
+     */
+    public void setSelect(boolean isSelect) {
+        for (int i = 0; i < topAdapter.getData().size(); i++) {
+            topAdapter.getData().get(i).setSelect(isSelect);
+            List<PBusBean.CartBean.GoodsBean> goodsBeans = topAdapter.getData().get(i).getGoods();
+            for (int j = 0; j < goodsBeans.size(); j++) {
+                goodsBeans.get(j).setSelect(isSelect);
+            }
+        }
+        topAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -181,6 +350,7 @@ public class BusFragment extends Fragment {
 
             @Override
             public void onSuccess(PBusBean o, String msg) {
+                isMember = o.getIsMember();
                 topAdapter.setNewData(o.getCart());
             }
         });

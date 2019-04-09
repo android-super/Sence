@@ -31,6 +31,7 @@ import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.Urls;
 import com.sence.net.manager.ApiCallBack;
+import com.sence.utils.GlideUtils;
 import com.sence.utils.LoginStatus;
 import com.sence.view.DividerSpacingItemDecoration;
 import com.sence.view.GridSpacingItemDecoration;
@@ -100,7 +101,7 @@ public class VipFragment extends Fragment implements View.OnClickListener {
         vip_share_more.setOnClickListener(this);
 
         if (LoginStatus.isLogin()) {
-            Glide.with(getActivity()).load(Urls.base_url + LoginStatus.getAvatar()).into(vip_head);
+            GlideUtils.getInstance().loadHead(LoginStatus.getAvatar(), vip_head);
             vip_name.setText(LoginStatus.getName());
         }
 
@@ -147,7 +148,7 @@ public class VipFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(getActivity(), ShopDetailsActivity.class);
-                intent.putExtra("id",topAdapter.getData().get(position).getId());
+                intent.putExtra("id", topAdapter.getData().get(position).getId());
                 startActivity(intent);
             }
         });
@@ -155,7 +156,7 @@ public class VipFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(getActivity(), ServiceDetailsActivity.class);
-                intent.putExtra("id",bottomAdapter.getData().get(position).getId());
+                intent.putExtra("id", bottomAdapter.getData().get(position).getId());
                 startActivity(intent);
             }
         });

@@ -180,6 +180,12 @@ public class HttpManager<P> {
             case USER_SERVE_LIST:
                 observable = httpService.UserServeList(requestBean.getMap());
                 break;
+            case BANK_LIST:
+                observable = httpService.BankList(requestBean.getMap());
+                break;
+            case BANK_ADD:
+                observable = httpService.BankCardAdd(requestBean.getMap());
+                break;
 
         }
         observable = observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());

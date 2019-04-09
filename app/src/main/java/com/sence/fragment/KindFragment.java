@@ -66,7 +66,7 @@ public class KindFragment extends Fragment {
 
     private void initKindList() {
         leftAdapter = new KindLeftAdapter(R.layout.rv_item_kind_left);
-        HttpManager.getInstance().PlayNetCode(HttpCode.KIND_GOODS,new REmptyBean()).request(new ApiCallBack<List<PKindBean>>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.KIND_GOODS, new REmptyBean()).request(new ApiCallBack<List<PKindBean>>() {
             @Override
             public void onFinish() {
 
@@ -141,7 +141,7 @@ public class KindFragment extends Fragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(getActivity(), ShopDetailsActivity.class);
-                intent.putExtra("id",rightAdapter.getData().get(position).getId());
+                intent.putExtra("id", rightAdapter.getData().get(position).getId());
                 startActivity(intent);
             }
         });

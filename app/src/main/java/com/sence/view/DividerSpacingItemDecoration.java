@@ -16,12 +16,19 @@ public class DividerSpacingItemDecoration extends RecyclerView.ItemDecoration {
     public static final int HORIZONTAL = LinearLayout.HORIZONTAL;
     public static final int VERTICAL = LinearLayout.VERTICAL;
 
-    private int orientation = VERTICAL;
+    private int orientation;
     private int space;
+    private boolean isHeadView = false;
 
     public DividerSpacingItemDecoration(int orientation, int space) {
         this.orientation = orientation;
         this.space = space;
+    }
+
+    public DividerSpacingItemDecoration(int orientation, int space, boolean isHeadView) {
+        this.orientation = orientation;
+        this.space = space;
+        this.isHeadView = isHeadView;
     }
 
     @Override
@@ -34,7 +41,13 @@ public class DividerSpacingItemDecoration extends RecyclerView.ItemDecoration {
             }
             outRect.right = space;
         } else {
-            outRect.bottom = space;
+            if (isHeadView) {
+                if (position != 0) {
+                    outRect.bottom = space;
+                }
+            } else {
+                outRect.bottom = space;
+            }
         }
 
     }
