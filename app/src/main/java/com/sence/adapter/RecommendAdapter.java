@@ -61,5 +61,7 @@ public class RecommendAdapter extends BaseQuickAdapter<PMainRecommendBean, BaseV
                 activity.startActivity(intent, activityOptions.toBundle());
             }
         });
+        helper.addOnClickListener(R.id.item_support_img);
+        helper.addOnClickListener(R.id.item_support);
     }
 }

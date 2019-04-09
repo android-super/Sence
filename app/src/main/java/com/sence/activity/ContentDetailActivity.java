@@ -17,6 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.blankj.utilcode.util.ConvertUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -26,6 +27,8 @@ import com.sence.adapter.ContentGoodAdapter;
 import com.sence.adapter.GoodsAdapter;
 import com.sence.base.BaseActivity;
 import com.sence.bean.request.RContentDetailBean;
+import com.sence.bean.request.RFocusBean;
+import com.sence.bean.request.RNidBean;
 import com.sence.bean.response.PContentDetailBean;
 import com.sence.fragment.CommentFragment;
 import com.sence.net.HttpCode;
@@ -92,7 +95,9 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
     LinearLayout toolTitleLayout;
 
     private String nid;
+    private String to_uid;
     private ContentGoodAdapter adapter;
+    private PContentDetailBean.NoteInfoBean noteInfoBean;
 
     private List<PContentDetailBean.NoteInfoBean.GoodsInfoBean> goodsInfoBeans;
 
@@ -100,6 +105,8 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
         if (o == null) {
             return;
         }
+        noteInfoBean = o.getNote_info();
+        to_uid = o.getNote_info().getUid();
         PContentDetailBean.NoteInfoBean noteInfoBean = o.getNote_info();
         Glide.with(this).load(Urls.base_url + noteInfoBean.getAvatar()).into(toolHead);
         toolName.setText(noteInfoBean.getNick_name());
@@ -178,6 +185,7 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
         contentSupportNum.setOnClickListener(this);
         contentSupport.setOnClickListener(this);
         contentBuy.setOnClickListener(this);
+        contentFocusTv.setOnClickListener(this);
     }
 
     @Override
@@ -193,13 +201,14 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
                 startActivity(new Intent(this, MyInfoActivity.class));
                 break;
             case R.id.content_support_num:
-
-                break;
             case R.id.content_support:
-
+                support(nid);
                 break;
             case R.id.content_buy:
                 showGoodDialog();
+                break;
+            case R.id.content_focus_tv:
+                toFocus();
                 break;
         }
     }
@@ -260,5 +269,58 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
         adapter.setNewData(goodsInfoBeans);
         bottomSheetDialog.setContentView(view);
         bottomSheetDialog.show();
+    }
+
+    public void toFocus(){
+        HttpManager.getInstance().PlayNetCode(HttpCode.USER_FOCUS,new RFocusBean(LoginStatus.getUid(),to_uid)).request(new ApiCallBack() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(Object o, String msg) {
+                ToastUtils.showShort(msg);
+            }
+        });
+    }
+
+    /**
+     * 点赞
+     * @param nid
+     */
+    public void support(String nid) {
+        HttpManager.getInstance().PlayNetCode(HttpCode.SUPPORT_NOTE_RECOMMEND, new RNidBean(LoginStatus.getUid(), nid)).request(new ApiCallBack() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(Object o, String msg) {
+                int support_num = Integer.parseInt(noteInfoBean.getPraise_count());
+                if (noteInfoBean.getIs_like().equals("0")) {
+                    noteInfoBean.setIs_like("1");
+                    support_num = support_num + 1;
+                    contentSupport.setImageResource(R.drawable.recommend_dianzan_y);
+                } else {
+                    noteInfoBean.setIs_like("0");
+                    support_num = support_num - 1;
+                    contentSupport.setImageResource(R.drawable.recommend_dianzan);
+                }
+                noteInfoBean.setPraise_count(support_num + "");
+                contentSupportNum.setText("赞·" + noteInfoBean.getPraise_count());
+            }
+        });
     }
 }

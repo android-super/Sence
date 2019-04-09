@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.orhanobut.logger.Logger;
 import com.sence.base.BaseApp;
+import com.sence.bean.base.BaseImageRequestBean;
 import com.sence.bean.base.BaseRequestBean;
 import com.sence.bean.base.BaseResponseBean;
 import com.sence.net.bean.ErrorConstants;
@@ -161,6 +162,9 @@ public class HttpManager<P> {
             case USER_FOCUS_LIST:
                 observable = httpService.UserFocusList(requestBean.getMap());
                 break;
+            case USER_NOTE_LIST:
+                observable = httpService.UserNoteList(requestBean.getMap());
+                break;
             case USER_ACCOUNT:
                 observable = httpService.MyAccount(requestBean.getMap());
                 break;
@@ -173,15 +177,43 @@ public class HttpManager<P> {
             case COMMENT_LIST:
                 observable = httpService.CommentList(requestBean.getMap());
                 break;
+            case SUPPORT_NOTE_RECOMMEND:
+                observable = httpService.SupportNoteRecommend(requestBean.getMap());
+                break;
+            case USER_FOCUS:
+                observable = httpService.UserFocus(requestBean.getMap());
+                break;
+            case BANK_CARD:
+                observable = httpService.BankCardList(requestBean.getMap());
+                break;
+            case USER_CASH:
+                observable = httpService.UserCash(requestBean.getMap());
+                break;
+            case USER_GOOD_LIST:
+                observable = httpService.UserGoodList(requestBean.getMap());
+                break;
+            case USER_SERVE_LIST:
+                observable = httpService.UserServeList(requestBean.getMap());
+                break;
 
-            case VIP_MEMBER:
-                break;
-            case CHECK_VERIFY_CODE:
-                break;
         }
         observable = observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
         return this;
     }
+
+    public HttpManager PlayNetCode(HttpCode code, BaseImageRequestBean requestBean) {
+        HttpService httpService = HttpClientManager.Instance.httpService;
+        switch (code){
+            case COMMENT_ADD:
+                observable = httpService.CommentOrder(requestBean.getMap());
+                break;
+            case USER_EDIT:
+                observable = httpService.UserEdit(requestBean.getMap());
+                break;
+        }
+        return this;
+    }
+
 
     /**
      * 添加请求识别Code

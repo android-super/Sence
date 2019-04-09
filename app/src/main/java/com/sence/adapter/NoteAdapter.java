@@ -56,5 +56,6 @@ public class NoteAdapter extends BaseQuickAdapter<PMainNoteBean, BaseViewHolder>
                 activity.startActivity(intent, activityOptions.toBundle());
             }
         });
+        helper.addOnClickListener(R.id.item_support);
     }
 }

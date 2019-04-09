@@ -15,6 +15,7 @@ import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.LoginStatus;
+import com.sence.utils.StatusBarUtil;
 
 /**
  * 我的账户
@@ -61,7 +62,8 @@ public class MyAccountActivity extends BaseActivity implements View.OnClickListe
     }
 
     public void initView() {
-
+        StatusBarUtil.setTranslucentForCoordinatorLayout(this, 0);
+        StatusBarUtil.setLightMode(this);
         accountBack.setOnClickListener(this);
         accountDetail.setOnClickListener(this);
         accountRecharge.setOnClickListener(this);
@@ -76,9 +78,9 @@ public class MyAccountActivity extends BaseActivity implements View.OnClickListe
                 finish();
                 break;
             case R.id.account_detail:
-                startActivity(new Intent(MyAccountActivity.this, AccountDetailActivity.class));
+                startActivity(new Intent(MyAccountActivity.this, UserDetailActivity.class));
                 break;
-            case R.id.account_recharge:
+            case R.id.account_recharge://目前不要了
                 startActivity(new Intent(MyAccountActivity.this, RechargeActivity.class));
                 break;
             case R.id.account_cash:

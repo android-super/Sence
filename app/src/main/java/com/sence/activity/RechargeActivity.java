@@ -1,10 +1,6 @@
 package com.sence.activity;
 
-import android.os.Bundle;
-
 import com.sence.R;
-
-import androidx.appcompat.app.AppCompatActivity;
 import com.sence.base.BaseActivity;
 
 /**

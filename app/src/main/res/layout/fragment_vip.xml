@@ -91,7 +91,7 @@
                         android:layout_marginRight="19dp"
                         android:layout_marginTop="15dp"
                         android:layout_marginBottom="15dp"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         android:background="@drawable/vip_lvka"
                         android:layout_width="match_parent"
                         android:layout_height="125dp">

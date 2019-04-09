@@ -1,37 +1,14 @@
 package com.sence.net;
 
 import com.sence.bean.base.BaseResponseBean;
-import com.sence.bean.response.PAccountBean;
-import com.sence.bean.response.PBusBean;
-import com.sence.bean.response.PBusRecommendBean;
-import com.sence.bean.response.PCommentBean;
-import com.sence.bean.response.PContentDetailBean;
-import com.sence.bean.response.PEnjoyVipBean;
-import com.sence.bean.response.PGoodListBean;
-import com.sence.bean.response.PMainFocusBean;
-import com.sence.bean.response.PMainNoteBean;
-import com.sence.bean.response.PMainRecommendBean;
-import com.sence.bean.response.PManageAddressBean;
-import com.sence.bean.response.PMyInfoBean;
-import com.sence.bean.response.PMyInfoServiceBean;
-import com.sence.bean.response.PMyOrderBean;
-import com.sence.bean.response.PNoteDetailBean;
-import com.sence.bean.response.POrderDetailsBean;
-import com.sence.bean.response.PSearchBean;
-import com.sence.bean.response.PServiceCommendBean;
-import com.sence.bean.response.PServiceeDetails;
-import com.sence.bean.response.PShopCommendBean;
-import com.sence.bean.response.PShopDetailsBean;
-import com.sence.bean.response.PUserBean;
-import com.sence.bean.response.PUserDetailBean;
-import com.sence.bean.response.PUserInfoBean;
-import com.sence.bean.response.PUserVipBean;
-import com.sence.bean.response.PVerifyCodeBean;
+import com.sence.bean.response.*;
 
 import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
+import retrofit2.Retrofit;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -103,10 +80,6 @@ public interface HttpService {
     Observable<BaseResponseBean<String>> UserFocusCancel(@FieldMap Map<String, Object> map);//取消关注
 
     @FormUrlEncoded
-    @POST(Urls.USER_FOCUS)
-    Observable<BaseResponseBean<String>> UserFocus(@FieldMap Map<String, Object> map);//关注
-
-    @FormUrlEncoded
     @POST(Urls.USER_LOGIN)
     Observable<BaseResponseBean<PUserBean>> Login(@FieldMap Map<String, Object> map);//登录
 
@@ -148,7 +121,7 @@ public interface HttpService {
 
     @FormUrlEncoded
     @POST(Urls.USER_CARD_LIST)
-    Observable<BaseResponseBean<String>> BankCardList(@FieldMap Map<String, Object> map);//银行卡列表
+    Observable<BaseResponseBean<List<PBankCardBean>>> BankCardList(@FieldMap Map<String, Object> map);//银行卡列表
 
     @FormUrlEncoded
     @POST(Urls.USER_CARD_DELETE)
@@ -205,7 +178,7 @@ public interface HttpService {
 
     @FormUrlEncoded
     @POST(Urls.GOOD_KIND)
-    Observable<BaseResponseBean<String>> GoodKind(@FieldMap Map<String, Object> map);//商品分类列表
+    Observable<BaseResponseBean<List<PKindBean>>> GoodKind(@FieldMap Map<String, Object> map);//商品分类列表
 
 
     @FormUrlEncoded
@@ -216,6 +189,8 @@ public interface HttpService {
     @POST(Urls.ORDER_DELETE)
     Observable<BaseResponseBean<String>> OrderDelete(@FieldMap Map<String, Object> map);//分类下的商品列表
 
+    @FormUrlEncoded
+    @POST(Urls.GOOD_LIST)
     Observable<BaseResponseBean<List<PGoodListBean>>> GoodList(@FieldMap Map<String, Object> map);//分类下的商品列表
 
     @FormUrlEncoded
@@ -236,11 +211,15 @@ public interface HttpService {
 
     @FormUrlEncoded
     @POST(Urls.USER_FANS_LIST)
-    Observable<BaseResponseBean<Object>> UserFansList(@FieldMap Map<String, Object> map);//我的粉絲列表
+    Observable<BaseResponseBean<List<PFansBean>>> UserFansList(@FieldMap Map<String, Object> map);//我的粉絲列表
 
     @FormUrlEncoded
-    @POST(Urls.USER_FOCUS_LISt)
+    @POST(Urls.USER_FOCUS_LIST)
     Observable<BaseResponseBean<Object>> UserFocusList(@FieldMap Map<String, Object> map);//我的关注列表
+
+    @FormUrlEncoded
+    @POST(Urls.USER_NOTE_LIST)
+    Observable<BaseResponseBean<List<PMainNoteBean>>> UserNoteList(@FieldMap Map<String, Object> map);//我的笔记列表
 
     @FormUrlEncoded
     @POST(Urls.MAIN_CONTENT_DETAIL)
@@ -257,4 +236,32 @@ public interface HttpService {
     @FormUrlEncoded
     @POST(Urls.USER_DETAIL)
     Observable<BaseResponseBean<List<PUserDetailBean>>> UserDetail(@FieldMap Map<String, Object> map);//我的信息
+
+    @FormUrlEncoded
+    @POST(Urls.SUPPORT_NOTE_RECOMMEND)
+    Observable<BaseResponseBean<Object>> SupportNoteRecommend(@FieldMap Map<String, Object> map);//笔记推荐点赞
+
+    @FormUrlEncoded
+    @POST(Urls.USER_FOCUS)
+    Observable<BaseResponseBean<Object>> UserFocus(@FieldMap Map<String, Object> map);//关注
+
+    @FormUrlEncoded
+    @POST(Urls.USER_CASH)
+    Observable<BaseResponseBean<Object>> UserCash(@FieldMap Map<String, Object> map);//余额提现
+
+    @FormUrlEncoded
+    @POST(Urls.ORDER_COMMENT)
+    Observable<BaseResponseBean<Object>> CommentOrder(@FieldMap Map<String, RequestBody> map);//添加订单评论
+
+    @FormUrlEncoded
+    @POST(Urls.USER_EDIT)
+    Observable<BaseResponseBean<Object>> UserEdit(@FieldMap Map<String, RequestBody> map);//添加订单评论
+
+    @FormUrlEncoded
+    @POST(Urls.USER_GOOD_LIST)
+    Observable<BaseResponseBean<List<PGoodBean>>> UserGoodList(@FieldMap Map<String, RequestBody> map);//添加订单评论
+
+    @FormUrlEncoded
+    @POST(Urls.USER_SERVE_LIST)
+    Observable<BaseResponseBean<List<PServeBean>>> UserServeList(@FieldMap Map<String, RequestBody> map);//添加订单评论
 }

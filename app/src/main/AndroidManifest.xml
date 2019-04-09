@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.sence"
-          xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.sence">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
@@ -13,15 +13,20 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.CAMERA"/>
 
+
     <application
-        android:name=".base.BaseApp"
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/AppThemeNoActionBar"
-        tools:replace="android:theme">
+            android:name=".base.BaseApp"
+            android:allowBackup="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:supportsRtl="true"
+            android:theme="@style/AppThemeNoActionBar"
+            tools:replace="android:theme">
+        <activity android:name=".activity.ServeListActivity">
+        </activity>
+        <activity android:name=".activity.GoodListActivity">
+        </activity>
         <activity android:name=".activity.AboutActivity">
         </activity>
         <activity android:name=".activity.TestBaseActivity">
@@ -60,8 +65,6 @@
         </activity>
         <activity android:name=".activity.MemberActivity">
         </activity>
-        <activity android:name=".activity.CommentReleaseActivity">
-        </activity>
         <activity android:name=".VerifyActivity">
         </activity>
         <activity android:name=".BindPhoneActivity">
@@ -71,9 +74,14 @@
         <activity android:name=".activity.ContentDetailActivity"/>
         <activity android:name=".activity.NoteDetailActivity"/>
         <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:launchMode="singleTask">
+                android:name=".MainActivity"
+                android:label="@string/app_name"
+                android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity android:name=".activity.EnjoyVipActivity"/>
         <activity android:name=".activity.MyOrderActivity"/>
