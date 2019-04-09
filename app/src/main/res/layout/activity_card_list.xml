@@ -6,25 +6,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:fitsSystemWindows="true"
-        tools:context=".activity.CardActivity">
+        tools:context=".activity.CardListActivity">
 
     <com.sence.view.PubTitle
             app:is_back="true"
+            app:tool_cover_title="选择银行"
             app:tool_cover_background="@color/white"
-            app:tool_cover_title="银行卡"
             android:layout_width="match_parent"
             android:layout_height="50dp"/>
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycle_view"
             android:layout_width="match_parent"
-            android:id="@+id/smart_refresh"
-            app:srlEnableLoadMoreWhenContentNotFull="false"
-            android:layout_height="match_parent">
-
-        <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycle_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+            android:layout_height="match_parent"/>
 </LinearLayout>

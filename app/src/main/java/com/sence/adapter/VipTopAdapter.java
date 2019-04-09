@@ -7,6 +7,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.sence.R;
 import com.sence.bean.response.PUserVipBean;
 import com.sence.net.Urls;
+import com.sence.utils.GlideUtils;
 
 /**
  * Created by zwy on 2019/3/14.
@@ -20,9 +21,9 @@ public class VipTopAdapter extends BaseQuickAdapter<PUserVipBean.GoodsBean, Base
 
     @Override
     protected void convert(BaseViewHolder helper, PUserVipBean.GoodsBean item) {
-        Glide.with(helper.itemView.getContext()).load(Urls.base_url+item.getImg()).into((ImageView) helper.getView(R.id.item_img));
-        helper.setText(R.id.item_name,item.getName());
-        helper.setText(R.id.item_now_price,"￥"+item.getPrice());
-        helper.setText(R.id.item_pre_price,"省￥"+item.getSaveMoney());
+        GlideUtils.getInstance().loadNormal(item.getImg(), (ImageView) helper.getView(R.id.item_img));
+        helper.setText(R.id.item_name, item.getName());
+        helper.setText(R.id.item_now_price, "￥" + item.getPrice());
+        helper.setText(R.id.item_pre_price, "省￥" + item.getSaveMoney());
     }
 }

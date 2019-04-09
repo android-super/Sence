@@ -14,6 +14,7 @@ import com.sence.R;
 import com.sence.activity.ContentDetailActivity;
 import com.sence.bean.response.PMainRecommendBean;
 import com.sence.net.Urls;
+import com.sence.utils.GlideUtils;
 import com.sence.view.NiceImageView;
 
 import androidx.core.app.ActivityOptionsCompat;
@@ -32,8 +33,8 @@ public class RecommendAdapter extends BaseQuickAdapter<PMainRecommendBean, BaseV
     protected void convert(BaseViewHolder helper, final PMainRecommendBean item) {
         final NiceImageView item_img = helper.getView(R.id.item_img);
         final Activity activity = (Activity) helper.itemView.getContext();
-        Glide.with(activity).load(Urls.base_url + item.getAlbum_url()).into(item_img);
-        Glide.with(activity).load(Urls.base_url + item.getAvatar()).into((ImageView) helper.getView(R.id.item_head));
+        GlideUtils.getInstance().loadHead(item.getAvatar(), (ImageView) helper.getView(R.id.item_head));
+        GlideUtils.getInstance().loadNormal(item.getAlbum_url(), item_img);
         helper.setText(R.id.item_title, item.getTitle());
         helper.setText(R.id.item_content, item.getContent());
         helper.setText(R.id.item_name, item.getNick_name());
@@ -56,8 +57,8 @@ public class RecommendAdapter extends BaseQuickAdapter<PMainRecommendBean, BaseV
             public void onClick(View v) {
                 ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(activity,
                         item_img, activity.getResources().getString(R.string.translation_recommend_name));
-                Intent intent = new Intent(activity,ContentDetailActivity.class);
-                intent.putExtra("nid",item.getNid());
+                Intent intent = new Intent(activity, ContentDetailActivity.class);
+                intent.putExtra("nid", item.getNid());
                 activity.startActivity(intent, activityOptions.toBundle());
             }
         });

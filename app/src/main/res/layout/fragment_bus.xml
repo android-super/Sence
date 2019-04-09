@@ -75,6 +75,11 @@
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="55dp">
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@drawable/shape_bottom_shader"
+                />
 
         <TextView
                 android:id="@+id/bus_all_select"

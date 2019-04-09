@@ -121,11 +121,19 @@ public interface HttpService {
 
     @FormUrlEncoded
     @POST(Urls.USER_CARD_LIST)
-    Observable<BaseResponseBean<List<PBankCardBean>>> BankCardList(@FieldMap Map<String, Object> map);//银行卡列表
+    Observable<BaseResponseBean<List<PBankCardBean>>> BankCardList(@FieldMap Map<String, Object> map);//我的银行卡列表
 
     @FormUrlEncoded
     @POST(Urls.USER_CARD_DELETE)
     Observable<BaseResponseBean<String>> BankCardDelete(@FieldMap Map<String, Object> map);//删除银行卡
+
+    @FormUrlEncoded
+    @POST(Urls.USER_BANK_CARD_LIST)
+    Observable<BaseResponseBean<List<PBankCardBean>>> BankList(@FieldMap Map<String, Object> map);//银行卡列表
+
+    @FormUrlEncoded
+    @POST(Urls.USER_AUTH)
+    Observable<BaseResponseBean<Object>> BankCardAdd(@FieldMap Map<String, Object> map);//银行卡列表
 
     @FormUrlEncoded
     @POST(Urls.COMMENT_LIST)

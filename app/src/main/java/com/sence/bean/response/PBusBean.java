@@ -1,5 +1,6 @@
 package com.sence.bean.response;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -7,7 +8,7 @@ import java.util.List;
  * package_name is com.sence.bean.response
  * 描述:SenceGit
  */
-public class PBusBean {
+public class PBusBean implements Serializable {
 
     /**
      * cart : [{"shopname":"hhhh","active":"1","favourable":"4","postage":"6","express":"1","goods":[{"num":"2",
@@ -44,7 +45,7 @@ public class PBusBean {
         this.cart = cart;
     }
 
-    public static class CartBean {
+    public static class CartBean implements Serializable {
         /**
          * shopname : hhhh
          * active : 1
@@ -59,6 +60,48 @@ public class PBusBean {
         private String favourable;
         private String postage;
         private String express;
+
+        public String getAll_price() {
+            return all_price;
+        }
+
+        public void setAll_price(String all_price) {
+            this.all_price = all_price;
+        }
+
+        public String getAll_postage() {
+            return all_postage;
+        }
+
+        public void setAll_postage(String all_postage) {
+            this.all_postage = all_postage;
+        }
+
+        private String all_price;//手动添加值总价
+        private String all_postage;//手动添加值总邮费
+        private String all_num;//手动添加值几件商品
+
+        public String getAll_money() {
+            return all_money;
+        }
+
+        public void setAll_money(String all_money) {
+            this.all_money = all_money;
+        }
+
+        private String all_money;//手动添加值总价（包含邮费）
+
+        public String getAll_num() {
+            return all_num;
+        }
+
+        public void setAll_num(String all_num) {
+            this.all_num = all_num;
+        }
+
+
+
+
         private List<GoodsBean> goods;
 
         public String getShopname() {
@@ -117,7 +160,7 @@ public class PBusBean {
             isSelect = select;
         }
 
-        public static class GoodsBean {
+        public static class GoodsBean implements Serializable {
             /**
              * num : 2
              * name : 一号商品

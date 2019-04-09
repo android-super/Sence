@@ -8,6 +8,7 @@ import com.sence.R;
 import com.sence.bean.response.PUserBean;
 import com.sence.bean.response.PUserVipBean;
 import com.sence.net.Urls;
+import com.sence.utils.GlideUtils;
 
 /**
  * Created by zwy on 2019/3/14.
@@ -21,7 +22,7 @@ public class VipBottomAdapter extends BaseQuickAdapter<PUserVipBean.ServiceBean,
 
     @Override
     protected void convert(BaseViewHolder helper, PUserVipBean.ServiceBean item) {
-        Glide.with(helper.itemView.getContext()).load(Urls.base_url + item.getImg()).into((ImageView) helper.getView(R.id.item_img));
+        GlideUtils.getInstance().loadNormal(item.getImg(), (ImageView) helper.getView(R.id.item_img));
         helper.setText(R.id.item_name, item.getTitle());
         helper.setText(R.id.item_content, item.getContent());
     }

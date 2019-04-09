@@ -6,26 +6,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="#f6f6f6"
         android:fitsSystemWindows="true"
-        tools:context=".activity.CashActivity">
+        tools:context=".activity.CardAddActivity">
 
     <com.sence.view.PubTitle
             app:is_back="true"
-            app:tool_cover_background="@color/white"
-            app:tool_cover_title="提现"
+            app:tool_cover_title="添加银行卡"
             android:layout_width="match_parent"
             android:layout_height="50dp"/>
 
-    <TextView
-            android:layout_width="match_parent"
-            android:layout_height="28dp"
-            android:background="#fdf0d8"
-            android:paddingLeft="18dp"
-            android:text="可提现余额为0.00元"
-            android:textSize="13sp"
-            android:textColor="#fea424"
-            android:gravity="center_vertical"/>
-
     <RelativeLayout
             android:background="@color/white"
             android:paddingLeft="18dp"
@@ -34,24 +24,24 @@
 
         <TextView
                 android:layout_centerVertical="true"
-                android:text="金额"
+                android:text="持卡人姓名"
                 android:textColor="#333333"
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
         <EditText
-                android:id="@+id/cash_name"
+                android:id="@+id/card_name"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:minWidth="150dp"
                 android:layout_marginRight="15dp"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textColor="#333333"
                 android:background="@android:color/transparent"
                 android:layout_alignParentRight="true"
                 android:gravity="center_vertical|right"
-                android:hint="提现金额不得小于100元"/>
+                android:hint="请输入持卡人姓名"/>
 
         <View
                 android:layout_width="match_parent"
@@ -68,59 +58,24 @@
 
         <TextView
                 android:layout_centerVertical="true"
-                android:text="手续费"
+                android:text="所属银行"
                 android:textColor="#333333"
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
         <TextView
-                android:id="@+id/cash_price"
+                android:id="@+id/card_bank"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:minWidth="150dp"
                 android:layout_marginRight="15dp"
-                android:textSize="14sp"
-                android:textColor="#333333"
-                android:layout_alignParentRight="true"
-                android:gravity="center_vertical|right"
-                android:text="0.00元"/>
-
-        <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="#f6f6f6"
-                android:layout_alignParentBottom="true"/>
-    </RelativeLayout>
-
-    <RelativeLayout
-            android:background="@color/white"
-            android:paddingLeft="18dp"
-            android:layout_width="match_parent"
-            android:layout_height="55dp">
-
-        <TextView
-                android:layout_centerVertical="true"
-                android:text="银行卡"
-                android:textColor="#333333"
                 android:textSize="16sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-        <TextView
-                android:id="@+id/cash_select"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:minWidth="150dp"
-                android:layout_marginRight="15dp"
-                android:textSize="14sp"
-                android:textColor="#333333"
-                android:background="@android:color/transparent"
                 android:layout_alignParentRight="true"
-                android:drawableRight="@drawable/card_zhankai"
                 android:drawablePadding="8dp"
+                android:drawableRight="@drawable/card_zhankai"
                 android:gravity="center_vertical|right"
-                android:hint="请添加银行卡"/>
+                android:hint="请选择银行"/>
 
         <View
                 android:layout_width="match_parent"
@@ -137,41 +92,90 @@
 
         <TextView
                 android:layout_centerVertical="true"
-                android:text="验证码"
+                android:text="手机号码"
                 android:textColor="#333333"
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
-        <TextView
-                android:id="@+id/cash_verify"
+        <EditText
+                android:id="@+id/card_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:minWidth="150dp"
+                android:inputType="phone"
+                android:maxLength="11"
                 android:layout_marginRight="15dp"
-                android:textSize="14sp"
-                android:textColor="@color/theme_green"
+                android:textSize="16sp"
                 android:background="@android:color/transparent"
                 android:layout_alignParentRight="true"
                 android:gravity="center_vertical|right"
-                android:text="获取验证码"/>
+                android:hint="请输入持卡人绑定银行卡手机号"/>
+    </RelativeLayout>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            />
+
+    <RelativeLayout
+            android:background="@color/white"
+            android:paddingLeft="18dp"
+            android:layout_width="match_parent"
+            android:layout_height="55dp">
+
+        <TextView
+                android:layout_centerVertical="true"
+                android:text="银行卡号"
+                android:textColor="#333333"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
         <EditText
-                android:id="@+id/cash_verify_code"
-                android:layout_centerVertical="true"
+                android:id="@+id/card_number"
                 android:layout_width="wrap_content"
-                android:minWidth="100dp"
-                android:layout_marginLeft="100dp"
+                android:layout_height="match_parent"
+                android:minWidth="150dp"
+                android:layout_marginRight="15dp"
+                android:textSize="16sp"
                 android:background="@android:color/transparent"
-                android:gravity="center_vertical"
-                android:layout_height="match_parent"/>
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical|right"
+                android:hint="请输入本人银行卡号"/>
 
         <View
-                android:layout_width="1dp"
-                android:layout_height="20dp"
-                android:layout_marginRight="30dp"
-                android:background="#eeeeee"
-                android:layout_toLeftOf="@id/cash_verify"
-                android:layout_centerVertical="true"/>
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#f6f6f6"
+                android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:background="@color/white"
+            android:paddingLeft="18dp"
+            android:layout_width="match_parent"
+            android:layout_height="55dp">
+
+        <TextView
+                android:layout_centerVertical="true"
+                android:text="支行信息"
+                android:textColor="#333333"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <EditText
+                android:id="@+id/card_point"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:minWidth="150dp"
+                android:layout_marginRight="15dp"
+                android:textSize="16sp"
+                android:background="@android:color/transparent"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical|right"
+                android:hint="请输入银行卡开户网点信息"/>
 
         <View
                 android:layout_width="match_parent"
@@ -182,11 +186,11 @@
 
     <TextView
             android:textColor="#a8a8a8"
-            android:textSize="12sp"
+            android:textSize="10sp"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:text="注：每周三可发起提现，预计七个工作日内到账：平台暂不收取手续费"
+            android:text="未保证资金顺利到账，请认真填写开户行支行信息，如填写有误，会导致转账失败。（查询开户行支行信息，请咨询所属银行客服）"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
@@ -195,15 +199,15 @@
             android:layout_height="match_parent">
 
         <TextView
-                android:layout_alignParentBottom="true"
-                android:id="@+id/cash_commit"
+                android:id="@+id/card_commit"
                 android:text="确认"
+                android:layout_alignParentBottom="true"
                 android:background="@drawable/shape_round_theme_green"
                 android:textSize="18sp"
                 android:textColor="@color/white"
                 android:gravity="center"
-                android:layout_margin="15dp"
                 android:layout_width="match_parent"
+                android:layout_margin="15dp"
                 android:layout_height="45dp"/>
     </RelativeLayout>
 </LinearLayout>

@@ -15,6 +15,7 @@ import com.sence.R;
 import com.sence.activity.ContentDetailActivity;
 import com.sence.bean.response.PMainFocusBean;
 import com.sence.net.Urls;
+import com.sence.utils.GlideUtils;
 
 /**
  * Created by zwy on 2019/3/12.
@@ -30,9 +31,10 @@ public class MainFocusAdapter extends BaseQuickAdapter<PMainFocusBean, BaseViewH
     protected void convert(BaseViewHolder helper, final PMainFocusBean item) {
         final Activity activity = (Activity) helper.itemView.getContext();
         final ImageView item_img = helper.getView(R.id.item_img);
-        Glide.with(activity).load(Urls.base_url + item.getAlbum_url()).into((ImageView) helper.getView(R.id.item_img));
+        GlideUtils.getInstance().loadHead(item.getAvatar(), (ImageView) helper.getView(R.id.item_head));
+        GlideUtils.getInstance().loadNormal(item.getAlbum_url(),
+                (ImageView) helper.getView(R.id.item_img));
         helper.setText(R.id.item_describe, item.getContent());
-        Glide.with(activity).load(Urls.base_url + item.getAvatar()).into((ImageView) helper.getView(R.id.item_head));
         helper.setText(R.id.item_name, item.getNick_name());
         TextView item_support = helper.getView(R.id.item_support);
         item_support.setText(item.getPraise_count());
@@ -48,7 +50,7 @@ public class MainFocusAdapter extends BaseQuickAdapter<PMainFocusBean, BaseViewH
                 ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(activity,
                         item_img, activity.getResources().getString(R.string.translation_recommend_name));
                 Intent intent = new Intent(activity, ContentDetailActivity.class);
-                intent.putExtra("nid",item.getNid());
+                intent.putExtra("nid", item.getNid());
                 activity.startActivity(intent, activityOptions.toBundle());
             }
         });

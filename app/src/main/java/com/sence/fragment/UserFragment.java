@@ -25,7 +25,9 @@ import com.sence.bean.request.RUidBean;
 import com.sence.bean.response.PUserInfoBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
+import com.sence.net.Urls;
 import com.sence.net.manager.ApiCallBack;
+import com.sence.utils.GlideUtils;
 import com.sence.utils.LoginStatus;
 import com.sence.view.NiceImageView;
 
@@ -112,6 +114,9 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         if (o == null) {
             return;
         }
+
+        GlideUtils.getInstance().loadHead(LoginStatus.getAvatar(), user_head);
+
         if (o.getIs_kol().equals("1")) {
             user_vip_layout.setVisibility(View.VISIBLE);
         } else {

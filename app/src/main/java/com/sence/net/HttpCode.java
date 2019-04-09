@@ -50,7 +50,9 @@ public enum HttpCode {
     COMMENT_LIST,//评价列表
     SUPPORT_NOTE_RECOMMEND,//推荐 笔记点赞
     USER_FOCUS,//关注
-    BANK_CARD,//银行卡列表
+    BANK_CARD,//我的银行卡列表
+    BANK_LIST,//銀行卡列表
+    BANK_ADD,//添加银行卡
     USER_CASH,//提现
     COMMENT_ADD,//添加评论（订单）
     USER_EDIT,//用戶信息修改
