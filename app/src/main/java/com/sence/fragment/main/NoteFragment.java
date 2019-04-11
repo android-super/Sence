@@ -5,11 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+
 import com.blankj.utilcode.util.ConvertUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -22,7 +18,6 @@ import com.sence.adapter.NoteAdapter;
 import com.sence.bean.request.RNidBean;
 import com.sence.bean.request.RUidListBean;
 import com.sence.bean.response.PMainNoteBean;
-import com.sence.bean.response.PMainRecommendBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
@@ -30,6 +25,12 @@ import com.sence.utils.LoginStatus;
 import com.sence.view.GridSpacingItemDecoration;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * 笔记Fragment

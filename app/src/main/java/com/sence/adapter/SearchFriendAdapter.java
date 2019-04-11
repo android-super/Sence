@@ -10,16 +10,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.orhanobut.logger.Logger;
 import com.sence.R;
 import com.sence.bean.request.RCancelFocusBean;
 import com.sence.bean.response.PSearchBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
-import com.sence.net.Urls;
 import com.sence.net.manager.ApiCallBack;
+import com.sence.utils.GlideUtils;
 import com.sence.utils.LoginStatus;
 import com.sence.view.NiceImageView;
 
@@ -77,15 +75,11 @@ public class SearchFriendAdapter extends RecyclerView.Adapter<SearchFriendAdapte
                 }
             }
         });
-        RequestOptions options = new RequestOptions();
-        options.placeholder(R.drawable.hint_img);
-        Glide.with(context)
-                .load(Urls.base_url + list.get(position).getAvatar())
-                .into(holder.mImg);
+        GlideUtils.getInstance().loadHead( list.get(position).getAvatar(),holder.mImg);
     }
 
     private void focus(final int position) {
-        HttpManager.getInstance().PlayNetCode(HttpCode.USER_FOCUS, new RCancelFocusBean(LoginStatus.getUid(),list.get(position).getId())).request(new ApiCallBack<String>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.USER_FOCUS, new RCancelFocusBean(LoginStatus.getUid(),list.get(position).getId())).request(new ApiCallBack<Object>() {
             @Override
             public void onFinish() {
 
@@ -97,7 +91,7 @@ public class SearchFriendAdapter extends RecyclerView.Adapter<SearchFriendAdapte
             }
 
             @Override
-            public void onSuccess(String o, String msg) {
+            public void onSuccess(Object o, String msg) {
                 Logger.e("msg==========" + msg);
                 ToastUtils.showShort(msg);
                 list.get(position).setIsFollow("1");

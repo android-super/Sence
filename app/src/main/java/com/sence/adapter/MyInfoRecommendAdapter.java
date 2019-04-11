@@ -8,11 +8,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.sence.R;
 import com.sence.bean.response.PMyInfoBean;
-import com.sence.net.Urls;
+import com.sence.utils.GlideUtils;
 import com.sence.view.NiceImageView;
 
 import java.util.ArrayList;
@@ -42,7 +40,7 @@ public class MyInfoRecommendAdapter extends RecyclerView.Adapter<MyInfoRecommend
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyInfoRecommendAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyInfoRecommendAdapter.ViewHolder holder, final int position) {
         if(list.get(position).getIs_kol().equals("1")){
             holder.mTag.setVisibility(View.VISIBLE);
         }else{
@@ -53,14 +51,8 @@ public class MyInfoRecommendAdapter extends RecyclerView.Adapter<MyInfoRecommend
         holder.mContent.setText(list.get(position).getContent());
         holder.mComment.setText(list.get(position).getMessage_count());
         holder.mLike.setText(list.get(position).getPraise_count());
-        RequestOptions options = new RequestOptions();
-        options.placeholder(R.drawable.hint_img);
-        Glide.with(context)
-                .load(Urls.base_url + list.get(position).getAvatar())
-                .into(holder.mImageView);
-        Glide.with(context)
-                .load(Urls.base_url + list.get(position).getAlbum_url())
-                .into(holder.mImg);
+        GlideUtils.getInstance().loadHead( list.get(position).getAvatar(),holder.mImageView);
+        GlideUtils.getInstance().loadHead( list.get(position).getAlbum_url(),holder.mImg);
     }
 
     @Override

@@ -6,11 +6,9 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.orhanobut.logger.Logger;
 import com.sence.R;
 import com.sence.activity.OrderCommentActivity;
@@ -19,7 +17,6 @@ import com.sence.bean.request.ROrderDetailsBean;
 import com.sence.bean.response.PMyOrderBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
-import com.sence.net.Urls;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.LoginStatus;
 
@@ -27,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHolder> {
@@ -52,41 +50,64 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull MyOrderAdapter.ViewHolder holder, final int position) {
-        RequestOptions options = new RequestOptions();
-        options.placeholder(R.drawable.hint_img);
-        Glide.with(context).load(Urls.base_url + list.get(position).getGoods().getImg()).into(holder.mImageView);
-        holder.mName.setText(list.get(position).getGoods().getName());
-        holder.mTime.setText(list.get(position).getAddtime());
-        if (list.get(position).getGoods().getPrice().contains(".")) {
-            holder.mPprice.setText("￥" + list.get(position).getGoods().getPrice());
-            holder.mPrice.setText("￥" + Integer.parseInt(list.get(position).getGoods().getPrice()) * Integer.parseInt(list.get(position).getGoods().getNum()));
-        } else {
-            holder.mPprice.setText("￥" + list.get(position).getGoods().getPrice() + ".00");
-            holder.mPrice.setText("￥" + Integer.parseInt(list.get(position).getGoods().getPrice()) * Integer.parseInt(list.get(position).getGoods().getNum()) + ".00");
-        }
-        if (list.get(position).getStatusMsg().equals("等待支付")) {
+        if ("1".equals(list.get(position).getStatus())) {
             holder.mAlipay.setText("立即支付");
-        } else if (list.get(position).getStatusMsg().equals("等待发货")) {
-            holder.mAlipay.setText("提醒发货");
-        } else if (list.get(position).getStatusMsg().equals("等待收货")) {
+            holder.mState.setText("待支付");
+        } else if ("2".equals(list.get(position).getStatus())) {
+            holder.mCancel.setText("查看订单");
+            holder.mState.setText("待发货");
+            holder.mAlipay.setVisibility(View.GONE);
+        } else if ("3".equals(list.get(position).getStatus())) {
+            holder.mCancel.setText("查看订单");
+            holder.mState.setText("待收货");
             holder.mAlipay.setText("确认收货");
-        } else if (list.get(position).getStatusMsg().equals("等待评价")) {
+        } else if ("4".equals(list.get(position).getStatus())) {
             holder.mSevice.setVisibility(View.GONE);
             holder.mCancel.setText("查看订单");
-            holder.mAlipay.setText("评价");
+            holder.mAlipay.setText("写评价");
+            holder.mState.setText("待支付");
+        }else if ("5".equals(list.get(position).getStatus())) {
+            holder.mLinearLayout.setVisibility(View.GONE);
+            holder.mState.setText("用户关闭");
+        }else if ("6".equals(list.get(position).getStatus())) {
+            holder.mLinearLayout.setVisibility(View.GONE);
+            holder.mState.setText("后台关闭");
+        }else if ("7".equals(list.get(position).getStatus())) {
+            holder.mSevice.setVisibility(View.GONE);
+            holder.mAlipay.setVisibility(View.GONE);
+            holder.mState.setText("已完成");
+            holder.mCancel.setText("再次购买");
+        }else if ("8".equals(list.get(position).getStatus())) {
+            holder.mSevice.setVisibility(View.GONE);
+            holder.mAlipay.setVisibility(View.GONE);
+            holder.mState.setText("系统取消");
+            holder.mCancel.setText("删除订单");
         }
+        MyOrderItemAdapter myOrderItemAdapter = new MyOrderItemAdapter(context);
+        LinearLayoutManager linearLayout = new LinearLayoutManager(context);
+        linearLayout.setOrientation(RecyclerView.VERTICAL);
+        holder.mRecyclerView.setLayoutManager(linearLayout);
+        holder.mRecyclerView.setAdapter(myOrderItemAdapter);
+        myOrderItemAdapter.setList(list.get(position).getGoods());
+        holder.mTime.setText(list.get(position).getAddtime());
+        holder.mPrice.setText("￥"+list.get(position).getNeedpay());
+        holder.mNum.setText("共"+list.get(position).getNum()+"件");
 
-        holder.mPnum.setText("×" + list.get(position).getGoods().getNum());
-        holder.mNum.setText("共" + list.get(position).getGoods().getNum() + "件");
-        holder.mState.setText(list.get(position).getStatusMsg());
         holder.mCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (list.get(position).getStatusMsg().equals("等待评价")) {
+                if ("4".equals(list.get(position).getStatus())||"3".equals(list.get(position).getStatus())||"2".equals(list.get(position).getStatus())) {
                     Intent intent = new Intent(context, OrderDetailsActivity.class);
                     intent.putExtra("id", list.get(position).getId());
+                    intent.putExtra("type", list.get(position).getStatusMsg());
                     context.startActivity(intent);
-                } else {
+                } else if("5".equals(list.get(position).getStatus())){
+
+                }else if("6".equals(list.get(position).getStatus())){
+
+                }else if("7".equals(list.get(position).getStatus())){
+
+                }else{
                     View view = View.inflate(context, R.layout.alter_deleteorder, null);
                     final AlertDialog alertDialog = new AlertDialog.Builder(context).create();
                     alertDialog.setView(view);
@@ -128,9 +149,9 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
         holder.mAlipay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (list.get(position).getStatusMsg().equals("等待评价")) {
+                if ("4".equals(list.get(position).getStatus())) {
                     Intent intent = new Intent(context, OrderCommentActivity.class);
-                    intent.putExtra("url", list.get(position).getGoods().getImg());
+                    intent.putExtra("url", list.get(position).getGoods().get(0).getImg());
                     context.startActivity(intent);
                     return;
                 }else{
@@ -159,24 +180,21 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
-
-        private ImageView mImageView;
-        private TextView mName, mPrice, mPnum, mState, mNum, mSevice, mCancel, mAlipay, mTime, mPprice;
+        private LinearLayout mLinearLayout;
+        private RecyclerView mRecyclerView;
+        private TextView mState, mSevice, mCancel, mAlipay, mTime,mPrice,mNum;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mState = itemView.findViewById(R.id.tv_state_myorder);
             mTime = itemView.findViewById(R.id.tv_time_myorder);
-            mImageView = itemView.findViewById(R.id.iv_img_myorder);
-            mName = itemView.findViewById(R.id.tv_name_myorder);
-            mPprice = itemView.findViewById(R.id.tv_pprice_myorder);
-            mPnum = itemView.findViewById(R.id.tv_pnum_myorder);
-            mNum = itemView.findViewById(R.id.tv_num_myorder);
-            mPrice = itemView.findViewById(R.id.tv_price_myorder);
+            mRecyclerView = itemView.findViewById(R.id.recycle_myorderitem);
             mSevice = itemView.findViewById(R.id.tv_service_myorder);
             mCancel = itemView.findViewById(R.id.tv_cancel_myorder);
+            mPrice = itemView.findViewById(R.id.tv_price_myorder);
+            mNum = itemView.findViewById(R.id.tv_num_myorder);
             mAlipay = itemView.findViewById(R.id.tv_alipay_myorder);
+            mLinearLayout = itemView.findViewById(R.id.ll_fooler_myorder);
         }
     }
 

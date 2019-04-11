@@ -19,6 +19,10 @@ import com.sence.utils.StatusBarUtil;
 
 import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+
 /**
  * 用户明细
  */

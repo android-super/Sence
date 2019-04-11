@@ -13,6 +13,10 @@ android {
         renderscriptTargetApi 19
         renderscriptSupportModeEnabled true
         multiDexEnabled true
+        ndk {
+            //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+        }
     }
     buildTypes {
         release {
@@ -73,4 +77,12 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.1.0'
 
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //3D地图so及jar
+    implementation 'com.amap.api:3dmap:latest.integration'
+    //定位功能
+    implementation 'com.amap.api:location:latest.integration'
+    implementation 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.2.1'
+    //搜索功能
+    implementation 'com.amap.api:search:latest.integration'
 }

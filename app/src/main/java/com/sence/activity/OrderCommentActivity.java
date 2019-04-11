@@ -3,14 +3,16 @@ package com.sence.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -18,9 +20,16 @@ import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.sence.R;
 import com.sence.base.BaseActivity;
-import com.sence.net.Urls;
+import com.sence.bean.request.RServiceCommentBean;
+import com.sence.net.HttpCode;
+import com.sence.net.HttpManager;
+import com.sence.net.manager.ApiCallBack;
+import com.sence.utils.GlideUtils;
+import com.sence.utils.LoginStatus;
 import com.sence.utils.StatusBarUtil;
+import com.sence.view.PubTitle;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,11 +76,13 @@ public class OrderCommentActivity extends BaseActivity implements View.OnClickLi
     ImageView ivImgthressShopcomment;
     @BindView(R.id.iv_closethress_shopcomment)
     ImageView ivClosethressShopcomment;
+    @BindView(R.id.pt_tablayout)
+    PubTitle ptTablayout;
     private String url;
     private List<LocalMedia> selectList = new ArrayList<>();
     private BottomSheetDialog mBottomSheetDialog;
-    private String star;
-
+    private String star="1";
+    private static String path = "/sdcard/myHead/";// sd路径
     @Override
     public int onActLayout() {
         return R.layout.activity_shopcomment;
@@ -82,19 +93,7 @@ public class OrderCommentActivity extends BaseActivity implements View.OnClickLi
         StatusBarUtil.setLightMode(this);
         Intent intent = getIntent();
         url = intent.getStringExtra("url");
-
-        RequestOptions options = new RequestOptions();
-        options.placeholder(R.drawable.hint_img);
-        Glide.with(this)
-                .load(Urls.base_url + url)
-                .into(ivShopimgShopcomment);
-
-//        mSubmit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                initData();
-//            }
-//        });
+        GlideUtils.getInstance().loadHead( url, ivShopimgShopcomment);
         View view = View.inflate(this, R.layout.bottom_dialog, null);
         TextView mTakePhoto = (TextView) view.findViewById(R.id.tv_takephoto);
         TextView mPhoto = (TextView) view.findViewById(R.id.tv_photo);
@@ -104,6 +103,12 @@ public class OrderCommentActivity extends BaseActivity implements View.OnClickLi
         mCancel.setOnClickListener(this);
         mBottomSheetDialog = new BottomSheetDialog(this);
         mBottomSheetDialog.setContentView(view);
+        ptTablayout.setRightOnClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                doHttp();
+            }
+        });
     }
 
     public void initData() {
@@ -114,6 +119,36 @@ public class OrderCommentActivity extends BaseActivity implements View.OnClickLi
 //        }
     }
 
+    private void doHttp() {
+        File[] files = new File[selectList.size()];
+        for (int i = 0; i <selectList.size() ; i++) {
+            Log.i("aaa",selectList.get(i).getCompressPath());
+            files[i] = new File(selectList.get(i).getCompressPath());
+        }
+        String content = etContentShopcomment.getText().toString();
+        if (TextUtils.isEmpty(content)) {
+            ToastUtils.showShort("亲，你不准备说点什么吗？");
+            return;
+        }
+
+        HttpManager.getInstance().PlayNetCode(HttpCode.COMMENT_ADD, new RServiceCommentBean(LoginStatus.getUid(), star,
+                content,files)).request(new ApiCallBack() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(Object o, String msg) {
+            }
+        });
+
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -248,7 +283,7 @@ public class OrderCommentActivity extends BaseActivity implements View.OnClickLi
 
     }
 
-    private void doHttp() {
+//    private void doHttp() {
 //        HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_COMMENT, new ROrderDetailsBean(LoginStatus.getUid(),star,etContentShopcomment.getText().toString().trim(),)).request(new ApiCallBack<String>() {
 //            @Override
 //            public void onFinish() {
@@ -264,7 +299,7 @@ public class OrderCommentActivity extends BaseActivity implements View.OnClickLi
 //                Logger.e("msg==========" + msg);
 //            }
 //        });
-    }
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

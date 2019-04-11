@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="com.sence">
+<manifest package="com.sence"
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
@@ -11,7 +11,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA"/> <!-- 允许程序访问CellID或WiFi热点来获取粗略的位置 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
 
     <application
@@ -31,6 +32,8 @@
         </activity>
         <activity android:name=".activity.GoodListActivity">
         </activity>
+        <activity android:name=".activity.MapActivity">
+        </activity>
         <activity android:name=".activity.AboutActivity">
         </activity>
         <activity android:name=".activity.TestBaseActivity">
@@ -41,7 +44,7 @@
         </activity>
         <activity android:name=".activity.MyFansFocusNoteActivity">
         </activity>
-        <activity android:name=".activity.AccountDetailActivity">
+        <activity android:name=".activity.WebActivity">
         </activity>
         <activity android:name=".activity.CardActivity">
         </activity>
@@ -52,6 +55,8 @@
         <activity android:name=".activity.OpenVipActivity">
         </activity>
         <activity android:name=".activity.SettingActivity">
+        </activity>
+        <activity android:name=".activity.ShopConfirmOrderActivity">
         </activity>
         <activity android:name=".SplashActivity">
             <intent-filter>
@@ -78,14 +83,9 @@
         <activity android:name=".activity.ContentDetailActivity"/>
         <activity android:name=".activity.NoteDetailActivity"/>
         <activity
-                android:name=".MainActivity"
-                android:label="@string/app_name"
-                android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTask">
         </activity>
         <activity android:name=".activity.EnjoyVipActivity"/>
         <activity android:name=".activity.MyOrderActivity"/>
@@ -104,7 +104,10 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".activity.UserDetailActivity"/>
         <activity android:name=".activity.SearchActivity"/>
-        <activity android:name=".activity.AutonymActivity"></activity>
+        <activity android:name=".activity.AutonymActivity"/>
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="24d67e5e19653fb188f93826d5a50534"/>
     </application>
 
 </manifest>

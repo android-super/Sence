@@ -1,14 +1,45 @@
 package com.sence.net;
 
 import com.sence.bean.base.BaseResponseBean;
-import com.sence.bean.response.*;
+import com.sence.bean.response.PAccountBean;
+import com.sence.bean.response.PBankCardBean;
+import com.sence.bean.response.PBusBean;
+import com.sence.bean.response.PBusRecommendBean;
+import com.sence.bean.response.PCommentBean;
+import com.sence.bean.response.PConfirmOrderBean;
+import com.sence.bean.response.PContentDetailBean;
+import com.sence.bean.response.PEnjoyVipBean;
+import com.sence.bean.response.PFansBean;
+import com.sence.bean.response.PGoodBean;
+import com.sence.bean.response.PGoodListBean;
+import com.sence.bean.response.PKindBean;
+import com.sence.bean.response.PMainFocusBean;
+import com.sence.bean.response.PMainNoteBean;
+import com.sence.bean.response.PMainRecommendBean;
+import com.sence.bean.response.PManageAddressBean;
+import com.sence.bean.response.PMyInfoBean;
+import com.sence.bean.response.PMyInfoServiceBean;
+import com.sence.bean.response.PMyOrderBean;
+import com.sence.bean.response.PNoteDetailBean;
+import com.sence.bean.response.POrderDetailsBean;
+import com.sence.bean.response.PSearchBean;
+import com.sence.bean.response.PServeBean;
+import com.sence.bean.response.PServiceCommendBean;
+import com.sence.bean.response.PServiceeDetails;
+import com.sence.bean.response.PShopCommendBean;
+import com.sence.bean.response.PShopDetailsBean;
+import com.sence.bean.response.PTimeRemainingBean;
+import com.sence.bean.response.PUserBean;
+import com.sence.bean.response.PUserDetailBean;
+import com.sence.bean.response.PUserInfoBean;
+import com.sence.bean.response.PUserVipBean;
+import com.sence.bean.response.PVerifyCodeBean;
 
 import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
-import retrofit2.Retrofit;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -78,6 +109,10 @@ public interface HttpService {
     @FormUrlEncoded
     @POST(Urls.USER_FOCUS_CANCEL)
     Observable<BaseResponseBean<String>> UserFocusCancel(@FieldMap Map<String, Object> map);//取消关注
+
+    @FormUrlEncoded
+    @POST(Urls.USER_FOCUS)
+    Observable<BaseResponseBean<Object>> UserFocus(@FieldMap Map<String, Object> map);//关注
 
     @FormUrlEncoded
     @POST(Urls.USER_LOGIN)
@@ -250,13 +285,12 @@ public interface HttpService {
     Observable<BaseResponseBean<Object>> SupportNoteRecommend(@FieldMap Map<String, Object> map);//笔记推荐点赞
 
     @FormUrlEncoded
-    @POST(Urls.USER_FOCUS)
-    Observable<BaseResponseBean<Object>> UserFocus(@FieldMap Map<String, Object> map);//关注
-
-    @FormUrlEncoded
     @POST(Urls.USER_CASH)
     Observable<BaseResponseBean<Object>> UserCash(@FieldMap Map<String, Object> map);//余额提现
 
+    @FormUrlEncoded
+    @POST(Urls.ORDER_COMMIT)
+    Observable<BaseResponseBean<PConfirmOrderBean>> OrderCommit(@FieldMap Map<String, Object> map);//提交订单
     @FormUrlEncoded
     @POST(Urls.ORDER_COMMENT)
     Observable<BaseResponseBean<Object>> CommentOrder(@FieldMap Map<String, RequestBody> map);//添加订单评论
@@ -264,6 +298,10 @@ public interface HttpService {
     @FormUrlEncoded
     @POST(Urls.USER_EDIT)
     Observable<BaseResponseBean<Object>> UserEdit(@FieldMap Map<String, RequestBody> map);//添加订单评论
+
+    @FormUrlEncoded
+    @POST(Urls.TIME_REMAINING)
+    Observable<BaseResponseBean<PTimeRemainingBean>> Time_Remaining(@FieldMap Map<String, RequestBody> map);//订单剩余时间
 
     @FormUrlEncoded
     @POST(Urls.USER_GOOD_LIST)

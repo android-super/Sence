@@ -3,6 +3,7 @@ package com.sence.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -17,8 +18,15 @@ import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.sence.R;
 import com.sence.base.BaseActivity;
+import com.sence.bean.request.RServiceCommentBean;
+import com.sence.net.HttpCode;
+import com.sence.net.HttpManager;
+import com.sence.net.manager.ApiCallBack;
+import com.sence.utils.LoginStatus;
 import com.sence.utils.StatusBarUtil;
+import com.sence.view.PubTitle;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,9 +62,12 @@ public class ServiceCommentActivity extends BaseActivity implements View.OnClick
     ImageView ivImgthressServicecomment;
     @BindView(R.id.iv_closethress_servicecomment)
     ImageView ivClosethressServicecomment;
+    @BindView(R.id.pt_tablayout)
+    PubTitle ptTablayout;
     private BottomSheetDialog mBottomSheetDialog;
     private List<LocalMedia> selectList = new ArrayList<>();
     private String star;
+    private static String path = "/sdcard/myHead/";// sd路径
 
     @Override
     public int onActLayout() {
@@ -75,37 +86,47 @@ public class ServiceCommentActivity extends BaseActivity implements View.OnClick
         mCancel.setOnClickListener(this);
         mBottomSheetDialog = new BottomSheetDialog(this);
         mBottomSheetDialog.setContentView(view);
+        ptTablayout.setRightOnClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     public void initData() {
     }
 
     private void doHttp() {
+        File[] files = new File[selectList.size()];
+        for (int i = 0; i <selectList.size() ; i++) {
+            Log.i("aaa",selectList.get(i).getPath());
+            files[i] = new File(selectList.get(i).getPath());
+        }
         String content = etContentServicecomment.getText().toString();
         if (TextUtils.isEmpty(content)) {
             ToastUtils.showShort("亲，你不准备说点什么吗？");
             return;
         }
-//        HttpManager.getInstance().PlayNetCode(HttpCode.COMMENT_ADD, new RCommentBean(LoginStatus.getUid(), star,
-//                content)).request(new ApiCallBack() {
-//            @Override
-//            public void onFinish() {
-//
-//            }
-//
-//            @Override
-//            public void Message(int code, String message) {
-//
-//            }
-//
-//            @Override
-//            public void onSuccess(Object o, String msg) {
-//
-//            }
-//        });
+
+        HttpManager.getInstance().PlayNetCode(HttpCode.COMMENT_ADD, new RServiceCommentBean(LoginStatus.getUid(), star,
+                content,files)).request(new ApiCallBack() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(Object o, String msg) {
+            }
+        });
 
     }
-
     private void imgAss() {
         if (selectList.size() == 0) {
             ivImgoneServicecomment.setImageResource(R.drawable.comment_tianjia);

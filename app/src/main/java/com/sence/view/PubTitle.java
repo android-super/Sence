@@ -120,7 +120,12 @@ public class PubTitle extends Toolbar {
         parent.addView(right_img);
 
     }
-
+    public void setRightImg(int img){
+        if(right_img!=null) {
+            right_img.setImageResource(img);
+            invalidate();
+        }
+    }
 
     private void addBack(RelativeLayout parent) {
         back_img = new ImageView(context);

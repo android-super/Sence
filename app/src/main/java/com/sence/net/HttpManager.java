@@ -96,6 +96,9 @@ public class HttpManager<P> {
             case ORDER_DETAIL:
                 observable = httpService.OrderDetail(requestBean.getMap());
                 break;
+            case TIME_REMAINING:
+                observable = httpService.Time_Remaining(requestBean.getMap());
+                break;
             case USER_ENJOY_VIP:
                 observable = httpService.EnjoyVip(requestBean.getMap());
                 break;
@@ -180,14 +183,11 @@ public class HttpManager<P> {
             case SUPPORT_NOTE_RECOMMEND:
                 observable = httpService.SupportNoteRecommend(requestBean.getMap());
                 break;
-            case USER_FOCUS:
-                observable = httpService.UserFocus(requestBean.getMap());
+            case USER_CASH:
+                observable = httpService.UserCash(requestBean.getMap());
                 break;
             case BANK_CARD:
                 observable = httpService.BankCardList(requestBean.getMap());
-                break;
-            case USER_CASH:
-                observable = httpService.UserCash(requestBean.getMap());
                 break;
             case USER_GOOD_LIST:
                 observable = httpService.UserGoodList(requestBean.getMap());
@@ -198,9 +198,13 @@ public class HttpManager<P> {
             case BANK_LIST:
                 observable = httpService.BankList(requestBean.getMap());
                 break;
+            case ORDER_COMMIT:
+                observable = httpService.OrderCommit(requestBean.getMap());
+                break;
             case BANK_ADD:
                 observable = httpService.BankCardAdd(requestBean.getMap());
                 break;
+
 
         }
         observable = observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());

@@ -7,11 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.sence.R;
 import com.sence.bean.response.PServiceCommendBean;
-import com.sence.net.Urls;
+import com.sence.utils.GlideUtils;
 import com.sence.view.NiceImageView;
 
 import java.util.ArrayList;
@@ -47,14 +45,10 @@ public class ServiceDetailsAdapter extends RecyclerView.Adapter<ServiceDetailsAd
         holder.mContent.setText(list.get(position).getContent());
         holder.mName.setText(list.get(position).getUsername());
         holder.mTime.setText(list.get(position).getTime());
-        RequestOptions options = new RequestOptions();
-        options.placeholder(R.drawable.hint_img);
-        Glide.with(context)
-                .load(Urls.base_url + list.get(position).getAvatar())
-                .into(holder.mImageView);
+        GlideUtils.getInstance().loadHead(  list.get(position).getAvatar(),holder.mImageView);
         ServiceDetailsImgAdapter mServiceDetailsImgAdapter = new ServiceDetailsImgAdapter(context);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(context,3);
-        gridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
+        gridLayoutManager.setOrientation(RecyclerView.VERTICAL);
         holder.mRecyclerView.setLayoutManager(gridLayoutManager);
         holder.mRecyclerView.setAdapter(mServiceDetailsImgAdapter);
         int i = Integer.parseInt(list.get(position).getStar());

@@ -1,26 +1,38 @@
 package com.sence.bean.response;
 
+import java.util.List;
+
 public class PServiceeDetails {
 
     /**
+     * isEvaluate : 1
      * id : 1
      * tag : 专业洗车券
-     * img :
+     * imgs : ["/Public/Uploads/see_shop/4/5bfe2d5ed0b1f.jpg","/Public/Uploads/see_shop/4/5bfe2d5ed0f34.jpg","/Public/Uploads/see_shop/4/5bfe2d5ed12aa.jpg","/Public/Uploads/see_shop/4/5bfe2d5ed1548.jpg"]
      * sid : 1
      * position :
-     * type : 1
+     * is_free : 0
      * username : hhhh
      * avatar : /Public/Home/img/default_avatar.png
      */
 
+    private String isEvaluate;
     private String id;
     private String tag;
-    private String img;
     private String sid;
     private String position;
-    private String type;
+    private String is_free;
     private String username;
     private String avatar;
+    private List<String> imgs;
+
+    public String getIsEvaluate() {
+        return isEvaluate;
+    }
+
+    public void setIsEvaluate(String isEvaluate) {
+        this.isEvaluate = isEvaluate;
+    }
 
     public String getId() {
         return id;
@@ -36,14 +48,6 @@ public class PServiceeDetails {
 
     public void setTag(String tag) {
         this.tag = tag;
-    }
-
-    public String getImg() {
-        return img;
-    }
-
-    public void setImg(String img) {
-        this.img = img;
     }
 
     public String getSid() {
@@ -62,12 +66,12 @@ public class PServiceeDetails {
         this.position = position;
     }
 
-    public String getType() {
-        return type;
+    public String getIs_free() {
+        return is_free;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setIs_free(String is_free) {
+        this.is_free = is_free;
     }
 
     public String getUsername() {
@@ -84,5 +88,13 @@ public class PServiceeDetails {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public List<String> getImgs() {
+        return imgs;
+    }
+
+    public void setImgs(List<String> imgs) {
+        this.imgs = imgs;
     }
 }

@@ -11,7 +11,7 @@ public class PMyOrderBean {
      * waitSend : 0
      * waitConfirm : 0
      * waitEvlua : 0
-     * list : [{"statusMsg":"等待支付","id":"2","addtime":"2019-03-18 17:28:46","needpay":"8","goods":{"gid":"1","price":"4","num":"2","name":"一号商品","img":""},"custom":{"nick_name":"hhhh","avatar":"","id":"1","name":"hhhh"}},{"id":"1","addtime":"2019-03-18 17:28:46","needpay":"12","goods":{"gid":"2","price":"4","num":"3","name":"2号商品","img":""},"custom":{"nick_name":"hhhh","avatar":"","id":"1","name":"hhhh"}}]
+     * list : [{"status":"2","statusMsg":"等待支付","id":"2","addtime":"2019-03-18 17:28:46","needpay":"8","num":"4","goods":[{"gid":"1","price":"4","num":"2","name":"一号商品","img":""}],"custom":{"nick_name":"hhhh","avatar":"","id":"1","name":"hhhh"}},{"id":"1","addtime":"2019-03-18 17:28:46","needpay":"12","goods":{"gid":"2","price":"4","num":"3","name":"2号商品","img":""},"custom":{"nick_name":"hhhh","avatar":"","id":"1","name":"hhhh"}}]
      */
 
     private String allNum;
@@ -71,20 +71,32 @@ public class PMyOrderBean {
 
     public static class ListBean {
         /**
+         * status : 2
          * statusMsg : 等待支付
          * id : 2
          * addtime : 2019-03-18 17:28:46
          * needpay : 8
-         * goods : {"gid":"1","price":"4","num":"2","name":"一号商品","img":""}
+         * num : 4
+         * goods : [{"gid":"1","price":"4","num":"2","name":"一号商品","img":""}]
          * custom : {"nick_name":"hhhh","avatar":"","id":"1","name":"hhhh"}
          */
 
+        private String status;
         private String statusMsg;
         private String id;
         private String addtime;
         private String needpay;
-        private GoodsBean goods;
+        private String num;
         private CustomBean custom;
+        private List<GoodsBean> goods;
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
+        }
 
         public String getStatusMsg() {
             return statusMsg;
@@ -118,12 +130,12 @@ public class PMyOrderBean {
             this.needpay = needpay;
         }
 
-        public GoodsBean getGoods() {
-            return goods;
+        public String getNum() {
+            return num;
         }
 
-        public void setGoods(GoodsBean goods) {
-            this.goods = goods;
+        public void setNum(String num) {
+            this.num = num;
         }
 
         public CustomBean getCustom() {
@@ -132,6 +144,60 @@ public class PMyOrderBean {
 
         public void setCustom(CustomBean custom) {
             this.custom = custom;
+        }
+
+        public List<GoodsBean> getGoods() {
+            return goods;
+        }
+
+        public void setGoods(List<GoodsBean> goods) {
+            this.goods = goods;
+        }
+
+        public static class CustomBean {
+            /**
+             * nick_name : hhhh
+             * avatar :
+             * id : 1
+             * name : hhhh
+             */
+
+            private String nick_name;
+            private String avatar;
+            private String id;
+            private String name;
+
+            public String getNick_name() {
+                return nick_name;
+            }
+
+            public void setNick_name(String nick_name) {
+                this.nick_name = nick_name;
+            }
+
+            public String getAvatar() {
+                return avatar;
+            }
+
+            public void setAvatar(String avatar) {
+                this.avatar = avatar;
+            }
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
         }
 
         public static class GoodsBean {
@@ -187,52 +253,6 @@ public class PMyOrderBean {
 
             public void setImg(String img) {
                 this.img = img;
-            }
-        }
-
-        public static class CustomBean {
-            /**
-             * nick_name : hhhh
-             * avatar :
-             * id : 1
-             * name : hhhh
-             */
-
-            private String nick_name;
-            private String avatar;
-            private String id;
-            private String name;
-
-            public String getNick_name() {
-                return nick_name;
-            }
-
-            public void setNick_name(String nick_name) {
-                this.nick_name = nick_name;
-            }
-
-            public String getAvatar() {
-                return avatar;
-            }
-
-            public void setAvatar(String avatar) {
-                this.avatar = avatar;
-            }
-
-            public String getId() {
-                return id;
-            }
-
-            public void setId(String id) {
-                this.id = id;
-            }
-
-            public String getName() {
-                return name;
-            }
-
-            public void setName(String name) {
-                this.name = name;
             }
         }
     }

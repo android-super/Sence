@@ -1,8 +1,10 @@
 package com.sence.bean.request;
 
+import com.sence.bean.base.BaseRequestBean;
+
 import java.io.File;
 
-public class RServiceCommentBean {
+public class RServiceCommentBean extends BaseRequestBean {
     private String uid;
     private String star;
     private String content;

@@ -178,7 +178,6 @@
 
 
                 </RelativeLayout>
-
                 <RelativeLayout
                     android:id="@+id/rl_shop_myinfo"
                     android:layout_width="wrap_content"

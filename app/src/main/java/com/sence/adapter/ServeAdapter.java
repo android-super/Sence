@@ -1,12 +1,12 @@
 package com.sence.adapter;
 
 import android.widget.ImageView;
-import com.bumptech.glide.Glide;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sence.R;
 import com.sence.bean.response.PServeBean;
-import com.sence.net.Urls;
+import com.sence.utils.GlideUtils;
 
 /**
  * Created by zwy on 2019/4/8.
@@ -20,7 +20,7 @@ public class ServeAdapter extends BaseQuickAdapter<PServeBean, BaseViewHolder> {
 
     @Override
     protected void convert(BaseViewHolder helper, PServeBean item) {
-        Glide.with(helper.itemView.getContext()).load(Urls.base_url + item.getImg()).into((ImageView) helper.getView(R.id.item_img));
+        GlideUtils.getInstance().loadHead( item.getImg(),(ImageView) helper.getView(R.id.item_img));
         helper.setText(R.id.item_name, item.getTitle());
         helper.setText(R.id.item_content, item.getContent());
     }

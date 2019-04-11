@@ -62,9 +62,10 @@ public class Urls {
     //商品
     public static final String ORDER_COMMENT_SUPPORT = "/index.php/Api/Orders/praise";//订单评论点赞
     public static final String ORDER_CANCEL = "/index.php/Api/Orders/cancelOrder";//订单取消
+    public static final String TIME_REMAINING = "/index.php/Api/Orders/getOrderTime";//订单剩余时间
     public static final String ORDER_COMMENT_LIST = "/index.php/Api/Goods/getGoodsCommentList";//商品评价列表
     public static final String ORDER_NOTE_GOODS = "/index.php/Api/Goods/getNotesGoods";//笔记立即购买 所有商品数据
-    public static final String ORDER_DETAIL = "/index.php/Api/Goods/getOrderDetail";//订单详情
+    public static final String ORDER_DETAIL = "/index.php/Api/Orders/getOrderDetail";//订单详情
     public static final String BUS_RECOMMEND = "/index.php/Api/Goods/getCommendGoods";//购物车页面推荐商品数据
     public static final String BUS_LIST = "/index.php/Api/Goods/getCartList";//购物车列表
     public static final String ORDER_PAY = "/index.php/Api/Orders/payOrder";//支付订单

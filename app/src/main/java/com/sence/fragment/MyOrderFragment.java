@@ -21,6 +21,7 @@ import com.sence.bean.response.PMyOrderBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
+import com.sence.utils.LoginStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,7 +111,7 @@ public class MyOrderFragment extends Fragment {
 
 
     private void loadData() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_LIST, new RMyOrderBean("1",page+"","10",status+"")).request(new ApiCallBack<PMyOrderBean>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_LIST, new RMyOrderBean(LoginStatus.getUid(),page+"","10",status+"")).request(new ApiCallBack<PMyOrderBean>() {
             @Override
             public void onFinish() {
                 mSmartRefreshLayout.finishRefresh();

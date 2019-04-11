@@ -1,16 +1,16 @@
 package com.sence.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.sence.R;
+import com.sence.activity.ServiceDetailsActivity;
 import com.sence.bean.response.PMyInfoServiceBean;
-import com.sence.net.Urls;
+import com.sence.utils.GlideUtils;
 import com.sence.view.NiceImageView;
 
 import java.util.ArrayList;
@@ -41,12 +41,8 @@ public class MyInfoServiceAdapter extends RecyclerView.Adapter<MyInfoServiceAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyInfoServiceAdapter.ViewHolder holder, int position) {
-        RequestOptions options = new RequestOptions();
-        options.placeholder(R.drawable.hint_img);
-        Glide.with(context)
-                .load(Urls.base_url + list.get(position).getImg())
-                .into(holder.mImageView);
+    public void onBindViewHolder(@NonNull MyInfoServiceAdapter.ViewHolder holder, final int position) {
+        GlideUtils.getInstance().loadHead( list.get(position).getImg(),holder.mImageView);
         if(list.get(position).getTag().size()==2){
             holder.mOlaber.setText(list.get(position).getTag().get(0));
             holder.mTlaber.setText(list.get(position).getTag().get(1));
@@ -62,6 +58,14 @@ public class MyInfoServiceAdapter extends RecyclerView.Adapter<MyInfoServiceAdap
         holder.mRecyclerView.setAdapter(enjoyVipImgAdapter);
         int num = Integer.parseInt(list.get(position).getStar());
         enjoyVipImgAdapter.setList(num,R.drawable.enjoyvip_xingxing);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ServiceDetailsActivity.class);
+                intent.putExtra("id",list.get(position).getId());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.sence.activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Handler;
@@ -10,7 +11,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
 import com.orhanobut.logger.Logger;
@@ -20,7 +20,6 @@ import com.sence.base.BaseActivity;
 import com.sence.bean.request.RMyInfoBean;
 import com.sence.bean.response.PMyInfoBean;
 import com.sence.fragment.MyInfoRecommendFragment;
-import com.sence.fragment.MyOrderFragment;
 import com.sence.fragment.main.NoteFragment;
 import com.sence.fragment.main.RecommendFragment;
 import com.sence.net.HttpCode;
@@ -28,6 +27,7 @@ import com.sence.net.HttpManager;
 import com.sence.net.Urls;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.FastBlurUtil;
+import com.sence.utils.GlideUtils;
 import com.sence.utils.NavigationBarUtil;
 import com.sence.utils.StatusBarUtil;
 import com.sence.view.NiceImageView;
@@ -52,6 +52,8 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     private MyInfoRecommendViewPagerAdatpter mMyInfoRecommendViewPagerAdatpter;
     private String[] list = {"推荐","笔记","共享"};
     private int scaleRatio;
+    private PMyInfoBean bean;
+
     @Override
     public int onActLayout() {
         return R.layout.activity_myinfo;
@@ -84,11 +86,27 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         mIsV = findViewById(R.id.iv_isv_myinfo);
         mBack = findViewById(R.id.iv_back_myinfo);
         mBack.setOnClickListener(this);
-
-        final Fragment[] fragmentList = {new RecommendFragment(), new NoteFragment(), new MyInfoRecommendFragment(), new MyOrderFragment(), new MyOrderFragment()};
+        findViewById(R.id.tv_deditor_myinfo).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MyInfoActivity.this, EditInfoActivity.class));
+            }
+        });
+        final RecommendFragment recommendFragment = new RecommendFragment();
+        final NoteFragment noteFragment = new NoteFragment();
+        MyInfoRecommendFragment myInfoRecommendFragment = new MyInfoRecommendFragment();
+        final Fragment[] fragmentList = {recommendFragment, noteFragment,myInfoRecommendFragment};
         mMyInfoRecommendViewPagerAdatpter = new MyInfoRecommendViewPagerAdatpter(getSupportFragmentManager(),this,fragmentList,list);
         mViewPager.setAdapter(mMyInfoRecommendViewPagerAdatpter);
         mTabLayoutButtom.setupWithViewPager(mViewPager);
+        myInfoRecommendFragment.result(new MyInfoRecommendFragment.DeleteServiceListener() {
+            @Override
+            public void delete() {
+                final Fragment[] fragments={recommendFragment, noteFragment};
+                String[] listTitle = {"推荐","笔记"};
+                mMyInfoRecommendViewPagerAdatpter.setList(fragments,listTitle);
+            }
+        });
         mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
@@ -101,6 +119,14 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                     mBack.setImageResource(R.drawable.myinfo_back);
                     mDeditor.setTextColor(Color.parseColor("#ffffff"));
                 }
+            }
+        });
+        findViewById(R.id.rl_shop_myinfo).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyInfoActivity.this, ShopDetailsActivity.class);
+                intent.putExtra("id",bean.getGoods_info().getId());
+                startActivity(intent);
             }
         });
     }
@@ -147,6 +173,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
             @Override
             public void onSuccess(PMyInfoBean o, String msg) {
                 Logger.e("msg==========" + msg);
+                bean = o;
                 mName.setText(o.getNick_name());
                 mAddress.setText(o.getDetails());
                 mFocusNum.setText(o.getFocus_num());
@@ -157,11 +184,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 }else {
                     mIsV.setVisibility(View.GONE);
                 }
-                RequestOptions options = new RequestOptions();
-                options.placeholder(R.drawable.hint_img);
-                Glide.with(MyInfoActivity.this)
-                        .load(Urls.base_url + o.getAvatar())
-                        .into(mImageView);
+                GlideUtils.getInstance().loadHead( o.getAvatar(),mImageView);
 //                Glide.with(MyInfoActivity.this)
 //                        .load(Urls.base_url + o.getAvatar())
 //                        .placeholder(R.drawable.hint_img)

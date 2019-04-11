@@ -63,3 +63,20 @@
 
 # for DexGuard only
 -keepresourcexmlelements manifest/application/meta-data@value=GlideModule
+
+#map
+-keep   class com.amap.api.maps.**{*;}
+-keep   class com.autonavi.amap.mapcore.*{*;}
+-keep   class com.amap.api.trace.**{*;}
+
+-keep   class com.amap.api.maps.**{*;}
+-keep   class com.autonavi.**{*;}
+-keep   class com.amap.api.trace.**{*;}
+
+-keep class com.amap.api.location.**{*;}
+-keep class com.amap.api.fence.**{*;}
+-keep class com.autonavi.aps.amapapi.model.**{*;}
+
+#导航
+-keep class com.amap.api.navi.**{*;}
+-keep class com.autonavi.**{*;}

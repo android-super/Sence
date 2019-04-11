@@ -6,11 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.sence.R;
 import com.sence.bean.response.PMyInfoBean;
-import com.sence.net.Urls;
+import com.sence.utils.GlideUtils;
 import com.sence.view.NiceImageView;
 
 import java.util.ArrayList;
@@ -41,17 +39,11 @@ public class MyInfoNoteAdapter extends RecyclerView.Adapter<MyInfoNoteAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull MyInfoNoteAdapter.ViewHolder holder, int position) {
+        GlideUtils.getInstance().loadHead( list.get(position).getAvatar(),holder.mImageView);
         holder.mName.setText(list.get(position).getNick_name());
         holder.mContent.setText(list.get(position).getContent());
         holder.mLike.setText(list.get(position).getPraise_count());
-        RequestOptions options = new RequestOptions();
-        options.placeholder(R.drawable.hint_img);
-        Glide.with(context)
-                .load(Urls.base_url + list.get(position).getAvatar())
-                .into(holder.mImageView);
-        Glide.with(context)
-                .load(Urls.base_url + list.get(position).getAlbum_url())
-                .into(holder.mImg);
+        GlideUtils.getInstance().loadHead( list.get(position).getAlbum_url(),holder.mImg);
     }
 
     @Override

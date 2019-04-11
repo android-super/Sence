@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.sence.view.NiceImageView
+        app:corner_radius="6dp"
+        android:layout_width="89dp"
+        android:layout_height="89dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="12dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/hint_img"
+        android:id="@+id/iv_img_confirmorder"
+        android:background="@drawable/shape_confirmorder_imgbg"
+        android:layout_marginBottom="14dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_layout_confirmorder"
+        android:layout_toRightOf="@+id/iv_img_confirmorder"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="15dp"
+        android:id="@+id/tv_shopname_confirmorder"
+        android:maxLines="2"
+        android:layout_marginTop="16dp"
+        android:lineSpacingExtra="5dp"
+        android:ellipsize="end"
+        android:textSize="@dimen/sp_12"
+        android:textColor="#070506"
+        android:text="东方福唐"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_shopname_confirmorder"
+        android:layout_toRightOf="@+id/iv_img_confirmorder"
+        android:layout_marginLeft="10.5dp"
+        android:id="@+id/tv_price_confirmorder"
+        android:layout_marginTop="32dp"
+        android:textSize="@dimen/sp_12"
+        android:textColor="#070506"
+        android:text="￥1000.0"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_shopname_confirmorder"
+        android:layout_toRightOf="@+id/tv_price_confirmorder"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/tv_num_confirmorder"
+        android:layout_marginTop="32dp"
+        android:textSize="@dimen/sp_12"
+        android:textColor="#070506"
+        android:text="х1"/>
+
+</RelativeLayout>

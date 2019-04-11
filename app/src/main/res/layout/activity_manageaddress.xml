@@ -9,7 +9,7 @@
     <com.sence.view.PubTitle
             style="@style/NoLeftToolbar"
             app:is_back="true"
-            app:tool_cover_title="管理收货地址"
+            app:tool_cover_title="选择收货地址"
             app:tool_cover_background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="50dp"/>

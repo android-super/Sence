@@ -46,4 +46,32 @@ public class LoginStatus {
         String status = SharedPreferencesUtil.getInstance().getString("img_status");
         return status;
     }
+
+    public static String getNameAddress() {
+        String status = SharedPreferencesUtil.getInstance().getString("name_address");
+        return status;
+    }
+
+    public static String getIdAddress() {
+        String status = SharedPreferencesUtil.getInstance().getString("id_address");
+        return status;
+    }
+
+    public static String getAddress() {
+        String status = SharedPreferencesUtil.getInstance().getString("address");
+        return status;
+    }
+
+    public static String getPhoneAddress() {
+        String status = SharedPreferencesUtil.getInstance().getString("phone_address");
+        return status;
+    }
+    public static boolean getIsCheckAddress() {
+        boolean iscleck = SharedPreferencesUtil.getInstance().getBoolean("ischeck_address");
+        return iscleck;
+    }
+    public static boolean getIsCheckShopAddress() {
+        boolean iscleck = SharedPreferencesUtil.getInstance().getBoolean("ischeck_shopaddress");
+        return iscleck;
+    }
 }

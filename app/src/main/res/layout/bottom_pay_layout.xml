@@ -57,7 +57,7 @@
             android:layout_marginLeft="9dp"
             android:gravity="center"
             android:id="@+id/tv_minute_pay"
-            android:text="29"
+            android:text="30"
             android:textSize="@dimen/sp_12"
             android:textColor="@color/white"
             />
@@ -74,7 +74,7 @@
             android:layout_marginLeft="9dp"
             android:gravity="center"
             android:id="@+id/tv_second_pay"
-            android:text="56"
+            android:text="00"
             android:textSize="@dimen/sp_12"
             android:textColor="@color/white"
             />

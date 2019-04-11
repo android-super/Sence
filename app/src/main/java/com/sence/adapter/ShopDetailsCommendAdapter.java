@@ -7,11 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.sence.R;
 import com.sence.bean.response.PShopDetailsBean;
-import com.sence.net.Urls;
+import com.sence.utils.GlideUtils;
 import com.sence.view.NiceImageView;
 
 import java.util.ArrayList;
@@ -44,10 +42,8 @@ public class ShopDetailsCommendAdapter extends RecyclerView.Adapter<ShopDetailsC
     public void onBindViewHolder(@NonNull ShopDetailsCommendAdapter.ViewHolder holder, int position) {
         holder.mName.setText(list.get(position).getNickname());
         holder.mContent.setText(list.get(position).getContent());
-        RequestOptions options = new RequestOptions();
-        options.placeholder(R.drawable.hint_img);
-        Glide.with(context).load(Urls.base_url + list.get(position).getImg()).into(holder.mImageView);
-        Glide.with(context).load(Urls.base_url + list.get(position).getAvatar()).into(holder.mImg);
+        GlideUtils.getInstance().loadHead( list.get(position).getImg(),holder.mImageView);
+        GlideUtils.getInstance().loadHead( list.get(position).getAvatar(),holder.mImg);
     }
 
     @Override

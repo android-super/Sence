@@ -7,11 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.sence.R;
 import com.sence.bean.response.PSearchBean;
-import com.sence.net.Urls;
+import com.sence.utils.GlideUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,11 +41,7 @@ public class SearchShopAdapter extends RecyclerView.Adapter<SearchShopAdapter.Vi
     public void onBindViewHolder(@NonNull SearchShopAdapter.ViewHolder holder, int position) {
         holder.mName.setText(list.get(position).getName());
         holder.mPrice.setText("￥"+list.get(position).getPrice());
-        RequestOptions options = new RequestOptions();
-        options.placeholder(R.drawable.hint_img);
-        Glide.with(context)
-                .load(Urls.base_url + list.get(position).getImg())
-                .into(holder.mImg);
+        GlideUtils.getInstance().loadHead(list.get(position).getImg(),holder.mImg);
     }
 
     @Override

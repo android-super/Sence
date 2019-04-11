@@ -4,6 +4,7 @@ import java.util.List;
 
 public class POrderDetailsBean {
 
+
     /**
      * id : 1
      * aid : 1

@@ -12,6 +12,7 @@
             app:tool_cover_background="@color/white"
             style="@style/NoLeftToolbar"
             app:tool_cover_right_size="15sp"
+            android:id="@+id/pt_tablayout"
             app:tool_cover_right_text="提交"
             app:tool_cover_right_color="@color/theme_green"
             android:layout_width="match_parent"

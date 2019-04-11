@@ -16,6 +16,7 @@ import com.sence.bean.response.PMyInfoServiceBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
+import com.sence.utils.LoginStatus;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -72,7 +73,7 @@ public class MyInfoRecommendFragment extends Fragment {
 
     private void doHttp() {
         if(type.equals("3")){
-            HttpManager.getInstance().PlayNetCode(HttpCode.USER_INFO_DATA_SERVICE, new RMyInfoBean("4", type)).request(new ApiCallBack<PMyInfoServiceBean>() {
+            HttpManager.getInstance().PlayNetCode(HttpCode.USER_INFO_DATA_SERVICE, new RMyInfoBean(LoginStatus.getUid(), type)).request(new ApiCallBack<PMyInfoServiceBean>() {
                 @Override
                 public void onFinish() {
 
@@ -86,7 +87,12 @@ public class MyInfoRecommendFragment extends Fragment {
                 @Override
                 public void onSuccess(PMyInfoServiceBean o, String msg) {
                     Logger.e("msg==========" + msg);
-                    myInfoServiceAdapter.setList(o.getOther_info());
+                    if(o.getOther_info().size()>0){
+                        myInfoServiceAdapter.setList(o.getOther_info());
+                    }else{
+                        listener.delete();
+                    }
+
                 }
             });
             return;
@@ -115,5 +121,13 @@ public class MyInfoRecommendFragment extends Fragment {
         });
     }
 
+    private DeleteServiceListener listener;
 
+    public void result(DeleteServiceListener listener) {
+        this.listener = listener;
+    }
+
+    public interface DeleteServiceListener {
+        void delete();
+    }
 }

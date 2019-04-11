@@ -7,16 +7,17 @@ import android.os.Build;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import androidx.core.app.ActivityOptionsCompat;
+
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sence.R;
 import com.sence.activity.NoteDetailActivity;
-import com.sence.bean.response.PMainNoteBean;
 import com.sence.bean.response.PNoteDetailBean;
 import com.sence.net.Urls;
 import com.sence.view.NiceImageView;
+
+import androidx.core.app.ActivityOptionsCompat;
 
 /**
  * Created by zwy on 2019/3/18.
@@ -32,6 +33,7 @@ public class NoteRecommendAdapter extends BaseQuickAdapter<PNoteDetailBean.Recom
     protected void convert(final BaseViewHolder helper, final PNoteDetailBean.RecommendNoteBean item) {
         final NiceImageView imageView = helper.getView(R.id.item_img);
         final Activity activity = (Activity) helper.itemView.getContext();
+
         Glide.with(activity).load(Urls.base_url + item.getAlbum_url()).into(imageView);
         helper.setText(R.id.item_describe, item.getContent());
         Glide.with(activity).load(Urls.base_url + item.getAvatar()).into((ImageView) helper.getView(R.id.item_head));

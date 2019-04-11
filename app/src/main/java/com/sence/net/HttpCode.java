@@ -33,10 +33,10 @@ public enum HttpCode {
     COMMENT_SHOP_LIST,//商品评论列表
     SERVE_COMMENT_LIST,//服务评论列表
     ORDER_DETAIL,//订单详情
+    TIME_REMAINING,//订单剩余时间
     ORDER_DELETE,//取消待付款，待支付订单
     USER_ENJOY_VIP,//尊享会员
     USER_FOCUS_CANCEL,//取消关注
-    USER_FOCUS,//关注
     USER_AUTH,//实名认证
     USER_INFO_DATA,//我的信息
     USER_INFO_DATA_SERVICE,//我的信息服务
@@ -54,6 +54,7 @@ public enum HttpCode {
     BANK_LIST,//銀行卡列表
     BANK_ADD,//添加银行卡
     USER_CASH,//提现
+    ORDER_COMMIT,//提交订单
     COMMENT_ADD,//添加评论（订单）
     USER_EDIT,//用戶信息修改
     USER_GOOD_LIST,//会员商品列表

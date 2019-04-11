@@ -6,18 +6,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.TextView;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+
 import com.blankj.utilcode.util.ConvertUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.orhanobut.logger.Logger;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
@@ -28,7 +20,6 @@ import com.sence.activity.ConfirmOrderActivity;
 import com.sence.activity.ShopDetailsActivity;
 import com.sence.adapter.BusBottomAdapter;
 import com.sence.adapter.BusTopAdapter;
-import com.sence.adapter.KindRightAdapter;
 import com.sence.bean.request.RUidBean;
 import com.sence.bean.request.RUidListBean;
 import com.sence.bean.response.PBusBean;
@@ -44,6 +35,13 @@ import com.sence.view.GridSpacingItemDecoration;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -157,6 +155,7 @@ public class BusFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ConfirmOrderActivity.class);
                 intent.putExtra("data", (Serializable) getAllSelectBean());
+                intent.putExtra("type","shop");
                 intent.putExtra("isMember", isMember);
                 startActivity(intent);
             }

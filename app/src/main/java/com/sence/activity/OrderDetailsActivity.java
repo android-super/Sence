@@ -1,8 +1,9 @@
 package com.sence.activity;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,19 +18,31 @@ import com.sence.R;
 import com.sence.adapter.OrderDetailsAdapter;
 import com.sence.base.BaseActivity;
 import com.sence.bean.request.ROrderDetailsBean;
+import com.sence.bean.request.RTimeRemainingBean;
 import com.sence.bean.response.POrderDetailsBean;
+import com.sence.bean.response.PTimeRemainingBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
+import com.sence.utils.DateUtils;
 import com.sence.utils.LoginStatus;
 import com.sence.utils.StatusBarUtil;
 import com.sence.view.PubTitle;
 
+import java.text.DecimalFormat;
+import java.util.concurrent.TimeUnit;
+
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * 订单详情
@@ -77,7 +90,15 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
     LinearLayout llOrderOrderdetails;
     @BindView(R.id.ll_buttom_orderdetails)
     LinearLayout llButtomOrderdetails;
-
+    @BindView(R.id.tv_text_orderdetails)
+    TextView tvTextOrderdetails;
+    @BindView(R.id.iv_map_orderdetails)
+    ImageView ivMapOrderdetails;
+    @BindView(R.id.rl_alllayout)
+    LinearLayout rlAlllayout;
+    @BindView(R.id.nv_layout)
+    NestedScrollView nvLayout;
+    private Disposable mDisposable;
     private OrderDetailsAdapter orderDetailsAdapter;
 
     private String id;
@@ -88,6 +109,8 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
     private TextView tvPricePay, tvTimePay, tvMinutePay, tvSecondPay;
     private ImageView ivZhiPay, ivWeiPay, ivBackPay;
     private Button btPayPay;
+    private boolean isstart = true;
+    private int time = 1800;
 
 
     @Override
@@ -107,9 +130,31 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         recycleOrderdetails.setLayoutManager(linearLayoutManager);
         recycleOrderdetails.setAdapter(orderDetailsAdapter);
-        if (!"等待支付".equals(type)) {
-//            btSubmintOrderdetails.setText("评价");
-            layoutHead.setRigthText("");
+
+        if ("4".equals(type)) {
+            btSubmintOrderdetails.setText("评价");
+        } else if ("3".equals(type)) {
+            tvTextOrderdetails.setVisibility(View.GONE);
+            tvSpriceOrderdetails.setVisibility(View.GONE);
+            btSubmintOrderdetails.setText("确认收货");
+        } else if ("2".equals(type)) {
+            tvTextOrderdetails.setVisibility(View.GONE);
+            tvSpriceOrderdetails.setVisibility(View.GONE);
+            btSubmintOrderdetails.setBackgroundResource(R.drawable.shape_myorder_bottom);
+            btSubmintOrderdetails.setTextColor(Color.parseColor("#838383"));
+            btSubmintOrderdetails.setText("联系客服");
+        } else if ("1".equals(type)) {
+            layoutHead.setRigthText("取消订单");
+        } else if ("8".equals(type)||"5".equals(type)||"6".equals(type)) {
+            tvTextOrderdetails.setVisibility(View.GONE);
+            tvSpriceOrderdetails.setVisibility(View.GONE);
+            btSubmintOrderdetails.setBackgroundResource(R.drawable.shape_myorder_bottom);
+            btSubmintOrderdetails.setTextColor(Color.parseColor("#838383"));
+            btSubmintOrderdetails.setText("删除订单");
+        } else if ("7".equals(type)) {
+            tvTextOrderdetails.setVisibility(View.GONE);
+            tvSpriceOrderdetails.setVisibility(View.GONE);
+            btSubmintOrderdetails.setText("再次购买");
         }
         bottomSheetDialog();
         layoutHead.setRightOnClick(new View.OnClickListener() {
@@ -154,27 +199,8 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
 
     }
 
-    private void bottomSheetDialog() {
-        View mView = View.inflate(this, R.layout.bottom_pay_layout, null);
-        mBottomSheetDialog = new BottomSheetDialog(this);
-        mBottomSheetDialog.setContentView(mView);
-        tvPricePay = mView.findViewById(R.id.tv_price_pay);
-        tvTimePay = mView.findViewById(R.id.tv_time_pay);
-        tvMinutePay = mView.findViewById(R.id.tv_minute_pay);
-        tvSecondPay = mView.findViewById(R.id.tv_second_pay);
-        ivZhiPay = mView.findViewById(R.id.iv_zhi_pay);
-        ivWeiPay = mView.findViewById(R.id.iv_wei_pay);
-        ivBackPay = mView.findViewById(R.id.iv_back_pay);
-        btPayPay = mView.findViewById(R.id.bt_pay_pay);
-        ivZhiPay.setOnClickListener(this);
-        ivWeiPay.setOnClickListener(this);
-        ivBackPay.setOnClickListener(this);
-        btPayPay.setOnClickListener(this);
-
-    }
-
     public void initData() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_DETAIL, new ROrderDetailsBean(id, LoginStatus.getUid())).request(new ApiCallBack<POrderDetailsBean>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_DETAIL, new ROrderDetailsBean(id, "1")).request(new ApiCallBack<POrderDetailsBean>() {
 
 
             @Override
@@ -188,12 +214,12 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
 
             @Override
             public void onSuccess(final POrderDetailsBean o, String msg) {
-                Logger.e("msg==========" + msg);
+                Logger.e("msg==========" + msg + o);
                 bean = o;
                 if (o.getGoods().size() > 0) {
                     orderDetailsAdapter.setList(o.getGoods());
                 }
-                mPrice.setText("￥" + o.getNeedpay());
+//
                 tvStateOrderdetails.setText(o.getStatus());
                 tvNumberOrderdetails.setText(o.getOid());
                 tvTimeOrderdetails.setText(o.getAddtime());
@@ -248,9 +274,50 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
                 startActivity(new Intent(OrderDetailsActivity.this, ManageAddressActivity.class));
                 break;
             case R.id.bt_submint_orderdetails:
-                mBottomSheetDialog.show();
+                if ("写评价".equals(type)) {
+                    Intent intent = new Intent(OrderDetailsActivity.this, OrderDetailsActivity.class);
+                    intent.putExtra("id", bean.getId());
+                    intent.putExtra("type", type);
+                    startActivity(intent);
+                    finish();
+                } else if ("待收货".equals(type)) {
+
+                } else if ("待发货".equals(type)) {
+
+                } else if ("待支付".equals(type)) {
+                    mBottomSheetDialog.show();
+                    if (isstart) {
+                        getTime();
+                    }
+                } else if ("交易关闭".equals(type)) {
+
+                } else if ("交易成功".equals(type)) {
+
+                }
                 break;
         }
+    }
+
+    private void getTime() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.TIME_REMAINING, new RTimeRemainingBean(id)).request(new ApiCallBack<PTimeRemainingBean>() {
+
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+            }
+
+            @Override
+            public void onSuccess(final PTimeRemainingBean o, String msg) {
+                Logger.e("msg==========" + msg);
+                time = Integer.parseInt(o.getPayTime());
+                doLastTime();
+            }
+        });
     }
 
 
@@ -274,10 +341,65 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
+
+    private void bottomSheetDialog() {
+        View mView = View.inflate(this, R.layout.bottom_pay_layout, null);
+        mBottomSheetDialog = new BottomSheetDialog(this);
+        mBottomSheetDialog.setContentView(mView);
+        tvPricePay = mView.findViewById(R.id.tv_price_pay);
+        tvTimePay = mView.findViewById(R.id.tv_time_pay);
+        tvMinutePay = mView.findViewById(R.id.tv_minute_pay);
+        tvSecondPay = mView.findViewById(R.id.tv_second_pay);
+        ivZhiPay = mView.findViewById(R.id.iv_zhi_pay);
+        ivWeiPay = mView.findViewById(R.id.iv_wei_pay);
+        ivBackPay = mView.findViewById(R.id.iv_back_pay);
+        btPayPay = mView.findViewById(R.id.bt_pay_pay);
+        ivZhiPay.setOnClickListener(this);
+        ivWeiPay.setOnClickListener(this);
+        ivBackPay.setOnClickListener(this);
+        btPayPay.setOnClickListener(this);
+        mBottomSheetDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                mDisposable.dispose();
+            }
+        });
+    }
+
+    public static double stringToDouble(String a) {
+        double b = Double.valueOf(a);
+        DecimalFormat df = new DecimalFormat("#.00");//此为保留1位小数，若想保留2位小数，则填写#.00  ，以此类推
+        String temp = df.format(b);
+        b = Double.valueOf(temp);
+        return b;
+    }
+
+    public void doLastTime() {
+        mDisposable = Observable.interval(0, 1, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()) // 由于interval默认在新线程，所以我们应该切回主线程
+                .subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(@NonNull Long aLong) {
+                        if (time - aLong <= 0) {
+                            if (time - aLong <= 0) {
+                                mDisposable.dispose();
+                            }
+
+                        } else {
+                            int t = (int) (time - aLong);
+                            String timedata = DateUtils.getTime(t);
+                            String[] spliTime = timedata.split(":");
+                            tvMinutePay.setText(spliTime[0]);
+                            tvSecondPay.setText(spliTime[1]);
+                        }
+                    }
+                });
+    }
+
+    @OnClick(R.id.iv_map_orderdetails)
+    public void onViewClicked() {
+        Intent intent = new Intent(OrderDetailsActivity.this, MapActivity.class);
+        startActivity(intent);
     }
 }

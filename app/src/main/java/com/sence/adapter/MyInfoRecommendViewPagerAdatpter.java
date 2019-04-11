@@ -9,13 +9,19 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 public class MyInfoRecommendViewPagerAdatpter extends FragmentPagerAdapter {
     private Context context;
-    private Fragment[] fragmentList;
-    private String[] list_Title;
-    public MyInfoRecommendViewPagerAdatpter(FragmentManager fm, Context context, Fragment[] fragmentList, String[] list_Title) {
+    private Fragment[] fragmentList = null;
+    private String[] list_Title = null;
+    public MyInfoRecommendViewPagerAdatpter(FragmentManager fm, Context context,Fragment[] fragmentList, String[] list_Title) {
         super(fm);
         this.context = context;
         this.fragmentList = fragmentList;
         this.list_Title = list_Title;
+
+    }
+    public void setList(Fragment[] fragmentList, String[] list_Title){
+        this.fragmentList = fragmentList;
+        this.list_Title = list_Title;
+        notifyDataSetChanged();
     }
     @Override
     public Fragment getItem(int position) {

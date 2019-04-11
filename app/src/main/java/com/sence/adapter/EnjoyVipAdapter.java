@@ -6,11 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.sence.R;
 import com.sence.bean.response.PEnjoyVipBean;
-import com.sence.net.Urls;
+import com.sence.utils.GlideUtils;
 import com.sence.view.NiceImageView;
 
 import java.util.ArrayList;
@@ -42,11 +40,7 @@ public class EnjoyVipAdapter extends RecyclerView.Adapter<EnjoyVipAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull EnjoyVipAdapter.ViewHolder holder, int position) {
-        RequestOptions options = new RequestOptions();
-        options.placeholder(R.drawable.hint_img);
-        Glide.with(context)
-                .load(Urls.base_url + list.get(position).getImg())
-                .into(holder.mImageView);
+        GlideUtils.getInstance().loadHead(  list.get(position).getImg(),holder.mImageView);
         if(list.get(position).getTag().size()==2){
             holder.mOlaber.setText(list.get(position).getTag().get(0));
             holder.mTlaber.setText(list.get(position).getTag().get(1));

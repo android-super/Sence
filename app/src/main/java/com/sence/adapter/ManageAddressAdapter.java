@@ -11,12 +11,14 @@ import android.widget.TextView;
 import com.orhanobut.logger.Logger;
 import com.sence.R;
 import com.sence.activity.AddAddressActivity;
+import com.sence.activity.ManageAddressActivity;
 import com.sence.bean.request.RAddressDeleteBean;
 import com.sence.bean.response.PManageAddressBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.LoginStatus;
+import com.sence.utils.SharedPreferencesUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,19 +29,21 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ManageAddressAdapter extends RecyclerView.Adapter<ManageAddressAdapter.ViewHolder> {
     private Context context;
     private List<PManageAddressBean> list = new ArrayList<>();
-
+    private View view;
+    private String type= "";
     public ManageAddressAdapter(Context context){
         this.context = context;
     }
-    public void setList(List<PManageAddressBean> list){
+    public void setList(List<PManageAddressBean> list,String type){
         this.list = list;
+        this.type=type;
         notifyDataSetChanged();
     }
 
     @NonNull
     @Override
     public ManageAddressAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.rv_item_manageaddress,parent,false);
+        view = LayoutInflater.from(context).inflate(R.layout.rv_item_manageaddress,parent,false);
         return new ViewHolder(view);
 
     }
@@ -57,6 +61,7 @@ public class ManageAddressAdapter extends RecyclerView.Adapter<ManageAddressAdap
                 context.startActivity(intent);
             }
         });
+
         holder.mDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,6 +86,27 @@ public class ManageAddressAdapter extends RecyclerView.Adapter<ManageAddressAdap
                 });
             }
         });
+        holder.mLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if("shop".equals(type)){
+                    SharedPreferencesUtil.getInstance().putString("name_address", list.get(position).getUsername());
+                    SharedPreferencesUtil.getInstance().putString("id_address", list.get(position).getId());
+                    SharedPreferencesUtil.getInstance().putString("address", list.get(position).getAddress());
+                    SharedPreferencesUtil.getInstance().putString("phone_address", list.get(position).getPhone());
+                    SharedPreferencesUtil.getInstance().putBoolean("ischeck_address", true);
+                    ((ManageAddressActivity)context).finish();
+                }else if("shopd".equals(type)){
+                    SharedPreferencesUtil.getInstance().putString("name_address", list.get(position).getUsername());
+                    SharedPreferencesUtil.getInstance().putString("id_address", list.get(position).getId());
+                    SharedPreferencesUtil.getInstance().putString("address", list.get(position).getAddress());
+                    SharedPreferencesUtil.getInstance().putString("phone_address", list.get(position).getPhone());
+                    SharedPreferencesUtil.getInstance().putBoolean("ischeck_shopaddress", true);
+                    ((ManageAddressActivity)context).finish();
+
+                }
+            }
+        });
     }
 
     @Override
@@ -91,6 +117,7 @@ public class ManageAddressAdapter extends RecyclerView.Adapter<ManageAddressAdap
 
         private LinearLayout mEditor,mDelete;
         private TextView mName,mPhone,mAddress;
+        private LinearLayout mLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -99,6 +126,7 @@ public class ManageAddressAdapter extends RecyclerView.Adapter<ManageAddressAdap
             mAddress = itemView.findViewById(R.id.tv_address_manageaddress);
             mEditor = itemView.findViewById(R.id.ll_editor_manageaddress);
             mDelete = itemView.findViewById(R.id.ll_delete_manageaddress);
+            mLayout = itemView.findViewById(R.id.show_content_view);
         }
     }
     private DeleteAddressListener listener;

@@ -4,10 +4,13 @@ import java.util.List;
 
 public class PShopDetailsBean {
 
+
     /**
+     * img : /Public/Uploads/Goods/2019-03-27/5c9afaf63f8b8.jpg
+     * postage : 6
      * imgs : ["/Public/Uploads/see_shop/4/5bfe2d5ed0b1f.jpg","/Public/Uploads/see_shop/4/5bfe2d5ed0f34.jpg","/Public/Uploads/see_shop/4/5bfe2d5ed12aa.jpg","/Public/Uploads/see_shop/4/5bfe2d5ed1548.jpg"]
      * name : 一号商品
-     * describe : 一号商品，请大家支持
+     * describe : http://192.168.1.10:8081/index.php/Shares/Public/show_notice_info/6
      * price : 10
      * vprice : 5
      * uid : 1
@@ -23,6 +26,8 @@ public class PShopDetailsBean {
      * comment : [{"nickname":"我是昵称","avatar":"我应该是头像地址","img":"我是评价的图片地址","content":"我是评价的内容"},{"nickname":"我是昵称2","avatar":"我应该是头像地址2","img":"我是评价的图片地址2","content":"我是评价的内容2"},{"nickname":"我是昵称3","avatar":"我应该是头像地址3","img":"我是评价的图片地址3","content":"我是评价的内容3"}]
      */
 
+    private String img;
+    private String postage;
     private String name;
     private String describe;
     private String price;
@@ -39,6 +44,22 @@ public class PShopDetailsBean {
     private String commentRate;
     private List<String> imgs;
     private List<CommentBean> comment;
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public String getPostage() {
+        return postage;
+    }
+
+    public void setPostage(String postage) {
+        this.postage = postage;
+    }
 
     public String getName() {
         return name;

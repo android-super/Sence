@@ -1,14 +1,13 @@
 package com.sence.adapter;
 
-import android.graphics.Color;
 import android.widget.ImageView;
-import com.bumptech.glide.Glide;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sence.R;
 import com.sence.bean.response.PCommentBean;
-import com.sence.net.Urls;
 import com.sence.utils.DateUtils;
+import com.sence.utils.GlideUtils;
 import com.sence.view.MyTextView;
 
 /**
@@ -23,7 +22,7 @@ public class CommentAdapter extends BaseQuickAdapter<PCommentBean, BaseViewHolde
 
     @Override
     protected void convert(BaseViewHolder helper, PCommentBean item) {
-        Glide.with(helper.itemView.getContext()).load(Urls.base_url+item.getUser().getAvatar()).into((ImageView) helper.getView(R.id.item_img));
+        GlideUtils.getInstance().loadHead( item.getUser().getAvatar(),(ImageView) helper.getView(R.id.item_img));
         helper.setText(R.id.item_name,item.getUser().getNick_name());
         helper.setText(R.id.item_time,
                 DateUtils.convertTimeNew(item.getDiff_time(),item.getNow_time(),item.getAdd_time()));
