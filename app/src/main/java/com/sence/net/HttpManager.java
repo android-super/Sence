@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.orhanobut.logger.Logger;
 import com.sence.base.BaseApp;
+import com.sence.bean.base.BaseFileRequestBean;
 import com.sence.bean.base.BaseImageRequestBean;
 import com.sence.bean.base.BaseRequestBean;
 import com.sence.bean.base.BaseResponseBean;
@@ -15,6 +16,7 @@ import com.sence.net.bean.HttpJsonErrorBean;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.net.manager.HttpClientManager;
 
+import java.io.EOFException;
 import java.net.SocketTimeoutException;
 import java.util.concurrent.TimeoutException;
 
@@ -183,11 +185,11 @@ public class HttpManager<P> {
             case SUPPORT_NOTE_RECOMMEND:
                 observable = httpService.SupportNoteRecommend(requestBean.getMap());
                 break;
-            case USER_CASH:
-                observable = httpService.UserCash(requestBean.getMap());
-                break;
             case BANK_CARD:
                 observable = httpService.BankCardList(requestBean.getMap());
+                break;
+            case USER_CASH:
+                observable = httpService.UserCash(requestBean.getMap());
                 break;
             case USER_GOOD_LIST:
                 observable = httpService.UserGoodList(requestBean.getMap());
@@ -204,21 +206,47 @@ public class HttpManager<P> {
             case BANK_ADD:
                 observable = httpService.BankCardAdd(requestBean.getMap());
                 break;
-
-
+            case BIND_CLIENT_ID:
+                observable = httpService.BindClientID(requestBean.getMap());
+                break;
+            case CHAT_CREATE_GROUP:
+                observable = httpService.ChatCreateGroup(requestBean.getMap());
+                break;
+            case CHAT_GROUP_LIST:
+                observable = httpService.ChatGroupList(requestBean.getMap());
+                break;
+            case CHAT_MEMBER_LIST:
+                observable = httpService.ChatMemberList(requestBean.getMap());
+                break;
+            case CHAT_ENTER:
+                observable = httpService.ChatEnter(requestBean.getMap());
+                break;
+            case CHAT_JOIN:
+                observable = httpService.ChatJoin(requestBean.getMap());
+                break;
+            case CHAT_SEND_MESSAGE:
+                observable = httpService.ChatSendMessage(requestBean.getMap());
+                break;
+            case CHAT_READ:
+                observable = httpService.ChatRead(requestBean.getMap());
+                break;
         }
         observable = observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
         return this;
     }
 
-    public HttpManager PlayNetCode(HttpCode code, BaseImageRequestBean requestBean) {
+    public HttpManager PlayNetCode(HttpCode code, BaseImageRequestBean requestBean,
+                                   BaseFileRequestBean fileRequestBean) {
         HttpService httpService = HttpClientManager.Instance.httpService;
-        switch (code){
+        switch (code) {
             case COMMENT_ADD:
                 observable = httpService.CommentOrder(requestBean.getMap());
                 break;
             case USER_EDIT:
                 observable = httpService.UserEdit(requestBean.getMap());
+                break;
+            case CHAT_SEND_MESSAGE:
+                observable = httpService.ChatSendImgMessage(requestBean.getMap(), fileRequestBean.getRequestImg());
                 break;
         }
         return this;
@@ -292,6 +320,9 @@ public class HttpManager<P> {
                     HttpJsonErrorBean errorBean = new Gson().fromJson(ErrorConstants.error_content,
                             HttpJsonErrorBean.class);
                     apiCallBack.Message(errorBean.getStatus(), errorBean.getMsg());
+                } else if (e instanceof EOFException) {
+                    Toast.makeText(BaseApp.INSTANCE,
+                            "上传失败", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(BaseApp.INSTANCE,
                             "请求失败", Toast.LENGTH_SHORT).show();

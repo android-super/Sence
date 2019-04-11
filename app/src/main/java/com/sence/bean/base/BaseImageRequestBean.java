@@ -12,14 +12,14 @@ import java.util.Map;
  * package_name is com.sence.bean.base
  * 描述:SenceGit
  */
-public abstract class BaseImageRequestBean{
+public abstract class BaseImageRequestBean {
     public Map getMap() {
         Map<String, Object> map = MapTransformUtils.objectToMap(this);
         Map<String, RequestBody> mapBody = MapTransformUtils.objectToMapImg(this);
-        mapBody.put("sign", RequestBody.create(MediaType.parse("text/plain;charset=UTF-8"),
+        mapBody.put("sign", RequestBody.create(MediaType.parse("text/plain"),
                 SPCommonUtils.signParameter(map)));
-        mapBody.put("time", RequestBody.create(MediaType.parse("text/plain;charset=UTF-8"),
+        mapBody.put("time", RequestBody.create(MediaType.parse("text/plain"),
                 SPCommonUtils.getTime()));
-        return map;
+        return mapBody;
     }
 }

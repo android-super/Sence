@@ -13,15 +13,7 @@ import android.widget.TextView;
 
 import com.sence.LoginActivity;
 import com.sence.R;
-import com.sence.activity.EnjoyVipActivity;
-import com.sence.activity.ManageAddressActivity;
-import com.sence.activity.MyAccountActivity;
-import com.sence.activity.MyFansFocusNoteActivity;
-import com.sence.activity.MyInfoActivity;
-import com.sence.activity.MyOrderActivity;
-import com.sence.activity.OpenVipActivity;
-import com.sence.activity.SettingActivity;
-import com.sence.activity.WebActivity;
+import com.sence.activity.*;
 import com.sence.bean.request.RUidBean;
 import com.sence.bean.response.PUserInfoBean;
 import com.sence.net.HttpCode;
@@ -193,7 +185,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.user_message:
-                startActivity(new Intent(getContext(), EnjoyVipActivity.class));
+                startActivity(new Intent(getContext(), MessageActivity.class));
                 break;
             case R.id.user_head:
                 startActivity(new Intent(getContext(), MyInfoActivity.class));

@@ -20,14 +20,7 @@
 
             <com.bigkoo.convenientbanner.ConvenientBanner
                     android:id="@+id/note_banner"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-
-            <ImageView
-                    android:src="@drawable/hint_img"
-                    android:scaleType="centerCrop"
-                    android:layout_width="match_parent"
-                    android:maxHeight="500dp"
+                    android:layout_width="500dp"
                     android:minHeight="375dp"
                     android:transitionName="@string/translation_note_name"
                     android:layout_height="wrap_content"/>

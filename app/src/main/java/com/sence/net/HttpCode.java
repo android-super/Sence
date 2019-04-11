@@ -5,6 +5,7 @@ package com.sence.net;
  */
 public enum HttpCode {
     GET_SYSTEM_TIME,//获取系统消息
+    BIND_CLIENT_ID,//绑定ClientId
     IS_REGISTER,//是否注册
     ADDRESS_ADD,//添加地址
     ADDRESS_EDIT,//编辑地址
@@ -59,4 +60,11 @@ public enum HttpCode {
     USER_EDIT,//用戶信息修改
     USER_GOOD_LIST,//会员商品列表
     USER_SERVE_LIST,//会员vip服务列表
+    CHAT_SEND_MESSAGE,//发送消息
+    CHAT_CREATE_GROUP,//创建V群
+    CHAT_JOIN,//加入V群
+    CHAT_MEMBER_LIST,//V群成員列表
+    CHAT_ENTER,//進入V群
+    CHAT_GROUP_LIST,//V群列表
+    CHAT_READ,//消息已读
 }

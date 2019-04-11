@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:padding="10dp">
+
+    <TextView
+            android:id="@+id/chat_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/shape_white_chat"
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text=""
+            android:textColor="#666666"
+            android:textSize="12sp"
+            android:visibility="gone"/>
+
+    <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <com.sence.view.NiceImageView
+                android:id="@+id/head_left"
+                android:layout_width="40dp"
+                app:corner_radius="5dp"
+                android:layout_height="40dp"
+                android:layout_gravity="left"
+                android:src="@drawable/hint_head"/>
+
+        <com.sence.view.NiceImageView
+                android:id="@+id/left_image"
+                android:layout_width="wrap_content"
+                android:layout_height="123dp"
+                android:layout_marginLeft="12dp"
+                android:layout_toRightOf="@id/head_left"
+                android:adjustViewBounds="true"
+                android:maxWidth="211dp"
+                android:visibility="gone"
+                app:corner_radius="10dp"/>
+
+        <LinearLayout
+                android:id="@+id/left_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginLeft="8dp"
+                android:layout_toRightOf="@+id/head_left"
+                android:background="@drawable/chat_bai">
+
+            <TextView
+                    android:id="@+id/left_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="#0c0c0c"
+                    android:textSize="14sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/ll_chat_tribe"
+                android:visibility="gone"
+                android:layout_width="254dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_toRightOf="@id/head_left"
+                android:background="@drawable/chat_invite_bg"
+                android:orientation="vertical">
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <com.sence.view.NiceImageView
+                        android:id="@+id/chat_huizhang"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_marginLeft="13dp"
+                        android:layout_marginTop="13dp"
+                        app:corner_radius="5dp"/>
+
+                <TextView
+                        android:id="@+id/chat_tribe_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="13dp"
+                        android:layout_marginTop="22dp"
+                        android:lineSpacingExtra="8dp"
+                        android:textColor="#242424"
+                        android:textSize="15sp"
+                        android:textStyle="bold"/>
+            </LinearLayout>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#eeeeee"/>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:orientation="horizontal">
+
+                <TextView
+                        android:id="@+id/chat_look"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="查看"
+                        android:textColor="#999999"
+                        android:textSize="15sp"/>
+
+                <View
+                        android:layout_width="0.5dp"
+                        android:layout_height="match_parent"
+                        android:background="#eeeeee"/>
+
+                <TextView
+                        android:id="@+id/chat_agree"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="同意"
+                        android:textColor="#999999"
+                        android:textSize="15sp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:orientation="horizontal">
+
+        <com.sence.view.NiceImageView
+                app:corner_radius="5dp"
+                android:id="@+id/head_right"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/hint_head"/>
+
+        <com.sence.view.NiceImageView
+                android:id="@+id/right_image"
+                android:layout_width="wrap_content"
+                android:layout_height="123dp"
+                android:layout_marginRight="12dp"
+                android:layout_toLeftOf="@+id/head_right"
+                android:adjustViewBounds="true"
+                android:maxWidth="211dp"
+                android:visibility="gone"
+                app:corner_radius="10dp"
+                />
+
+        <LinearLayout
+                android:id="@+id/right_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="9dp"
+                android:layout_toLeftOf="@+id/head_right"
+                android:layout_weight="1"
+                android:background="@drawable/chat_blu">
+
+            <TextView
+                    android:id="@+id/right_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="#0c0c0c"
+                    android:textSize="15sp"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <TextView
+            android:id="@+id/join_tribe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/shape_tribe_chat"
+            android:gravity="center"
+            android:text=""
+            android:textColor="#ffffff"
+            android:textSize="14sp"
+            android:visibility="gone"/>
+
+</LinearLayout>

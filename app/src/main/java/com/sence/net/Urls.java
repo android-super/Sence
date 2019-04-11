@@ -10,6 +10,8 @@ public class Urls {
 
     public static final String true_ip = "http://192.168.1.10:8085";
     public static final String test_ip = "http://192.168.1.10:8085";
+    public static final String IP_ = "192.168.1.10";//长连接测试
+    public static final int POST_ = 6681;//端口号
     public static final String base_url = isTest ? test_ip : true_ip;
     public static final String SYSTEM_TIME = "/index.php/Api/Base/getServerTime";//获取服务器时间
     //评论
@@ -86,4 +88,12 @@ public class Urls {
     public static final String SERVE_DETAIL = "/index.php/Api/Serve/getServeDetail";//服务详情
     public static final String SERVE_COMMENT_LIST = "/index.php/Api/Serve/getServiceComments";//服务评论列表
     public static final String SERVE_COMMENT_ADD = "/index.php/Api/Orders/evaluateOrder";//添加服务评价
+    //V群
+    public static final String CHAT_SEND_MESSAGE = "/index.php/api/VGroup/sendMessageToGroup";//发送消息
+    public static final String CHAT_CREATE_GROUP = "/index.php/api/VGroup/createVGroup";//创建微群
+    public static final String CHAT_JOIN = "/index.php/api/VGroup/joinVGroup";//加入微群
+    public static final String CHAT_MEMBER_LIST = "/index.php/api/VGroup/getVGroupUserList";//微群成员列表
+    public static final String CHAT_ENTER = "/index.php/api/VGroup/enterVGroup";//进入V群
+    public static final String CHAT_GROUP_LIST = "/index.php/api/VGroup/getVGroupList";//V群列表
+    public static final String CHAT_READ = "/index.php/api/VGroup/readGroupMessage";//消息已读
 }

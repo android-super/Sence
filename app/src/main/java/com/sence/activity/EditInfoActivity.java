@@ -80,23 +80,23 @@ public class EditInfoActivity extends BaseActivity implements View.OnClickListen
     }
 
     public void editFinish() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.USER_EDIT,
-                new RUserEditBean(LoginStatus.getUid(), name, style, sex, head)).request(new ApiCallBack() {
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void Message(int code, String message) {
-
-            }
-
-            @Override
-            public void onSuccess(Object o, String msg) {
-
-            }
-        });
+//        HttpManager.getInstance().PlayNetCode(HttpCode.USER_EDIT,
+//                new RUserEditBean(LoginStatus.getUid(), name, style, sex, head)).request(new ApiCallBack() {
+//            @Override
+//            public void onFinish() {
+//
+//            }
+//
+//            @Override
+//            public void Message(int code, String message) {
+//
+//            }
+//
+//            @Override
+//            public void onSuccess(Object o, String msg) {
+//
+//            }
+//        });
     }
 
 }

@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -15,6 +16,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
 import com.orhanobut.logger.Logger;
 import com.sence.R;
+import com.sence.activity.chat.ui.ChatMsgActivity;
 import com.sence.adapter.MyInfoRecommendViewPagerAdatpter;
 import com.sence.base.BaseActivity;
 import com.sence.bean.request.RMyInfoBean;
@@ -34,6 +36,7 @@ import com.sence.view.NiceImageView;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
+
 /**
  * 个人信息
  */
@@ -43,14 +46,15 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     private TabLayout mTabLayoutButtom;
     private ImageView mBack;
     private View mView;
-    private TextView mDeditor,mName,mAddress,mFocusNum,mFansNum,mSigner,mShopName,mShopPrice;
-    private NiceImageView  mImg,mImageView;
+    private TextView mDeditor, mName, mAddress, mFocusNum, mFansNum, mSigner, mShopName, mShopPrice;
+    private NiceImageView mImg, mImageView;
     private RelativeLayout mShop;
     private ImageView mHead;
     private NiceImageView mIsV;
+    private LinearLayout ll_group_myinfo;
 
     private MyInfoRecommendViewPagerAdatpter mMyInfoRecommendViewPagerAdatpter;
-    private String[] list = {"推荐","笔记","共享"};
+    private String[] list = {"推荐", "笔记", "共享"};
     private int scaleRatio;
     private PMyInfoBean bean;
 
@@ -61,7 +65,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void initView() {
-        if(NavigationBarUtil.hasNavigationBar(this)){
+        if (NavigationBarUtil.hasNavigationBar(this)) {
             NavigationBarUtil.initActivity(findViewById(android.R.id.content));
         }
         StatusBarUtil.setTranslucentForCoordinatorLayout(this, 0);
@@ -85,7 +89,9 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         mViewPager = findViewById(R.id.vp_content_myinfo);
         mIsV = findViewById(R.id.iv_isv_myinfo);
         mBack = findViewById(R.id.iv_back_myinfo);
+        ll_group_myinfo = findViewById(R.id.ll_group_myinfo);
         mBack.setOnClickListener(this);
+        ll_group_myinfo.setOnClickListener(this);
         findViewById(R.id.tv_deditor_myinfo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,16 +101,17 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         final RecommendFragment recommendFragment = new RecommendFragment();
         final NoteFragment noteFragment = new NoteFragment();
         MyInfoRecommendFragment myInfoRecommendFragment = new MyInfoRecommendFragment();
-        final Fragment[] fragmentList = {recommendFragment, noteFragment,myInfoRecommendFragment};
-        mMyInfoRecommendViewPagerAdatpter = new MyInfoRecommendViewPagerAdatpter(getSupportFragmentManager(),this,fragmentList,list);
+        final Fragment[] fragmentList = {recommendFragment, noteFragment, myInfoRecommendFragment};
+        mMyInfoRecommendViewPagerAdatpter = new MyInfoRecommendViewPagerAdatpter(getSupportFragmentManager(), this,
+                fragmentList, list);
         mViewPager.setAdapter(mMyInfoRecommendViewPagerAdatpter);
         mTabLayoutButtom.setupWithViewPager(mViewPager);
         myInfoRecommendFragment.result(new MyInfoRecommendFragment.DeleteServiceListener() {
             @Override
             public void delete() {
-                final Fragment[] fragments={recommendFragment, noteFragment};
-                String[] listTitle = {"推荐","笔记"};
-                mMyInfoRecommendViewPagerAdatpter.setList(fragments,listTitle);
+                final Fragment[] fragments = {recommendFragment, noteFragment};
+                String[] listTitle = {"推荐", "笔记"};
+                mMyInfoRecommendViewPagerAdatpter.setList(fragments, listTitle);
             }
         });
         mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
@@ -125,21 +132,22 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MyInfoActivity.this, ShopDetailsActivity.class);
-                intent.putExtra("id",bean.getGoods_info().getId());
+                intent.putExtra("id", bean.getGoods_info().getId());
                 startActivity(intent);
             }
         });
     }
-    private void dim(final  String url) {
+
+    private void dim(final String url) {
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 scaleRatio = 5;
                 //  下面的这个方法必须在子线程中执行
-                 Bitmap blurBitmap = FastBlurUtil.GetUrlBitmap(url, scaleRatio);
+                Bitmap blurBitmap = FastBlurUtil.GetUrlBitmap(url, scaleRatio);
                 Message message = new Message();
-                message.obj=blurBitmap;
+                message.obj = blurBitmap;
                 handler.sendMessage(message);
                 //                        刷新ui必须在主线程中执行
 
@@ -148,7 +156,8 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
 
 
     }
-    private Handler handler = new Handler(){
+
+    private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             Bitmap blurBitmap = (Bitmap) msg.obj;
@@ -159,7 +168,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     };
 
     public void initData() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.USER_INFO_DATA, new RMyInfoBean("4","1")).request(new ApiCallBack<PMyInfoBean>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.USER_INFO_DATA, new RMyInfoBean("4", "1")).request(new ApiCallBack<PMyInfoBean>() {
             @Override
             public void onFinish() {
 
@@ -179,25 +188,25 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 mFocusNum.setText(o.getFocus_num());
                 mFansNum.setText(o.getFans_num());
                 mSigner.setText(o.getAutograph());
-                if(o.getIs_kol().equals("1")){
+                if (o.getIs_kol().equals("1")) {
                     mIsV.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     mIsV.setVisibility(View.GONE);
                 }
-                GlideUtils.getInstance().loadHead( o.getAvatar(),mImageView);
+                GlideUtils.getInstance().loadHead(o.getAvatar(), mImageView);
 //                Glide.with(MyInfoActivity.this)
 //                        .load(Urls.base_url + o.getAvatar())
 //                        .placeholder(R.drawable.hint_img)
 //                        .fallback(R.drawable.hint_img)
 //                        .into(mHead);
                 dim(Urls.base_url + o.getAvatar());
-                if(o.getIs_kol().equals("1")){
+                if (o.getIs_kol().equals("1")) {
                     mShopName.setText(o.getGoods_info().getName());
-                    mShopPrice.setText("￥ "+o.getGoods_info().getPrice());
+                    mShopPrice.setText("￥ " + o.getGoods_info().getPrice());
                     Glide.with(MyInfoActivity.this)
                             .load(Urls.base_url + o.getGoods_info().getImg())
                             .into(mImg);
-                }else{
+                } else {
                     mShop.setVisibility(View.GONE);
                 }
             }
@@ -205,13 +214,16 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     }
 
 
-
-
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_back_myinfo:
                 finish();
+                break;
+            case R.id.ll_group_myinfo:
+                Intent intent = new Intent(MyInfoActivity.this, ChatMsgActivity.class);
+                intent.putExtra("v_id", bean.getVid());
+                startActivity(intent);
                 break;
         }
     }

@@ -11,6 +11,7 @@ import com.sence.fragment.*;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
+import com.sence.utils.SocketUtils;
 import com.sence.utils.StatusBarUtil;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
@@ -42,6 +43,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void initView() {
         StatusBarUtil.setLightMode(this);
+        SocketUtils.getInstance().startSocket();
+
         mainHome.setTag(0);
         mainVip.setTag(1);
         mainKind.setTag(2);
@@ -61,29 +64,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mains = new LinearLayout[]{mainHome, mainVip, mainKind, mainBus, mainUser};
 
         setSelect(0);
-        getSystemTime();
     }
 
-    private void getSystemTime() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.GET_SYSTEM_TIME).request(new ApiCallBack<String>() {
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void Message(int code, String message) {
-
-            }
-
-            @Override
-            public void onSuccess(String time, String msg) {
-                long sys_time = System.currentTimeMillis() / 1000;
-                long resu = Long.parseLong(time) - sys_time;
-                SPUtils.getInstance().put("sysTime", String.valueOf(resu));
-            }
-        });
-    }
 
     @Override
     public void onClick(View view) {
@@ -106,5 +88,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 }
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SocketUtils.getInstance().stopSocket();
     }
 }

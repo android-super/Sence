@@ -58,7 +58,7 @@ dependencies {
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-3'
     implementation 'com.github.chrisbanes:PhotoView:2.1.4'
     implementation 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:1.2.32@aar'
-    implementation 'com.bigkoo:ConvenientBanner:2.1.4'
+    implementation 'com.bigkoo:convenientbanner:2.0.5'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
     // Optional, if you use support library fragments:
@@ -77,7 +77,7 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.1.0'
 
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'org.greenrobot:eventbus:3.1.1'
     //3D地图so及jar
     implementation 'com.amap.api:3dmap:latest.integration'
     //定位功能

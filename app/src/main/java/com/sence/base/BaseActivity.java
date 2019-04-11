@@ -6,6 +6,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import com.sence.utils.LoginStatus;
+import com.sence.utils.SocketUtils;
 
 public abstract class BaseActivity extends AppCompatActivity implements BaseInterface {
     private Unbinder unbinder;
@@ -29,6 +31,16 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseInte
     public void onActCreate(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
             return;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!SocketUtils.getInstance().isConnected()){
+            if (LoginStatus.isLogin()){
+                SocketUtils.getInstance().startSocket();
+            }
         }
     }
 

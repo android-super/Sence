@@ -1,6 +1,8 @@
 package com.sence.utils;
 
+import android.util.Log;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 import java.io.File;
@@ -63,14 +65,13 @@ public class MapTransformUtils {
                 field.setAccessible(true);
                 RequestBody body = null;
                 if (field.get(obj) instanceof String) {
-                    body = RequestBody.create(MediaType.parse("text/plain;charset=UTF-8"), (String) field.get(obj));
-                } else if (field.get(obj) instanceof File) {
-                    body = RequestBody.create(MediaType.parse("multipart/form-data;charset=UTF-8"), (File) field.get(obj));
+                    body = RequestBody.create(MediaType.parse("text/plain"), (String) field.get(obj));
                 }
                 map.put(field.getName(), body);
             }
         } catch (IllegalAccessException e) {
             e.printStackTrace();
+            Log.e("TAG", e.toString());
         }
         return map;
     }
