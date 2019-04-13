@@ -14,6 +14,8 @@ public class Urls {
     public static final int POST_ = 6681;//端口号
     public static final String base_url = isTest ? test_ip : true_ip;
     public static final String SYSTEM_TIME = "/index.php/Api/Base/getServerTime";//获取服务器时间
+    public static final String SERVICE_ADDCOMMENT = "/index.php/Api/Serve/evaluateService";//服务评论
+    public static final String SEARCH_RECOMMEND = "/index.php/Api/Public/homeSearchRecommend";//搜索推荐数据
     //评论
     public static final String COMMENT_DELETE = "/index.php/Api/Public/delMsg";//删除评论
     public static final String COMMENT_SUPPORT = "/index.php/Api/Public/giveLike";//评论点赞，取消点赞
@@ -72,7 +74,7 @@ public class Urls {
     public static final String BUS_LIST = "/index.php/Api/Goods/getCartList";//购物车列表
     public static final String ORDER_PAY = "/index.php/Api/Orders/payOrder";//支付订单
     public static final String COMMENT_SHOP_LIST = "/index.php/Api/Goods/getGoodsCommentList";//商品评论列表
-    public static final String ORDER_COMMENT = "/index.php/Api/Orders/evaluOrder";//评价订单
+    public static final String ORDER_COMMENT = "/index.php/Api/Orders/evaluateOrder";//评价订单
     public static final String ORDER_COMMIT = "/index.php/Api/Orders/submitUserOrder";//提交订单
     public static final String ORDER_LIST = "/index.php/Api/Orders/getUserOrders";//订单列表
     public static final String BUS_ADD_CUT = "/index.php/Api/Goods/handleToCart";//购物车数量增加减少
@@ -84,6 +86,8 @@ public class Urls {
     public static final String ADDRESS_ADD = "/index.php/Api/Address/addAddress";//添加收货地址
     public static final String ORDER_DELETE = "/index.php/Api/Orders/cancelOrder";//取消待付款，待支付订单
     public static final String ADDRESS_EDIT = "/index.php/Api/Address/editAddress";//编辑收货地址
+    public static final String CONFIRM_TAKEGOOD = "/index.php/Api/Orders/confirmReceiveGoods";//确认收货
+    public static final String DELETE_DONEORDER = "/index.php/Api/Orders/deleteFinishOrder";//删除已完成订单
     //服务
     public static final String SERVE_DETAIL = "/index.php/Api/Serve/getServeDetail";//服务详情
     public static final String SERVE_COMMENT_LIST = "/index.php/Api/Serve/getServiceComments";//服务评论列表

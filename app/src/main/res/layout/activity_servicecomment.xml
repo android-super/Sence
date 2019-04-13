@@ -74,6 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="19dp"
             android:text="非常差"
+            android:id="@+id/tv_type_servicecomment"
             android:textColor="#999999"
             android:textSize="@dimen/sp_12"/>
 
@@ -112,7 +113,7 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:layout_marginRight="20dp"
-                    android:scaleType="center"
+                    android:scaleType="centerCrop"
                     android:layout_marginTop="10dp"
                     android:id="@+id/iv_imgone_servicecomment"
                     android:src="@drawable/comment_tianjia"/>
@@ -133,7 +134,7 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
                     android:id="@+id/iv_imgtwe_servicecomment"
-                    android:scaleType="center"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/comment_yi"/>
                 <ImageView
                     android:layout_width="20dp"
@@ -152,7 +153,7 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
                     android:id="@+id/iv_imgthress_servicecomment"
-                    android:scaleType="center"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/comment_er"/>
                 <ImageView
                     android:layout_width="20dp"

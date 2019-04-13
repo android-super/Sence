@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.orhanobut.logger.Logger;
 import com.sence.R;
 import com.sence.activity.OrderCommentActivity;
@@ -64,24 +65,28 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
         } else if ("4".equals(list.get(position).getStatus())) {
             holder.mSevice.setVisibility(View.GONE);
             holder.mCancel.setText("查看订单");
-            holder.mAlipay.setText("写评价");
-            holder.mState.setText("待支付");
+            holder.mAlipay.setText("评价");
+            holder.mState.setText("写评价");
         }else if ("5".equals(list.get(position).getStatus())) {
-            holder.mLinearLayout.setVisibility(View.GONE);
+            holder.mSevice.setVisibility(View.GONE);
+            holder.mAlipay.setVisibility(View.GONE);
+            holder.mCancel.setText("再次购买");
             holder.mState.setText("用户关闭");
         }else if ("6".equals(list.get(position).getStatus())) {
-            holder.mLinearLayout.setVisibility(View.GONE);
+            holder.mSevice.setVisibility(View.GONE);
+            holder.mAlipay.setVisibility(View.GONE);
+            holder.mCancel.setText("再次购买");
             holder.mState.setText("后台关闭");
         }else if ("7".equals(list.get(position).getStatus())) {
             holder.mSevice.setVisibility(View.GONE);
             holder.mAlipay.setVisibility(View.GONE);
             holder.mState.setText("已完成");
-            holder.mCancel.setText("再次购买");
+            holder.mCancel.setText("删除订单");
         }else if ("8".equals(list.get(position).getStatus())) {
             holder.mSevice.setVisibility(View.GONE);
             holder.mAlipay.setVisibility(View.GONE);
             holder.mState.setText("系统取消");
-            holder.mCancel.setText("删除订单");
+            holder.mCancel.setText("再次购买");
         }
         MyOrderItemAdapter myOrderItemAdapter = new MyOrderItemAdapter(context);
         LinearLayoutManager linearLayout = new LinearLayoutManager(context);
@@ -99,15 +104,26 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
                 if ("4".equals(list.get(position).getStatus())||"3".equals(list.get(position).getStatus())||"2".equals(list.get(position).getStatus())) {
                     Intent intent = new Intent(context, OrderDetailsActivity.class);
                     intent.putExtra("id", list.get(position).getId());
-                    intent.putExtra("type", list.get(position).getStatusMsg());
+                    intent.putExtra("type", list.get(position).getStatus());
                     context.startActivity(intent);
                 } else if("5".equals(list.get(position).getStatus())){
-
+                    Intent intent = new Intent(context, OrderDetailsActivity.class);
+                    intent.putExtra("id", list.get(position).getId());
+                    intent.putExtra("type", list.get(position).getStatus());
+                    context.startActivity(intent);
                 }else if("6".equals(list.get(position).getStatus())){
-
+                    Intent intent = new Intent(context, OrderDetailsActivity.class);
+                    intent.putExtra("id", list.get(position).getId());
+                    intent.putExtra("type", list.get(position).getStatus());
+                    context.startActivity(intent);
                 }else if("7".equals(list.get(position).getStatus())){
-
-                }else{
+                    DeleteOreder(position);
+                }else if("8".equals(list.get(position).getStatus())){
+                    Intent intent = new Intent(context, OrderDetailsActivity.class);
+                    intent.putExtra("id", list.get(position).getId());
+                    intent.putExtra("type", list.get(position).getStatus());
+                    context.startActivity(intent);
+                }else if("1".equals(list.get(position).getStatus())){
                     View view = View.inflate(context, R.layout.alter_deleteorder, null);
                     final AlertDialog alertDialog = new AlertDialog.Builder(context).create();
                     alertDialog.setView(view);
@@ -136,6 +152,7 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
                                 @Override
                                 public void onSuccess(String o, String msg) {
                                     Logger.e("msg==========" + msg);
+                                    ToastUtils.showShort(msg);
                                     listener.delete(position);
                                 }
                             });
@@ -152,12 +169,15 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
                 if ("4".equals(list.get(position).getStatus())) {
                     Intent intent = new Intent(context, OrderCommentActivity.class);
                     intent.putExtra("url", list.get(position).getGoods().get(0).getImg());
+                    intent.putExtra("id", list.get(position).getId());
                     context.startActivity(intent);
                     return;
+                }else if("3".equals(list.get(position).getStatus())){
+                    ConfirmTakeGood(position);
                 }else{
                     Intent intent = new Intent(context, OrderDetailsActivity.class);
                     intent.putExtra("id", list.get(position).getId());
-                    intent.putExtra("type", list.get(position).getStatusMsg());
+                    intent.putExtra("type", list.get(position).getStatus());
                     context.startActivity(intent);
                 }
 
@@ -168,8 +188,51 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
             public void onClick(View v) {
                 Intent intent = new Intent(context, OrderDetailsActivity.class);
                 intent.putExtra("id", list.get(position).getId());
-                intent.putExtra("type", list.get(position).getStatusMsg());
+                intent.putExtra("type", list.get(position).getStatus());
                 context.startActivity(intent);
+            }
+        });
+    }
+
+    private void ConfirmTakeGood(final int position) {
+        HttpManager.getInstance().PlayNetCode(HttpCode.CONFIRM_TAKEGOOD, new ROrderDetailsBean(list.get(position).getId(), LoginStatus.getUid())).request(new ApiCallBack<String>() {
+
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+            }
+
+            @Override
+            public void onSuccess(final String o, String msg) {
+                Logger.e("msg==========" + msg + o);
+                ToastUtils.showShort(msg);
+                listener.delete(position);
+            }
+        });
+    }
+    private void DeleteOreder(final int position) {
+        HttpManager.getInstance().PlayNetCode(HttpCode.DELETE_DONEORDER, new ROrderDetailsBean(list.get(position).getId(), LoginStatus.getUid())).request(new ApiCallBack<String>() {
+
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+            }
+
+            @Override
+            public void onSuccess(final String o, String msg) {
+                Logger.e("msg==========" + msg + o);
+                ToastUtils.showShort(msg);
+                listener.delete(position);
             }
         });
     }

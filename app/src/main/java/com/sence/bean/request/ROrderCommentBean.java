@@ -2,18 +2,25 @@ package com.sence.bean.request;
 
 import com.sence.bean.base.BaseImageRequestBean;
 
-public class RServiceCommentBean extends BaseImageRequestBean {
+public class ROrderCommentBean extends BaseImageRequestBean {
     private String uid;
-    private String sid;
     private String star;
     private String content;
+    private String oid;
 
+    public String getOid() {
+        return oid;
+    }
 
-    public RServiceCommentBean(String uid, String sid, String star, String content) {
+    public void setOid(String oid) {
+        this.oid = oid;
+    }
+
+    public ROrderCommentBean(String uid, String star, String content,  String oid) {
         this.uid = uid;
-        this.sid = sid;
         this.star = star;
         this.content = content;
+        this.oid = oid;
     }
 
     public String getUid() {
@@ -22,14 +29,6 @@ public class RServiceCommentBean extends BaseImageRequestBean {
 
     public void setUid(String uid) {
         this.uid = uid;
-    }
-
-    public String getSid() {
-        return sid;
-    }
-
-    public void setSid(String sid) {
-        this.sid = sid;
     }
 
     public String getStar() {

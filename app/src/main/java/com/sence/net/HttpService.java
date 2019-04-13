@@ -20,6 +20,9 @@ public interface HttpService {
     @GET(Urls.SYSTEM_TIME)
     Observable<BaseResponseBean<String>> getSystemTime();//获取系统时间
 
+    @POST(Urls.SEARCH_RECOMMEND)
+    Observable<BaseResponseBean<List<PSearchRecommendBean>>> SearchRecommend();//搜索推荐数据
+
     @FormUrlEncoded
     @POST(Urls.USER_IS_REGISTER)
     Observable<BaseResponseBean<String>> IsRegister(@FieldMap Map<String, Object> map);//用户是否注册
@@ -33,16 +36,20 @@ public interface HttpService {
     Observable<BaseResponseBean<String>> AddressEdit(@FieldMap Map<String, Object> map);//编辑收货地址
 
     @FormUrlEncoded
+    @POST(Urls.CONFIRM_TAKEGOOD)
+    Observable<BaseResponseBean<String>> ConfirmTakeGood(@FieldMap Map<String, Object> map);//确认收货
+
+    @FormUrlEncoded
+    @POST(Urls.DELETE_DONEORDER)
+    Observable<BaseResponseBean<String>> Delete_DoneOrder(@FieldMap Map<String, Object> map);//确认收货
+
+    @FormUrlEncoded
     @POST(Urls.ORDER_LIST)
     Observable<BaseResponseBean<PMyOrderBean>> OrderList(@FieldMap Map<String, Object> map);//订单列表
 
     @FormUrlEncoded
     @POST(Urls.ADDRESS_LIST)
     Observable<BaseResponseBean<List<PManageAddressBean>>> AddressList(@FieldMap Map<String, Object> map);//用户地址列表
-
-    @FormUrlEncoded
-    @POST(Urls.ORDER_COMMENT)
-    Observable<BaseResponseBean<String>> OrderComment(@FieldMap Map<String, Object> map);//评价订单
 
     @FormUrlEncoded
     @POST(Urls.ADDRESS_DELETE)
@@ -152,6 +159,10 @@ public interface HttpService {
     @POST(Urls.COMMENT_DELETE)
     Observable<BaseResponseBean<String>> CommentDelete(@FieldMap Map<String, Object> map);//删除评论
 
+    @Multipart
+    @POST(Urls.SERVICE_ADDCOMMENT)
+    Observable<BaseResponseBean<String>> SearviceAddComment(@PartMap Map<String, RequestBody> map,@Part List<MultipartBody.Part> partList);//添加服务评价
+
     @FormUrlEncoded
     @POST(Urls.MAIN_NOTE_DETAIL)
     Observable<BaseResponseBean<PNoteDetailBean>> NoteDetail(@FieldMap Map<String, Object> map);//笔记详情
@@ -258,17 +269,21 @@ public interface HttpService {
     @POST(Urls.ORDER_COMMIT)
     Observable<BaseResponseBean<PConfirmOrderBean>> OrderCommit(@FieldMap Map<String, Object> map);//提交订单
 
-    @FormUrlEncoded
+    @Multipart
     @POST(Urls.ORDER_COMMENT)
-    Observable<BaseResponseBean<Object>> CommentOrder(@FieldMap Map<String, RequestBody> map);//添加订单评论
+    Observable<BaseResponseBean<String>> CommentOrder(@PartMap Map<String, RequestBody> map,@Part List<MultipartBody.Part> partList);//订单评论
 
     @FormUrlEncoded
     @POST(Urls.USER_EDIT)
-    Observable<BaseResponseBean<Object>> UserEdit(@FieldMap Map<String, RequestBody> map);//添加订单评论
+    Observable<BaseResponseBean<Object>> UserEdit(@FieldMap Map<String, RequestBody> map);//编辑个人资料
 
     @FormUrlEncoded
     @POST(Urls.TIME_REMAINING)
     Observable<BaseResponseBean<PTimeRemainingBean>> Time_Remaining(@FieldMap Map<String, RequestBody> map);//订单剩余时间
+
+    @FormUrlEncoded
+    @POST(Urls.ORDER_COMMENT_SUPPORT)
+    Observable<BaseResponseBean<String>> OrderCommentSupport(@FieldMap Map<String, RequestBody> map);//评论点赞
 
     @FormUrlEncoded
     @POST(Urls.USER_GOOD_LIST)

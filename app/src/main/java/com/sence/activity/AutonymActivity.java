@@ -114,10 +114,22 @@ public class AutonymActivity extends BaseActivity {
                 SharedPreferencesUtil.getInstance().putString("id_status", "2");
                 llHeadAutonym.setVisibility(View.GONE);
                 llShowAutonym.setVisibility(View.VISIBLE);
-                SharedPreferencesUtil.getInstance().putString("real_name", etNameAutonym.getText().toString().trim());
-                SharedPreferencesUtil.getInstance().putString("id_card", etIdentityAutonym.getText().toString().trim());
-                tvNameAutonym.setText(etNameAutonym.getText().toString().trim());
-                tvIdentityAutonym.setText(etIdentityAutonym.getText().toString().trim());
+                String name = etNameAutonym.getText().toString().trim();
+                String autonym = etIdentityAutonym.getText().toString().trim();
+                StringBuffer userName = null;
+                for (int i = 0; i <name.length() ; i++) {
+                    if(i==0){
+                        userName.append(name.substring(0,1));
+                    }else{
+                        userName.append("*");
+                    }
+                }
+                String autonymhead = autonym.substring(0, 1);
+                String autonymtail = autonym.substring(autonym.length() - 1, autonym.length());
+                SharedPreferencesUtil.getInstance().putString("real_name",userName.toString() );
+                SharedPreferencesUtil.getInstance().putString("id_card", autonymhead+"**************"+autonymtail);
+                tvNameAutonym.setText(userName.toString());
+                tvIdentityAutonym.setText(autonymhead+"**************"+autonymtail);
             }
         });
     }

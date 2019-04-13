@@ -6,9 +6,9 @@
     android:background="@color/white"
     android:orientation="vertical">
     <ImageView
-        android:layout_width="11dp"
-        android:layout_height="@dimen/sp_12"
-        android:layout_margin="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
         android:src="@drawable/guanbi"
         android:id="@+id/iv_back_pay"
         android:layout_gravity="right"/>

@@ -13,14 +13,20 @@
             app:tool_cover_background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="50dp"/>
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/srl_layout_manageaddress">
+
 
     <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:background="@color/white"
-            android:layout_weight="1"
-            android:id="@+id/rlv_address_manageaddress"/>
 
+            android:id="@+id/rlv_address_manageaddress"/>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
     <TextView
             android:layout_width="match_parent"
             android:layout_height="50dp"

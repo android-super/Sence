@@ -18,6 +18,7 @@ import com.sence.adapter.SearchShopAdapter;
 import com.sence.base.BaseActivity;
 import com.sence.bean.request.RSearchBean;
 import com.sence.bean.response.PSearchBean;
+import com.sence.bean.response.PSearchRecommendBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
@@ -56,7 +57,7 @@ public class SearchActivity extends BaseActivity {
     LinearLayout llShopSearch;
     @BindView(R.id.ll_friend_search)
     LinearLayout llFriendSearch;
-    private List<String> list = new ArrayList<>();
+    private List<PSearchRecommendBean> list = new ArrayList<>();
     private SearchFriendAdapter mSearchFriendAdapter;
     private SearchShopAdapter mSearchShopAdapter;
 
@@ -68,9 +69,6 @@ public class SearchActivity extends BaseActivity {
     @Override
     public void initView() {
         StatusBarUtil.setLightMode(this);
-    }
-
-    public void initData() {
         etContentSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -105,13 +103,7 @@ public class SearchActivity extends BaseActivity {
 
             }
         });
-        for (int i = 0; i < 10; i++) {
-            list.add("酒店年底阿森纳");
-            list.add("酒店法撒旦撒年底阿森纳");
-            list.add("酒店纳");
-            list.add("酒店年底阿萨芬撒森纳");
-        }
-        addList();
+
         mSearchFriendAdapter = new SearchFriendAdapter(SearchActivity.this);
         recycleSearchfriend.setLayoutManager(new LinearLayoutManager(SearchActivity.this));
         recycleSearchfriend.setAdapter(mSearchFriendAdapter);
@@ -128,7 +120,33 @@ public class SearchActivity extends BaseActivity {
                 doHttp(data);
             }
         });
+    }
 
+    public void initData() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.SEARCH_RECOMMEND).request(new ApiCallBack<List<PSearchRecommendBean>>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(List<PSearchRecommendBean> o, String msg) {
+                Logger.e("msg==========" + msg);
+                if(o.size()>0){
+                    list = o;
+                    addList();
+                }
+            }
+        });
+        String content = etContentSearch.getText().toString().trim();
+        if(!TextUtils.isEmpty(content)){
+            doHttp(content);
+        }
     }
 
 
@@ -176,7 +194,7 @@ public class SearchActivity extends BaseActivity {
         for (int i = 0; i < list.size(); i++) {
             TextView tv = new TextView(this);
             tv.setPadding(25, 8, 25, 8);
-            tv.setText(list.get(i));
+            tv.setText(list.get(i).getName());
             tv.setMaxLines(1);
             tv.setEllipsize(TextUtils.TruncateAt.END);
             tv.setTextColor(Color.parseColor("#333333"));

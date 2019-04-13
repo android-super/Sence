@@ -111,6 +111,10 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
     private Button btPayPay;
     private boolean isstart = true;
     private int time = 1800;
+    private String idAddress;
+    private String address;
+    private String nameAddress;
+    private String phoneAddress;
 
 
     @Override
@@ -150,11 +154,11 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
             tvSpriceOrderdetails.setVisibility(View.GONE);
             btSubmintOrderdetails.setBackgroundResource(R.drawable.shape_myorder_bottom);
             btSubmintOrderdetails.setTextColor(Color.parseColor("#838383"));
-            btSubmintOrderdetails.setText("删除订单");
+            btSubmintOrderdetails.setText("再次购买");
         } else if ("7".equals(type)) {
             tvTextOrderdetails.setVisibility(View.GONE);
             tvSpriceOrderdetails.setVisibility(View.GONE);
-            btSubmintOrderdetails.setText("再次购买");
+            btSubmintOrderdetails.setText("删除订单");
         }
         bottomSheetDialog();
         layoutHead.setRightOnClick(new View.OnClickListener() {
@@ -200,7 +204,17 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
     }
 
     public void initData() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_DETAIL, new ROrderDetailsBean(id, "1")).request(new ApiCallBack<POrderDetailsBean>() {
+        boolean isCheckOrderAddress = LoginStatus.getIsCheckOrderAddress();
+        if(isCheckOrderAddress){
+            idAddress = LoginStatus.getIdAddress();
+            address = LoginStatus.getAddress();
+            nameAddress = LoginStatus.getNameAddress();
+            phoneAddress = LoginStatus.getPhoneAddress();
+            tvAddressOrderdetails.setText(address);
+            tvPhoneOrderdetails.setText(phoneAddress);
+            tvNameOrderdetails.setText(nameAddress);
+        }
+        HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_DETAIL, new ROrderDetailsBean(id, LoginStatus.getUid())).request(new ApiCallBack<POrderDetailsBean>() {
 
 
             @Override
@@ -237,8 +251,47 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
             }
         });
     }
+    private void ConfirmTakeGood() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.CONFIRM_TAKEGOOD, new ROrderDetailsBean(id, LoginStatus.getUid())).request(new ApiCallBack<String>() {
 
 
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+            }
+
+            @Override
+            public void onSuccess(final String o, String msg) {
+                Logger.e("msg==========" + msg + o);
+                ToastUtils.showShort(msg);
+                finish();
+            }
+        });
+    }
+    private void DeleteOreder() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.DELETE_DONEORDER, new ROrderDetailsBean(id, LoginStatus.getUid())).request(new ApiCallBack<String>() {
+
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+            }
+
+            @Override
+            public void onSuccess(final String o, String msg) {
+                Logger.e("msg==========" + msg + o);
+                ToastUtils.showShort(msg);
+            }
+        });
+    }
     private void CancelOreder() {
 
         HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_DELETE, new ROrderDetailsBean(id, LoginStatus.getUid())).request(new ApiCallBack<String>() {
@@ -271,28 +324,34 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_address_orderdetails:
-                startActivity(new Intent(OrderDetailsActivity.this, ManageAddressActivity.class));
+                if("1".equals(type)){
+                    Intent intentAddress = new Intent(OrderDetailsActivity.this, ManageAddressActivity.class);
+                    intentAddress.putExtra("type", "order");
+                    startActivity(intentAddress);
+                }
                 break;
             case R.id.bt_submint_orderdetails:
-                if ("写评价".equals(type)) {
-                    Intent intent = new Intent(OrderDetailsActivity.this, OrderDetailsActivity.class);
+                if ("4".equals(type)) {
+                    Intent intent = new Intent(OrderDetailsActivity.this, OrderCommentActivity.class);
                     intent.putExtra("id", bean.getId());
-                    intent.putExtra("type", type);
+                    intent.putExtra("url", bean.getGoods().get(0).getImg());
                     startActivity(intent);
                     finish();
-                } else if ("待收货".equals(type)) {
+                } else if ("3".equals(type)) {
+                    ConfirmTakeGood();
 
-                } else if ("待发货".equals(type)) {
+                } else if ("2".equals(type)) {
 
-                } else if ("待支付".equals(type)) {
+                } else if ("1".equals(type)) {
                     mBottomSheetDialog.show();
                     if (isstart) {
                         getTime();
                     }
-                } else if ("交易关闭".equals(type)) {
-
-                } else if ("交易成功".equals(type)) {
-
+                } else if ("5".equals(type)||"6".equals(type)||"8".equals(type)) {
+                    Intent intent = new Intent(OrderDetailsActivity.this,MyInfoActivity.class);
+                    startActivity(intent);
+                } else if ("7".equals(type)) {
+                    DeleteOreder();
                 }
                 break;
         }

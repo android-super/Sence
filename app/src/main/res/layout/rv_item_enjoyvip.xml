@@ -7,8 +7,8 @@
               android:orientation="vertical">
 
     <RelativeLayout
-        android:layout_width="155dp"
-        android:layout_height="130dp">
+        android:layout_width="match_parent"
+        android:layout_height="155dp">
 
         <com.sence.view.NiceImageView
             android:id="@+id/iv_img_enjoyvip_item"
@@ -18,21 +18,35 @@
             android:scaleType="fitXY"
             android:src="@drawable/hint_img"
             />
-        <ImageView
+        <com.sence.view.NiceImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/enjoyvip_yiying"
-            android:layout_alignParentBottom="true"/>
+            android:scaleType="centerCrop"
+            app:corner_bottom_left_radius="2dp"
+            app:corner_bottom_right_radius="2dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="0dp"
+            android:src="@drawable/yiying"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="5dp"
-            android:layout_marginBottom="6dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="11dp"
+            android:layout_marginBottom="8dp"
             android:textColor="#ffffff"
             android:textSize="10sp"
             android:id="@+id/tv_num_enjoyvip_item"
             android:text="体验 32次"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="11dp"
+            android:id="@+id/recycle_enjoyvipimg"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="6dp"
+            android:layout_marginBottom="8dp"/>
+
+
     </RelativeLayout>
 
     <LinearLayout
@@ -46,12 +60,16 @@
             android:layout_marginTop="8dp"
             android:maxEms="4"
             android:ellipsize="end"
-            android:background="@drawable/enjoyvip_biankuang"
+            android:background="@drawable/shape_serive_bg"
+            android:textColor="#666666"
+            android:paddingLeft="7dp"
+            android:paddingRight="6dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="@dimen/dp_4"
             android:gravity="center"
             android:text="万豪旅游"
             android:maxLines="1"
             android:singleLine="true"
-            android:textColor="@color/theme_green"
             android:textSize="10sp"/>
         <TextView
             android:id="@+id/tv_tlabel_enjoyvip_item"
@@ -62,20 +80,18 @@
             android:singleLine="true"
             android:ellipsize="end"
             android:maxLines="1"
-            android:background="@drawable/enjoyvip_biankuang"
             android:gravity="center"
             android:layout_marginLeft="5dp"
             android:text="万豪旅游"
-            android:textColor="@color/theme_green"
+            android:background="@drawable/shape_serive_bg"
+            android:textColor="#666666"
+            android:paddingLeft="7dp"
+            android:paddingRight="6dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="@dimen/dp_4"
             android:textSize="10sp"/>
     </LinearLayout>
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/recycle_enjoyvipimg"
-        android:layout_marginTop="6dp">
 
-    </androidx.recyclerview.widget.RecyclerView>
 
 
 </LinearLayout>

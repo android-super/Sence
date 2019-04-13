@@ -18,9 +18,11 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.orhanobut.logger.Logger;
 import com.sence.R;
 import com.sence.base.BaseActivity;
-import com.sence.bean.request.RServiceCommentBean;
+import com.sence.bean.request.RImageListBean;
+import com.sence.bean.request.ROrderCommentBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
@@ -81,8 +83,11 @@ public class OrderCommentActivity extends BaseActivity implements View.OnClickLi
     private String url;
     private List<LocalMedia> selectList = new ArrayList<>();
     private BottomSheetDialog mBottomSheetDialog;
-    private String star="1";
+    private String star = "1";
     private static String path = "/sdcard/myHead/";// sd路径
+    private File[] files;
+    private String id;
+
     @Override
     public int onActLayout() {
         return R.layout.activity_shopcomment;
@@ -93,7 +98,8 @@ public class OrderCommentActivity extends BaseActivity implements View.OnClickLi
         StatusBarUtil.setLightMode(this);
         Intent intent = getIntent();
         url = intent.getStringExtra("url");
-        GlideUtils.getInstance().loadHead( url, ivShopimgShopcomment);
+        id = intent.getStringExtra("id");
+        GlideUtils.getInstance().loadHead(url, ivShopimgShopcomment);
         View view = View.inflate(this, R.layout.bottom_dialog, null);
         TextView mTakePhoto = (TextView) view.findViewById(R.id.tv_takephoto);
         TextView mPhoto = (TextView) view.findViewById(R.id.tv_photo);
@@ -120,19 +126,33 @@ public class OrderCommentActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void doHttp() {
-        File[] files = new File[selectList.size()];
-        for (int i = 0; i <selectList.size() ; i++) {
-            Log.i("aaa",selectList.get(i).getCompressPath());
-            files[i] = new File(selectList.get(i).getCompressPath());
+        if (selectList.size() == 0) {
+            files = null;
+        } else {
+            files = new File[selectList.size()];
+            for (int i = 0; i < selectList.size(); i++) {
+                Log.i("aaa", selectList.get(i).getCompressPath());
+                files[i] = new File(selectList.get(i).getCompressPath());
+            }
         }
-        String content = etContentShopcomment.getText().toString();
+        final String content = etContentShopcomment.getText().toString();
         if (TextUtils.isEmpty(content)) {
             ToastUtils.showShort("亲，你不准备说点什么吗？");
             return;
         }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                uploadImg(content, files);
+            }
+        }).start();
 
-        HttpManager.getInstance().PlayNetCode(HttpCode.COMMENT_ADD, new RServiceCommentBean(LoginStatus.getUid(), star,
-                content,files)).request(new ApiCallBack() {
+
+    }
+
+    public void uploadImg(String content, File[] imgs) {
+        HttpManager.getInstance().PlayNetCode(HttpCode.COMMENT_ADD, new ROrderCommentBean(LoginStatus.getUid(), star, content, id
+        ), new RImageListBean(imgs)).request(new ApiCallBack<String>() {
             @Override
             public void onFinish() {
 
@@ -144,10 +164,12 @@ public class OrderCommentActivity extends BaseActivity implements View.OnClickLi
             }
 
             @Override
-            public void onSuccess(Object o, String msg) {
+            public void onSuccess(String o, String msg) {
+                Logger.e("msg==========" + msg);
+                ToastUtils.showShort(msg);
+                finish();
             }
         });
-
     }
 
     @Override

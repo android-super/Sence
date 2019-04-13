@@ -151,7 +151,15 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
         llShopcommendShopdetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ShopDetailsActivity.this, ShopCommendActivity.class));
+                Intent intentCommend = new Intent(ShopDetailsActivity.this, ShopCommendActivity.class);
+                intentCommend.putExtra("id", bean.getId());
+                intentCommend.putExtra("num", bean.getCartNum());
+                intentCommend.putExtra("postage", bean.getPostage());
+                intentCommend.putExtra("price", bean.getPrice());
+                intentCommend.putExtra("name", bean.getName());
+                intentCommend.putExtra("img", bean.getImg());
+                intentCommend.putExtra("username", bean.getUsername());
+                startActivity(intentCommend);
             }
         });
         ivBackShopdetails.setOnClickListener(new View.OnClickListener() {
@@ -218,8 +226,8 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
 
             @Override
             public void onSuccess(PShopDetailsBean o, String msg) {
-                imgs = o.getImgs();
                 Logger.e("msg==========" + msg);
+                imgs = o.getImgs();
                 bean = o;
                 if (o.getComment().size() > 0) {
                     mShopDetailsCommendAdapter.setList(o.getComment());
@@ -236,13 +244,18 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                         ImageView imageView = new ImageView(ShopDetailsActivity.this);
                         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                         GlideUtils.getInstance().loadHead( imgs.get(i), imageView);
+                        list.add(imageView);
                     }
                     shopDetailsImgAdapter.setList(list);
                 }
-                tvOpriceShopdetails.setText(new Integer(o.getPrice()) + new Integer(o.getVprice()) + "");
-                tvCpriceShopdetails.setText(o.getPrice());
+                tvOpriceShopdetails.setText(o.getPrice());
+                if("0".equals(o.getVprice())){
+                    tvCpriceShopdetails.setText(o.getPrice());
+                }else{
+                    tvCpriceShopdetails.setText(o.getVprice());
+                }
                 tvDiscountShopdetails.setText(o.getDiscount() + "折");
-                if (new Integer(o.getVprice()) == 0) {
+                if ("0".equals(o.getVprice())) {
                     tvVipShopdetails.setVisibility(View.GONE);
                 }
                 tvNameShopdetails.setText(o.getName());
@@ -363,7 +376,6 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
             case R.id.tv_buy_shopdetails:
                 bgAlpha(0.5f);
                 popupWindow.showAtLocation(contentView, Gravity.BOTTOM, 0, 0);
-//                mBottomSheetDialog.show();
 
                 break;
             case R.id.ll_service_shopdetails:
@@ -378,7 +390,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void addShop() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.BUS_ADD, new RBusAddBean(bean.getUid(), LoginStatus.getUid())).request(new ApiCallBack() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.BUS_ADD, new RBusAddBean(bean.getId(), LoginStatus.getUid())).request(new ApiCallBack() {
             @Override
             public void onFinish() {
 
@@ -414,7 +426,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
             case R.id.bt_buyshop_confirm:
                 popupWindow.dismiss();
                 Intent intentBuy = new Intent(ShopDetailsActivity.this, ShopConfirmOrderActivity.class);
-                intentBuy.putExtra("id", bean.getUid());
+                intentBuy.putExtra("id", bean.getId());
                 intentBuy.putExtra("num", mNum.getText().toString());
                 intentBuy.putExtra("postage", bean.getPostage());
                 intentBuy.putExtra("price", bean.getPrice());

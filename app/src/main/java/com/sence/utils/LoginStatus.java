@@ -74,4 +74,8 @@ public class LoginStatus {
         boolean iscleck = SharedPreferencesUtil.getInstance().getBoolean("ischeck_shopaddress");
         return iscleck;
     }
+    public static boolean getIsCheckOrderAddress() {
+        boolean iscleck = SharedPreferencesUtil.getInstance().getBoolean("ischeck_orderaddress");
+        return iscleck;
+    }
 }

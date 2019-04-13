@@ -1,8 +1,10 @@
 package com.sence.activity;
 
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.amap.api.location.AMapLocation;
@@ -14,13 +16,18 @@ import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.Marker;
+import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
+import com.amap.api.services.geocoder.GeocodeResult;
+import com.amap.api.services.geocoder.GeocodeSearch;
+import com.amap.api.services.geocoder.RegeocodeResult;
 import com.sence.R;
 import com.sence.utils.StatusBarUtil;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MapActivity extends AppCompatActivity implements LocationSource, AMapLocationListener {
+public class MapActivity extends AppCompatActivity implements LocationSource, AMapLocationListener, GeocodeSearch.OnGeocodeSearchListener {
 
 
     private MapView mvMap;
@@ -28,7 +35,8 @@ public class MapActivity extends AppCompatActivity implements LocationSource, AM
     private OnLocationChangedListener mListener;
     private AMapLocationClient mlocationClient;
     private AMapLocationClientOption mLocationOption;
-    private String map;
+    private String map = "";
+    private GeocodeSearch geocoderSearch;
 
 
     @Override
@@ -50,16 +58,29 @@ public class MapActivity extends AppCompatActivity implements LocationSource, AM
         myLocationStyle.interval(2000); //设置连续定位模式下的定位间隔，只在连续定位模式下生效，单次定位模式下不会生效。单位为毫秒。
         aMap.setMyLocationStyle(myLocationStyle);//设置定位蓝点的Style
 //aMap.getUiSettings().setMyLocationButtonEnabled(true);设置默认定位按钮是否显示，非必需设置。
-        aMap.setMyLocationEnabled(true);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false
-        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);
-        // 设置定位监听
+        aMap.setMyLocationEnabled(true);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
+        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_MAP_ROTATE);
+//        myLocationStyle.showMyLocation(true);//设置是否显示定位小蓝点，用于满足只想使用定位，不想使用定位小蓝点的场景
+
+// 设置定位监听
         aMap.setLocationSource(this);
 // 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
         aMap.setMyLocationEnabled(true);
 // 设置定位的类型为定位模式，有定位、跟随或地图根据面向方向旋转几种
-//        aMap.setMyLocationType(AMap.LOCATION_TYPE_LOCATE);
-    }
+        if(!TextUtils.isEmpty(map)){
+            String[] split = map.split(",");
+            LatLng latLng = new LatLng(Integer.parseInt(split[0]),Integer.parseInt(split[1]));
+            final Marker marker = aMap.addMarker(new MarkerOptions().position(latLng).title("北京").snippet("当前位置"));
+        }
+        geocoderSearch = new GeocodeSearch(this);
+        geocoderSearch.setOnGeocodeSearchListener(this);
+        aMap.setOnMyLocationChangeListener(new AMap.OnMyLocationChangeListener() {
+            @Override
+            public void onMyLocationChange(Location location) {
 
+            }
+        });
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -138,5 +159,15 @@ public class MapActivity extends AppCompatActivity implements LocationSource, AM
                 Log.e("AmapErr", errText);
             }
         }
+    }
+
+    @Override
+    public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
+
+    }
+
+    @Override
+    public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
+
     }
 }

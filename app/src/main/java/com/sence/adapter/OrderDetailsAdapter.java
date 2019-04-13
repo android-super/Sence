@@ -1,12 +1,14 @@
 package com.sence.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.sence.R;
+import com.sence.activity.ShopDetailsActivity;
 import com.sence.bean.response.POrderDetailsBean;
 import com.sence.utils.GlideUtils;
 import com.sence.view.NiceImageView;
@@ -38,13 +40,20 @@ public class OrderDetailsAdapter extends RecyclerView.Adapter<OrderDetailsAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull OrderDetailsAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull OrderDetailsAdapter.ViewHolder holder, final int position) {
 
         holder.mName.setText(list.get(position).getName());
         holder.mPrice.setText("￥"+list.get(position).getPrice());
         holder.mNum.setText("х"+list.get(position).getNum());
         GlideUtils.getInstance().loadHead( list.get(position).getImg(),holder.mImg);
-
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ShopDetailsActivity.class);
+                intent.putExtra("id",list.get(position).getId());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

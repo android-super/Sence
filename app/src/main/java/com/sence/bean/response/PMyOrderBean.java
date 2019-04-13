@@ -4,14 +4,13 @@ import java.util.List;
 
 public class PMyOrderBean {
 
-
     /**
      * allNum : 2
      * waitPay : 2
      * waitSend : 0
      * waitConfirm : 0
      * waitEvlua : 0
-     * list : [{"status":"2","statusMsg":"等待支付","id":"2","addtime":"2019-03-18 17:28:46","needpay":"8","num":"4","goods":[{"gid":"1","price":"4","num":"2","name":"一号商品","img":""}],"custom":{"nick_name":"hhhh","avatar":"","id":"1","name":"hhhh"}},{"id":"1","addtime":"2019-03-18 17:28:46","needpay":"12","goods":{"gid":"2","price":"4","num":"3","name":"2号商品","img":""},"custom":{"nick_name":"hhhh","avatar":"","id":"1","name":"hhhh"}}]
+     * list : [{"sellerUid":"1","status":"2","statusMsg":"等待支付","id":"2","addtime":"2019-03-18 17:28:46","needpay":"8","num":"4","goods":[{"gid":"1","price":"4","num":"2","name":"一号商品","img":""}],"custom":{"nick_name":"hhhh","avatar":"","id":"1","name":"hhhh"}},{"id":"1","addtime":"2019-03-18 17:28:46","needpay":"12","goods":{"gid":"2","price":"4","num":"3","name":"2号商品","img":""},"custom":{"nick_name":"hhhh","avatar":"","id":"1","name":"hhhh"}}]
      */
 
     private String allNum;
@@ -71,6 +70,7 @@ public class PMyOrderBean {
 
     public static class ListBean {
         /**
+         * sellerUid : 1
          * status : 2
          * statusMsg : 等待支付
          * id : 2
@@ -81,6 +81,7 @@ public class PMyOrderBean {
          * custom : {"nick_name":"hhhh","avatar":"","id":"1","name":"hhhh"}
          */
 
+        private String sellerUid;
         private String status;
         private String statusMsg;
         private String id;
@@ -89,6 +90,14 @@ public class PMyOrderBean {
         private String num;
         private CustomBean custom;
         private List<GoodsBean> goods;
+
+        public String getSellerUid() {
+            return sellerUid;
+        }
+
+        public void setSellerUid(String sellerUid) {
+            this.sellerUid = sellerUid;
+        }
 
         public String getStatus() {
             return status;

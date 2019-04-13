@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.sence.R;
 import com.sence.base.BaseActivity;
 import com.sence.utils.DataCleanManager;
+import com.sence.utils.SharedPreferencesUtil;
 import com.sence.utils.StatusBarUtil;
 import com.sence.view.PubTitle;
 
@@ -81,6 +82,7 @@ public class SettingActivity extends BaseActivity {
                 startActivity(new Intent(SettingActivity.this, AboutActivity.class));
                 break;
             case R.id.tv_quit_setting:
+                SharedPreferencesUtil.getInstance().putBoolean("is_login", false);
                 break;
         }
     }

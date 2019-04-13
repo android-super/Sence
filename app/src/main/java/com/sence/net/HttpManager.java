@@ -68,9 +68,6 @@ public class HttpManager<P> {
             case ORDER_LIST:
                 observable = httpService.OrderList(requestBean.getMap());
                 break;
-            case ORDER_COMMENT:
-                observable = httpService.OrderComment(requestBean.getMap());
-                break;
             case ADDRESS_LIST:
                 observable = httpService.AddressList(requestBean.getMap());
                 break;
@@ -95,11 +92,20 @@ public class HttpManager<P> {
             case SERVE_COMMENT_LIST:
                 observable = httpService.ServeCommentList(requestBean.getMap());
                 break;
+            case CONFIRM_TAKEGOOD:
+                observable = httpService.ConfirmTakeGood(requestBean.getMap());
+                break;
+            case DELETE_DONEORDER:
+                observable = httpService.Delete_DoneOrder(requestBean.getMap());
+                break;
             case ORDER_DETAIL:
                 observable = httpService.OrderDetail(requestBean.getMap());
                 break;
             case TIME_REMAINING:
                 observable = httpService.Time_Remaining(requestBean.getMap());
+                break;
+            case ORDER_COMMENT_SUPPORT:
+                observable = httpService.OrderCommentSupport(requestBean.getMap());
                 break;
             case USER_ENJOY_VIP:
                 observable = httpService.EnjoyVip(requestBean.getMap());
@@ -240,7 +246,10 @@ public class HttpManager<P> {
         HttpService httpService = HttpClientManager.Instance.httpService;
         switch (code) {
             case COMMENT_ADD:
-                observable = httpService.CommentOrder(requestBean.getMap());
+                observable = httpService.CommentOrder(requestBean.getMap(),fileRequestBean.getRequestImg());
+                break;
+            case SERVICE_ADDCOMMENT:
+                observable = httpService.SearviceAddComment(requestBean.getMap(),fileRequestBean.getRequestImg());
                 break;
             case USER_EDIT:
                 observable = httpService.UserEdit(requestBean.getMap());
@@ -263,6 +272,9 @@ public class HttpManager<P> {
         switch (code) {
             case GET_SYSTEM_TIME:
                 observable = HttpClientManager.Instance.httpService.getSystemTime();
+                break;
+            case SEARCH_RECOMMEND:
+                observable = HttpClientManager.Instance.httpService.SearchRecommend();
                 break;
 
         }

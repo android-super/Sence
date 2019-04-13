@@ -5,6 +5,7 @@ package com.sence.net;
  */
 public enum HttpCode {
     GET_SYSTEM_TIME,//获取系统消息
+    SEARCH_RECOMMEND,//搜索推荐数据
     BIND_CLIENT_ID,//绑定ClientId
     IS_REGISTER,//是否注册
     ADDRESS_ADD,//添加地址
@@ -34,9 +35,12 @@ public enum HttpCode {
     COMMENT_SHOP_LIST,//商品评论列表
     SERVE_COMMENT_LIST,//服务评论列表
     ORDER_DETAIL,//订单详情
+    CONFIRM_TAKEGOOD,//确认收货
+    DELETE_DONEORDER,//删除已完成订单
     TIME_REMAINING,//订单剩余时间
     ORDER_DELETE,//取消待付款，待支付订单
     USER_ENJOY_VIP,//尊享会员
+    ORDER_COMMENT_SUPPORT,//评论点赞
     USER_FOCUS_CANCEL,//取消关注
     USER_AUTH,//实名认证
     USER_INFO_DATA,//我的信息
@@ -54,6 +58,7 @@ public enum HttpCode {
     BANK_CARD,//我的银行卡列表
     BANK_LIST,//銀行卡列表
     BANK_ADD,//添加银行卡
+    SERVICE_ADDCOMMENT,//添加服务评价
     USER_CASH,//提现
     ORDER_COMMIT,//提交订单
     COMMENT_ADD,//添加评论（订单）

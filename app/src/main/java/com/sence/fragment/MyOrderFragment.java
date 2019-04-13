@@ -61,14 +61,14 @@ public class MyOrderFragment extends Fragment {
         mSmartRefreshLayout = getView().findViewById(R.id.srl_more_myorder);
         mMore = getView().findViewById(R.id.tv_more_myorder);
         mMyOrderAdapter = new MyOrderAdapter(getContext());
-        mSmartRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
-        mSmartRefreshLayout.setRefreshFooter(new ClassicsFooter(getActivity()));
+
         LinearLayoutManager linearLayout = new LinearLayoutManager(getContext());
         linearLayout.setOrientation(RecyclerView.VERTICAL);
-        loadData();
-        mSmartRefreshLayout.setEnableLoadMoreWhenContentNotFull(false);
         mRecyclerView.setLayoutManager(linearLayout);
         mRecyclerView.setAdapter(mMyOrderAdapter);
+        mSmartRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
+        mSmartRefreshLayout.setRefreshFooter(new ClassicsFooter(getActivity()));
+        mSmartRefreshLayout.setEnableLoadMoreWhenContentNotFull(false);
         mSmartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -83,7 +83,7 @@ public class MyOrderFragment extends Fragment {
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mSmartRefreshLayout.autoLoadMore();
+                mSmartRefreshLayout.finishRefresh();
                 page=1;
                 loadData();
             }
@@ -100,15 +100,17 @@ public class MyOrderFragment extends Fragment {
             public void delete(int i) {
                 listBeans.remove(i);
                 mMyOrderAdapter.setList(listBeans);
-                ToastUtils.showShort("取消成功");
                 ((MyOrderActivity)getActivity()).setTitlen(i,listBeans.size());
             }
         });
 
     }
 
-
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadData();
+    }
 
     private void loadData() {
         HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_LIST, new RMyOrderBean(LoginStatus.getUid(),page+"","10",status+"")).request(new ApiCallBack<PMyOrderBean>() {

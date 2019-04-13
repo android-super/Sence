@@ -71,31 +71,33 @@
                 android:textColor="#999999"
                 android:textSize="@dimen/sp_12"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:paddingLeft="@dimen/dp_10"
-                android:paddingRight="@dimen/dp_10"
-                android:id="@+id/iv_like_shopcommend"
-                android:src="@drawable/myinfo_dianzan"/>
-
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shape_shopcommed_dianzanbg"
-                android:drawableLeft="@drawable/shopcommend_dianzan_y"
-                android:drawablePadding="15dp"
-                android:gravity="center_vertical"
-                android:layout_gravity="center_vertical"
-                android:paddingLeft="9dp"
-                android:id="@+id/tv_likenum_shopcommend"
-                android:paddingRight="9dp"
-                android:text="99"
-                android:layout_marginRight="7dp"
-                android:textColor="#333333"
-                android:textSize="10sp"
-                />
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:id="@+id/ll_like_shopcommend"
+                android:background="@drawable/shape_shopcommed_dianzanbg">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:id="@+id/iv_like_shopcommend"
+                    android:src="@drawable/shopcommend_dianzan_y"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:paddingLeft="9dp"
+                    android:id="@+id/tv_likenum_shopcommend"
+                    android:paddingRight="9dp"
+                    android:text="99"
+                    android:layout_marginRight="7dp"
+                    android:textColor="#333333"
+                    android:textSize="10sp"
+                    />
+            </LinearLayout>
+
         </LinearLayout>
     </LinearLayout>
 

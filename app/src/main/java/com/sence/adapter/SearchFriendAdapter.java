@@ -1,6 +1,7 @@
 package com.sence.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.ToastUtils;
 import com.orhanobut.logger.Logger;
 import com.sence.R;
+import com.sence.activity.MyInfoActivity;
 import com.sence.bean.request.RCancelFocusBean;
 import com.sence.bean.response.PSearchBean;
 import com.sence.net.HttpCode;
@@ -73,6 +75,14 @@ public class SearchFriendAdapter extends RecyclerView.Adapter<SearchFriendAdapte
                 }else{
                     focus(position);
                 }
+            }
+        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, MyInfoActivity.class);
+                intent.putExtra("uid",list.get(position).getId());
+                context.startActivity(intent);
             }
         });
         GlideUtils.getInstance().loadHead( list.get(position).getAvatar(),holder.mImg);

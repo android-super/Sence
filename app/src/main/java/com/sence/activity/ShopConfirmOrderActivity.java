@@ -1,7 +1,10 @@
 package com.sence.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -115,6 +118,7 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
     private String id;
     private String num;
     private Double shopMaxPrice;
+    private AlertDialog alertDialog;
 
     @Override
     public int onActLayout() {
@@ -149,7 +153,35 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
         tvShopnumConfirmorder.setText("共" + num + "件商品");
         bottomSheetDialog();
     }
+    private void alter(){
+        View view = View.inflate(ShopConfirmOrderActivity.this, R.layout.alter_deleteorder, null);
+        alertDialog = new AlertDialog.Builder(ShopConfirmOrderActivity.this).create();
+        alertDialog.setView(view);
+        alertDialog.show();
+        TextView mTitle = view.findViewById(R.id.tv_title_deleteorder);
+        mTitle.setText("取消支付");
+        TextView mContent = view.findViewById(R.id.tv_content_deleteorder);
+        mContent.setText("取消支付后订单进入待支付，在我的订单里可以继续购买。");
+        TextView mCancel = view.findViewById(R.id.tv_cancel_deleteorder);
+        mCancel.setText("稍后付款");
+        TextView mConfirm = view.findViewById(R.id.tv_confirm_deleteorder);
+        mConfirm.setText("继续购买");
+        mCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                alertDialog.dismiss();
+            }
+        });
 
+        mConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+
+            }
+        });
+    }
     @Override
     public void initData() {
         isCheckAddress = LoginStatus.getIsCheckShopAddress();
@@ -207,6 +239,7 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        Log.i("aaa",json.toString()+"=="+LoginStatus.getUid()+"=="+idAddress);
         HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_COMMIT, new RConfirmOrderBean(json, LoginStatus.getUid(), idAddress)).request(new ApiCallBack<PConfirmOrderBean>() {
 
 
@@ -224,7 +257,6 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
                 Logger.e("msg==========" + msg);
                 String oid = o.getOid();
                 time = Integer.parseInt(o.getTime());
-
                 doLastTime();
             }
         });
@@ -243,10 +275,16 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
                 break;
             case R.id.bt_pay_pay:
                 mBottomSheetDialog.dismiss();
-
+                Intent intent = new Intent(ShopConfirmOrderActivity.this, OrderDetailsActivity.class);
+                intent.putExtra("type","2");
+                intent.putExtra("id",id);
+                startActivity(intent);
+                alertDialog.dismiss();
+                mBottomSheetDialog.dismiss();
+                finish();
                 break;
             case R.id.iv_back_pay:
-                mBottomSheetDialog.dismiss();
+                alter();
                 break;
         }
     }
@@ -269,6 +307,15 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
         btPayPay.setOnClickListener(this);
 
         tvPricePay.setText("￥" + shopMaxPrice);
+
+        mBottomSheetDialog.setCancelable(false);
+        mBottomSheetDialog.setCanceledOnTouchOutside(false);
+        mBottomSheetDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                alter();
+            }
+        });
     }
 
     public static double stringToDouble(String a) {

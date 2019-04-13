@@ -5,7 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.orhanobut.logger.Logger;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sence.R;
 import com.sence.adapter.MyInfoNoteAdapter;
 import com.sence.adapter.MyInfoRecommendAdapter;
@@ -18,11 +24,15 @@ import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.LoginStatus;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import io.reactivex.annotations.NonNull;
 
 public class MyInfoRecommendFragment extends Fragment {
 
@@ -30,6 +40,10 @@ public class MyInfoRecommendFragment extends Fragment {
     private String type;
     private MyInfoNoteAdapter myInfoNoteAdapter;
     private MyInfoServiceAdapter myInfoServiceAdapter;
+    private int page=1;
+    private SmartRefreshLayout mSmartRefreshLayout;
+    private List<PMyInfoServiceBean.OtherInfoBean> list = new ArrayList<>();
+    private List<PMyInfoBean.OtherInfoBean> listOther = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,6 +62,7 @@ public class MyInfoRecommendFragment extends Fragment {
 
     private void init() {
         RecyclerView recyclerView = getView().findViewById(R.id.recycle_myinforecommend);
+        mSmartRefreshLayout = getView().findViewById(R.id.srl_layout_myinforecommend);
         if(type.equals("1")){
             myInfoRecommendAdapter = new MyInfoRecommendAdapter(getContext());
             LinearLayoutManager linearLayout = new LinearLayoutManager(getActivity());
@@ -61,11 +76,42 @@ public class MyInfoRecommendFragment extends Fragment {
             recyclerView.setAdapter(myInfoNoteAdapter);
         }else if(type.equals("3")){
             myInfoServiceAdapter = new MyInfoServiceAdapter(getContext());
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),2);
-            gridLayoutManager.setOrientation(RecyclerView.VERTICAL);
-            recyclerView.setLayoutManager(gridLayoutManager);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+            linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+            recyclerView.setLayoutManager(linearLayoutManager);
             recyclerView.setAdapter(myInfoServiceAdapter);
         }
+        mSmartRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
+        mSmartRefreshLayout.setRefreshFooter(new ClassicsFooter(getActivity()));
+        mSmartRefreshLayout.setEnableLoadMoreWhenContentNotFull(false);
+        mSmartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                page++;
+                if(type.equals("3")){
+                    if(list.size()==0){
+                        ToastUtils.showShort("没有更多了！");
+                    }else{
+                        doHttp();
+                    }
+                }else{
+                    if(listOther.size()==0){
+                        ToastUtils.showShort("没有更多了！");
+                    }else{
+                        doHttp();
+                    }
+                }
+
+                mSmartRefreshLayout.finishLoadMore();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                mSmartRefreshLayout.finishRefresh();
+                page = 1;
+                doHttp();
+            }
+        });
         doHttp();
 
     }
@@ -73,7 +119,7 @@ public class MyInfoRecommendFragment extends Fragment {
 
     private void doHttp() {
         if(type.equals("3")){
-            HttpManager.getInstance().PlayNetCode(HttpCode.USER_INFO_DATA_SERVICE, new RMyInfoBean(LoginStatus.getUid(), type)).request(new ApiCallBack<PMyInfoServiceBean>() {
+            HttpManager.getInstance().PlayNetCode(HttpCode.USER_INFO_DATA_SERVICE, new RMyInfoBean(LoginStatus.getUid(), type,LoginStatus.getUid(),page+"","10")).request(new ApiCallBack<PMyInfoServiceBean>() {
                 @Override
                 public void onFinish() {
 
@@ -87,6 +133,7 @@ public class MyInfoRecommendFragment extends Fragment {
                 @Override
                 public void onSuccess(PMyInfoServiceBean o, String msg) {
                     Logger.e("msg==========" + msg);
+                    list = o.getOther_info();
                     if(o.getOther_info().size()>0){
                         myInfoServiceAdapter.setList(o.getOther_info());
                     }else{
@@ -97,7 +144,7 @@ public class MyInfoRecommendFragment extends Fragment {
             });
             return;
         }
-        HttpManager.getInstance().PlayNetCode(HttpCode.USER_INFO_DATA, new RMyInfoBean("4", type)).request(new ApiCallBack<PMyInfoBean>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.USER_INFO_DATA, new RMyInfoBean(LoginStatus.getUid(), type,"",page+"","10")).request(new ApiCallBack<PMyInfoBean>() {
             @Override
             public void onFinish() {
 
@@ -111,6 +158,7 @@ public class MyInfoRecommendFragment extends Fragment {
             @Override
             public void onSuccess(PMyInfoBean o, String msg) {
                 Logger.e("msg==========" + msg);
+                listOther = o.getOther_info();
                 if(type.equals("1")){
                     myInfoRecommendAdapter.setList(o.getOther_info());
                 }else if(type.equals("2")){

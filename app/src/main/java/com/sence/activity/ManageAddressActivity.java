@@ -1,9 +1,16 @@
 package com.sence.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sence.R;
 import com.sence.adapter.ManageAddressAdapter;
 import com.sence.base.BaseActivity;
@@ -15,11 +22,14 @@ import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.LoginStatus;
 import com.sence.utils.StatusBarUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * 管理收货地址
@@ -30,10 +40,12 @@ public class ManageAddressActivity extends BaseActivity {
     RecyclerView rlvAddressManageaddress;
     @BindView(R.id.tv_addaddress_manageaddress)
     TextView tvAddaddressManageaddress;
+    @BindView(R.id.srl_layout_manageaddress)
+    SmartRefreshLayout srlLayoutManageaddress;
 
     private ManageAddressAdapter mManageAddressAdapter;
     private int page = 1;
-    private List<PManageAddressBean> list;
+    private List<PManageAddressBean> list = new ArrayList<>();
     private String type;
 
     @Override
@@ -57,18 +69,41 @@ public class ManageAddressActivity extends BaseActivity {
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         rlvAddressManageaddress.setLayoutManager(linearLayoutManager);
         rlvAddressManageaddress.setAdapter(mManageAddressAdapter);
+        srlLayoutManageaddress.setRefreshHeader(new ClassicsHeader(ManageAddressActivity.this));
+        srlLayoutManageaddress.setRefreshFooter(new ClassicsFooter(ManageAddressActivity.this));
+        srlLayoutManageaddress.setEnableLoadMoreWhenContentNotFull(false);
+        srlLayoutManageaddress.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                page++;
+                if(list.size()==0){
+                    ToastUtils.showShort("没有更多了！");
+                }else{
+                    dohttp();
+                }
+                srlLayoutManageaddress.finishLoadMore();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                srlLayoutManageaddress.finishRefresh();
+                page=1;
+                dohttp();
+            }
+        });
         mManageAddressAdapter.result(new ManageAddressAdapter.DeleteAddressListener() {
             @Override
             public void delete(int i) {
                 list.remove(i);
-                mManageAddressAdapter.setList(list,type);
+                mManageAddressAdapter.setList(list, type);
             }
         });
     }
 
+
     @Override
-    protected void onResume() {
-        super.onResume();
+    public void initData() {
+        super.initData();
         dohttp();
     }
 
@@ -89,10 +124,16 @@ public class ManageAddressActivity extends BaseActivity {
             public void onSuccess(final List<PManageAddressBean> o, String msg) {
                 if (o.size() > 0) {
                     list = o;
-                    mManageAddressAdapter.setList(o,type);
+                    mManageAddressAdapter.setList(o, type);
                 }
             }
         });
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }

@@ -3,12 +3,11 @@ package com.sence.adapter;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.bumptech.glide.Glide;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sence.R;
 import com.sence.bean.response.PBusBean;
-import com.sence.net.Urls;
 import com.sence.utils.GlideUtils;
 
 /**
@@ -29,6 +28,12 @@ public class BusGoodAdapter extends BaseQuickAdapter<PBusBean.CartBean.GoodsBean
         GlideUtils.getInstance().loadNormal(item.getImg(), (ImageView) helper.getView(R.id.item_img));
         helper.setText(R.id.item_content, item.getName());
         helper.setText(R.id.item_price, "￥"+item.getPrice());
+        helper.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         final TextView item_num = helper.getView(R.id.item_num);
         item_num.setText(item.getNum() + "");
         ImageView item_select = helper.getView(R.id.item_select);

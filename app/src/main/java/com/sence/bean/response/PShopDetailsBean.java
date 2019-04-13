@@ -25,6 +25,15 @@ public class PShopDetailsBean {
      * commentRate : 97.7
      * comment : [{"nickname":"我是昵称","avatar":"我应该是头像地址","img":"我是评价的图片地址","content":"我是评价的内容"},{"nickname":"我是昵称2","avatar":"我应该是头像地址2","img":"我是评价的图片地址2","content":"我是评价的内容2"},{"nickname":"我是昵称3","avatar":"我应该是头像地址3","img":"我是评价的图片地址3","content":"我是评价的内容3"}]
      */
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     private String img;
     private String postage;

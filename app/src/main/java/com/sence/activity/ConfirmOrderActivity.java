@@ -258,7 +258,6 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         }
         tvPricePay.setText("￥" + priceAll);
         mBottomSheetDialog.setCancelable(false);
-
         mBottomSheetDialog.setCanceledOnTouchOutside(false);
         mBottomSheetDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override

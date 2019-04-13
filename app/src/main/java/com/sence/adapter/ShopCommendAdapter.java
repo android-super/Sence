@@ -1,17 +1,23 @@
 package com.sence.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
+import com.orhanobut.logger.Logger;
 import com.sence.R;
-import com.sence.activity.ServiceDetailsActivity;
+import com.sence.bean.request.RShopDetailsBean;
 import com.sence.bean.response.PShopCommendBean;
+import com.sence.net.HttpCode;
+import com.sence.net.HttpManager;
+import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.GlideUtils;
+import com.sence.utils.LoginStatus;
 import com.sence.view.NiceImageView;
 
 import java.util.ArrayList;
@@ -23,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ShopCommendAdapter extends RecyclerView.Adapter<ShopCommendAdapter.ViewHolder> {
     private Context context;
     private List<PShopCommendBean> list = new ArrayList<>();
+    private int num;
 
     public ShopCommendAdapter(Context context){
         this.context = context;
@@ -44,42 +51,61 @@ public class ShopCommendAdapter extends RecyclerView.Adapter<ShopCommendAdapter.
     public void onBindViewHolder(@NonNull final ShopCommendAdapter.ViewHolder holder, final int position) {
         holder.mContent.setText(list.get(position).getContent());
         holder.mName.setText(list.get(position).getNickname());
+        holder.mLikeNum.setText(list.get(position).getPraise());
         GlideUtils.getInstance().loadHead( list.get(position).getAvatar(),holder.mImageView);
         if(list.get(position).getImgs().size()>0){
             GlideUtils.getInstance().loadHead( list.get(position).getImgs().get(0),holder.mCommendImg);
         }else{
             holder.mCommendImg.setVisibility(View.GONE);
         }
-        holder.mLike.setOnClickListener(new View.OnClickListener() {
+        if("1".equals(list.get(position).getIsPraise())){
+            holder.mLike.setImageResource(R.drawable.shopcommend_dianzan_y);
+        }else{
+            holder.mLike.setImageResource(R.drawable.myinfo_dianzan);
+        }
+        num = Integer.parseInt(list.get(position).getPraise());
+        holder.mLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(list.get(position).getIsPraise().equals("1")){
-                    CancelLike();
+                    Like(position);
                     list.get(position).setIsPraise("0");
                     holder.mLike.setImageResource(R.drawable.myinfo_dianzan);
+                    num--;
+                    holder.mLikeNum.setText(num+"");
                 }else if(list.get(position).getIsPraise().equals("0")){
-                    Like();
+                    Like(position);
+                    num++;
                     list.get(position).setIsPraise("1");
+                    holder.mLikeNum.setText(num+"");
                     holder.mLike.setImageResource(R.drawable.shopcommend_dianzan_y);
                 }
             }
         });
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+
+
+    }
+
+
+
+    private void Like(int position) {
+        HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_COMMENT_SUPPORT, new RShopDetailsBean(list.get(position).getId(), LoginStatus.getUid())).request(new ApiCallBack<String>() {
             @Override
-            public void onClick(View v) {
-                context.startActivity(new Intent(context, ServiceDetailsActivity.class));
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(String o, String msg) {
+                Logger.e("msg==========" + msg);
+                ToastUtils.showShort(msg);
             }
         });
-
-
-    }
-
-    private void CancelLike() {
-
-    }
-
-    private void Like() {
-
     }
 
     @Override
@@ -92,6 +118,7 @@ public class ShopCommendAdapter extends RecyclerView.Adapter<ShopCommendAdapter.
         private NiceImageView mImageView;
         private ImageView mCommendImg,mLike;
         private TextView mName,mContent,mLikeNum;
+        private LinearLayout mLinearLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -99,6 +126,7 @@ public class ShopCommendAdapter extends RecyclerView.Adapter<ShopCommendAdapter.
             mCommendImg = itemView.findViewById(R.id.iv_commendimg_shopcommend);
             mName = itemView.findViewById(R.id.tv_name_shopcommend);
             mLike = itemView.findViewById(R.id.iv_like_shopcommend);
+            mLinearLayout = itemView.findViewById(R.id.ll_like_shopcommend);
             mLikeNum = itemView.findViewById(R.id.tv_likenum_shopcommend);
             mContent = itemView.findViewById(R.id.tv_content_shopcommend);
         }

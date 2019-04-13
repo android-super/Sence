@@ -3,7 +3,6 @@ package com.sence.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -16,8 +15,10 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.orhanobut.logger.Logger;
 import com.sence.R;
 import com.sence.base.BaseActivity;
+import com.sence.bean.request.RImageListBean;
 import com.sence.bean.request.RServiceCommentBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
@@ -64,10 +65,12 @@ public class ServiceCommentActivity extends BaseActivity implements View.OnClick
     ImageView ivClosethressServicecomment;
     @BindView(R.id.pt_tablayout)
     PubTitle ptTablayout;
+    @BindView(R.id.tv_type_servicecomment)
+    TextView tvTypeServicecomment;
     private BottomSheetDialog mBottomSheetDialog;
     private List<LocalMedia> selectList = new ArrayList<>();
     private String star;
-    private static String path = "/sdcard/myHead/";// sd路径
+    private String id;
 
     @Override
     public int onActLayout() {
@@ -77,6 +80,8 @@ public class ServiceCommentActivity extends BaseActivity implements View.OnClick
     @Override
     public void initView() {
         StatusBarUtil.setLightMode(this);
+        Intent intent = getIntent();
+        id = intent.getStringExtra("id");
         View view = View.inflate(this, R.layout.bottom_dialog, null);
         TextView mTakePhoto = (TextView) view.findViewById(R.id.tv_takephoto);
         TextView mPhoto = (TextView) view.findViewById(R.id.tv_photo);
@@ -89,7 +94,7 @@ public class ServiceCommentActivity extends BaseActivity implements View.OnClick
         ptTablayout.setRightOnClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                doHttp();
             }
         });
     }
@@ -98,19 +103,28 @@ public class ServiceCommentActivity extends BaseActivity implements View.OnClick
     }
 
     private void doHttp() {
-        File[] files = new File[selectList.size()];
-        for (int i = 0; i <selectList.size() ; i++) {
-            Log.i("aaa",selectList.get(i).getPath());
-            files[i] = new File(selectList.get(i).getPath());
+        final File[] imgs = new File[selectList.size()];
+        for (int i = 0; i < selectList.size(); i++) {
+            imgs[i] = new File(selectList.get(i).getPath());
         }
-        String content = etContentServicecomment.getText().toString();
+        final String content = etContentServicecomment.getText().toString();
         if (TextUtils.isEmpty(content)) {
             ToastUtils.showShort("亲，你不准备说点什么吗？");
             return;
         }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                uploadImg(content,imgs);
+            }
+        }).start();
 
-        HttpManager.getInstance().PlayNetCode(HttpCode.COMMENT_ADD, new RServiceCommentBean(LoginStatus.getUid(), star,
-                content,files)).request(new ApiCallBack() {
+
+    }
+
+    public void uploadImg(String content,File[] imgs){
+        HttpManager.getInstance().PlayNetCode(HttpCode.SERVICE_ADDCOMMENT, new RServiceCommentBean(LoginStatus.getUid(), id, star,
+                content),new RImageListBean(imgs)).request(new ApiCallBack<String>() {
             @Override
             public void onFinish() {
 
@@ -122,11 +136,14 @@ public class ServiceCommentActivity extends BaseActivity implements View.OnClick
             }
 
             @Override
-            public void onSuccess(Object o, String msg) {
+            public void onSuccess(String o, String msg) {
+                Logger.e("msg==========" + msg);
+                ToastUtils.showShort(msg);
+                finish();
             }
         });
-
     }
+
     private void imgAss() {
         if (selectList.size() == 0) {
             ivImgoneServicecomment.setImageResource(R.drawable.comment_tianjia);
@@ -174,7 +191,7 @@ public class ServiceCommentActivity extends BaseActivity implements View.OnClick
                     // 如果裁剪并压缩了，以取压缩路径为准，因为是先裁剪后压缩的
                     selectList.clear();
                     selectList.addAll(localMedia);
-
+                    imgAss();
 //                    adapter.setList(selectList);
 //                    adapter.notifyDataSetChanged();
                     break;
@@ -184,7 +201,7 @@ public class ServiceCommentActivity extends BaseActivity implements View.OnClick
                         selectList.remove(2);
                     }
                     selectList.addAll(localMediat);
-
+                    imgAss();
                     break;
             }
         }
@@ -278,6 +295,7 @@ public class ServiceCommentActivity extends BaseActivity implements View.OnClick
                 ivXingfourServicecomment.setImageResource(R.drawable.servicecomment_xing);
                 ivXingfiveServicecomment.setImageResource(R.drawable.servicecomment_xing);
                 star = "1";
+                tvTypeServicecomment.setText("非常差");
                 break;
             case R.id.iv_xingtwe_servicecomment:
                 ivXingoneServicecomment.setImageResource(R.drawable.servicecomment_xingimg);
@@ -286,6 +304,7 @@ public class ServiceCommentActivity extends BaseActivity implements View.OnClick
                 ivXingfourServicecomment.setImageResource(R.drawable.servicecomment_xing);
                 ivXingfiveServicecomment.setImageResource(R.drawable.servicecomment_xing);
                 star = "2";
+                tvTypeServicecomment.setText("差");
                 break;
             case R.id.iv_xingthress_servicecomment:
                 ivXingoneServicecomment.setImageResource(R.drawable.servicecomment_xingimg);
@@ -293,6 +312,7 @@ public class ServiceCommentActivity extends BaseActivity implements View.OnClick
                 ivXingthressServicecomment.setImageResource(R.drawable.servicecomment_xingimg);
                 ivXingfourServicecomment.setImageResource(R.drawable.servicecomment_xing);
                 ivXingfiveServicecomment.setImageResource(R.drawable.servicecomment_xing);
+                tvTypeServicecomment.setText("一般");
                 star = "3";
                 break;
             case R.id.iv_xingfour_servicecomment:
@@ -301,6 +321,7 @@ public class ServiceCommentActivity extends BaseActivity implements View.OnClick
                 ivXingthressServicecomment.setImageResource(R.drawable.servicecomment_xingimg);
                 ivXingfourServicecomment.setImageResource(R.drawable.servicecomment_xingimg);
                 ivXingfiveServicecomment.setImageResource(R.drawable.servicecomment_xing);
+                tvTypeServicecomment.setText("好");
                 star = "4";
                 break;
             case R.id.iv_xingfive_servicecomment:
@@ -309,6 +330,7 @@ public class ServiceCommentActivity extends BaseActivity implements View.OnClick
                 ivXingthressServicecomment.setImageResource(R.drawable.servicecomment_xingimg);
                 ivXingfourServicecomment.setImageResource(R.drawable.servicecomment_xingimg);
                 ivXingfiveServicecomment.setImageResource(R.drawable.servicecomment_xingimg);
+                tvTypeServicecomment.setText("非常好");
                 star = "5";
                 break;
             case R.id.iv_imgone_servicecomment:

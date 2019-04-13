@@ -19,6 +19,7 @@ import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.GlideUtils;
+import com.sence.utils.LoginStatus;
 import com.sence.utils.StatusBarUtil;
 import com.sence.view.NiceImageView;
 import com.sence.view.PubTitle;
@@ -56,7 +57,7 @@ public class ServiceDetailsActivity extends BaseActivity {
 
     private ServiceDetailsAdapter mServiceDetailsAdapter;
     private int page = 1;
-    private String id;
+    private String id= "";
     private PServiceeDetails bean = null;
     private ShopDetailsImgAdapter shopDetailsImgAdapter;
 
@@ -88,7 +89,7 @@ public class ServiceDetailsActivity extends BaseActivity {
     }
 
     public void initData() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.SERVE_DETAIL, new RShopDetailsBean(id, "1")).request(new ApiCallBack<PServiceeDetails>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.SERVE_DETAIL, new RShopDetailsBean(id, LoginStatus.getUid())).request(new ApiCallBack<PServiceeDetails>() {
             @Override
             public void onFinish() {
 
@@ -122,7 +123,7 @@ public class ServiceDetailsActivity extends BaseActivity {
             }
         });
         HttpManager.getInstance().PlayNetCode(HttpCode.SERVE_COMMENT_LIST,
-                new RShopCommendBean("1", page + "", "10")).request(new ApiCallBack<List<PServiceCommendBean>>() {
+                new RShopCommendBean(id, page + "", "10")).request(new ApiCallBack<List<PServiceCommendBean>>() {
             @Override
             public void onFinish() {
 
@@ -154,7 +155,7 @@ public class ServiceDetailsActivity extends BaseActivity {
     @OnClick(R.id.tv_map_servicedetails)
     public void onViewClicked() {
         Intent intent = new Intent(ServiceDetailsActivity.this, MapActivity.class);
-//        intent.putExtra("map",bean.getPosition());
+        intent.putExtra("map",bean.getPosition());
         startActivity(intent);
     }
 }

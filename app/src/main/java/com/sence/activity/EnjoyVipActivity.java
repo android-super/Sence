@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+import com.blankj.utilcode.util.ToastUtils;
 import com.orhanobut.logger.Logger;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sence.R;
 import com.sence.adapter.EnjoyVipAdapter;
 import com.sence.base.BaseActivity;
@@ -20,6 +23,15 @@ import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.LoginStatus;
 import com.sence.utils.StatusBarUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * 尊享会员
  */
@@ -28,10 +40,13 @@ public class EnjoyVipActivity extends BaseActivity {
     TextView tvPriceEnjoyvip;
     @BindView(R.id.recycle_enjoyvip)
     RecyclerView recycleEnjoyvip;
+    @BindView(R.id.srl_layout_enjoyvip)
+    SmartRefreshLayout srlLayoutEnjoyvip;
 
 
     private EnjoyVipAdapter mEnjoyVipAdapter;
     private int page = 1;
+    private List<PEnjoyVipBean.ServiceBean> list = new ArrayList<>();
 
     @Override
     public int onActLayout() {
@@ -52,6 +67,28 @@ public class EnjoyVipActivity extends BaseActivity {
         gridLayoutManager.setOrientation(RecyclerView.VERTICAL);
         recycleEnjoyvip.setLayoutManager(gridLayoutManager);
         recycleEnjoyvip.setAdapter(mEnjoyVipAdapter);
+        srlLayoutEnjoyvip.setRefreshHeader(new ClassicsHeader(this));
+        srlLayoutEnjoyvip.setRefreshFooter(new ClassicsFooter(this));
+        srlLayoutEnjoyvip.setEnableLoadMoreWhenContentNotFull(false);
+        srlLayoutEnjoyvip.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                page++;
+                if(list.size()==0){
+                    ToastUtils.showShort("没有更多了！");
+                }else{
+                    initData();
+                }
+                srlLayoutEnjoyvip.finishLoadMore();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                srlLayoutEnjoyvip.autoLoadMore();
+                page = 1;
+                initData();
+            }
+        });
     }
 
     public void initData() {
@@ -71,10 +108,18 @@ public class EnjoyVipActivity extends BaseActivity {
             public void onSuccess(PEnjoyVipBean o, String msg) {
                 Logger.e("msg==========" + msg);
                 tvPriceEnjoyvip.setText("￥" + o.getMoney());
-                if (o.getService().size() > 0) {
+                list = o.getService();
+                if (list.size() > 0) {
                     mEnjoyVipAdapter.setList(o.getService());
                 }
             }
         });
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }
