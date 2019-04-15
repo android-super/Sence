@@ -188,11 +188,15 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 startActivity(new Intent(getContext(), MessageActivity.class));
                 break;
             case R.id.user_head:
-                startActivity(new Intent(getContext(), MyInfoActivity.class));
+                Intent intent = new Intent(getContext(), MyInfoActivity.class);
+                intent.putExtra("uid", LoginStatus.getUid());
+                startActivity(intent);
                 break;
             case R.id.user_name:
                 if (LoginStatus.isLogin()) {
-                    startActivity(new Intent(getContext(), MyInfoActivity.class));
+                    intent = new Intent(getContext(), MyInfoActivity.class);
+                    intent.putExtra("uid", LoginStatus.getUid());
+                    startActivity(intent);
                 } else {
                     startActivity(new Intent(getContext(), LoginActivity.class));
                 }
@@ -208,7 +212,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.user_all_order:
                 Intent intentall = new Intent(getContext(), MyOrderActivity.class);
-                intentall.putExtra("type",0);
+                intentall.putExtra("type", 0);
                 startActivity(intentall);
                 break;
             case R.id.user_pay:
@@ -244,7 +248,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 startActivity(new Intent(getContext(), SettingActivity.class));
                 break;
             case R.id.user_open:
-                startActivity(new Intent(getContext(), OpenVipActivity.class));
+                startActivity(new Intent(getContext(), OpenVipPageActivity.class));
                 break;
         }
     }

@@ -10,10 +10,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.sence.R;
 import com.sence.activity.ContentDetailActivity;
 import com.sence.adapter.CommentAdapter;
 import com.sence.bean.request.RCommentListBean;
+import com.sence.bean.request.RCommentSupportBean;
 import com.sence.bean.response.PCommentBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
@@ -38,7 +40,7 @@ public class CommentFragment extends Fragment {
     private String type;
     private int page = 1;
 
-    private CommentAdapter adapter;
+    private CommentAdapter commentAdapter;
 
 
     public CommentFragment() {
@@ -78,8 +80,8 @@ public class CommentFragment extends Fragment {
         comment_look = getView().findViewById(R.id.comment_look);
 
         comment_recycle.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new CommentAdapter(R.layout.rv_item_comment);
-        comment_recycle.setAdapter(adapter);
+        commentAdapter = new CommentAdapter(R.layout.rv_item_comment);
+        comment_recycle.setAdapter(commentAdapter);
 
         comment_write.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +95,12 @@ public class CommentFragment extends Fragment {
                 ((ContentDetailActivity) getActivity()).showCommentDialog();
             }
         });
+        commentAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                CommentSupport(commentAdapter.getData().get(position).getId(), position);
+            }
+        });
 
         initData();
     }
@@ -100,6 +108,31 @@ public class CommentFragment extends Fragment {
     private void initData() {
         HttpManager.getInstance().PlayNetCode(HttpCode.COMMENT_LIST,
                 new RCommentListBean(LoginStatus.getUid(), rid, type, page + "")).request(new ApiCallBack<List<PCommentBean>>() {
+            @Override
+            public void onFinish() {
+                comment_num.setText("(" + commentAdapter.getData().size() + ")");
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(List<PCommentBean> o, String msg) {
+                if (page == 1) {
+                    commentAdapter.setNewData(o);
+                } else {
+                    commentAdapter.addData(o);
+                }
+
+            }
+        });
+    }
+
+    public void CommentSupport(String mid, final int position) {
+        HttpManager.getInstance().PlayNetCode(HttpCode.COMMENT_SUPPORT,
+                new RCommentSupportBean(LoginStatus.getUid(), mid)).request(new ApiCallBack() {
             @Override
             public void onFinish() {
 
@@ -111,12 +144,17 @@ public class CommentFragment extends Fragment {
             }
 
             @Override
-            public void onSuccess(List<PCommentBean> o, String msg) {
-                if (page == 1) {
-                    adapter.setNewData(o);
+            public void onSuccess(Object o, String msg) {
+                int support_num = Integer.parseInt(commentAdapter.getData().get(position).getLike_num());
+                if (commentAdapter.getData().get(position).getIs_like().equals("0")) {
+                    commentAdapter.getData().get(position).setIs_like("1");
+                    support_num = support_num + 1;
                 } else {
-                    adapter.addData(o);
+                    commentAdapter.getData().get(position).setIs_like("0");
+                    support_num = support_num - 1;
                 }
+                commentAdapter.getData().get(position).setLike_num(support_num + "");
+                commentAdapter.notifyDataSetChanged();
             }
         });
     }

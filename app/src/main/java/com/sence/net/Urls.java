@@ -21,6 +21,8 @@ public class Urls {
     public static final String COMMENT_SUPPORT = "/index.php/Api/Public/giveLike";//评论点赞，取消点赞
     public static final String COMMENT_ADD = "/index.php/Api/Public/addMsg";//添加评论
     public static final String COMMENT_LIST = "/index.php/Api/Public/getMsgList";//评论列表
+    public static final String PAY_ALI = "/index.php/Api/Alipay/alipay_sign";//支付寶支付
+    public static final String PAY_WX = "/index.php/Api/Wxpay/wx_prepay";//微信支付
     //用户
     public static final String USER_CARD_DELETE = "/index.php/Api/mine/delCard";//删除银行卡
     public static final String USER_CARD_LIST = "/index.php/Api/mine/myCardList";//银行卡列表

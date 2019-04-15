@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+              android:orientation="vertical"
+             tools:context=".fragment.tag.TagFragment">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="515dp">
+
+        <ImageView
+                android:id="@+id/tag_img"
+                android:layout_width="match_parent"
+                android:layout_centerInParent="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/hint_img"
+                android:layout_height="match_parent"/>
+
+        <com.sence.view.PictureTagLayout
+                android:id="@+id/tag_layout"
+                android:layout_centerInParent="true"
+                android:layout_width="match_parent"
+                android:visibility="visible"
+                android:layout_height="match_parent"/>
+    </RelativeLayout>
+
+</LinearLayout>

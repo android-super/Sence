@@ -1,71 +1,81 @@
 package com.sence.activity;
 
-import android.graphics.Bitmap;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import com.blankj.utilcode.util.ToastUtils;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
+import android.widget.TextView;
+import androidx.viewpager.widget.ViewPager;
+import butterknife.BindView;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.sence.R;
-import com.sence.view.PictureTagLayout;
-import com.sence.view.PubTitle;
+import com.sence.adapter.pager.ViewTagPagerAdapter;
+import com.sence.base.BaseActivity;
+import com.sence.fragment.tag.TagFragment;
+
+import java.util.List;
 
 /**
  * 添加标签
  */
-public class AddTagActivity extends AppCompatActivity {
-    private ImageView tag_img;
-    private PictureTagLayout tag_layout;
-    private Bitmap bitmap;
-    private int height;
-    private int width;
+public class AddTagActivity extends BaseActivity implements View.OnClickListener {
+    @BindView(R.id.view_pager)
+    ViewPager viewPager;
+    @BindView(R.id.tag_back)
+    ImageView tagBack;
+    @BindView(R.id.tag_title)
+    TextView tagTitle;
+    @BindView(R.id.tag_next)
+    TextView tagNext;
 
+    private ViewTagPagerAdapter adapter;
+    private List<LocalMedia> localMedia;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_tag);
-        tag_img = findViewById(R.id.tag_img);
-        tag_layout = findViewById(R.id.tag_layout);
-        Glide.with(this).asBitmap()
-                .load("http://pic29.nipic.com/20130508/12516822_185004197132_2.jpg")
-                //强制Glide返回一个Bitmap对象
-                .listener(new RequestListener<Bitmap>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target,
-                                                boolean isFirstResource) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target,
-                                                   DataSource dataSource, boolean isFirstResource) {
-                        bitmap = resource;
-                        width = resource.getWidth();
-                        height = resource.getHeight();
-                        handler.sendEmptyMessage(0);
-                        return false;
-                    }
-                }).into(tag_img);
+    public int onActLayout() {
+        return R.layout.activity_add_tag;
     }
 
-    public Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) tag_layout.getLayoutParams();
-            layoutParams.width = width;
-            layoutParams.height = height;
-            tag_layout.setLayoutParams(layoutParams);
+    @Override
+    public void initView() {
+        tagBack.setOnClickListener(this);
+        tagNext.setOnClickListener(this);
+        adapter = new ViewTagPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
+        localMedia = this.getIntent().getParcelableArrayListExtra("data");
+        for (int i = 0; i < localMedia.size(); i++) {
+            int position = i + 1;
+            adapter.addFragment(TagFragment.newInstance(localMedia.get(i).getCompressPath()),
+                    position + "");
         }
-    };
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                tagTitle.setText("添加标签(" + position + "/" + localMedia.size() + ")");
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tag_back:
+                finish();
+                break;
+            case R.id.tag_next:
+                Intent intent = new Intent(AddTagActivity.this, CommitTagActivity.class);
+                startActivity(intent);
+                break;
+        }
+    }
 }

@@ -22,6 +22,7 @@ import com.sence.adapter.RecommendAdapter;
 import com.sence.bean.request.RContentDetailBean;
 import com.sence.bean.request.RNidBean;
 import com.sence.bean.request.RUidListBean;
+import com.sence.bean.response.PMainBean;
 import com.sence.bean.response.PMainRecommendBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
@@ -45,7 +46,6 @@ public class RecommendFragment extends Fragment {
 
     private RecommendAdapter adapter;
     private int page = 1;
-    private int size = 10;
 
     public RecommendFragment() {
         // Required empty public constructor
@@ -68,7 +68,7 @@ public class RecommendFragment extends Fragment {
 
     private void initData() {
         HttpManager.getInstance().PlayNetCode(HttpCode.MAIN_RECOMMEND, new RUidListBean(LoginStatus.getUid(), page + ""
-        )).request(new ApiCallBack<List<PMainRecommendBean>>() {
+        )).request(new ApiCallBack<PMainBean>() {
             @Override
             public void onFinish() {
                 smartRefreshLayout.finishRefresh();
@@ -81,11 +81,11 @@ public class RecommendFragment extends Fragment {
             }
 
             @Override
-            public void onSuccess(List<PMainRecommendBean> o, String msg) {
+            public void onSuccess(PMainBean o, String msg) {
                 if (page == 1) {
-                    adapter.setNewData(o);
+                    adapter.setNewData(o.getNote_list());
                 } else {
-                    adapter.addData(o);
+                    adapter.addData(o.getNote_list());
                 }
             }
         });
@@ -100,6 +100,7 @@ public class RecommendFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setNestedScrollingEnabled(true);
         adapter = new RecommendAdapter(R.layout.rv_item_recommend);
+        adapter.setEmptyView(R.layout.empty_main_recommend_note, recyclerView);
         recyclerView.setAdapter(adapter);
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
@@ -118,7 +119,7 @@ public class RecommendFragment extends Fragment {
             @Override
             public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
                 if (view.getId() == R.id.item_support || view.getId() == R.id.item_support_img) {
-                    support(position,adapter.getData().get(position).getNid());
+                    support(position, adapter.getData().get(position).getNid());
 
                 }
             }
@@ -127,11 +128,13 @@ public class RecommendFragment extends Fragment {
 
     /**
      * 点赞
+     *
      * @param position
      * @param nid
      */
     public void support(final int position, String nid) {
-        HttpManager.getInstance().PlayNetCode(HttpCode.SUPPORT_NOTE_RECOMMEND, new RNidBean(LoginStatus.getUid(), nid)).request(new ApiCallBack() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.SUPPORT_NOTE_RECOMMEND, new RNidBean(LoginStatus.getUid(),
+                nid)).request(new ApiCallBack() {
             @Override
             public void onFinish() {
 

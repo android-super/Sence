@@ -40,26 +40,16 @@ public class RUserEditBean extends BaseImageRequestBean {
         this.sex = sex;
     }
 
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
     private String uid;
     private String nick_name;
     private String autograph;
     private String sex;
 
-    public RUserEditBean(String uid, String nick_name, String autograph, String sex, String avatar) {
+    public RUserEditBean(String uid, String nick_name, String autograph, String sex) {
         this.uid = uid;
         this.nick_name = nick_name;
         this.autograph = autograph;
         this.sex = sex;
-        this.avatar = avatar;
     }
 
-    private String avatar;
 }

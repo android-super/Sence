@@ -1,5 +1,6 @@
 package com.sence.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -52,6 +53,7 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
             case R.id.message_open:
                 break;
             case R.id.message_hd_layout:
+                startActivity(new Intent(MessageActivity.this, MessageHDActivity.class));
                 break;
             case R.id.message_xt_layout:
                 break;

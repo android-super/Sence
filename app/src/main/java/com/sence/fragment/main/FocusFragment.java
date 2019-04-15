@@ -23,8 +23,10 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sence.R;
 import com.sence.adapter.MainFocusAdapter;
+import com.sence.adapter.MainRecommendFocusAdapter;
 import com.sence.bean.request.RNidBean;
 import com.sence.bean.request.RUidListBean;
+import com.sence.bean.response.PMainBean;
 import com.sence.bean.response.PMainFocusBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
@@ -41,7 +43,11 @@ public class FocusFragment extends Fragment {
     private SmartRefreshLayout smartRefreshLayout;
     private RecyclerView recyclerView;
 
+    private RecyclerView empty_recycle;
+    private View empty_view;
+
     private MainFocusAdapter adapter;
+    private MainRecommendFocusAdapter recommendFocusAdapter;
     private int page = 1;
 
     public FocusFragment() {
@@ -65,7 +71,7 @@ public class FocusFragment extends Fragment {
 
     private void initData() {
         HttpManager.getInstance().PlayNetCode(HttpCode.MAIN_FOCUS,
-                new RUidListBean(LoginStatus.getUid(), page + "")).request(new ApiCallBack<List<PMainFocusBean>>() {
+                new RUidListBean(LoginStatus.getUid(), page + "")).request(new ApiCallBack<PMainBean>() {
             @Override
             public void onFinish() {
                 smartRefreshLayout.finishRefresh();
@@ -78,12 +84,13 @@ public class FocusFragment extends Fragment {
             }
 
             @Override
-            public void onSuccess(List<PMainFocusBean> o, String msg) {
+            public void onSuccess(PMainBean o, String msg) {
                 if (page == 1) {
-                    adapter.setNewData(o);
+                    adapter.setNewData(o.getNote_list());
                 } else {
-                    adapter.addData(o);
+                    adapter.addData(o.getNote_list());
                 }
+                recommendFocusAdapter.setNewData(o.getGoodess_recommend());
             }
         });
     }
@@ -120,6 +127,17 @@ public class FocusFragment extends Fragment {
                 }
             }
         });
+
+        initEmptyView();
+    }
+
+    private void initEmptyView() {
+        empty_view = LayoutInflater.from(getActivity()).inflate(R.layout.empty_main_focus, null);
+        adapter.setEmptyView(empty_view);
+        empty_recycle = empty_view.findViewById(R.id.recycle_view);
+        empty_recycle.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        recommendFocusAdapter = new MainRecommendFocusAdapter(R.layout.rv_item_main_focus);
+        empty_recycle.setAdapter(recommendFocusAdapter);
     }
 
     /**

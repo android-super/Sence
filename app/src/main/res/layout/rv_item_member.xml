@@ -1,14 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
-              android:layout_width="wrap_content"
+              android:layout_width="match_parent"
               android:layout_height="wrap_content">
 
     <com.sence.view.NiceImageView
             app:corner_radius="4dp"
             android:scaleType="centerCrop"
             android:id="@+id/item_head"
+            android:layout_centerHorizontal="true"
             android:layout_width="50dp"
+            android:src="@drawable/hint_img"
             android:layout_height="50dp"/>
-</LinearLayout>
+    <ImageView
+            android:id="@+id/item_serve"
+            android:layout_alignRight="@id/item_head"
+            android:layout_marginRight="-5dp"
+            android:layout_alignBottom="@id/item_head"
+            android:src="@drawable/chat_fuwu"
+            android:layout_width="wrap_content"
+            android:layout_marginBottom="-5dp"
+            android:layout_height="wrap_content"/>
+    <TextView
+            android:id="@+id/item_name"
+            android:layout_below="@id/item_head"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="12sp"
+            android:textColor="#333333"
+            android:text="@string/hint_name"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"/>
+</RelativeLayout>

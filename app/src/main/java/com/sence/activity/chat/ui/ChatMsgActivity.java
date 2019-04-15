@@ -18,6 +18,7 @@ import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.sence.R;
+import com.sence.activity.MemberActivity;
 import com.sence.activity.MyInfoActivity;
 import com.sence.activity.chat.adapter.CommonFragmentPagerAdapter;
 import com.sence.activity.chat.bean.ChatSocketBean;
@@ -37,6 +38,7 @@ import com.sence.net.HttpManager;
 import com.sence.net.Urls;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.*;
+import com.sence.view.PubTitle;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -66,6 +68,8 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
     RelativeLayout emotionLayout;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.pub_title)
+    PubTitle pubTitle;
 
     private EmotionInputDetector mDetector;
 
@@ -164,12 +168,12 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
                 switch (view.getId()) {
                     case R.id.head_left://左边头像
                         Intent intent = new Intent(ChatMsgActivity.this, MyInfoActivity.class);
-                        intent.putExtra("fuid", reAdapter.getData().get(position).getUid());
+                        intent.putExtra("uid", reAdapter.getData().get(position).getUid());
                         startActivity(intent);
                         break;
                     case R.id.head_right://右边头像 自己
                         intent = new Intent(ChatMsgActivity.this, MyInfoActivity.class);
-                        intent.putExtra("fuid", reAdapter.getData().get(position).getUid());
+                        intent.putExtra("uid", reAdapter.getData().get(position).getUid());
                         startActivity(intent);
                         break;
                     case R.id.left_image://左边大图片
@@ -197,9 +201,17 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
             }
         });
 
-
         chatFunctionPhoto.setOnClickListener(this);
         chatFunctionPhotograph.setOnClickListener(this);
+
+        pubTitle.setRightOnClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ChatMsgActivity.this, MemberActivity.class);
+                intent.putExtra("v_id",v_id);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

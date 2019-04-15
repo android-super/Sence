@@ -17,6 +17,7 @@ import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.LoginStatus;
+import com.sence.utils.StatusBarUtil;
 
 import java.util.List;
 
@@ -42,6 +43,7 @@ public class CardActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        StatusBarUtil.setLightMode(this);
         smartRefresh.setEnableRefresh(false);
         smartRefresh.setEnableLoadMore(false);
         recycleView.setLayoutManager(new LinearLayoutManager(this));

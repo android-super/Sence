@@ -30,6 +30,7 @@
             android:background="@color/main_second_gray"
             android:layout_width="match_parent"
             android:layout_weight="1"
+            android:minHeight="150dp"
             android:layout_height="match_parent"/>
 
 </LinearLayout>

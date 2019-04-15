@@ -1,20 +1,34 @@
 package com.sence.activity;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.config.PictureMimeType;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.sence.R;
+import com.sence.activity.chat.ui.ChatMsgActivity;
 import com.sence.base.BaseActivity;
 import com.sence.bean.request.RUserEditBean;
+import com.sence.bean.request.RUserEditHeadBean;
+import com.sence.bean.response.PChatMessageBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
+import com.sence.utils.BitmapUtils;
 import com.sence.utils.LoginStatus;
 import com.sence.utils.StatusBarUtil;
 import com.sence.view.NiceImageView;
 import com.sence.view.PubTitle;
+import org.greenrobot.eventbus.EventBus;
+
+import java.io.File;
+import java.util.List;
 
 /**
  * 修改个人信息
@@ -36,7 +50,7 @@ public class EditInfoActivity extends BaseActivity implements View.OnClickListen
     PubTitle editTitle;
 
     private String name;
-    private String head;
+    private File head;
     private String sex;
     private String style;
 
@@ -56,7 +70,13 @@ public class EditInfoActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onClick(View v) {
                 name = editName.getText().toString();
-
+                if (editBoy.isSelected()){
+                    sex = "男";
+                }
+                if (editGirl.isSelected()){
+                    sex = "女";
+                }
+                style = editStyle.getText().toString();
                 editFinish();
             }
         });
@@ -67,6 +87,11 @@ public class EditInfoActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.edit_head:
+                PictureSelector.create(EditInfoActivity.this)
+                        .openGallery(PictureMimeType.ofImage())
+                        .maxSelectNum(1)
+                        .compress(true)
+                        .forResult(PictureConfig.CHOOSE_REQUEST);
                 break;
             case R.id.edit_girl:
                 editGirl.setSelected(true);
@@ -80,23 +105,43 @@ public class EditInfoActivity extends BaseActivity implements View.OnClickListen
     }
 
     public void editFinish() {
-//        HttpManager.getInstance().PlayNetCode(HttpCode.USER_EDIT,
-//                new RUserEditBean(LoginStatus.getUid(), name, style, sex, head)).request(new ApiCallBack() {
-//            @Override
-//            public void onFinish() {
-//
-//            }
-//
-//            @Override
-//            public void Message(int code, String message) {
-//
-//            }
-//
-//            @Override
-//            public void onSuccess(Object o, String msg) {
-//
-//            }
-//        });
+        HttpManager.getInstance().PlayNetCode(HttpCode.USER_EDIT,
+                new RUserEditBean(LoginStatus.getUid(), name, style, sex),new RUserEditHeadBean(head)).request(new ApiCallBack() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(Object o, String msg) {
+
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int req, int res, Intent data) {
+        if (res == RESULT_OK) {
+            switch (req) {
+                case PictureConfig.CHOOSE_REQUEST:
+                    // 图片、视频、音频选择结果回调
+                    List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
+                    if (selectList.get(0).isCompressed()) {
+                        Bitmap bitmap = BitmapUtils.getSmallBitmap(selectList.get(0).getCompressPath());
+                        head = BitmapUtils.Bitmap2File(bitmap, getPackageName(), 100);
+                        PChatMessageBean.MessageBean bean = new PChatMessageBean.MessageBean();
+                        bean.setContent(selectList.get(0).getCompressPath());
+                        bean.setType(2);
+                        EventBus.getDefault().post(bean);
+                    }
+                    break;
+            }
+        }
     }
 
 }

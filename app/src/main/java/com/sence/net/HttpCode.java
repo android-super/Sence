@@ -72,4 +72,9 @@ public enum HttpCode {
     CHAT_ENTER,//進入V群
     CHAT_GROUP_LIST,//V群列表
     CHAT_READ,//消息已读
+    COMMENT_DETAIL_ADD,//添加评论
+    COMMENT_SUPPORT,//评论点赞
+    NOTE_ADD,//添加笔记
+    PAY_ALI,//支付宝支付
+    PAY_WX,//微信支付
 }

@@ -32,6 +32,7 @@ public class PubTitle extends Toolbar {
     private ImageView back_img;
     private ImageView right_img;
     private TextView right_text;
+    private TextView title;
 
     private boolean is_back = true;
     private boolean is_animator_back = false;
@@ -99,8 +100,8 @@ public class PubTitle extends Toolbar {
         parent.addView(right_text);
     }
 
-    public  void setRigthText(String content){
-        if(right_text!=null) {
+    public void setRigthText(String content) {
+        if (right_text != null) {
             right_text.setText(content);
             invalidate();
         }
@@ -120,8 +121,10 @@ public class PubTitle extends Toolbar {
         parent.addView(right_img);
 
     }
-    public void setRightImg(int img){
-        if(right_img!=null) {
+
+
+    public void setRightImg(int img) {
+        if (right_img != null) {
             right_img.setImageResource(img);
             invalidate();
         }
@@ -156,7 +159,7 @@ public class PubTitle extends Toolbar {
         if (TextUtils.isEmpty(tool_cover_title)) {
             return;
         }
-        TextView title = new TextView(context);
+        title = new TextView(context);
         RelativeLayout.LayoutParams layoutParams =
                 new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT);

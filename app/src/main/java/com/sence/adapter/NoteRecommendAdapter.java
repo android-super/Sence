@@ -15,6 +15,7 @@ import com.sence.R;
 import com.sence.activity.NoteDetailActivity;
 import com.sence.bean.response.PNoteDetailBean;
 import com.sence.net.Urls;
+import com.sence.utils.GlideUtils;
 import com.sence.view.NiceImageView;
 
 import androidx.core.app.ActivityOptionsCompat;
@@ -33,10 +34,9 @@ public class NoteRecommendAdapter extends BaseQuickAdapter<PNoteDetailBean.Recom
     protected void convert(final BaseViewHolder helper, final PNoteDetailBean.RecommendNoteBean item) {
         final NiceImageView imageView = helper.getView(R.id.item_img);
         final Activity activity = (Activity) helper.itemView.getContext();
-
-        Glide.with(activity).load(Urls.base_url + item.getAlbum_url()).into(imageView);
+        GlideUtils.getInstance().loadHead(item.getAvatar(), (ImageView) helper.getView(R.id.item_head));
+        GlideUtils.getInstance().loadNormal(item.getAlbum_url(), imageView);
         helper.setText(R.id.item_describe, item.getContent());
-        Glide.with(activity).load(Urls.base_url + item.getAvatar()).into((ImageView) helper.getView(R.id.item_head));
         helper.setText(R.id.item_name, item.getNick_name());
         TextView item_support = helper.getView(R.id.item_support);
         item_support.setText(item.getPraise_count());

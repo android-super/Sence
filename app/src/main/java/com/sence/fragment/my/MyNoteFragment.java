@@ -16,6 +16,7 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sence.R;
 import com.sence.adapter.FansAdapter;
+import com.sence.adapter.MyNoteAdapter;
 import com.sence.adapter.NoteAdapter;
 import com.sence.bean.request.RUidListBean;
 import com.sence.bean.response.PMainNoteBean;
@@ -31,7 +32,7 @@ public class MyNoteFragment extends Fragment {
     private RecyclerView recyclerView;
 
     private int page = 1;
-    private NoteAdapter adapter;
+    private MyNoteAdapter adapter;
     public MyNoteFragment() {
         // Required empty public constructor
     }
@@ -52,7 +53,7 @@ public class MyNoteFragment extends Fragment {
         smartRefreshLayout.setRefreshFooter(new ClassicsFooter(getActivity()));
         recyclerView = getView().findViewById(R.id.recycle_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new NoteAdapter(R.layout.rv_item_note);
+        adapter = new MyNoteAdapter(R.layout.rv_item_note);
         recyclerView.setAdapter(adapter);
 
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {

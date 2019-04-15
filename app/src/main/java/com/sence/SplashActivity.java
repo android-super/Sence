@@ -3,23 +3,20 @@ package com.sence;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
-
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import com.blankj.utilcode.util.SPUtils;
-import com.sence.activity.AddTagActivity;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.PermissionUtil;
-
-import java.util.concurrent.TimeUnit;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+
+import java.util.concurrent.TimeUnit;
 
 
 public class SplashActivity extends AppCompatActivity {

@@ -236,6 +236,18 @@ public class HttpManager<P> {
             case CHAT_READ:
                 observable = httpService.ChatRead(requestBean.getMap());
                 break;
+            case COMMENT_DETAIL_ADD:
+                observable = httpService.CommentAdd(requestBean.getMap());
+                break;
+            case COMMENT_SUPPORT:
+                observable = httpService.CommentSupport(requestBean.getMap());
+                break;
+            case PAY_ALI:
+                observable = httpService.PayAli(requestBean.getMap());
+                break;
+            case PAY_WX:
+                observable = httpService.PayWx(requestBean.getMap());
+                break;
         }
         observable = observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
         return this;
@@ -252,10 +264,13 @@ public class HttpManager<P> {
                 observable = httpService.SearviceAddComment(requestBean.getMap(),fileRequestBean.getRequestImg());
                 break;
             case USER_EDIT:
-                observable = httpService.UserEdit(requestBean.getMap());
+                observable = httpService.UserEdit(requestBean.getMap(),fileRequestBean.getRequestImg());
                 break;
             case CHAT_SEND_MESSAGE:
                 observable = httpService.ChatSendImgMessage(requestBean.getMap(), fileRequestBean.getRequestImg());
+                break;
+            case NOTE_ADD:
+                observable = httpService.NoteAdd(requestBean.getMap(), fileRequestBean.getRequestImg());
                 break;
         }
         return this;

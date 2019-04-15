@@ -2,6 +2,7 @@ package com.sence.adapter;
 
 import android.widget.ImageView;
 
+import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sence.R;
@@ -30,16 +31,17 @@ public class CommentAdapter extends BaseQuickAdapter<PCommentBean, BaseViewHolde
         helper.setText(R.id.item_replay_content,item.getOld_message());
         MyTextView item_content = helper.getView(R.id.item_content);
         MyTextView item_replay_content = helper.getView(R.id.item_replay_content);
-        ImageView item_support_img = helper.getView(R.id.item_support_img);
+        TextView item_support = helper.getView(R.id.item_support);
         if (item.getIs_like().equals("1")){
-            item_support_img.setSelected(true);
+            item_support.setSelected(true);
         }else{
-            item_support_img.setSelected(false);
+            item_support.setSelected(false);
         }
         item_content.setText(item.getContent());
+
         item_replay_content.setText(item.getOld_message());
 //        item_content.setSpecifiedTextsColor(item_content.getText().toString(), item.getReply().getNick_name(), Color.parseColor(
 //                "#507daf"));
-
+        helper.addOnClickListener(R.id.item_support);
     }
 }

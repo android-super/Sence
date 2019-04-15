@@ -7,8 +7,10 @@
               android:layout_height="match_parent">
 
     <com.sence.view.PubTitle
+            android:id="@+id/pub_title"
             app:is_back="true"
             app:tool_cover_title="聊天室"
+            app:tool_cover_right_img="@drawable/chat_gengd"
             app:tool_cover_background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="50dp"/>

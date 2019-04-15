@@ -115,7 +115,7 @@ public class VipFragment extends Fragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.vip_info_layout:
-                intent = new Intent(getActivity(), OpenVipActivity.class);
+                intent = new Intent(getActivity(), OpenVipPageActivity.class);
                 startActivity(intent);
                 break;
             case R.id.vip_exclusive_more:

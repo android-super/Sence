@@ -241,6 +241,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         });
     }
 
+    
 
     @Override
     public void onClick(View v) {

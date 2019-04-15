@@ -131,83 +131,78 @@
     <include
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             layout="@layout/include_recommend_content"
-            android:layout_marginBottom="54dp"
             android:layout_height="match_parent"
             android:layout_width="match_parent"/>
 
-    <LinearLayout
+
+    <RelativeLayout
+            app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
             android:layout_gravity="bottom"
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="54dp">
+            android:background="@color/white"
+            android:layout_height="55dp">
 
         <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:background="@drawable/main_yinying"/>
+                android:layout_height="1dp"
+                android:background="@drawable/shape_bottom_shader"/>
 
-        <RelativeLayout
-                android:layout_width="match_parent"
-                android:background="@color/white"
-                android:layout_height="match_parent">
+        <ImageView
+                android:id="@+id/content_support"
+                android:layout_marginLeft="43dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/recommend_dianzan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
-            <ImageView
-                    android:id="@+id/content_support"
-                    android:layout_marginLeft="43dp"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/recommend_dianzan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+        <TextView
+                android:id="@+id/content_support_num"
+                android:text="赞·99+"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/content_support"
+                android:textSize="12sp"
+                android:textColor="#444444"
+                android:layout_marginLeft="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
-            <TextView
-                    android:id="@+id/content_support_num"
-                    android:text="赞·99+"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/content_support"
-                    android:textSize="12sp"
-                    android:textColor="#444444"
-                    android:layout_marginLeft="4dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+        <TextView
+                android:id="@+id/content_comment"
+                android:text="评论·99+"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/recommend_pinglun"
+                android:layout_toRightOf="@+id/content_support"
+                android:textSize="12sp"
+                android:textColor="#444444"
+                android:drawablePadding="4dp"
+                android:layout_marginLeft="109dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
-            <TextView
-                    android:id="@+id/content_comment"
-                    android:text="评论·99+"
-                    android:layout_centerVertical="true"
-                    android:drawableLeft="@drawable/recommend_pinglun"
-                    android:layout_toRightOf="@+id/content_support"
-                    android:textSize="12sp"
-                    android:textColor="#444444"
-                    android:drawablePadding="4dp"
-                    android:layout_marginLeft="109dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+        <TextView
+                android:id="@+id/content_buy"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
+                android:text="立即购买"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:background="@drawable/recommend_buy_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
-            <TextView
-                    android:id="@+id/content_buy"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:layout_alignParentRight="true"
-                    android:text="立即购买"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    android:textSize="13sp"
-                    android:background="@drawable/recommend_buy_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-            <TextView
-                    android:layout_alignRight="@+id/content_buy"
-                    android:text="2"
-                    android:id="@+id/content_buy_num"
-                    android:layout_marginRight="6dp"
-                    android:gravity="center"
-                    android:background="@drawable/shape_buy_num_point"
-                    android:layout_width="15dp"
-                    android:textSize="10sp"
-                    android:textColor="@color/white"
-                    android:layout_height="15dp"/>
-        </RelativeLayout>
-    </LinearLayout>
+        <TextView
+                android:layout_alignRight="@+id/content_buy"
+                android:text="2"
+                android:id="@+id/content_buy_num"
+                android:layout_marginRight="6dp"
+                android:gravity="center"
+                android:background="@drawable/shape_buy_num_point"
+                android:layout_width="15dp"
+                android:textSize="10sp"
+                android:textColor="@color/white"
+                android:layout_height="15dp"/>
+    </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

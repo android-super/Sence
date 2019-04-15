@@ -11,7 +11,7 @@
         <ImageView
                 android:id="@+id/item_img"
                 android:layout_width="match_parent"
-                android:layout_height="125dp"
+                android:layout_height="165dp"
                 android:src="@drawable/hint_img"
                 android:scaleType="centerCrop"/>
 

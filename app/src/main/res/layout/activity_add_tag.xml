@@ -9,22 +9,58 @@
         tools:context=".activity.AddTagActivity">
 
     <RelativeLayout
+            android:background="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="400dp">
+            android:layout_height="50dp">
 
         <ImageView
-                android:id="@+id/tag_img"
-                android:layout_width="match_parent"
-                android:layout_centerInParent="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/hint_img"
-                android:layout_height="match_parent"/>
+                android:id="@+id/tag_back"
+                android:src="@drawable/fanhui"
+                android:layout_width="50dp"
+                android:scaleType="center"
+                android:layout_height="50dp"/>
 
-        <com.sence.view.PictureTagLayout
-                android:id="@+id/tag_layout"
+        <TextView
+                android:id="@+id/tag_title"
                 android:layout_centerInParent="true"
-                android:layout_width="match_parent"
-                android:visibility="visible"
-                android:layout_height="match_parent"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        <TextView
+                android:id="@+id/tag_next"
+                android:text="下一步"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:background="@drawable/shape_round_tag_next"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_width="58dp"
+                android:gravity="center"
+                android:layout_height="24dp"/>
     </RelativeLayout>
+
+    <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="515dp"/>
+    <LinearLayout
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="match_parent">
+        <TextView
+                android:text="点击照片添加标签"
+                android:textSize="13sp"
+                android:textColor="#333333"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:textColor="#666666"
+                android:textSize="11sp"
+                android:layout_marginTop="12dp"
+                android:text="还可以拖动标签，点击标签进行编辑(单张图片可添加多个标签)"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
 </LinearLayout>

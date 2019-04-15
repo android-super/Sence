@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sence.R;
 import com.sence.activity.NoteDetailActivity;
+import com.sence.bean.response.PMainBean;
 import com.sence.bean.response.PMainNoteBean;
 import com.sence.net.Urls;
 import com.sence.utils.GlideUtils;
@@ -25,13 +26,13 @@ import androidx.core.app.ActivityOptionsCompat;
  * package_name is com.sence.adapter
  * 描述:SenceGit
  */
-public class NoteAdapter extends BaseQuickAdapter<PMainNoteBean, BaseViewHolder> {
+public class NoteAdapter extends BaseQuickAdapter<PMainBean.NoteListBean, BaseViewHolder> {
     public NoteAdapter(int layoutResId) {
         super(layoutResId);
     }
 
     @Override
-    protected void convert(final BaseViewHolder helper, final PMainNoteBean item) {
+    protected void convert(final BaseViewHolder helper, final PMainBean.NoteListBean item) {
         final NiceImageView imageView = helper.getView(R.id.item_img);
         final Activity activity = (Activity) helper.itemView.getContext();
         GlideUtils.getInstance().loadHead(item.getAvatar(), (ImageView) helper.getView(R.id.item_head));

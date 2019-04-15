@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sence.R;
 import com.sence.activity.ContentDetailActivity;
+import com.sence.bean.response.PMainBean;
 import com.sence.bean.response.PMainFocusBean;
 import com.sence.net.Urls;
 import com.sence.utils.GlideUtils;
@@ -22,13 +23,13 @@ import com.sence.utils.GlideUtils;
  * package_name is com.sence.adapter
  * 描述:Sence
  */
-public class MainFocusAdapter extends BaseQuickAdapter<PMainFocusBean, BaseViewHolder> {
+public class MainFocusAdapter extends BaseQuickAdapter<PMainBean.NoteListBean, BaseViewHolder> {
     public MainFocusAdapter(int layoutResId) {
         super(layoutResId);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, final PMainFocusBean item) {
+    protected void convert(BaseViewHolder helper, final PMainBean.NoteListBean item) {
         final Activity activity = (Activity) helper.itemView.getContext();
         final ImageView item_img = helper.getView(R.id.item_img);
         GlideUtils.getInstance().loadHead(item.getAvatar(), (ImageView) helper.getView(R.id.item_head));

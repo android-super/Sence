@@ -1,6 +1,7 @@
 package com.sence.net;
 
 import com.sence.bean.base.BaseResponseBean;
+import com.sence.bean.request.RMemberBean;
 import com.sence.bean.response.*;
 
 import java.util.List;
@@ -81,7 +82,7 @@ public interface HttpService {
 
     @FormUrlEncoded
     @POST(Urls.USER_FOCUS_CANCEL)
-    Observable<BaseResponseBean<String>> UserFocusCancel(@FieldMap Map<String, Object> map);//取消关注
+    Observable<BaseResponseBean<Object>> UserFocusCancel(@FieldMap Map<String, Object> map);//取消关注
 
     @FormUrlEncoded
     @POST(Urls.USER_FOCUS)
@@ -169,19 +170,20 @@ public interface HttpService {
 
     @FormUrlEncoded
     @POST(Urls.MAIN_RECOMMEND)
-    Observable<BaseResponseBean<List<PMainRecommendBean>>> MainRecommend(@FieldMap Map<String, Object> map);//首页推荐
+    Observable<BaseResponseBean<PMainBean>> MainRecommend(@FieldMap Map<String, Object> map);//首页推荐
 
     @FormUrlEncoded
     @POST(Urls.MAIN_FOCUS)
-    Observable<BaseResponseBean<List<PMainFocusBean>>> MainFocus(@FieldMap Map<String, Object> map);//首页关注
+    Observable<BaseResponseBean<PMainBean>> MainFocus(@FieldMap Map<String, Object> map);//首页关注
 
     @FormUrlEncoded
     @POST(Urls.NOTE_DELETE)
     Observable<BaseResponseBean<String>> NoteDelete(@FieldMap Map<String, Object> map);//删除笔记
 
-    @FormUrlEncoded
+    @Multipart
     @POST(Urls.NOTE_ADD)
-    Observable<BaseResponseBean<String>> NoteAdd(@FieldMap Map<String, Object> map);//添加笔记
+    Observable<BaseResponseBean<String>> NoteAdd(@PartMap Map<String, RequestBody> map,
+                                                 @Part List<MultipartBody.Part> partList);//添加笔记
 
     @FormUrlEncoded
     @POST(Urls.MAIN_SEARCH)
@@ -189,7 +191,7 @@ public interface HttpService {
 
     @FormUrlEncoded
     @POST(Urls.MAIN_NOTE)
-    Observable<BaseResponseBean<List<PMainNoteBean>>> MainNote(@FieldMap Map<String, Object> map);//首页笔记
+    Observable<BaseResponseBean<PMainBean>> MainNote(@FieldMap Map<String, Object> map);//首页笔记
 
 
     @FormUrlEncoded
@@ -273,9 +275,10 @@ public interface HttpService {
     @POST(Urls.ORDER_COMMENT)
     Observable<BaseResponseBean<String>> CommentOrder(@PartMap Map<String, RequestBody> map,@Part List<MultipartBody.Part> partList);//订单评论
 
-    @FormUrlEncoded
+    @Multipart
     @POST(Urls.USER_EDIT)
-    Observable<BaseResponseBean<Object>> UserEdit(@FieldMap Map<String, RequestBody> map);//编辑个人资料
+    Observable<BaseResponseBean<Object>> UserEdit(@PartMap Map<String, RequestBody> map,
+                                                  @Part List<MultipartBody.Part> partList);//修改个人信息
 
     @FormUrlEncoded
     @POST(Urls.TIME_REMAINING)
@@ -316,7 +319,7 @@ public interface HttpService {
 
     @FormUrlEncoded
     @POST(Urls.CHAT_MEMBER_LIST)
-    Observable<BaseResponseBean<Object>> ChatMemberList(@FieldMap Map<String, Object> map);//V群成员列表
+    Observable<BaseResponseBean<List<RMemberBean>>> ChatMemberList(@FieldMap Map<String, Object> map);//V群成员列表
 
     @FormUrlEncoded
     @POST(Urls.CHAT_ENTER)
@@ -329,6 +332,14 @@ public interface HttpService {
     @FormUrlEncoded
     @POST(Urls.CHAT_READ)
     Observable<BaseResponseBean<Object>> ChatRead(@FieldMap Map<String, Object> map);//消息已读
+
+    @FormUrlEncoded
+    @POST(Urls.PAY_ALI)
+    Observable<BaseResponseBean<String>> PayAli(@FieldMap Map<String, Object> map);//支付宝支付
+
+    @FormUrlEncoded
+    @POST(Urls.PAY_WX)
+    Observable<BaseResponseBean<PWxPayBean>> PayWx(@FieldMap Map<String, Object> map);//微信支付
 
 
 }

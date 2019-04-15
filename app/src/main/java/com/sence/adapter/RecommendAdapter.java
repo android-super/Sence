@@ -12,6 +12,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sence.R;
 import com.sence.activity.ContentDetailActivity;
+import com.sence.bean.response.PMainBean;
 import com.sence.bean.response.PMainRecommendBean;
 import com.sence.net.Urls;
 import com.sence.utils.GlideUtils;
@@ -24,19 +25,19 @@ import androidx.core.app.ActivityOptionsCompat;
  * package_name is com.sence.adapter
  * 描述:SenceGit
  */
-public class RecommendAdapter extends BaseQuickAdapter<PMainRecommendBean, BaseViewHolder> {
+public class RecommendAdapter extends BaseQuickAdapter<PMainBean.NoteListBean, BaseViewHolder> {
     public RecommendAdapter(int layoutResId) {
         super(layoutResId);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, final PMainRecommendBean item) {
+    protected void convert(BaseViewHolder helper, final PMainBean.NoteListBean item) {
         final NiceImageView item_img = helper.getView(R.id.item_img);
         final Activity activity = (Activity) helper.itemView.getContext();
         GlideUtils.getInstance().loadHead(item.getAvatar(), (ImageView) helper.getView(R.id.item_head));
         GlideUtils.getInstance().loadNormal(item.getAlbum_url(), item_img);
         helper.setText(R.id.item_title, item.getTitle());
-        helper.setText(R.id.item_content, item.getContent());
+        helper.setText(R.id.item_content, item.getDescribe());
         helper.setText(R.id.item_name, item.getNick_name());
         if (item.getIs_kol().equals("1")) {
             helper.setGone(R.id.item_tag, true);

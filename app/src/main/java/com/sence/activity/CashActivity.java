@@ -19,6 +19,7 @@ import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.LoginStatus;
+import com.sence.utils.StatusBarUtil;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
@@ -61,6 +62,7 @@ public class CashActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void initView() {
+        StatusBarUtil.setLightMode(this);
         cashSelect.setOnClickListener(this);
         cashVerify.setOnClickListener(this);
         cashCommit.setOnClickListener(this);

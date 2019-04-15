@@ -14,8 +14,6 @@
     <uses-permission android:name="android.permission.CAMERA"/> <!-- 允许程序访问CellID或WiFi热点来获取粗略的位置 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
-
-
     <application
             android:name=".base.BaseApp"
             android:allowBackup="true"
@@ -25,8 +23,38 @@
             android:supportsRtl="true"
             android:theme="@style/AppThemeNoActionBar"
             tools:replace="android:theme">
-
-        <!-- 拍照7.0文件共享适配 -->
+        <activity android:name=".activity.MessageHDActivity">
+        </activity>
+        <!-- 支付宝支付 -->
+        <activity
+                android:name="com.alipay.sdk.app.H5PayActivity"
+                android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+                android:exported="false"
+                android:screenOrientation="behind"
+                android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity
+                android:name="com.alipay.sdk.app.H5AuthActivity"
+                android:configChanges="orientation|keyboardHidden|navigation"
+                android:exported="false"
+                android:screenOrientation="behind"
+                android:windowSoftInputMode="adjustResize|stateHidden"/> <!-- 微信支付 -->
+        <activity
+                android:name=".wxapi.WXEntryActivity"
+                android:configChanges="keyboardHidden|orientation|screenSize"
+                android:exported="true"
+                android:launchMode="singleTop"
+                android:screenOrientation="portrait"
+                android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <activity
+                android:name=".wxapi.WXPayEntryActivity"
+                android:exported="true"
+                android:launchMode="singleTop"
+                android:screenOrientation="portrait"
+                android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <activity android:name=".activity.OpenVipPageActivity">
+        </activity>
+        <activity android:name=".activity.CommitTagActivity">
+        </activity> <!-- 拍照7.0文件共享适配 -->
         <provider
                 android:name="androidx.core.content.FileProvider"
                 android:authorities="${applicationId}.provider"
@@ -34,8 +62,9 @@
                 android:grantUriPermissions="true">
             <meta-data
                     android:name="android.support.FILE_PROVIDER_PATHS"
-                    android:resource="@xml/file_paths" />
+                    android:resource="@xml/file_paths"/>
         </provider>
+
         <activity
                 android:name=".activity.chat.ui.ChatMsgActivity"
                 android:windowSoftInputMode="stateAlwaysHidden"/>
@@ -83,11 +112,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity
-                android:name=".wxapi.WXEntryActivity"
-                android:configChanges="keyboardHidden|orientation|screenSize"
-                android:exported="true"
-                android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         <activity android:name=".activity.MyAccountActivity">
         </activity>
         <activity android:name=".activity.MemberActivity">
@@ -99,9 +123,7 @@
         <activity android:name=".LoginActivity">
         </activity>
         <activity android:name=".activity.ContentDetailActivity"/>
-        <activity
-                android:name=".activity.NoteDetailActivity"
-                />
+        <activity android:name=".activity.NoteDetailActivity"/>
         <activity
                 android:name=".MainActivity"
                 android:label="@string/app_name"

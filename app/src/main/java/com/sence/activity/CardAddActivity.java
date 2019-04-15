@@ -17,6 +17,7 @@ import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.LoginStatus;
+import com.sence.utils.StatusBarUtil;
 
 /**
  * 添加銀行卡界面
@@ -51,6 +52,7 @@ public class CardAddActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void initView() {
+        StatusBarUtil.setLightMode(this);
         cardBank.setOnClickListener(this);
         cardCommit.setOnClickListener(this);
     }

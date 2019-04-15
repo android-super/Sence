@@ -17,6 +17,7 @@ import com.sence.R;
 import com.sence.adapter.NoteAdapter;
 import com.sence.bean.request.RNidBean;
 import com.sence.bean.request.RUidListBean;
+import com.sence.bean.response.PMainBean;
 import com.sence.bean.response.PMainNoteBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
@@ -63,7 +64,7 @@ public class NoteFragment extends Fragment {
 
     private void initData() {
         HttpManager.getInstance().PlayNetCode(HttpCode.MAIN_NOTE,
-                new RUidListBean(LoginStatus.getUid(), page + "")).request(new ApiCallBack<List<PMainNoteBean>>() {
+                new RUidListBean(LoginStatus.getUid(), page + "")).request(new ApiCallBack<PMainBean>() {
             @Override
             public void onFinish() {
                 smartRefreshLayout.finishRefresh();
@@ -76,11 +77,11 @@ public class NoteFragment extends Fragment {
             }
 
             @Override
-            public void onSuccess(List<PMainNoteBean> o, String msg) {
+            public void onSuccess(PMainBean o, String msg) {
                 if (page == 1) {
-                    adapter.setNewData(o);
+                    adapter.setNewData(o.getNote_list());
                 } else {
-                    adapter.addData(o);
+                    adapter.addData(o.getNote_list());
                 }
             }
         });
@@ -98,6 +99,7 @@ public class NoteFragment extends Fragment {
                 true);
         recyclerView.addItemDecoration(gridSpacingItemDecoration);
         adapter = new NoteAdapter(R.layout.rv_item_note);
+        adapter.setEmptyView(R.layout.empty_main_recommend_note, recyclerView);
         recyclerView.setAdapter(adapter);
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
