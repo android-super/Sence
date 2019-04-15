@@ -61,7 +61,7 @@ public class SPCommonUtils {
         for (int i = 0; i < list.size(); ++i) {
             sb.append(list.get(i)).append(separator);
         }
-        return separator.equals("") ? sb.toString() : sb.toString().substring(0, sb.toString().length() - 1);
+        return "".equals(separator) ? sb.toString() : sb.toString().substring(0, sb.toString().length() - 1);
     }
 
 

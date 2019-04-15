@@ -112,8 +112,6 @@ public class AutonymActivity extends BaseActivity {
             public void onSuccess(String o, String msg) {
                 Logger.e("msg==========" + msg);
                 SharedPreferencesUtil.getInstance().putString("id_status", "2");
-                llHeadAutonym.setVisibility(View.GONE);
-                llShowAutonym.setVisibility(View.VISIBLE);
                 String name = etNameAutonym.getText().toString().trim();
                 String autonym = etIdentityAutonym.getText().toString().trim();
                 StringBuffer userName = null;
@@ -130,6 +128,8 @@ public class AutonymActivity extends BaseActivity {
                 SharedPreferencesUtil.getInstance().putString("id_card", autonymhead+"**************"+autonymtail);
                 tvNameAutonym.setText(userName.toString());
                 tvIdentityAutonym.setText(autonymhead+"**************"+autonymtail);
+                llHeadAutonym.setVisibility(View.GONE);
+                llShowAutonym.setVisibility(View.VISIBLE);
             }
         });
     }

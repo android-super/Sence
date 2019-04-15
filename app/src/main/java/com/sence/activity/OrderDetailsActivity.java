@@ -149,7 +149,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
             btSubmintOrderdetails.setText("联系客服");
         } else if ("1".equals(type)) {
             layoutHead.setRigthText("取消订单");
-        } else if ("8".equals(type)||"5".equals(type)||"6".equals(type)) {
+        } else if ("8".equals(type) || "5".equals(type) || "6".equals(type)) {
             tvTextOrderdetails.setVisibility(View.GONE);
             tvSpriceOrderdetails.setVisibility(View.GONE);
             btSubmintOrderdetails.setBackgroundResource(R.drawable.shape_myorder_bottom);
@@ -159,6 +159,9 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
             tvTextOrderdetails.setVisibility(View.GONE);
             tvSpriceOrderdetails.setVisibility(View.GONE);
             btSubmintOrderdetails.setText("删除订单");
+        }
+        if (!"1".equals(type)) {
+            ivToaddressOrderdetails.setVisibility(View.GONE);
         }
         bottomSheetDialog();
         layoutHead.setRightOnClick(new View.OnClickListener() {
@@ -205,7 +208,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
 
     public void initData() {
         boolean isCheckOrderAddress = LoginStatus.getIsCheckOrderAddress();
-        if(isCheckOrderAddress){
+        if (isCheckOrderAddress) {
             idAddress = LoginStatus.getIdAddress();
             address = LoginStatus.getAddress();
             nameAddress = LoginStatus.getNameAddress();
@@ -233,24 +236,58 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
                 if (o.getGoods().size() > 0) {
                     orderDetailsAdapter.setList(o.getGoods());
                 }
-//
                 tvStateOrderdetails.setText(o.getStatus());
-                tvNumberOrderdetails.setText(o.getOid());
-                tvTimeOrderdetails.setText(o.getAddtime());
+                tvNumberOrderdetails.setText("下单编号："+o.getOid());
+                tvTimeOrderdetails.setText("下单时间："+o.getAddtime());
                 tvStroenameOrderdetails.setText(o.getShopname());
                 tvNameOrderdetails.setText(o.getAddress().getUsername());
                 tvPhoneOrderdetails.setText(o.getAddress().getPhone());
-                tvAddressOrderdetails.setText(o.getAddress().getAddress());
-                tvShoppriceOrderdetails.setText("￥" + o.getGmoney());
-                tvCouponOrderdetails.setText("-￥" + o.getCmoney());
-                tvPostpriceOrderdetails.setText("+￥" + o.getPmoney());
-                tvTaxpriceOrderdetails.setText("+￥" + o.getFee());
-                tvMoneyOrderdetails.setText("￥" + o.getNeedpay());
-                tvSpriceOrderdetails.setText("￥" + o.getNeedpay());
-                tvPricePay.setText("￥" + o.getNeedpay());
+                tvAddressOrderdetails.setText(o.getAddress().getArea()+o.getAddress().getAddress());
+                if(o.getGmoney().contains(".")){
+                    tvShoppriceOrderdetails.setText("￥" + o.getGmoney());
+                }else{
+                    tvShoppriceOrderdetails.setText("￥" + o.getGmoney()+".00");
+                }
+                if(o.getGmoney().contains(".")){
+                    tvCouponOrderdetails.setText("-￥" + o.getCmoney());
+                }else{
+                    tvCouponOrderdetails.setText("-￥" + o.getCmoney()+".00");
+                }
+                if(o.getGmoney().contains(".")){
+                    tvPostpriceOrderdetails.setText("+￥" + o.getPmoney());
+                }else{
+                    tvPostpriceOrderdetails.setText("+￥" + o.getPmoney()+".00");
+                }
+                if(o.getGmoney().contains(".")){
+                    tvTaxpriceOrderdetails.setText("+￥" + o.getFee());
+                }else{
+                    tvTaxpriceOrderdetails.setText("+￥" + o.getFee()+".00");
+                }
+                if(o.getGmoney().contains(".")){
+                    tvMoneyOrderdetails.setText("￥" + o.getNeedpay());
+                }else{
+                    tvMoneyOrderdetails.setText("￥" + o.getNeedpay()+".00");
+                }
+                if(o.getGmoney().contains(".")){
+                    tvSpriceOrderdetails.setText("￥" + o.getNeedpay());
+                }else{
+                    tvSpriceOrderdetails.setText("￥" + o.getNeedpay()+"00");
+                }
+                if(o.getGmoney().contains(".")){
+                    tvPricePay.setText("￥" + o.getNeedpay());
+                }else{
+                    tvPricePay.setText("￥" + o.getNeedpay()+".00");
+                }
+
+
+
+
+
+
             }
         });
     }
+
     private void ConfirmTakeGood() {
         HttpManager.getInstance().PlayNetCode(HttpCode.CONFIRM_TAKEGOOD, new ROrderDetailsBean(id, LoginStatus.getUid())).request(new ApiCallBack<String>() {
 
@@ -272,6 +309,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
             }
         });
     }
+
     private void DeleteOreder() {
         HttpManager.getInstance().PlayNetCode(HttpCode.DELETE_DONEORDER, new ROrderDetailsBean(id, LoginStatus.getUid())).request(new ApiCallBack<String>() {
 
@@ -292,6 +330,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
             }
         });
     }
+
     private void CancelOreder() {
 
         HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_DELETE, new ROrderDetailsBean(id, LoginStatus.getUid())).request(new ApiCallBack<String>() {
@@ -308,12 +347,10 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onSuccess(String o, String msg) {
                 Logger.e("msg==========" + msg);
-                if (msg.equals("取消成功")) {
-                    ToastUtils.showShort("订单取消成功");
+                ToastUtils.showShort("订单取消成功");
 //                    mTv.setText("取消成功");
 //                    mTv.setClickable(false);
-                    tvStateOrderdetails.setText("订单已取消");
-                }
+                tvStateOrderdetails.setText("订单已取消");
             }
         });
 
@@ -324,7 +361,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_address_orderdetails:
-                if("1".equals(type)){
+                if ("1".equals(type)) {
                     Intent intentAddress = new Intent(OrderDetailsActivity.this, ManageAddressActivity.class);
                     intentAddress.putExtra("type", "order");
                     startActivity(intentAddress);
@@ -347,8 +384,8 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
                     if (isstart) {
                         getTime();
                     }
-                } else if ("5".equals(type)||"6".equals(type)||"8".equals(type)) {
-                    Intent intent = new Intent(OrderDetailsActivity.this,MyInfoActivity.class);
+                } else if ("5".equals(type) || "6".equals(type) || "8".equals(type)) {
+                    Intent intent = new Intent(OrderDetailsActivity.this, MyInfoActivity.class);
                     startActivity(intent);
                 } else if ("7".equals(type)) {
                     DeleteOreder();

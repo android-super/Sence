@@ -101,7 +101,7 @@ public class ServiceDetailsActivity extends BaseActivity {
             }
 
             @Override
-            public void onSuccess(PServiceeDetails o, String msg) {
+            public void onSuccess(final PServiceeDetails o, String msg) {
                 Logger.e("msg==========" + msg+"=="+o.getImgs().size());
                 bean = o;
                 List<ImageView> list = new ArrayList<>();
@@ -110,6 +110,16 @@ public class ServiceDetailsActivity extends BaseActivity {
                     imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                     GlideUtils.getInstance().loadHead( o.getImgs().get(i),imageView);
                     list.add(imageView);
+                    final int position = i;
+                    imageView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(ServiceDetailsActivity.this, ImgFlexActivity.class);
+                            intent.putStringArrayListExtra("imgs", (ArrayList<String>) o.getImgs());
+                            intent.putExtra("position",position);
+                            startActivity(intent);
+                        }
+                    });
                 }
                 shopDetailsImgAdapter.setList(list);
 

@@ -61,7 +61,6 @@ public class MyOrderFragment extends Fragment {
         mSmartRefreshLayout = getView().findViewById(R.id.srl_more_myorder);
         mMore = getView().findViewById(R.id.tv_more_myorder);
         mMyOrderAdapter = new MyOrderAdapter(getContext());
-
         LinearLayoutManager linearLayout = new LinearLayoutManager(getContext());
         linearLayout.setOrientation(RecyclerView.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayout);

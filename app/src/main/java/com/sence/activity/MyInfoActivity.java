@@ -3,15 +3,12 @@ package com.sence.activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
@@ -42,7 +39,6 @@ import com.sence.view.NiceImageView;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -62,7 +58,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     private View mView;
     private TextView mDeditor, mName, mAddress, mFocusNum, mFansNum, mSigner, mShopName, mShopPrice;
     private NiceImageView mImg, mImageView;
-    private RelativeLayout mShop;
+    private LinearLayout mShop;
     private ImageView mHead;
     private NiceImageView mIsV;
     private LinearLayout ll_group_myinfo;
@@ -74,6 +70,10 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     private int page = 1;
     private String uid = "";
     private String is_focus;
+    private UserRecommendFragment recommendFragment;
+    private UserNoteFragment noteFragment;
+    private Fragment[] fragmentList;
+    private View layout;
 
     @Override
     public int onActLayout() {
@@ -87,12 +87,6 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         }
         StatusBarUtil.setTranslucentForCoordinatorLayout(this, 0);
         StatusBarUtil.setLightMode(this);
-        Intent intent = getIntent();
-        Log.i("aaaaaa",uid+"==="+LoginStatus.getUid());
-        uid = intent.getStringExtra("uid");
-        if (TextUtils.isEmpty(uid)) {
-            uid = LoginStatus.getUid();
-        }
         mAppBarLayout = findViewById(R.id.al_appbar_myinfo);
         mDeditor = findViewById(R.id.tv_deditor_myinfo);
         mTabLayoutButtom = findViewById(R.id.tl_tabhid_myinfo);
@@ -115,6 +109,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         mShopPrice = findViewById(R.id.tv_price_myinfo);
         mImageView = findViewById(R.id.iv_imgico_myinfo);
         mViewPager = findViewById(R.id.vp_content_myinfo);
+        layout = findViewById(R.id.v_layout_myinfo);
         mIsV = findViewById(R.id.iv_isv_myinfo);
         mBack = findViewById(R.id.iv_back_myinfo);
         ll_group_myinfo = findViewById(R.id.ll_group_myinfo);
@@ -126,19 +121,24 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 startActivity(new Intent(MyInfoActivity.this, EditInfoActivity.class));
             }
         });
-        final UserRecommendFragment recommendFragment = new UserRecommendFragment();
-        final UserNoteFragment noteFragment = new UserNoteFragment();
+        recommendFragment = new UserRecommendFragment();
+        noteFragment = new UserNoteFragment();
         MyInfoRecommendFragment myInfoRecommendFragment = new MyInfoRecommendFragment();
-        final Fragment[] fragmentList = {recommendFragment, noteFragment, myInfoRecommendFragment};
+        fragmentList = new Fragment[]{recommendFragment, noteFragment, myInfoRecommendFragment};
         mMyInfoRecommendViewPagerAdatpter = new MyInfoRecommendViewPagerAdatpter(getSupportFragmentManager(), this, fragmentList, list);
         mViewPager.setAdapter(mMyInfoRecommendViewPagerAdatpter);
         mTabLayoutButtom.setupWithViewPager(mViewPager);
+        Intent intent = getIntent();
+        uid = intent.getStringExtra("uid");
+        if (TextUtils.isEmpty(uid)||LoginStatus.getUid().equals(uid)) {
+            ivFocusMyinfo.setVisibility(View.GONE);
+            ivChatMyinfo.setVisibility(View.GONE);
+            uid = LoginStatus.getUid();
+        }
         myInfoRecommendFragment.result(new MyInfoRecommendFragment.DeleteServiceListener() {
             @Override
             public void delete() {
-                final Fragment[] fragments = {recommendFragment, noteFragment};
-                String[] listTitle = {"推荐", "笔记"};
-                mMyInfoRecommendViewPagerAdatpter.setList(fragments, listTitle);
+
             }
         });
         mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
@@ -195,7 +195,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     };
 
     public void initData() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.USER_INFO_DATA, new RMyInfoBean(LoginStatus.getUid(), "1", uid, page + "", "10")).request(new ApiCallBack<PMyInfoBean>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.USER_INFO_DATA, new RMyInfoBean(LoginStatus.getUid(), "3", uid, page + "", "10")).request(new ApiCallBack<PMyInfoBean>() {
             @Override
             public void onFinish() {
 
@@ -218,24 +218,26 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                     ivFocusMyinfo.setImageResource(R.drawable.guanzhu);
                     ivChatMyinfo.setImageResource(R.drawable.sixin);
                 }
+                if("0".equals(o.getIs_kol())){
+                    mShop.setVisibility(View.GONE);
+                    layout.setVisibility(View.VISIBLE);
+                    mIsV.setVisibility(View.GONE);
+                }else{
+                    mShopName.setText(o.getGoods_info().getName());
+                    mShopPrice.setText("￥ " + o.getGoods_info().getPrice());
+                    GlideUtils.getInstance().loadHead(o.getGoods_info().getImg(), mImg);
+                }
                 mName.setText(o.getNick_name());
                 mAddress.setText(o.getDetails());
                 mFocusNum.setText(o.getFocus_num());
                 mFansNum.setText(o.getFans_num());
                 mSigner.setText(o.getAutograph());
-                if (o.getIs_kol().equals("1")) {
-                    mIsV.setVisibility(View.VISIBLE);
-                } else {
-                    mIsV.setVisibility(View.GONE);
-                }
                 GlideUtils.getInstance().loadHead(o.getAvatar(), mImageView);
                 dim(Urls.base_url + o.getAvatar());
-                if (o.getIs_kol().equals("1")) {
-                    mShopName.setText(o.getGoods_info().getName());
-                    mShopPrice.setText("￥ " + o.getGoods_info().getPrice());
-                    GlideUtils.getInstance().loadHead(o.getGoods_info().getImg(), mImg);
-                } else {
-                    mShop.setVisibility(View.GONE);
+                if(o.getOther_info().size()==0){
+                    final Fragment[] fragments = {recommendFragment, noteFragment};
+                    String[] listTitle = {"推荐", "笔记"};
+                    mMyInfoRecommendViewPagerAdatpter.setList(fragments, listTitle);
                 }
             }
         });
@@ -255,14 +257,6 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 startActivity(intent);
                 break;
         }
-    }
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
     }
 
     @OnClick({R.id.iv_focus_myinfo, R.id.iv_chat_myinfo, R.id.iv_groupchat_myinfo})

@@ -8,14 +8,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sence.R;
 import com.sence.activity.NoteDetailActivity;
 import com.sence.bean.response.PMainBean;
 import com.sence.bean.response.PMainNoteBean;
-import com.sence.net.Urls;
 import com.sence.utils.GlideUtils;
 import com.sence.view.NiceImageView;
 
@@ -41,7 +39,7 @@ public class NoteAdapter extends BaseQuickAdapter<PMainBean.NoteListBean, BaseVi
         helper.setText(R.id.item_name, item.getNick_name());
         TextView item_support = helper.getView(R.id.item_support);
         item_support.setText(item.getPraise_count());
-        if (item.getIs_like().equals("1")) {
+        if ("1".equals(item.getIs_like())) {
             item_support.setSelected(true);
         } else {
             item_support.setSelected(false);

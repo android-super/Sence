@@ -17,11 +17,12 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ServiceDetailsImgAdapter extends RecyclerView.Adapter<ServiceDetailsImgAdapter.ViewHolder> {
+public class ShopCommendImgAdapter extends RecyclerView.Adapter<ShopCommendImgAdapter.ViewHolder> {
     private Context context;
     private List<String> list = new ArrayList<>();
+    private int num;
 
-    public ServiceDetailsImgAdapter(Context context){
+    public ShopCommendImgAdapter(Context context){
         this.context = context;
     }
     public void setList(List<String> list){
@@ -31,14 +32,14 @@ public class ServiceDetailsImgAdapter extends RecyclerView.Adapter<ServiceDetail
 
     @NonNull
     @Override
-    public ServiceDetailsImgAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.rv_item_servicedetailsimg,parent,false);
-        return new ServiceDetailsImgAdapter.ViewHolder(view);
+    public ShopCommendImgAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.rv_item_shopcommentimg,parent,false);
+        return new ShopCommendImgAdapter.ViewHolder(view);
 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ServiceDetailsImgAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final ShopCommendImgAdapter.ViewHolder holder, final int position) {
         GlideUtils.getInstance().loadHead( list.get(position),holder.mImageView);
         holder.mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,7 +63,7 @@ public class ServiceDetailsImgAdapter extends RecyclerView.Adapter<ServiceDetail
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mImageView = itemView.findViewById(R.id.iv_img_servicedetailsimg);
+            mImageView = itemView.findViewById(R.id.iv_commendimg_shopcommend);
         }
     }
 }

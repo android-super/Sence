@@ -41,7 +41,7 @@ public class MyInfoRecommendAdapter extends RecyclerView.Adapter<MyInfoRecommend
 
     @Override
     public void onBindViewHolder(@NonNull MyInfoRecommendAdapter.ViewHolder holder, final int position) {
-        if(list.get(position).getIs_kol().equals("1")){
+        if("1".equals(list.get(position).getIs_kol())){
             holder.mTag.setVisibility(View.VISIBLE);
         }else{
             holder.mTag.setVisibility(View.GONE);

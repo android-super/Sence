@@ -43,7 +43,15 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<ConfirmOrderAdapte
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         holder.mRecyclerView.setLayoutManager(linearLayoutManager);
         holder.mRecyclerView.setAdapter(confirmOrderItemAdapter);
-        confirmOrderItemAdapter.setList(list.get(position).getGoods());
+        List<PBusBean.CartBean.GoodsBean> listGoods = new ArrayList<>();
+        for (int i = 0; i < list.get(position).getGoods().size(); i++) {
+            if(list.get(position).getGoods().get(i).isSelect()){
+                listGoods.add(list.get(position).getGoods().get(i));
+            }
+        }
+        if(listGoods.size()>0){
+            confirmOrderItemAdapter.setList(listGoods);
+        }
         holder.mName.setText(list.get(position).getShopname());
         holder.mNum.setText("共"+list.get(position).getAll_num()+"件商品");
         holder.mPrice.setText("￥:"+list.get(position).getAll_price());

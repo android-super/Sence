@@ -8,12 +8,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="14dp"
-        android:paddingRight="14dp">
+        >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:paddingLeft="14dp"
+            android:paddingRight="14dp"
             android:orientation="horizontal">
 
             <com.sence.view.NiceImageView
@@ -40,23 +41,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:paddingLeft="14dp"
+            android:paddingRight="14dp"
             android:lineSpacingExtra="9dp"
             android:id="@+id/tv_content_shopcommend"
             android:text="绿竹是禾本科，绿竹属竿较高大，近直立，单丛生；节间圆筒形，竿壁厚。箨鞘质地坚韧，顶端截形或两肩部广圆；绿竹是禾本科，绿竹属竿较高大，近直立，单丛生；节间圆筒形，竿壁厚。箨鞘质地坚韧，顶端截形或两肩部广圆；"
             android:textColor="#333333"
             android:textSize="@dimen/sp_14"/>
 
-        <ImageView
-            android:layout_width="175dp"
-            android:layout_height="175dp"
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:scaleType="fitXY"
-            android:id="@+id/iv_commendimg_shopcommend"
-            android:src="@drawable/hint_img"/>
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:id="@+id/recycle_commendimg_shopcommend"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingLeft="14dp"
+            android:paddingRight="14dp"
             android:orientation="horizontal">
 
             <TextView

@@ -137,12 +137,12 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
         contentDescribe.setText(noteInfoBean.getAutograph());
         contentTitle.setText(noteInfoBean.getTitle());
 
-        if (noteInfoBean.getIs_like().equals("1")) {
+        if ("1".equals(noteInfoBean.getIs_like())) {
             contentSupport.setImageResource(R.drawable.recommend_dianzan_y);
         } else {
             contentSupport.setImageResource(R.drawable.recommend_dianzan);
         }
-        if (noteInfoBean.getIs_focus().equals("1")) {
+        if ("1".equals(noteInfoBean.getIs_focus())) {
             toolFocus.setVisibility(View.VISIBLE);
             toolContentFocus.setVisibility(View.GONE);
             contentFocus.setVisibility(View.VISIBLE);
@@ -395,7 +395,7 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onSuccess(Object o, String msg) {
                 int support_num = Integer.parseInt(noteInfoBean.getPraise_count());
-                if (noteInfoBean.getIs_like().equals("0")) {
+                if ("0".equals(noteInfoBean.getIs_like())) {
                     noteInfoBean.setIs_like("1");
                     support_num = support_num + 1;
                     contentSupport.setImageResource(R.drawable.recommend_dianzan_y);

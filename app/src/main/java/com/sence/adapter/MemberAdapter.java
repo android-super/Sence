@@ -20,7 +20,7 @@ public class MemberAdapter extends BaseQuickAdapter<RMemberBean, BaseViewHolder>
     @Override
     protected void convert(BaseViewHolder helper, RMemberBean item) {
         GlideUtils.getInstance().loadHead(item.getAvatar(), (ImageView) helper.getView(R.id.item_head));
-        if (item.getIs_kol().equals("1")){
+        if ("1".equals(item.getIs_kol())){
             helper.setGone(R.id.item_serve,true);
         }else {
             helper.setGone(R.id.item_serve,false);

@@ -2,8 +2,8 @@ package com.sence.utils;
 
 import android.os.Handler;
 import android.os.Message;
-import android.text.TextUtils;
 import android.util.Log;
+
 import com.blankj.utilcode.util.PhoneUtils;
 import com.orhanobut.logger.Logger;
 import com.sence.activity.chat.bean.ChatSocketBean;
@@ -12,17 +12,13 @@ import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.Urls;
 import com.sence.net.manager.ApiCallBack;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -169,7 +165,7 @@ public class SocketUtils {
                     }
                     for (int i = 0; i < results.size(); i++) {
                         ChatSocketBean socketBean = JsonParseUtil.parseString(results.get(i), ChatSocketBean.class);
-                        if (socketBean.getType().equals("init")) {
+                        if ("init".equals(socketBean.getType())) {
                             client_id = socketBean.getClient_id();
                             request();
                         }

@@ -113,7 +113,7 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:layout_marginRight="20dp"
-                    android:scaleType="centerCrop"
+                    android:scaleType="centerInside"
                     android:layout_marginTop="10dp"
                     android:id="@+id/iv_imgone_servicecomment"
                     android:src="@drawable/comment_tianjia"/>
@@ -134,7 +134,7 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
                     android:id="@+id/iv_imgtwe_servicecomment"
-                    android:scaleType="centerCrop"
+                    android:scaleType="centerInside"
                     android:src="@drawable/comment_yi"/>
                 <ImageView
                     android:layout_width="20dp"
@@ -153,15 +153,16 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
                     android:id="@+id/iv_imgthress_servicecomment"
-                    android:scaleType="centerCrop"
+                    android:scaleType="centerInside"
                     android:src="@drawable/comment_er"/>
+
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
                     android:id="@+id/iv_closethress_servicecomment"
-                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="60dp"
                     android:src="@drawable/comment_guanbi"
-                    android:layout_marginLeft="60dp"/>
+                    android:visibility="gone"/>
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>

@@ -95,13 +95,11 @@
                 android:textColor="#000000"
                 android:textSize="16sp"
                 />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="500dp"
-                android:id="@+id/wb_notload"></View>
+
             <WebView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:minHeight="300dp"
                 android:id="@+id/wv_content_shopdetails"
                 />
 
@@ -111,6 +109,7 @@
                 android:paddingLeft="14dp"
                 android:gravity="center_vertical"
                 android:layout_marginBottom="16dp"
+                android:layout_marginTop="22dp"
                 android:orientation="horizontal">
 
                 <com.sence.view.NiceImageView
@@ -134,7 +133,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_10"
-                android:background="#FCFCFC"></View>
+                android:background="#f6f6f6"></View>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

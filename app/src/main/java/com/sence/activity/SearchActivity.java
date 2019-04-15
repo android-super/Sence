@@ -196,6 +196,7 @@ public class SearchActivity extends BaseActivity {
             tv.setPadding(25, 8, 25, 8);
             tv.setText(list.get(i).getName());
             tv.setMaxLines(1);
+            tv.setMaxEms(8);
             tv.setEllipsize(TextUtils.TruncateAt.END);
             tv.setTextColor(Color.parseColor("#333333"));
             tv.setSingleLine();

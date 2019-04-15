@@ -3,7 +3,6 @@ package com.sence.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -11,8 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.lljjcoder.citypickerview.widget.CityPicker;
@@ -27,6 +25,8 @@ import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.LoginStatus;
 import com.sence.utils.StatusBarUtil;
+
+import butterknife.BindView;
 
 /**
  * 添加收货地址
@@ -153,7 +153,7 @@ public class AddAddressActivity extends BaseActivity {
             ToastUtils.showShort("请输入正确的手机号码");
             return;
         }
-        if (address.equals("省、市、区")) {
+        if ("省、市、区".equals(address)) {
             ToastUtils.showShort("请选择省市区");
             return;
         }
@@ -190,9 +190,7 @@ public class AddAddressActivity extends BaseActivity {
             public void onSuccess(String o, String msg) {
                 Logger.e("msg==========" + msg);
                 ToastUtils.showShort(msg);
-                if (msg.equals("编辑地址成功")) {
-                    finish();
-                }
+                finish();
             }
         });
     }
@@ -214,9 +212,7 @@ public class AddAddressActivity extends BaseActivity {
             public void onSuccess(String o, String msg) {
                 Logger.e("msg==========" + msg);
                 ToastUtils.showShort(msg);
-                if (msg.equals("添加地址成功")) {
-                    finish();
-                }
+                finish();
             }
         });
     }

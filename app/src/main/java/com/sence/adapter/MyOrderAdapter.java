@@ -7,10 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.orhanobut.logger.Logger;
+import com.scwang.smartrefresh.layout.util.DensityUtil;
 import com.sence.R;
 import com.sence.activity.OrderCommentActivity;
 import com.sence.activity.OrderDetailsActivity;
@@ -32,7 +34,6 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
     private static final int FOOTER = 2;
     private Context context;
     private List<PMyOrderBean.ListBean> list = new ArrayList<>();
-
     public MyOrderAdapter(Context context) {
         this.context = context;
     }
@@ -95,9 +96,21 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
         holder.mRecyclerView.setAdapter(myOrderItemAdapter);
         myOrderItemAdapter.setList(list.get(position).getGoods());
         holder.mTime.setText(list.get(position).getAddtime());
-        holder.mPrice.setText("￥"+list.get(position).getNeedpay());
+        if(list.get(position).getNeedpay().contains(".")){
+            holder.mPrice.setText("￥"+list.get(position).getNeedpay());
+        }else{
+            holder.mPrice.setText("￥"+list.get(position).getNeedpay()+".00");
+        }
         holder.mNum.setText("共"+list.get(position).getNum()+"件");
-
+        myOrderItemAdapter.result(new MyOrderItemAdapter.OnclickListener() {
+            @Override
+            public void click() {
+                Intent intent = new Intent(context, OrderDetailsActivity.class);
+                intent.putExtra("id", list.get(position).getId());
+                intent.putExtra("type", list.get(position).getStatus());
+                context.startActivity(intent);
+            }
+        });
         holder.mCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,9 +138,12 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
                     context.startActivity(intent);
                 }else if("1".equals(list.get(position).getStatus())){
                     View view = View.inflate(context, R.layout.alter_deleteorder, null);
-                    final AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-                    alertDialog.setView(view);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context,R.style.AlertDialogStyle);
+                    builder.setView(view);
+                    final AlertDialog alertDialog = builder.create();
+                    alertDialog.setCancelable(true);
                     alertDialog.show();
+                    alertDialog.getWindow().setLayout(new DensityUtil().dip2px(270), LinearLayout.LayoutParams.WRAP_CONTENT);
                     view.findViewById(R.id.tv_cancel_deleteorder).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -192,6 +208,7 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
                 context.startActivity(intent);
             }
         });
+
     }
 
     private void ConfirmTakeGood(final int position) {
@@ -215,6 +232,8 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
             }
         });
     }
+
+
     private void DeleteOreder(final int position) {
         HttpManager.getInstance().PlayNetCode(HttpCode.DELETE_DONEORDER, new ROrderDetailsBean(list.get(position).getId(), LoginStatus.getUid())).request(new ApiCallBack<String>() {
 
@@ -246,6 +265,7 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
         private LinearLayout mLinearLayout;
         private RecyclerView mRecyclerView;
         private TextView mState, mSevice, mCancel, mAlipay, mTime,mPrice,mNum;
+        private RelativeLayout mRelativeLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -258,9 +278,9 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
             mNum = itemView.findViewById(R.id.tv_num_myorder);
             mAlipay = itemView.findViewById(R.id.tv_alipay_myorder);
             mLinearLayout = itemView.findViewById(R.id.ll_fooler_myorder);
+            mRelativeLayout = itemView.findViewById(R.id.rl_layout_myorder);
         }
     }
-
     private DeleteOrderListener listener;
 
     public void result(DeleteOrderListener listener) {
@@ -270,4 +290,5 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
     public interface DeleteOrderListener {
         void delete(int i);
     }
+
 }

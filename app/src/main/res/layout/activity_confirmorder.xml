@@ -170,7 +170,10 @@
                     android:textColor="#808080"
                     android:textSize="13sp"/>
             </RelativeLayout>
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_10"
+                android:background="#f6f6f6"></View>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

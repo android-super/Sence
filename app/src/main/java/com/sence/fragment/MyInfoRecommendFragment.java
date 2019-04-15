@@ -63,18 +63,18 @@ public class MyInfoRecommendFragment extends Fragment {
     private void init() {
         RecyclerView recyclerView = getView().findViewById(R.id.recycle_myinforecommend);
         mSmartRefreshLayout = getView().findViewById(R.id.srl_layout_myinforecommend);
-        if(type.equals("1")){
+        if("1".equals(type)){
             myInfoRecommendAdapter = new MyInfoRecommendAdapter(getContext());
             LinearLayoutManager linearLayout = new LinearLayoutManager(getActivity());
             linearLayout.setOrientation(RecyclerView.VERTICAL);
             recyclerView.setLayoutManager(linearLayout);
             recyclerView.setAdapter(myInfoRecommendAdapter);
-        }else if(type.equals("2")){
+        }else if("2".equals(type)){
             myInfoNoteAdapter = new MyInfoNoteAdapter(getContext());
             GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
             recyclerView.setLayoutManager(gridLayoutManager);
             recyclerView.setAdapter(myInfoNoteAdapter);
-        }else if(type.equals("3")){
+        }else if("3".equals(type)){
             myInfoServiceAdapter = new MyInfoServiceAdapter(getContext());
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
             linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -88,7 +88,7 @@ public class MyInfoRecommendFragment extends Fragment {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 page++;
-                if(type.equals("3")){
+                if("3".equals(type)){
                     if(list.size()==0){
                         ToastUtils.showShort("没有更多了！");
                     }else{
@@ -118,7 +118,7 @@ public class MyInfoRecommendFragment extends Fragment {
 
 
     private void doHttp() {
-        if(type.equals("3")){
+        if("3".equals(type)){
             HttpManager.getInstance().PlayNetCode(HttpCode.USER_INFO_DATA_SERVICE, new RMyInfoBean(LoginStatus.getUid(), type,LoginStatus.getUid(),page+"","10")).request(new ApiCallBack<PMyInfoServiceBean>() {
                 @Override
                 public void onFinish() {
@@ -136,8 +136,6 @@ public class MyInfoRecommendFragment extends Fragment {
                     list = o.getOther_info();
                     if(o.getOther_info().size()>0){
                         myInfoServiceAdapter.setList(o.getOther_info());
-                    }else{
-                        listener.delete();
                     }
 
                 }
@@ -159,9 +157,9 @@ public class MyInfoRecommendFragment extends Fragment {
             public void onSuccess(PMyInfoBean o, String msg) {
                 Logger.e("msg==========" + msg);
                 listOther = o.getOther_info();
-                if(type.equals("1")){
+                if("1".equals(type)){
                     myInfoRecommendAdapter.setList(o.getOther_info());
-                }else if(type.equals("2")){
+                }else if("2".equals(type)){
                     myInfoNoteAdapter.setList(o.getOther_info());
                 }
 

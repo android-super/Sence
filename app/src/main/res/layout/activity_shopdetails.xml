@@ -1,107 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_barlayout_shiodetails"
         android:layout_width="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <com.google.android.material.appbar.AppBarLayout
+        <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:id="@+id/app_barlayout_shiodetails"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:contentScrim="@color/white"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <com.google.android.material.appbar.CollapsingToolbarLayout
+            <RelativeLayout
+                android:id="@+id/rl_vp_shiodetails"
                 android:layout_width="match_parent"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                app:contentScrim="@color/white"
-                android:layout_height="wrap_content">
+                android:layout_height="350dp">
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/vp_img_shopdetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp"
+                    android:transitionName="@string/translation_note_name">
+                </androidx.viewpager.widget.ViewPager>
+
+                <TextView
+                    android:id="@+id/tv_imgnum_shopdetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/shape_shopdetails_bg"
+                    android:paddingBottom="3dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingTop="3dp"
+                    android:text="1/1"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"/>
+            </RelativeLayout>
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/rl_head_shopdetails"
+                style="@style/NoLeftToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                app:layout_collapseMode="pin">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="350dp"
-                    android:id="@+id/rl_vp_shiodetails">
+                    android:layout_height="match_parent">
 
-                    <androidx.viewpager.widget.ViewPager
-                        android:id="@+id/vp_img_shopdetails"
+                    <View
+                        android:id="@+id/shop_view"
                         android:layout_width="match_parent"
-                        android:transitionName="@string/translation_note_name"
-                        android:layout_height="350dp">
-                    </androidx.viewpager.widget.ViewPager>
-                    <TextView
-                        android:id="@+id/tv_imgnum_shopdetails"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"/>
+
+                    <ImageView
+                        android:id="@+id/iv_back_shopdetails"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:layout_alignParentBottom="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_margin="15dp"
-                        android:textSize="10sp"
-                        android:paddingLeft="8dp"
-                        android:paddingRight="8dp"
-                        android:paddingTop="3dp"
-                        android:paddingBottom="3dp"
-                        android:background="@drawable/shape_shopdetails_bg"
-                        android:text="1/1"
-                        android:textColor="@color/white"/>
-                </RelativeLayout>
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:scaleType="center"
+                        android:src="@drawable/fanhui"/>】
 
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/rl_head_shopdetails"
-                    android:layout_width="match_parent"
-                    app:layout_collapseMode="pin"
-                    style="@style/NoLeftToolbar"
-                    android:layout_height="70dp">
-                    <RelativeLayout
+                    <LinearLayout
+                        android:id="@+id/ll_head_shopdetails"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <View
-                            android:id="@+id/shop_view"
-                            android:background="@color/white"
+                        android:layout_height="50dp"
+                        android:layout_alignParentBottom="true"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"/>
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="详情"
+                            android:textColor="#000000"
+                            android:textSize="18sp"/>
 
-                        <ImageView
-                            android:id="@+id/iv_back_shopdetails"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_alignParentBottom="true"
-                            android:scaleType="center"
-                            android:layout_marginLeft="@dimen/dp_10"
-                            android:src="@drawable/fanhui"/>】
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:layout_alignParentBottom="true"
-                            android:id="@+id/ll_head_shopdetails"
-                            android:visibility="gone"
-                            android:orientation="horizontal">
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:textSize="18sp"
-                                android:gravity="center"
-                                android:textColor="#000000"
-                                android:text="详情"/>
-
-                        </LinearLayout>
+                    </LinearLayout>
 
 
-                    </RelativeLayout>
-                </androidx.appcompat.widget.Toolbar>
-            </com.google.android.material.appbar.CollapsingToolbarLayout>
-        </com.google.android.material.appbar.AppBarLayout>
+                </RelativeLayout>
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
-        <include
-            layout="@layout/layout_shop_content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="50dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            />
+    <include
+        layout="@layout/layout_shop_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        />
 
-        <include
-            layout="@layout/shop_buttom_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            ></include>
+    <include
+        layout="@layout/shop_buttom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        ></include>
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

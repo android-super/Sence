@@ -2,12 +2,14 @@ package com.sence.adapter;
 
 import android.view.View;
 import android.widget.TextView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sence.R;
 import com.sence.bean.response.PBusBean;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by zwy on 2019/3/13.
@@ -37,15 +39,15 @@ public class BusTopAdapter extends BaseQuickAdapter<PBusBean.CartBean, BaseViewH
     protected void convert(final BaseViewHolder helper, final PBusBean.CartBean item) {
         helper.addOnClickListener(R.id.item_name_select);
         helper.setText(R.id.item_name_select, item.getShopname());
-        if (item.getActive().equals("0")) {
+        if ("0".equals(item.getActive())) {
             helper.setGone(R.id.item_discount_layout, false);
         } else {
             helper.setGone(R.id.item_discount_layout, true);
             helper.setText(R.id.item_discount, "活动优惠-￥:" + item.getFavourable());
         }
-        if (item.getExpress().equals("1")) {
+        if ("1".equals(item.getExpress())) {
             helper.setText(R.id.item_kind_cost, "包邮");
-        } else if (item.getExpress().equals("2")) {
+        } else if ("2".equals(item.getExpress())) {
             helper.setText(R.id.item_kind_cost, "已免邮费");
         } else {
             helper.setText(R.id.item_kind_cost, "还差些钱才能免邮");
@@ -56,7 +58,7 @@ public class BusTopAdapter extends BaseQuickAdapter<PBusBean.CartBean, BaseViewH
         } else {
             item_name_select.setSelected(false);
         }
-        if (item.getActive().equals("1")) {
+        if ("1".equals(item.getActive())) {
             helper.setGone(R.id.item_discount_layout, true);
         } else {
             helper.setGone(R.id.item_discount_layout, false);

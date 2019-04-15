@@ -5,11 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+
 import com.blankj.utilcode.util.ConvertUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -27,6 +23,12 @@ import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.LoginStatus;
 import com.sence.view.GridSpacingItemDecoration;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * 笔记Fragment
@@ -141,7 +143,7 @@ public class SupportFragment extends Fragment {
             @Override
             public void onSuccess(Object o, String msg) {
                 int support_num = Integer.parseInt(adapter.getData().get(position).getPraise_count());
-                if (adapter.getData().get(position).getIs_like().equals("0")) {
+                if ("0".equals(adapter.getData().get(position).getIs_like())) {
                     adapter.getData().get(position).setIs_like("1");
                     support_num = support_num + 1;
                 } else {

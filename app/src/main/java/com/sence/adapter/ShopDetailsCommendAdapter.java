@@ -1,6 +1,7 @@
 package com.sence.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sence.R;
+import com.sence.activity.ImgFlexActivity;
 import com.sence.bean.response.PShopDetailsBean;
 import com.sence.utils.GlideUtils;
 import com.sence.view.NiceImageView;
@@ -39,11 +41,20 @@ public class ShopDetailsCommendAdapter extends RecyclerView.Adapter<ShopDetailsC
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ShopDetailsCommendAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ShopDetailsCommendAdapter.ViewHolder holder, final int position) {
         holder.mName.setText(list.get(position).getNickname());
         holder.mContent.setText(list.get(position).getContent());
         GlideUtils.getInstance().loadHead( list.get(position).getImg(),holder.mImageView);
         GlideUtils.getInstance().loadHead( list.get(position).getAvatar(),holder.mImg);
+        final String img = list.get(position).getImg();
+        holder.mImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ImgFlexActivity.class);
+                intent.putExtra("img",img);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

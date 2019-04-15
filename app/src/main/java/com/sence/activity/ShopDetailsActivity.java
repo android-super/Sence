@@ -84,8 +84,6 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
     TextView tvVipShopdetails;
     @BindView(R.id.tv_name_shopdetails)
     TextView tvNameShopdetails;
-    @BindView(R.id.wb_notload)
-    View wbNotload;
     @BindView(R.id.wv_content_shopdetails)
     WebView wvContentShopdetails;
     @BindView(R.id.iv_shopimg_shopdetails)
@@ -121,7 +119,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
     private ShopDetailsCommendAdapter mShopDetailsCommendAdapter;
 
     private WebSettings settings;
-    private List<String> imgs;
+    private List<String> imgs = new ArrayList<>();
     private String id;
     private PShopDetailsBean bean = null;
     private int num;
@@ -245,6 +243,16 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                         GlideUtils.getInstance().loadHead( imgs.get(i), imageView);
                         list.add(imageView);
+                        final int position = i;
+                        imageView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                        Intent intent = new Intent(ShopDetailsActivity.this, ImgFlexActivity.class);
+                                        intent.putStringArrayListExtra("imgs", (ArrayList<String>) imgs);
+                                        intent.putExtra("position",position);
+                                        startActivity(intent);
+                            }
+                        });
                     }
                     shopDetailsImgAdapter.setList(list);
                 }
@@ -294,7 +302,6 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 //页面加载完成之后
-                wbNotload.setVisibility(View.GONE);
             }
 
             public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
@@ -346,7 +353,11 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
         mAdd = contentView.findViewById(R.id.rl_buyshop_add);
         mConfirm = contentView.findViewById(R.id.bt_buyshop_confirm);
         GlideUtils.getInstance().loadHead(bean.getImg(),mImg);
-        tvPrice.setText("￥"+bean.getPrice());
+        if("0".equals(bean.getVprice())){
+            tvPrice.setText("￥"+bean.getPrice());
+        }else{
+            tvPrice.setText("￥"+bean.getVprice());
+        }
         mJian.setOnClickListener(this);
         mAdd.setOnClickListener(this);
         mConfirm.setOnClickListener(this);
@@ -386,6 +397,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                 intent.putExtra("type", "3");
                 startActivity(intent);
                 break;
+
         }
     }
 
@@ -429,7 +441,11 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                 intentBuy.putExtra("id", bean.getId());
                 intentBuy.putExtra("num", mNum.getText().toString());
                 intentBuy.putExtra("postage", bean.getPostage());
-                intentBuy.putExtra("price", bean.getPrice());
+                if("0".equals(bean.getVprice())){
+                    intentBuy.putExtra("price", bean.getPrice());
+                }else{
+                    intentBuy.putExtra("price", bean.getVprice());
+                }
                 intentBuy.putExtra("name", bean.getName());
                 intentBuy.putExtra("img", bean.getImg());
                 intentBuy.putExtra("username", bean.getUsername());

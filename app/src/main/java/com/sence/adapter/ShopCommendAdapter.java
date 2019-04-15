@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class ShopCommendAdapter extends RecyclerView.Adapter<ShopCommendAdapter.ViewHolder> {
@@ -49,15 +50,17 @@ public class ShopCommendAdapter extends RecyclerView.Adapter<ShopCommendAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull final ShopCommendAdapter.ViewHolder holder, final int position) {
+        ShopCommendImgAdapter shopCommendImgAdapter = new ShopCommendImgAdapter(context);
+        GridLayoutManager linearLayoutManager = new GridLayoutManager(context,2);
+        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+        holder.mCommendImg.setLayoutManager(linearLayoutManager);
+        holder.mCommendImg.setAdapter(shopCommendImgAdapter);
+        shopCommendImgAdapter.setList(list.get(position).getImgs());
         holder.mContent.setText(list.get(position).getContent());
         holder.mName.setText(list.get(position).getNickname());
         holder.mLikeNum.setText(list.get(position).getPraise());
         GlideUtils.getInstance().loadHead( list.get(position).getAvatar(),holder.mImageView);
-        if(list.get(position).getImgs().size()>0){
-            GlideUtils.getInstance().loadHead( list.get(position).getImgs().get(0),holder.mCommendImg);
-        }else{
-            holder.mCommendImg.setVisibility(View.GONE);
-        }
+
         if("1".equals(list.get(position).getIsPraise())){
             holder.mLike.setImageResource(R.drawable.shopcommend_dianzan_y);
         }else{
@@ -116,14 +119,15 @@ public class ShopCommendAdapter extends RecyclerView.Adapter<ShopCommendAdapter.
 
 
         private NiceImageView mImageView;
-        private ImageView mCommendImg,mLike;
+        private ImageView mLike;
+        private RecyclerView mCommendImg;
         private TextView mName,mContent,mLikeNum;
         private LinearLayout mLinearLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mImageView = itemView.findViewById(R.id.iv_img_shopcommend);
-            mCommendImg = itemView.findViewById(R.id.iv_commendimg_shopcommend);
+            mCommendImg = itemView.findViewById(R.id.recycle_commendimg_shopcommend);
             mName = itemView.findViewById(R.id.tv_name_shopcommend);
             mLike = itemView.findViewById(R.id.iv_like_shopcommend);
             mLinearLayout = itemView.findViewById(R.id.ll_like_shopcommend);

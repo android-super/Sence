@@ -1,9 +1,13 @@
 package com.sence.activity;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -11,14 +15,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.alipay.sdk.app.PayTask;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.orhanobut.logger.Logger;
+import com.scwang.smartrefresh.layout.util.DensityUtil;
 import com.sence.R;
 import com.sence.base.BaseActivity;
+import com.sence.bean.request.RAliPayBean;
 import com.sence.bean.request.RConfirmOrderBean;
+import com.sence.bean.request.RWxPayBean;
 import com.sence.bean.response.PConfirmOrderBean;
+import com.sence.bean.response.PWxPayBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
@@ -29,12 +39,15 @@ import com.sence.utils.SharedPreferencesUtil;
 import com.sence.utils.StatusBarUtil;
 import com.sence.view.NiceImageView;
 import com.sence.view.PubTitle;
+import com.sence.wxapi.WeiXinPayUtils;
+import com.sence.zhifubao.PayResult;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DecimalFormat;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -119,6 +132,8 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
     private String num;
     private Double shopMaxPrice;
     private AlertDialog alertDialog;
+    private String oid;
+    private int PAYMENTTYPE = 1;
 
     @Override
     public int onActLayout() {
@@ -153,10 +168,12 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
         tvShopnumConfirmorder.setText("共" + num + "件商品");
         bottomSheetDialog();
     }
-    private void alter(){
+
+    private void alter() {
         View view = View.inflate(ShopConfirmOrderActivity.this, R.layout.alter_deleteorder, null);
-        alertDialog = new AlertDialog.Builder(ShopConfirmOrderActivity.this).create();
+        alertDialog = new AlertDialog.Builder(ShopConfirmOrderActivity.this, R.style.AlertDialogStyle).create();
         alertDialog.setView(view);
+        alertDialog.getWindow().setLayout(new DensityUtil().dip2px(270), LinearLayout.LayoutParams.WRAP_CONTENT);
         alertDialog.show();
         TextView mTitle = view.findViewById(R.id.tv_title_deleteorder);
         mTitle.setText("取消支付");
@@ -169,8 +186,8 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
         mCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
                 alertDialog.dismiss();
+                finish();
             }
         });
 
@@ -178,10 +195,100 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
             @Override
             public void onClick(View v) {
                 alertDialog.dismiss();
-
+                mBottomSheetDialog.show();
             }
         });
     }
+    /**
+     * 微信
+     */
+    private void PayWx() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.PAY_WX, new RWxPayBean(LoginStatus.getUid(), "1",tvSpriceConfrimorder.getText().toString().trim(),oid)).request(new ApiCallBack<PWxPayBean>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(PWxPayBean o, String msg) {
+                Logger.e("msg==========" + msg);
+                WeiXinPayUtils wxpay = new WeiXinPayUtils(ShopConfirmOrderActivity.this, o);
+                wxpay.pay();
+            }
+        });
+    }
+    /**
+     * 支付宝
+     */
+    private void aLiPay() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.PAY_ALI, new RAliPayBean("1", LoginStatus.getUid(), tvSpriceConfrimorder.getText().toString().trim(), oid)).request(new ApiCallBack<String>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(final String o, String msg) {
+                Runnable payRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        PayTask alipay = new PayTask(ShopConfirmOrderActivity.this);
+                        Map<String, String> result = alipay.payV2(o, true);
+                        Log.i("msp", result.toString());
+                        Message msg = new Message();
+                        msg.what = SDK_PAY_FLAG;
+                        msg.obj = result;
+                        mHandler.sendMessage(msg);
+                    }
+                };
+
+                Thread payThread = new Thread(payRunnable);
+                payThread.start();
+            }
+        });
+
+    }
+    private static final int SDK_PAY_FLAG = 1;
+
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler() {
+        @SuppressWarnings("unused")
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case SDK_PAY_FLAG: {
+                    @SuppressWarnings("unchecked")
+                    PayResult payResult = new PayResult((Map<String, String>) msg.obj);
+                    /**
+                     对于支付结果，请商户依赖服务端的异步通知结果。同步通知结果，仅作为支付结束的通知。
+                     */
+                    String resultInfo = payResult.getResult();// 同步返回需要验证的信息
+                    String resultStatus = payResult.getResultStatus();
+                    // 判断resultStatus 为9000则代表支付成功
+                    if (TextUtils.equals(resultStatus, "9000")) {
+                        // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
+                        Toast.makeText(ShopConfirmOrderActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else {
+                        // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
+                        Toast.makeText(ShopConfirmOrderActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+    };
     @Override
     public void initData() {
         isCheckAddress = LoginStatus.getIsCheckShopAddress();
@@ -239,7 +346,7 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.i("aaa",json.toString()+"=="+LoginStatus.getUid()+"=="+idAddress);
+        Log.i("aaa", json.toString() + "==" + LoginStatus.getUid() + "==" + idAddress);
         HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_COMMIT, new RConfirmOrderBean(json, LoginStatus.getUid(), idAddress)).request(new ApiCallBack<PConfirmOrderBean>() {
 
 
@@ -255,7 +362,7 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
             @Override
             public void onSuccess(final PConfirmOrderBean o, String msg) {
                 Logger.e("msg==========" + msg);
-                String oid = o.getOid();
+                oid = o.getOid();
                 time = Integer.parseInt(o.getTime());
                 doLastTime();
             }
@@ -268,20 +375,20 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
             case R.id.iv_zhi_pay:
                 ivZhiPay.setImageResource(R.drawable.xuanzhong);
                 ivWeiPay.setImageResource(R.drawable.weixuan);
+                PAYMENTTYPE= 2;
                 break;
             case R.id.iv_wei_pay:
                 ivWeiPay.setImageResource(R.drawable.xuanzhong);
                 ivZhiPay.setImageResource(R.drawable.weixuan);
+                PAYMENTTYPE = 1;
                 break;
             case R.id.bt_pay_pay:
+                if(PAYMENTTYPE==1){
+                    PayWx();
+                }else if(PAYMENTTYPE == 2){
+                    aLiPay();
+                }
                 mBottomSheetDialog.dismiss();
-                Intent intent = new Intent(ShopConfirmOrderActivity.this, OrderDetailsActivity.class);
-                intent.putExtra("type","2");
-                intent.putExtra("id",id);
-                startActivity(intent);
-                alertDialog.dismiss();
-                mBottomSheetDialog.dismiss();
-                finish();
                 break;
             case R.id.iv_back_pay:
                 alter();
@@ -307,18 +414,15 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
         btPayPay.setOnClickListener(this);
 
         tvPricePay.setText("￥" + shopMaxPrice);
-
-        mBottomSheetDialog.setCancelable(false);
-        mBottomSheetDialog.setCanceledOnTouchOutside(false);
-        mBottomSheetDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+        mBottomSheetDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
-            public void onDismiss(DialogInterface dialog) {
+            public void onCancel(DialogInterface dialog) {
                 alter();
             }
         });
     }
 
-    public static double stringToDouble(String a) {
+    private  double stringToDouble(String a) {
         double b = Double.valueOf(a);
         DecimalFormat df = new DecimalFormat("#.00");//此为保留1位小数，若想保留2位小数，则填写#.00  ，以此类推
         String temp = df.format(b);

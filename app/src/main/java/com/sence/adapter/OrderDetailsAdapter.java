@@ -43,7 +43,11 @@ public class OrderDetailsAdapter extends RecyclerView.Adapter<OrderDetailsAdapte
     public void onBindViewHolder(@NonNull OrderDetailsAdapter.ViewHolder holder, final int position) {
 
         holder.mName.setText(list.get(position).getName());
-        holder.mPrice.setText("￥"+list.get(position).getPrice());
+        if(list.get(position).getPrice().contains(".")){
+            holder.mPrice.setText("￥"+list.get(position).getPrice());
+        }else{
+            holder.mPrice.setText("￥"+list.get(position).getPrice()+".00");
+        }
         holder.mNum.setText("х"+list.get(position).getNum());
         GlideUtils.getInstance().loadHead( list.get(position).getImg(),holder.mImg);
         holder.itemView.setOnClickListener(new View.OnClickListener() {

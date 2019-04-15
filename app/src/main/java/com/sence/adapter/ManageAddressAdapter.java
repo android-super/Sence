@@ -30,20 +30,22 @@ public class ManageAddressAdapter extends RecyclerView.Adapter<ManageAddressAdap
     private Context context;
     private List<PManageAddressBean> list = new ArrayList<>();
     private View view;
-    private String type= "";
-    public ManageAddressAdapter(Context context){
+    private String type = "";
+
+    public ManageAddressAdapter(Context context) {
         this.context = context;
     }
-    public void setList(List<PManageAddressBean> list,String type){
+
+    public void setList(List<PManageAddressBean> list, String type) {
         this.list = list;
-        this.type=type;
+        this.type = type;
         notifyDataSetChanged();
     }
 
     @NonNull
     @Override
     public ManageAddressAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        view = LayoutInflater.from(context).inflate(R.layout.rv_item_manageaddress,parent,false);
+        view = LayoutInflater.from(context).inflate(R.layout.rv_item_manageaddress, parent, false);
         return new ViewHolder(view);
 
     }
@@ -51,13 +53,13 @@ public class ManageAddressAdapter extends RecyclerView.Adapter<ManageAddressAdap
     @Override
     public void onBindViewHolder(@NonNull ManageAddressAdapter.ViewHolder holder, final int position) {
         holder.mName.setText(list.get(position).getUsername());
-        holder.mAddress.setText(list.get(position).getArea()+list.get(position).getAddress());
+        holder.mAddress.setText(list.get(position).getArea() + list.get(position).getAddress());
         holder.mPhone.setText(list.get(position).getPhone());
         holder.mEditor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, AddAddressActivity.class);
-                intent.putExtra("bean",list.get(position));
+                intent.putExtra("bean", list.get(position));
                 context.startActivity(intent);
             }
         });
@@ -65,7 +67,7 @@ public class ManageAddressAdapter extends RecyclerView.Adapter<ManageAddressAdap
         holder.mDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HttpManager.getInstance().PlayNetCode(HttpCode.ADDRESS_DELETE, new RAddressDeleteBean(LoginStatus.getUid(),list.get(position).getId())).request(new ApiCallBack<String>() {
+                HttpManager.getInstance().PlayNetCode(HttpCode.ADDRESS_DELETE, new RAddressDeleteBean(LoginStatus.getUid(), list.get(position).getId())).request(new ApiCallBack<String>() {
                     @Override
                     public void onFinish() {
 
@@ -79,9 +81,7 @@ public class ManageAddressAdapter extends RecyclerView.Adapter<ManageAddressAdap
                     @Override
                     public void onSuccess(String o, String msg) {
                         Logger.e("msg==========" + msg);
-                        if(msg.equals("删除地址成功")){
-                            listener.delete(position);
-                        }
+                        listener.delete(position);
                     }
                 });
             }
@@ -89,28 +89,28 @@ public class ManageAddressAdapter extends RecyclerView.Adapter<ManageAddressAdap
         holder.mLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if("shop".equals(type)){
+                if ("shop".equals(type)) {
                     SharedPreferencesUtil.getInstance().putString("name_address", list.get(position).getUsername());
                     SharedPreferencesUtil.getInstance().putString("id_address", list.get(position).getId());
-                    SharedPreferencesUtil.getInstance().putString("address", list.get(position).getAddress());
+                    SharedPreferencesUtil.getInstance().putString("address", list.get(position).getArea() + list.get(position).getAddress());
                     SharedPreferencesUtil.getInstance().putString("phone_address", list.get(position).getPhone());
                     SharedPreferencesUtil.getInstance().putBoolean("ischeck_address", true);
-                    ((ManageAddressActivity)context).finish();
-                }else if("shopd".equals(type)){
+                    ((ManageAddressActivity) context).finish();
+                } else if ("shopd".equals(type)) {
                     SharedPreferencesUtil.getInstance().putString("name_address", list.get(position).getUsername());
                     SharedPreferencesUtil.getInstance().putString("id_address", list.get(position).getId());
-                    SharedPreferencesUtil.getInstance().putString("address", list.get(position).getAddress());
+                    SharedPreferencesUtil.getInstance().putString("address", list.get(position).getArea() + list.get(position).getAddress());
                     SharedPreferencesUtil.getInstance().putString("phone_address", list.get(position).getPhone());
                     SharedPreferencesUtil.getInstance().putBoolean("ischeck_shopaddress", true);
-                    ((ManageAddressActivity)context).finish();
+                    ((ManageAddressActivity) context).finish();
 
-                }else if("order".equals(type)){
+                } else if ("order".equals(type)) {
                     SharedPreferencesUtil.getInstance().putString("name_address", list.get(position).getUsername());
                     SharedPreferencesUtil.getInstance().putString("id_address", list.get(position).getId());
-                    SharedPreferencesUtil.getInstance().putString("address", list.get(position).getAddress());
+                    SharedPreferencesUtil.getInstance().putString("address", list.get(position).getArea() + list.get(position).getAddress());
                     SharedPreferencesUtil.getInstance().putString("phone_address", list.get(position).getPhone());
                     SharedPreferencesUtil.getInstance().putBoolean("ischeck_orderaddress", true);
-                    ((ManageAddressActivity)context).finish();
+                    ((ManageAddressActivity) context).finish();
                 }
             }
         });
@@ -120,10 +120,11 @@ public class ManageAddressAdapter extends RecyclerView.Adapter<ManageAddressAdap
     public int getItemCount() {
         return list.size();
     }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private LinearLayout mEditor,mDelete;
-        private TextView mName,mPhone,mAddress;
+        private LinearLayout mEditor, mDelete;
+        private TextView mName, mPhone, mAddress;
         private LinearLayout mLayout;
 
         public ViewHolder(View itemView) {
@@ -136,10 +137,11 @@ public class ManageAddressAdapter extends RecyclerView.Adapter<ManageAddressAdap
             mLayout = itemView.findViewById(R.id.show_content_view);
         }
     }
+
     private DeleteAddressListener listener;
 
-    public void result( DeleteAddressListener listener){
-        this.listener=listener;
+    public void result(DeleteAddressListener listener) {
+        this.listener = listener;
     }
 
     public interface DeleteAddressListener {

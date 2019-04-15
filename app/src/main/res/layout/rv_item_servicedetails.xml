@@ -1,64 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+              android:orientation="vertical"
                 xmlns:app="http://schemas.android.com/apk/res-auto">
-    <com.sence.view.NiceImageView
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="24dp"
-        android:src="@drawable/hint_img"
-        android:scaleType="fitXY"
-        app:is_circle="true"
-        android:id="@+id/iv_vimg_servicedetails"
-        android:layout_marginLeft="12dp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#333333"
-        android:layout_marginTop="27dp"
-        android:layout_toRightOf="@+id/iv_vimg_servicedetails"
-        android:text="小喵喵"
-        android:id="@+id/tv_vname_servicedetails"
-        android:layout_marginLeft="14dp"/>
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="11dp"
-        android:id="@+id/ll_head_servicedetails"
-        android:layout_below="@+id/tv_vname_servicedetails"
-        android:layout_toRightOf="@id/iv_vimg_servicedetails"
-        android:layout_marginTop="7dp"
-        android:layout_marginLeft="14dp">
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/recycle_xing_servicedetails">
-
-        </androidx.recyclerview.widget.RecyclerView>
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_toRightOf="@+id/recycle_xing_servicedetails"
-            android:id="@+id/recycle_bxing_servicedetails">
-
-        </androidx.recyclerview.widget.RecyclerView>
-    </RelativeLayout>
-    <TextView
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="29dp"
-        android:id="@+id/tv_vtime_servicedetails"
-        android:layout_marginRight="15dp"
-        android:layout_alignParentRight="true"
-        android:text="3月26日"
-        android:textColor="#999999"
-        android:textSize="@dimen/sp_12"/>
+        android:layout_marginTop="22dp"
+        android:orientation="horizontal">
+        <com.sence.view.NiceImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/hint_img"
+            android:layout_marginTop="2dp"
+            android:scaleType="centerCrop"
+            app:is_circle="true"
+            android:id="@+id/iv_vimg_servicedetails"
+            android:layout_marginLeft="12dp"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_16"
+            android:textColor="#333333"
+            android:layout_toRightOf="@+id/iv_vimg_servicedetails"
+            android:text="小喵喵"
+            android:id="@+id/tv_vname_servicedetails"
+            android:layout_marginLeft="14dp"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="11dp"
+            android:id="@+id/ll_head_servicedetails"
+            android:layout_below="@+id/tv_vname_servicedetails"
+            android:layout_toRightOf="@id/iv_vimg_servicedetails"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="14dp">
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/recycle_xing_servicedetails">
+
+            </androidx.recyclerview.widget.RecyclerView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/recycle_xing_servicedetails"
+                android:id="@+id/recycle_bxing_servicedetails">
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </RelativeLayout>
+        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:id="@+id/tv_vtime_servicedetails"
+            android:layout_marginRight="15dp"
+            android:text="3月26日"
+            android:textColor="#999999"
+            android:textSize="@dimen/sp_12"/>
+    </LinearLayout>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp"
         android:id="@+id/tv_vcontent_servicedetails"
-        android:layout_below="@+id/ll_head_servicedetails"
         android:lineSpacingExtra="6dp"
         android:layout_marginLeft="60dp"
         android:maxLines="4"
@@ -82,11 +94,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="60dp"
         android:layout_marginRight="14dp"
-        android:layout_below="@+id/tv_vcontent_servicedetails"
         android:layout_marginTop="15dp"
         android:nestedScrollingEnabled="false"
         android:id="@+id/recycle_servicedetails_img"
         android:layout_marginBottom="20dp">
 
     </androidx.recyclerview.widget.RecyclerView>
-</RelativeLayout>
+</LinearLayout>

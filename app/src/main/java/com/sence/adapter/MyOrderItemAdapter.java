@@ -48,7 +48,12 @@ public class MyOrderItemAdapter extends RecyclerView.Adapter<MyOrderItemAdapter.
             holder.mPprice.setText("￥" + list.get(position).getPrice() + ".00");
         }
         holder.mPnum.setText("×" + list.get(position).getNum());
-
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.click();
+            }
+        });
     }
 
     @Override
@@ -71,14 +76,14 @@ public class MyOrderItemAdapter extends RecyclerView.Adapter<MyOrderItemAdapter.
         }
     }
 
-    private MyOrderAdapter.DeleteOrderListener listener;
+    private OnclickListener listener;
 
-    public void result(MyOrderAdapter.DeleteOrderListener listener) {
+    public void result(OnclickListener listener) {
         this.listener = listener;
     }
 
-    public interface DeleteOrderListener {
-        void delete(int i);
+    public interface OnclickListener {
+        void click();
     }
 }
 
