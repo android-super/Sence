@@ -21,12 +21,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MyInfoRecommendAdapter extends RecyclerView.Adapter<MyInfoRecommendAdapter.ViewHolder> {
     private Context context;
-    private List<PMyInfoBean.OtherInfoBean> list = new ArrayList<>();
+    private List<PMyInfoBean.ListBean> list = new ArrayList<>();
 
     public MyInfoRecommendAdapter(Context context){
         this.context = context;
     }
-    public void setList(List<PMyInfoBean.OtherInfoBean> list){
+    public void setList(List<PMyInfoBean.ListBean> list){
         this.list = list;
         notifyDataSetChanged();
     }
@@ -48,7 +48,7 @@ public class MyInfoRecommendAdapter extends RecyclerView.Adapter<MyInfoRecommend
         }
         holder.mName.setText(list.get(position).getNick_name());
         holder.mTitle.setText(list.get(position).getTitle());
-        holder.mContent.setText(list.get(position).getContent());
+        holder.mContent.setText(list.get(position).getDescribe());
         holder.mComment.setText(list.get(position).getMessage_count());
         holder.mLike.setText(list.get(position).getPraise_count());
         GlideUtils.getInstance().loadHead( list.get(position).getAvatar(),holder.mImageView);

@@ -84,6 +84,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
+        android:id="@+id/ll_zhi_pay"
         android:layout_marginTop="56dp">
         <ImageView
             android:layout_width="22dp"
@@ -117,6 +118,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
+        android:id="@+id/ll_wei_pay"
         android:layout_marginTop="13dp">
         <ImageView
             android:layout_width="22dp"

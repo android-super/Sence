@@ -2,7 +2,6 @@ package com.sence.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
@@ -19,9 +18,9 @@ import com.sence.R;
 import com.sence.activity.chat.ui.ChatMsgActivity;
 import com.sence.adapter.MyInfoRecommendViewPagerAdatpter;
 import com.sence.base.BaseActivity;
+import com.sence.bean.request.PUserinfoBean;
 import com.sence.bean.request.RCancelFocusBean;
-import com.sence.bean.request.RMyInfoBean;
-import com.sence.bean.response.PMyInfoBean;
+import com.sence.bean.response.PUserMyInfoBean;
 import com.sence.fragment.MyInfoRecommendFragment;
 import com.sence.fragment.UserNoteFragment;
 import com.sence.fragment.UserRecommendFragment;
@@ -49,14 +48,16 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     ImageView ivFocusMyinfo;
     @BindView(R.id.iv_chat_myinfo)
     ImageView ivChatMyinfo;
+    @BindView(R.id.iv_edit_myinfo)
+    ImageView ivEditMyinfo;
     @BindView(R.id.iv_groupchat_myinfo)
     ImageView ivGroupchatMyinfo;
     private ViewPager mViewPager;
     private AppBarLayout mAppBarLayout;
     private TabLayout mTabLayoutButtom;
-    private ImageView mBack;
+    private ImageView mBack,mShare;
     private View mView;
-    private TextView mDeditor, mName, mAddress, mFocusNum, mFansNum, mSigner, mShopName, mShopPrice;
+    private TextView  mName, mAddress, mFocusNum, mFansNum, mSigner, mShopName, mShopPrice;
     private NiceImageView mImg, mImageView;
     private LinearLayout mShop;
     private ImageView mHead;
@@ -66,14 +67,14 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     private MyInfoRecommendViewPagerAdatpter mMyInfoRecommendViewPagerAdatpter;
     private String[] list = {"推荐", "笔记", "共享"};
     private int scaleRatio;
-    private PMyInfoBean bean;
+    private PUserMyInfoBean bean;
     private int page = 1;
     private String uid = "";
     private String is_focus;
-    private UserRecommendFragment recommendFragment;
     private UserNoteFragment noteFragment;
     private Fragment[] fragmentList;
     private View layout;
+    private UserRecommendFragment recommendFragment;
 
     @Override
     public int onActLayout() {
@@ -88,11 +89,11 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         StatusBarUtil.setTranslucentForCoordinatorLayout(this, 0);
         StatusBarUtil.setLightMode(this);
         mAppBarLayout = findViewById(R.id.al_appbar_myinfo);
-        mDeditor = findViewById(R.id.tv_deditor_myinfo);
         mTabLayoutButtom = findViewById(R.id.tl_tabhid_myinfo);
         mView = findViewById(R.id.shop_view_myinfo);
         mName = findViewById(R.id.tv_name_myinfo);
         mAddress = findViewById(R.id.tv_address_myinfo);
+        mShare = findViewById(R.id.iv_share_myinfo);
         mHead = findViewById(R.id.iv_head_myinfo);
         mFocusNum = findViewById(R.id.tv_focusnum_myinfo);
         mFansNum = findViewById(R.id.tv_fansnum_myinfo);
@@ -115,12 +116,6 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         ll_group_myinfo = findViewById(R.id.ll_group_myinfo);
         mBack.setOnClickListener(this);
         ll_group_myinfo.setOnClickListener(this);
-        findViewById(R.id.tv_deditor_myinfo).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MyInfoActivity.this, EditInfoActivity.class));
-            }
-        });
         recommendFragment = new UserRecommendFragment();
         noteFragment = new UserNoteFragment();
         MyInfoRecommendFragment myInfoRecommendFragment = new MyInfoRecommendFragment();
@@ -131,6 +126,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         Intent intent = getIntent();
         uid = intent.getStringExtra("uid");
         if (TextUtils.isEmpty(uid)||LoginStatus.getUid().equals(uid)) {
+            ivEditMyinfo.setVisibility(View.VISIBLE);
             ivFocusMyinfo.setVisibility(View.GONE);
             ivChatMyinfo.setVisibility(View.GONE);
             uid = LoginStatus.getUid();
@@ -148,10 +144,10 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 mView.setAlpha(alpha);
                 if (alpha > 0.8) {
                     mBack.setImageResource(R.drawable.login_fanhui);
-                    mDeditor.setTextColor(Color.parseColor("#222222"));
+                    mShare.setImageResource(R.drawable.hei);
                 } else {
                     mBack.setImageResource(R.drawable.myinfo_back);
-                    mDeditor.setTextColor(Color.parseColor("#ffffff"));
+                    mShare.setImageResource(R.drawable.feixiang);
                 }
             }
         });
@@ -180,8 +176,6 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
 
             }
         }).start();
-
-
     }
 
     private Handler handler = new Handler() {
@@ -195,7 +189,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     };
 
     public void initData() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.USER_INFO_DATA, new RMyInfoBean(LoginStatus.getUid(), "3", uid, page + "", "10")).request(new ApiCallBack<PMyInfoBean>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.USER_MYINFO, new PUserinfoBean(LoginStatus.getUid(),  uid)).request(new ApiCallBack<PUserMyInfoBean>() {
             @Override
             public void onFinish() {
 
@@ -207,7 +201,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
             }
 
             @Override
-            public void onSuccess(PMyInfoBean o, String msg) {
+            public void onSuccess(PUserMyInfoBean o, String msg) {
                 Logger.e("msg==========" + msg);
                 bean = o;
                 is_focus = o.getIs_focus();
@@ -234,7 +228,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 mSigner.setText(o.getAutograph());
                 GlideUtils.getInstance().loadHead(o.getAvatar(), mImageView);
                 dim(Urls.base_url + o.getAvatar());
-                if(o.getOther_info().size()==0){
+                if("0".equals(o.getIs_have_service())){
                     final Fragment[] fragments = {recommendFragment, noteFragment};
                     String[] listTitle = {"推荐", "笔记"};
                     mMyInfoRecommendViewPagerAdatpter.setList(fragments, listTitle);
@@ -259,7 +253,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         }
     }
 
-    @OnClick({R.id.iv_focus_myinfo, R.id.iv_chat_myinfo, R.id.iv_groupchat_myinfo})
+    @OnClick({R.id.iv_focus_myinfo, R.id.iv_chat_myinfo, R.id.iv_groupchat_myinfo,R.id.iv_edit_myinfo})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_focus_myinfo:
@@ -272,6 +266,9 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 break;
             case R.id.iv_chat_myinfo:
 
+                break;
+            case R.id.iv_edit_myinfo:
+                startActivity(new Intent(MyInfoActivity.this,EditInfoActivity.class));
                 break;
             case R.id.iv_groupchat_myinfo:
                 Intent intent = new Intent(MyInfoActivity.this,ChatMsgActivity.class);

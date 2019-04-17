@@ -22,13 +22,13 @@ import androidx.core.app.ActivityOptionsCompat;
  * package_name is com.sence.adapter
  * 描述:SenceGit
  */
-public class UserRecommendAdapter extends BaseQuickAdapter<PMyInfoBean.OtherInfoBean, BaseViewHolder> {
+public class UserRecommendAdapter extends BaseQuickAdapter<PMyInfoBean.ListBean, BaseViewHolder> {
     public UserRecommendAdapter(int layoutResId) {
         super(layoutResId);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, final PMyInfoBean.OtherInfoBean item) {
+    protected void convert(BaseViewHolder helper, final PMyInfoBean.ListBean item) {
         final NiceImageView item_img = helper.getView(R.id.item_img);
         final Activity activity = (Activity) helper.itemView.getContext();
         GlideUtils.getInstance().loadHead(item.getAvatar(), (ImageView) helper.getView(R.id.item_head));

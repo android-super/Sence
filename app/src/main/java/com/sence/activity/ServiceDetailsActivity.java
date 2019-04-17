@@ -54,10 +54,12 @@ public class ServiceDetailsActivity extends BaseActivity {
     PubTitle ptPubTitle;
     @BindView(R.id.tv_map_servicedetails)
     TextView tvMapServicedetails;
+    @BindView(R.id.tv_imgnum_servicedetails)
+    TextView tvImgnumServicedetails;
 
     private ServiceDetailsAdapter mServiceDetailsAdapter;
     private int page = 1;
-    private String id= "";
+    private String id = "";
     private PServiceeDetails bean = null;
     private ShopDetailsImgAdapter shopDetailsImgAdapter;
 
@@ -79,6 +81,9 @@ public class ServiceDetailsActivity extends BaseActivity {
         ptPubTitle.setRightOnClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                if ("0".equals(bean.getIsEvaluate())) {
+//                    return;
+//                }
                 Intent intent = new Intent(ServiceDetailsActivity.this, ServiceCommentActivity.class);
                 intent.putExtra("id", bean.getId());
                 startActivity(intent);
@@ -86,8 +91,25 @@ public class ServiceDetailsActivity extends BaseActivity {
         });
         shopDetailsImgAdapter = new ShopDetailsImgAdapter();
         vpImgServicedetails.setAdapter(shopDetailsImgAdapter);
+        vpImgServicedetails.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                tvImgnumServicedetails.setText(++position+"/"+bean.getImgs().size());
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
+    @Override
     public void initData() {
         HttpManager.getInstance().PlayNetCode(HttpCode.SERVE_DETAIL, new RShopDetailsBean(id, LoginStatus.getUid())).request(new ApiCallBack<PServiceeDetails>() {
             @Override
@@ -102,13 +124,16 @@ public class ServiceDetailsActivity extends BaseActivity {
 
             @Override
             public void onSuccess(final PServiceeDetails o, String msg) {
-                Logger.e("msg==========" + msg+"=="+o.getImgs().size());
+                Logger.e("msg==========" + msg + "==" + o.getImgs().size());
                 bean = o;
+                if(o.getImgs().size()>0){
+                    tvImgnumServicedetails.setText("1/"+o.getImgs().size());
+                }
                 List<ImageView> list = new ArrayList<>();
                 for (int i = 0; i < o.getImgs().size(); i++) {
                     ImageView imageView = new ImageView(ServiceDetailsActivity.this);
                     imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                    GlideUtils.getInstance().loadHead( o.getImgs().get(i),imageView);
+                    GlideUtils.getInstance().loadHead(o.getImgs().get(i), imageView);
                     list.add(imageView);
                     final int position = i;
                     imageView.setOnClickListener(new View.OnClickListener() {
@@ -116,20 +141,20 @@ public class ServiceDetailsActivity extends BaseActivity {
                         public void onClick(View v) {
                             Intent intent = new Intent(ServiceDetailsActivity.this, ImgFlexActivity.class);
                             intent.putStringArrayListExtra("imgs", (ArrayList<String>) o.getImgs());
-                            intent.putExtra("position",position);
+                            intent.putExtra("position", position);
                             startActivity(intent);
                         }
                     });
                 }
                 shopDetailsImgAdapter.setList(list);
 
-                if("0".equals(o.getIsEvaluate())){
+                if ("0".equals(o.getIsEvaluate())) {
                     ptPubTitle.setRightImg(0);
                 }
                 tvNameServicedetails.setText(o.getTag());
                 tvAddressServicedetails.setText(o.getPosition());
                 tvUsernameServicedetails.setText(o.getUsername());
-                GlideUtils.getInstance().loadHead( o.getAvatar(), ivUserimgServicedetails);
+                GlideUtils.getInstance().loadHead(o.getAvatar(), ivUserimgServicedetails);
             }
         });
         HttpManager.getInstance().PlayNetCode(HttpCode.SERVE_COMMENT_LIST,
@@ -165,7 +190,7 @@ public class ServiceDetailsActivity extends BaseActivity {
     @OnClick(R.id.tv_map_servicedetails)
     public void onViewClicked() {
         Intent intent = new Intent(ServiceDetailsActivity.this, MapActivity.class);
-        intent.putExtra("map",bean.getPosition());
+        intent.putExtra("map", bean.getPosition());
         startActivity(intent);
     }
 }

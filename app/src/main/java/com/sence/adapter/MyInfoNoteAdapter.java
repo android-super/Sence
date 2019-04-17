@@ -19,12 +19,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MyInfoNoteAdapter extends RecyclerView.Adapter<MyInfoNoteAdapter.ViewHolder> {
     private Context context;
-    private List<PMyInfoBean.OtherInfoBean> list = new ArrayList<>();
+    private List<PMyInfoBean.ListBean> list = new ArrayList<>();
 
     public MyInfoNoteAdapter(Context context){
         this.context = context;
     }
-    public void setList(List<PMyInfoBean.OtherInfoBean> list){
+    public void setList(List<PMyInfoBean.ListBean> list){
         this.list = list;
         notifyDataSetChanged();
     }

@@ -32,12 +32,31 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/vp_img_servicedetails"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:src="@drawable/hint_img"/>
+                android:layout_height="184dp">
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/vp_img_servicedetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/hint_img"/>
+                <TextView
+                    android:id="@+id/tv_imgnum_servicedetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/shape_shopdetails_bg"
+                    android:paddingBottom="3dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingTop="3dp"
+                    android:text="1/1"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"/>
+            </RelativeLayout>
+
 
             <TextView
                 android:id="@+id/tv_name_servicedetails"

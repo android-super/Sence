@@ -155,10 +155,10 @@ public class SettingActivity extends BaseActivity {
 
         @Override
         public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
-            for (Map.Entry<String, String> entry : map.entrySet()) {
-                String key = entry.getKey();
-                String value = entry.getValue();
-            }
+//            for (Map.Entry<String, String> entry : map.entrySet()) {
+////                String key = entry.getKey();
+////                String value = entry.getValue();
+////            }
             finish();
         }
 

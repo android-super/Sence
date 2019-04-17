@@ -203,6 +203,9 @@ public class ShopCommendActivity extends BaseActivity implements View.OnClickLis
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_addshop_shopdetails:
+                if(num==0){
+                    tvShopnumShopdetails.setVisibility(View.VISIBLE);
+                }
                 addShop();
                 break;
             case R.id.tv_buy_shopdetails:

@@ -125,6 +125,9 @@ public class HttpManager<P> {
             case USER_INFO_DATA:
                 observable = httpService.UserInfoData(requestBean.getMap());
                 break;
+            case USER_MYINFO:
+                observable = httpService.UserMyInfo(requestBean.getMap());
+                break;
             case USER_INFO_DATA_SERVICE:
                 observable = httpService.UserInfoDataService(requestBean.getMap());
                 break;

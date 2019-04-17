@@ -8,12 +8,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:paddingLeft="15dp"
         android:orientation="horizontal">
         <com.sence.view.NiceImageView
             android:layout_width="89dp"
             app:corner_radius="6dp"
             android:layout_height="89dp"
-            android:layout_marginLeft="15dp"
             android:src="@drawable/hint_img"
             android:scaleType="centerCrop"
             android:id="@+id/iv_img_myorder"
@@ -26,6 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:paddingRight="15dp"
                 android:layout_toRightOf="@id/iv_img_myorder"
                 android:layout_marginLeft="@dimen/dp_10"
                 android:id="@+id/tv_name_myorder"

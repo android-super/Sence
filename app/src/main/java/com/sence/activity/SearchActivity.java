@@ -1,11 +1,9 @@
 package com.sence.activity;
 
-import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -112,14 +110,6 @@ public class SearchActivity extends BaseActivity {
         recycleSearchshop.setLayoutManager(new LinearLayoutManager(SearchActivity.this));
         recycleSearchshop.setAdapter(mSearchShopAdapter);
 
-        flFlowSearch.result(new FlowLayout.FlowListener() {
-            @Override
-            public void gettext(String data) {
-                etContentSearch.setText(data);
-                llFlowSearch.setVisibility(View.GONE);
-                doHttp(data);
-            }
-        });
     }
 
     public void initData() {
@@ -139,7 +129,7 @@ public class SearchActivity extends BaseActivity {
                 Logger.e("msg==========" + msg);
                 if(o.size()>0){
                     list = o;
-                    addList();
+                    flFlowSearch.addList(o);
                 }
             }
         });
@@ -183,26 +173,5 @@ public class SearchActivity extends BaseActivity {
         });
     }
 
-    private void addList() {
-        //往容器内添加TextView数据
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(15, 8, 15, 8);
-        if (flFlowSearch != null) {
-            flFlowSearch.removeAllViews();
-        }
-        for (int i = 0; i < list.size(); i++) {
-            TextView tv = new TextView(this);
-            tv.setPadding(25, 8, 25, 8);
-            tv.setText(list.get(i).getName());
-            tv.setMaxLines(1);
-            tv.setMaxEms(8);
-            tv.setEllipsize(TextUtils.TruncateAt.END);
-            tv.setTextColor(Color.parseColor("#333333"));
-            tv.setSingleLine();
-            tv.setBackgroundResource(R.drawable.shape_search_textbg);
-            tv.setLayoutParams(layoutParams);
-            flFlowSearch.addView(tv, layoutParams);
-        }
-    }
+
 }

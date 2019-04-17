@@ -142,7 +142,7 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:layout_marginRight="20dp"
-                    android:scaleType="centerInside"
+                    android:scaleType="fitXY"
                     android:layout_marginTop="10dp"
                     android:id="@+id/iv_imgone_shopcomment"
                     android:src="@drawable/comment_tianjia"/>
@@ -162,8 +162,9 @@
                 android:layout_height="70dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="10dp"
+                android:visibility="gone"
                 android:id="@+id/iv_imgtwe_shopcomment"
-                android:scaleType="centerInside"
+                android:scaleType="fitXY"
                 android:src="@drawable/comment_yi"/>
                 <ImageView
                     android:layout_width="20dp"
@@ -181,8 +182,9 @@
                 android:layout_height="70dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="10dp"
+                android:visibility="gone"
                 android:id="@+id/iv_imgthress_shopcomment"
-                android:scaleType="centerInside"
+                android:scaleType="fitXY"
                 android:src="@drawable/comment_er"/>
                 <ImageView
                     android:layout_width="20dp"

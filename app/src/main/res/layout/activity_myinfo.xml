@@ -91,6 +91,13 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="5dp"
                                     android:src="@drawable/sixin"/>
+                                <ImageView
+                                    android:id="@+id/iv_edit_myinfo"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:visibility="gone"
+                                    android:src="@drawable/bianjiziliao"/>
                             </LinearLayout>
 
                             <RelativeLayout
@@ -296,7 +303,6 @@
                             android:id="@+id/shop_view_myinfo"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-
                             android:background="@color/white"/>
 
                         <ImageView
@@ -307,20 +313,15 @@
                             android:layout_gravity="center_vertical"
                             android:scaleType="center"
                             android:src="@drawable/login_fanhui"/>
-
-                        <TextView
-                            android:id="@+id/tv_deditor_myinfo"
-                            android:layout_width="wrap_content"
+                        <ImageView
+                            android:id="@+id/iv_share_myinfo"
+                            android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:layout_alignParentBottom="true"
+                            android:layout_gravity="center_vertical"
                             android:layout_alignParentRight="true"
-                            android:gravity="center_vertical"
-                            android:paddingLeft="16dp"
-                            android:paddingRight="16dp"
-                            android:text="编辑"
-                            android:textColor="#ffffff"
-                            android:textSize="@dimen/sp_16"
-                            />
+                            android:scaleType="center"
+                            android:src="@drawable/hei"/>
 
 
                     </RelativeLayout>

@@ -23,6 +23,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemeNoActionBar"
         tools:replace="android:theme">
+        <activity android:name=".activity.SystemInformActivity">
+        </activity>
+        <activity android:name=".activity.InformActivity">
+        </activity>
         <activity android:name=".activity.ImgFlexActivity">
         </activity>
         <activity android:name=".activity.MessageHDActivity">
@@ -44,13 +48,12 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
+
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         <activity android:name=".activity.OpenVipPageActivity">
         </activity>
@@ -151,7 +154,7 @@
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="24d67e5e19653fb188f93826d5a50534"/>
+            android:value="b9423c91ab0d7939f4a816ee945a54c4"/>
     </application>
 
 </manifest>

@@ -72,6 +72,7 @@ public class ImgFlexActivity extends AppCompatActivity {
 
             }
         });
+
         if (listImg.size() > 0) {
             mNum.setText(++position +"/"+ listImg.size());
             List<PhotoView> list = new ArrayList<>();
@@ -88,6 +89,7 @@ public class ImgFlexActivity extends AppCompatActivity {
                 list.add(photoView);
             }
             mImgFlexAdapter.setList(list);
+            mViewPager.setCurrentItem(--position);
         }else{
             PhotoView photoView = new PhotoView(ImgFlexActivity.this);
             photoView.setOnPhotoTapListener(new OnPhotoTapListener() {
@@ -101,7 +103,8 @@ public class ImgFlexActivity extends AppCompatActivity {
             List<PhotoView> list = new ArrayList<>();
             list.add(photoView);
             mImgFlexAdapter.setList(list);
+            mViewPager.setCurrentItem(position);
         }
-        mViewPager.setCurrentItem(position);
+
     }
 }

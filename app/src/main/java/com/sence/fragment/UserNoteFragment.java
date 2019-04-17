@@ -39,6 +39,7 @@ public class UserNoteFragment extends Fragment {
 
     private UserNoteAdapter adapter;
     private int page = 1;
+    private String type;
 
     public UserNoteFragment() {
         // Required empty public constructor
@@ -55,12 +56,14 @@ public class UserNoteFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Bundle arguments = getArguments();
+        type = arguments.getString("type");
         initRefresh();
         initData();
     }
 
     private void initData() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.USER_INFO_DATA, new RMyInfoBean(LoginStatus.getUid(),"1","",page+"","10")).request(new ApiCallBack<PMyInfoBean>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.USER_INFO_DATA, new RMyInfoBean(LoginStatus.getUid(),type,"",page+"","10")).request(new ApiCallBack<PMyInfoBean>() {
             @Override
             public void onFinish() {
                 smartRefreshLayout.finishRefresh();
@@ -75,9 +78,9 @@ public class UserNoteFragment extends Fragment {
             @Override
             public void onSuccess(PMyInfoBean o, String msg) {
                 if (page == 1) {
-                    adapter.setNewData(o.getOther_info());
+                    adapter.setNewData(o.getList());
                 } else {
-                    adapter.addData(o.getOther_info());
+                    adapter.addData(o.getList());
                 }
             }
         });

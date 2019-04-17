@@ -1,16 +1,16 @@
 package com.sence.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import com.sence.R;
 import com.sence.base.BaseActivity;
 import com.sence.utils.StatusBarUtil;
+
+import butterknife.BindView;
 
 public class MessageActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.message_open)
@@ -56,8 +56,10 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
                 startActivity(new Intent(MessageActivity.this, MessageHDActivity.class));
                 break;
             case R.id.message_xt_layout:
+                startActivity(new Intent(MessageActivity.this, SystemInformActivity.class));
                 break;
             case R.id.message_tz_layout:
+                startActivity(new Intent(MessageActivity.this, InformActivity.class));
                 break;
             case R.id.message_kf_layout:
                 break;

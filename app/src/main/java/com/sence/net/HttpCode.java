@@ -43,7 +43,8 @@ public enum HttpCode {
     ORDER_COMMENT_SUPPORT,//评论点赞
     USER_FOCUS_CANCEL,//取消关注
     USER_AUTH,//实名认证
-    USER_INFO_DATA,//我的信息
+    USER_MYINFO,//我的信息
+    USER_INFO_DATA,//我的信息内容
     USER_INFO_DATA_SERVICE,//我的信息服务
     USER_FANS_LIST,//我的粉丝列表
     MAIN_SEARCH,//首页搜索

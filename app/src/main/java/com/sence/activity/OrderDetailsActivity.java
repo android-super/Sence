@@ -1,26 +1,36 @@
 package com.sence.activity;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.Message;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.alipay.sdk.app.PayTask;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.orhanobut.logger.Logger;
 import com.sence.R;
 import com.sence.adapter.OrderDetailsAdapter;
 import com.sence.base.BaseActivity;
+import com.sence.bean.request.RAliPayBean;
 import com.sence.bean.request.ROrderDetailsBean;
 import com.sence.bean.request.RTimeRemainingBean;
+import com.sence.bean.request.RWxPayBean;
 import com.sence.bean.response.POrderDetailsBean;
 import com.sence.bean.response.PTimeRemainingBean;
+import com.sence.bean.response.PWxPayBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
@@ -28,8 +38,11 @@ import com.sence.utils.DateUtils;
 import com.sence.utils.LoginStatus;
 import com.sence.utils.StatusBarUtil;
 import com.sence.view.PubTitle;
+import com.sence.wxapi.WeiXinPayUtils;
+import com.sence.zhifubao.PayResult;
 
 import java.text.DecimalFormat;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import androidx.core.widget.NestedScrollView;
@@ -48,6 +61,7 @@ import io.reactivex.schedulers.Schedulers;
  * 订单详情
  */
 public class OrderDetailsActivity extends BaseActivity implements View.OnClickListener {
+    private int PAYMENTTYPE = 2;
     @BindView(R.id.tv_state_orderdetails)
     TextView tvStateOrderdetails;
     @BindView(R.id.tv_number_orderdetails)
@@ -271,7 +285,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
                 if(o.getGmoney().contains(".")){
                     tvSpriceOrderdetails.setText("￥" + o.getNeedpay());
                 }else{
-                    tvSpriceOrderdetails.setText("￥" + o.getNeedpay()+"00");
+                    tvSpriceOrderdetails.setText("￥" + o.getNeedpay()+".00");
                 }
                 if(o.getGmoney().contains(".")){
                     tvPricePay.setText("￥" + o.getNeedpay());
@@ -420,15 +434,20 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_zhi_pay:
+            case R.id.ll_zhi_pay:
                 ivZhiPay.setImageResource(R.drawable.xuanzhong);
                 ivWeiPay.setImageResource(R.drawable.weixuan);
                 break;
-            case R.id.iv_wei_pay:
+            case R.id.ll_wei_pay:
                 ivWeiPay.setImageResource(R.drawable.xuanzhong);
                 ivZhiPay.setImageResource(R.drawable.weixuan);
                 break;
             case R.id.bt_pay_pay:
+                if(PAYMENTTYPE==1){
+                    PayWx();
+                }else if(PAYMENTTYPE == 2){
+                    aLiPay();
+                }
                 mBottomSheetDialog.dismiss();
                 break;
             case R.id.iv_back_pay:
@@ -436,7 +455,96 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
                 break;
         }
     }
+    /**
+     * 微信
+     */
+    private void PayWx() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.PAY_WX, new RWxPayBean(LoginStatus.getUid(), "1",bean.getGmoney(),id)).request(new ApiCallBack<PWxPayBean>() {
+            @Override
+            public void onFinish() {
 
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(PWxPayBean o, String msg) {
+                Logger.e("msg==========" + msg);
+                WeiXinPayUtils wxpay = new WeiXinPayUtils(OrderDetailsActivity.this, o);
+                wxpay.pay();
+            }
+        });
+    }
+    /**
+     * 支付宝
+     */
+    private void aLiPay() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.PAY_ALI, new RAliPayBean("1", LoginStatus.getUid(), bean.getGmoney(), id)).request(new ApiCallBack<String>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(final String o, String msg) {
+                Runnable payRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        PayTask alipay = new PayTask(OrderDetailsActivity.this);
+                        Map<String, String> result = alipay.payV2(o, true);
+                        Log.i("msp", result.toString());
+                        Message msg = new Message();
+                        msg.what = SDK_PAY_FLAG;
+                        msg.obj = result;
+                        mHandler.sendMessage(msg);
+                    }
+                };
+
+                Thread payThread = new Thread(payRunnable);
+                payThread.start();
+            }
+        });
+
+    }
+    private static final int SDK_PAY_FLAG = 1;
+
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler() {
+        @SuppressWarnings("unused")
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case SDK_PAY_FLAG: {
+                    @SuppressWarnings("unchecked")
+                    PayResult payResult = new PayResult((Map<String, String>) msg.obj);
+                    /**
+                     对于支付结果，请商户依赖服务端的异步通知结果。同步通知结果，仅作为支付结束的通知。
+                     */
+                    String resultInfo = payResult.getResult();// 同步返回需要验证的信息
+                    String resultStatus = payResult.getResultStatus();
+                    // 判断resultStatus 为9000则代表支付成功
+                    if (TextUtils.equals(resultStatus, "9000")) {
+                        // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
+                        Toast.makeText(OrderDetailsActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else {
+                        // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
+                        Toast.makeText(OrderDetailsActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+    };
 
     private void bottomSheetDialog() {
         View mView = View.inflate(this, R.layout.bottom_pay_layout, null);
@@ -450,8 +558,8 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
         ivWeiPay = mView.findViewById(R.id.iv_wei_pay);
         ivBackPay = mView.findViewById(R.id.iv_back_pay);
         btPayPay = mView.findViewById(R.id.bt_pay_pay);
-        ivZhiPay.setOnClickListener(this);
-        ivWeiPay.setOnClickListener(this);
+        mView.findViewById(R.id.ll_zhi_pay).setOnClickListener(this);
+        mView.findViewById(R.id.ll_wei_pay).setOnClickListener(this);
         ivBackPay.setOnClickListener(this);
         btPayPay.setOnClickListener(this);
         mBottomSheetDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {

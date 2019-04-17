@@ -112,8 +112,9 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private String[] splitId;
     private int mine = 0;
     private int count = 0;
-    private int PAYMENTTYPE = 1;
+    private int PAYMENTTYPE = 2;
     private String oid;
+    private double allprice;
 
     @Override
     public int onActLayout() {
@@ -132,7 +133,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         recycleConfirmorder.setLayoutManager(linearLayoutManager);
         recycleConfirmorder.setAdapter(confirmOrderAdapter);
-        double allprice = 0.0;
+        allprice = 0.0;
         if(list.size()>0){
             for (int i = 0; i < list.size(); i++) {
                 List<PBusBean.CartBean.GoodsBean> goods = list.get(i).getGoods();
@@ -146,9 +147,9 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         }
         for (int i = 0; i < list.size(); i++) {
             double price = stringtodouble(list.get(i).getAll_money());
-            allprice+=price;
+            allprice +=price;
         }
-        tvSpriceConfrimorder.setText("￥"+allprice);
+        tvSpriceConfrimorder.setText("￥"+ allprice);
         if ("shop".equals(type)) {
             confirmOrderAdapter.setList(listData);
         }
@@ -255,11 +256,11 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_zhi_pay:
+            case R.id.ll_zhi_pay:
                 ivZhiPay.setImageResource(R.drawable.xuanzhong);
                 ivWeiPay.setImageResource(R.drawable.weixuan);
                 break;
-            case R.id.iv_wei_pay:
+            case R.id.ll_wei_pay:
                 ivWeiPay.setImageResource(R.drawable.xuanzhong);
                 ivZhiPay.setImageResource(R.drawable.weixuan);
                 break;
@@ -281,7 +282,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
      * 微信
      */
     private void PayWx() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.PAY_WX, new RWxPayBean(LoginStatus.getUid(), "1",tvSpriceConfrimorder.getText().toString().trim(),oid)).request(new ApiCallBack<PWxPayBean>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.PAY_WX, new RWxPayBean(LoginStatus.getUid(), "1",allprice+"",oid)).request(new ApiCallBack<PWxPayBean>() {
             @Override
             public void onFinish() {
 
@@ -304,7 +305,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
      * 支付宝
      */
     private void aLiPay() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.PAY_ALI, new RAliPayBean("1", LoginStatus.getUid(), tvSpriceConfrimorder.getText().toString().trim(), oid)).request(new ApiCallBack<String>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.PAY_ALI, new RAliPayBean("1", LoginStatus.getUid(), allprice+"", oid)).request(new ApiCallBack<String>() {
             @Override
             public void onFinish() {
 
@@ -379,8 +380,8 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         ivWeiPay = mView.findViewById(R.id.iv_wei_pay);
         ivBackPay = mView.findViewById(R.id.iv_back_pay);
         btPayPay = mView.findViewById(R.id.bt_pay_pay);
-        ivZhiPay.setOnClickListener(this);
-        ivWeiPay.setOnClickListener(this);
+        mView.findViewById(R.id.ll_zhi_pay).setOnClickListener(this);
+        mView.findViewById(R.id.ll_wei_pay).setOnClickListener(this);
         ivBackPay.setOnClickListener(this);
         btPayPay.setOnClickListener(this);
         for (int i = 0; i < listData.size(); i++) {

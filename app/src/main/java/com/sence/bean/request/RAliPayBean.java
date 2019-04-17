@@ -8,11 +8,11 @@ import com.sence.bean.base.BaseRequestBean;
  * 描述:SenceGit
  */
 public class RAliPayBean extends BaseRequestBean {
-    public RAliPayBean(String purpose, String uid, String total_amount, String exp) {
+    public RAliPayBean(String purpose, String uid, String total_amount, String oid) {
         this.purpose = purpose;
         this.uid = uid;
         this.total_amount = total_amount;
-        this.exp = exp;
+        this.oid = oid;
     }
 
     public String getPurpose() {
@@ -39,16 +39,16 @@ public class RAliPayBean extends BaseRequestBean {
         this.total_amount = total_amount;
     }
 
-    public String getExp() {
-        return exp;
+    public String getOid() {
+        return oid;
     }
 
-    public void setExp(String exp) {
-        this.exp = exp;
+    public void setOid(String oid) {
+        this.oid = oid;
     }
 
     private String purpose;
     private String uid;
     private String total_amount;
-    private String exp;
+    private String oid;
 }

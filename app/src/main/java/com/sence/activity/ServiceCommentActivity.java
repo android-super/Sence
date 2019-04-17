@@ -147,19 +147,22 @@ public class ServiceCommentActivity extends BaseActivity implements View.OnClick
     private void imgAss() {
         if (selectList.size() == 0) {
             ivImgoneServicecomment.setImageResource(R.drawable.comment_tianjia);
-            ivImgtweServicecomment.setImageResource(R.drawable.comment_yi);
-            ivImgthressServicecomment.setImageResource(R.drawable.comment_er);
+            ivImgtweServicecomment.setVisibility(View.GONE);
+            ivImgthressServicecomment.setVisibility(View.GONE);
             ivCloseoneServicecomment.setVisibility(View.GONE);
             ivClosetweServicecomment.setVisibility(View.GONE);
             ivClosethressServicecomment.setVisibility(View.GONE);
         } else if (selectList.size() == 1) {
+            ivImgtweServicecomment.setVisibility(View.VISIBLE);
+            ivImgthressServicecomment.setVisibility(View.GONE);
             ivImgtweServicecomment.setImageResource(R.drawable.comment_yi);
-            ivImgthressServicecomment.setImageResource(R.drawable.comment_er);
             Glide.with(ServiceCommentActivity.this).load(selectList.get(0).getPath()).into(ivImgoneServicecomment);
             ivCloseoneServicecomment.setVisibility(View.VISIBLE);
             ivClosetweServicecomment.setVisibility(View.GONE);
             ivClosethressServicecomment.setVisibility(View.GONE);
         } else if (selectList.size() == 2) {
+            ivImgtweServicecomment.setVisibility(View.VISIBLE);
+            ivImgthressServicecomment.setVisibility(View.VISIBLE);
             ivImgthressServicecomment.setImageResource(R.drawable.comment_er);
             Glide.with(ServiceCommentActivity.this).load(selectList.get(0).getPath()).into(ivImgoneServicecomment);
             Glide.with(ServiceCommentActivity.this).load(selectList.get(1).getPath()).into(ivImgtweServicecomment);

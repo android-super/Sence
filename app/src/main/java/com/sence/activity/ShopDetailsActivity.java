@@ -122,7 +122,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
     private List<String> imgs = new ArrayList<>();
     private String id;
     private PShopDetailsBean bean = null;
-    private int num;
+    private int num = 0;
     private BottomSheetDialog mBottomSheetDialog;
     private TextView tvPrice, mNum;
     private ImageView mImg;
@@ -382,17 +382,36 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_addshop_shopdetails:
+                if(LoginStatus.getUid().isEmpty()){
+                    ToastUtils.showShort("请先登录");
+                    return;
+                }
+                if(num==0){
+                    tvShopnumShopdetails.setVisibility(View.VISIBLE);
+                }
                 addShop();
                 break;
             case R.id.tv_buy_shopdetails:
+                if(LoginStatus.getUid().isEmpty()){
+                    ToastUtils.showShort("请先登录");
+                    return;
+                }
                 bgAlpha(0.5f);
                 popupWindow.showAtLocation(contentView, Gravity.BOTTOM, 0, 0);
 
                 break;
             case R.id.ll_service_shopdetails:
+                if(LoginStatus.getUid().isEmpty()){
+                    ToastUtils.showShort("请先登录");
+                    return;
+                }
 
                 break;
             case R.id.ll_shop_shopdetails:
+                if(LoginStatus.getUid().isEmpty()){
+                    ToastUtils.showShort("请先登录");
+                    return;
+                }
                 Intent intent = new Intent(ShopDetailsActivity.this, MainActivity.class);
                 intent.putExtra("type", "3");
                 startActivity(intent);

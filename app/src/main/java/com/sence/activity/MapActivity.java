@@ -1,11 +1,18 @@
 package com.sence.activity;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -26,8 +33,12 @@ import com.sence.R;
 import com.sence.utils.StatusBarUtil;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
-public class MapActivity extends AppCompatActivity implements LocationSource, AMapLocationListener, GeocodeSearch.OnGeocodeSearchListener {
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+
+public class MapActivity extends AppCompatActivity implements LocationSource, AMapLocationListener, GeocodeSearch.OnGeocodeSearchListener, ActivityCompat.OnRequestPermissionsResultCallback {
 
 
     private MapView mvMap;
@@ -37,8 +48,12 @@ public class MapActivity extends AppCompatActivity implements LocationSource, AM
     private AMapLocationClientOption mLocationOption;
     private String map = "";
     private GeocodeSearch geocoderSearch;
-
-
+    private LocationManager lm;
+    private static final int BAIDU_READ_PHONE_STATE = 100;//定位权限请求
+    private static final int PRIVATE_CODE = 1315;//开启GPS权限
+    static final String[] LOCATIONGPS = new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.READ_PHONE_STATE};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +68,7 @@ public class MapActivity extends AppCompatActivity implements LocationSource, AM
         if (aMap == null) {
             aMap = mvMap.getMap();
         }
+        showGPSContacts();
         MyLocationStyle myLocationStyle;
         myLocationStyle = new MyLocationStyle();//初始化定位蓝点样式类myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);//连续定位、且将视角移动到地图中心点，定位点依照设备方向旋转，并且会跟随设备移动。（1秒1次定位）如果不设置myLocationType，默认也会执行此种模式。
         myLocationStyle.interval(2000); //设置连续定位模式下的定位间隔，只在连续定位模式下生效，单次定位模式下不会生效。单位为毫秒。
@@ -74,12 +90,106 @@ public class MapActivity extends AppCompatActivity implements LocationSource, AM
         }
         geocoderSearch = new GeocodeSearch(this);
         geocoderSearch.setOnGeocodeSearchListener(this);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                1);
         aMap.setOnMyLocationChangeListener(new AMap.OnMyLocationChangeListener() {
             @Override
             public void onMyLocationChange(Location location) {
 
             }
         });
+    }
+    public void showGPSContacts() {
+        lm = (LocationManager) this.getSystemService(this.LOCATION_SERVICE);
+        boolean ok = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        if (ok) {//开了定位服务
+            if (Build.VERSION.SDK_INT >= 23) { //判断是否为android6.0系统版本，如果是，需要动态添加权限
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                        != PERMISSION_GRANTED) {// 没有权限，申请权限。
+                    ActivityCompat.requestPermissions(this, LOCATIONGPS,
+                            BAIDU_READ_PHONE_STATE);
+                } else {
+                    getLocation();//getLocation为定位方法
+                }
+            } else {
+                getLocation();//getLocation为定位方法
+            }
+        } else {
+            Toast.makeText(this, "系统检测到未开启GPS定位服务,请开启", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent();
+            intent.setAction(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            startActivityForResult(intent, PRIVATE_CODE);
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case PRIVATE_CODE:
+                break;
+
+        }
+    }
+    /**
+     * 获取具体位置的经纬度
+     */
+    private void getLocation() {
+        // 获取位置管理服务
+        LocationManager locationManager;
+        String serviceName = Context.LOCATION_SERVICE;
+        locationManager = (LocationManager) this.getSystemService(serviceName);
+        // 查找到服务信息
+        Criteria criteria = new Criteria();
+        criteria.setAccuracy(Criteria.ACCURACY_FINE); // 高精度
+        criteria.setAltitudeRequired(false);
+        criteria.setBearingRequired(false);
+        criteria.setCostAllowed(true);
+        criteria.setPowerRequirement(Criteria.POWER_LOW); // 低功耗
+        String provider = locationManager.getBestProvider(criteria, true); // 获取GPS信息
+        /**这段代码不需要深究，是locationManager.getLastKnownLocation(provider)自动生成的，不加会出错**/
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        Location location = locationManager.getLastKnownLocation(provider); // 通过GPS获取位置
+        updateLocation(location);
+    }
+    /**
+     * 获取到当前位置的经纬度
+     * @param location
+     */
+    private void updateLocation(Location location) {
+        if (location != null) {
+            double latitude = location.getLatitude();
+            double longitude = location.getLongitude();
+        }
+    }
+    /**
+     * Android6.0申请权限的回调方法
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            // requestCode即所声明的权限获取码，在checkSelfPermission时传入
+            case BAIDU_READ_PHONE_STATE:
+                //如果用户取消，permissions可能为null.
+                if (grantResults[0] == PERMISSION_GRANTED && grantResults.length > 0) {  //有权限
+                    // 获取到权限，作相应处理
+                    getLocation();
+                } else {
+                    showGPSContacts();
+                }
+                break;
+            default:
+                break;
+        }
     }
     @Override
     protected void onDestroy() {

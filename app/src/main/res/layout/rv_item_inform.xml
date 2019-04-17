@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="#f6f6f6"
+    android:layout_height="wrap_content"
+    tools:context=".activity.InformActivity">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:textSize="@dimen/sp_12"
+        android:id="@+id/tv_time_inform"
+        android:layout_gravity="center_horizontal"
+        android:text="03月18日 下午3:40"
+        android:textColor="#999999"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:background="@drawable/shape_inform_bg">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#333333"
+            android:textSize="15sp"
+            android:id="@+id/tv_type_inform"
+            android:layout_marginLeft="9dp"
+            android:layout_marginTop="17dp"
+            android:text="技能审核"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="7dp"
+            android:textSize="13sp"
+            android:layout_below="@+id/tv_type_inform"
+            android:lineSpacingExtra="8dp"
+            android:id="@+id/tv_content_inform"
+            android:layout_marginBottom="19dp"
+            android:paddingRight="@dimen/dp_10"
+            android:ellipsize="end"
+            android:gravity="left"
+            android:textColor="#666666"
+            android:text="i爱电影讯 据台湾媒体报道　首部挤入全球百大电影票房榜的亚洲片、排名55的《战狼2》，以56.7870亿元（人民币，下同）票房，10月26日风光下片；但各界期。"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/xiangshang"
+            android:id="@+id/iv_flex_inform"
+            android:paddingBottom="21dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:paddingRight="8dp"
+            android:layout_gravity="right"
+            />
+    </RelativeLayout>
+</LinearLayout>

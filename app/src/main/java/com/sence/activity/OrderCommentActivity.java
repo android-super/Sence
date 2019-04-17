@@ -207,19 +207,22 @@ public class OrderCommentActivity extends BaseActivity implements View.OnClickLi
     private void imgAss() {
         if (selectList.size() == 0) {
             ivImgoneShopcomment.setImageResource(R.drawable.comment_tianjia);
-            ivImgtweShopcomment.setImageResource(R.drawable.comment_yi);
-            ivImgthressShopcomment.setImageResource(R.drawable.comment_er);
+            ivImgtweShopcomment.setVisibility(View.GONE);
+            ivImgthressShopcomment.setVisibility(View.GONE);
             ivCloseoneShopcomment.setVisibility(View.GONE);
             ivClosetweShopcomment.setVisibility(View.GONE);
             ivClosethressShopcomment.setVisibility(View.GONE);
         } else if (selectList.size() == 1) {
+            ivImgtweShopcomment.setVisibility(View.VISIBLE);
             ivImgtweShopcomment.setImageResource(R.drawable.comment_yi);
-            ivImgthressShopcomment.setImageResource(R.drawable.comment_er);
+            ivImgthressShopcomment.setVisibility(View.GONE);
             Glide.with(OrderCommentActivity.this).load(selectList.get(0).getPath()).into(ivImgoneShopcomment);
             ivCloseoneShopcomment.setVisibility(View.VISIBLE);
             ivClosetweShopcomment.setVisibility(View.GONE);
             ivClosethressShopcomment.setVisibility(View.GONE);
         } else if (selectList.size() == 2) {
+            ivImgtweShopcomment.setVisibility(View.VISIBLE);
+            ivImgthressShopcomment.setVisibility(View.VISIBLE);
             ivImgthressShopcomment.setImageResource(R.drawable.comment_er);
             Glide.with(OrderCommentActivity.this).load(selectList.get(0).getPath()).into(ivImgoneShopcomment);
             Glide.with(OrderCommentActivity.this).load(selectList.get(1).getPath()).into(ivImgtweShopcomment);

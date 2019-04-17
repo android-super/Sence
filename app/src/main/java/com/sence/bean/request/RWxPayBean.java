@@ -32,24 +32,24 @@ public class RWxPayBean extends BaseRequestBean {
         this.total_fee = total_fee;
     }
 
-    public String getExp() {
-        return exp;
+    public String getOid() {
+        return oid;
     }
 
-    public void setExp(String exp) {
-        this.exp = exp;
+    public void setOid(String oid) {
+        this.oid = oid;
     }
 
     private String uid;
     private String purpose;
 
-    public RWxPayBean(String uid, String purpose, String total_fee, String exp) {
+    public RWxPayBean(String uid, String purpose, String total_fee, String oid) {
         this.uid = uid;
         this.purpose = purpose;
         this.total_fee = total_fee;
-        this.exp = exp;
+        this.oid = oid;
     }
 
     private String total_fee;
-    private String exp;
+    private String oid;
 }

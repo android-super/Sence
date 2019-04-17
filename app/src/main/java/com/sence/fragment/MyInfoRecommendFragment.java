@@ -42,8 +42,8 @@ public class MyInfoRecommendFragment extends Fragment {
     private MyInfoServiceAdapter myInfoServiceAdapter;
     private int page=1;
     private SmartRefreshLayout mSmartRefreshLayout;
-    private List<PMyInfoServiceBean.OtherInfoBean> list = new ArrayList<>();
-    private List<PMyInfoBean.OtherInfoBean> listOther = new ArrayList<>();
+    private List<PMyInfoServiceBean.ListBean> list = new ArrayList<>();
+    private List<PMyInfoBean.ListBean> listOther = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -133,9 +133,9 @@ public class MyInfoRecommendFragment extends Fragment {
                 @Override
                 public void onSuccess(PMyInfoServiceBean o, String msg) {
                     Logger.e("msg==========" + msg);
-                    list = o.getOther_info();
-                    if(o.getOther_info().size()>0){
-                        myInfoServiceAdapter.setList(o.getOther_info());
+                    list = o.getList();
+                    if(o.getList().size()>0){
+                        myInfoServiceAdapter.setList(o.getList());
                     }
 
                 }
@@ -156,11 +156,11 @@ public class MyInfoRecommendFragment extends Fragment {
             @Override
             public void onSuccess(PMyInfoBean o, String msg) {
                 Logger.e("msg==========" + msg);
-                listOther = o.getOther_info();
+                listOther = o.getList();
                 if("1".equals(type)){
-                    myInfoRecommendAdapter.setList(o.getOther_info());
+                    myInfoRecommendAdapter.setList(o.getList());
                 }else if("2".equals(type)){
-                    myInfoNoteAdapter.setList(o.getOther_info());
+                    myInfoNoteAdapter.setList(o.getList());
                 }
 
             }

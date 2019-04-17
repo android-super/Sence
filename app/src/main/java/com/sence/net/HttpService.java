@@ -246,18 +246,21 @@ public interface HttpService {
     @FormUrlEncoded
     @POST(Urls.MAIN_CONTENT_DETAIL)
     Observable<BaseResponseBean<PContentDetailBean>> ContentDetail(@FieldMap Map<String, Object> map);//内容详情
-
     @FormUrlEncoded
     @POST(Urls.USER_INFO_DATA)
-    Observable<BaseResponseBean<PMyInfoBean>> UserInfoData(@FieldMap Map<String, Object> map);//我的信息
+    Observable<BaseResponseBean<PUserMyInfoBean>> UserMyInfo(@FieldMap Map<String, Object> map);//我的信息
 
     @FormUrlEncoded
-    @POST(Urls.USER_INFO_DATA)
-    Observable<BaseResponseBean<PMyInfoServiceBean>> UserInfoDataService(@FieldMap Map<String, Object> map);//我的信息
+    @POST(Urls.USER_INFO_CONTENT)
+    Observable<BaseResponseBean<PMyInfoBean>> UserInfoData(@FieldMap Map<String, Object> map);//我的信息内容
+
+    @FormUrlEncoded
+    @POST(Urls.USER_INFO_CONTENT)
+    Observable<BaseResponseBean<PMyInfoServiceBean>> UserInfoDataService(@FieldMap Map<String, Object> map);//我的信息服务
 
     @FormUrlEncoded
     @POST(Urls.USER_DETAIL)
-    Observable<BaseResponseBean<List<PUserDetailBean>>> UserDetail(@FieldMap Map<String, Object> map);//我的信息
+    Observable<BaseResponseBean<List<PUserDetailBean>>> UserDetail(@FieldMap Map<String, Object> map);//账户明细
 
     @FormUrlEncoded
     @POST(Urls.SUPPORT_NOTE_RECOMMEND)

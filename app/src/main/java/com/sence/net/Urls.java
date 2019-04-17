@@ -29,6 +29,7 @@ public class Urls {
     public static final String USER_BANK_CARD_LIST = "/index.php/Api/public/bankList";//获取银行列表
     public static final String USER_ACCOUNT = "/index.php/Api/mine/myAccount";//我的账户
     public static final String USER_INFO_DATA = "/index.php/api/user/personalInfo";//我的信息
+    public static final String USER_INFO_CONTENT = "/index.php/api/user/userReleas";//我的信息
     public static final String USER_VERIFY_CHECK = "/index.php/Api/mine/checkCode";//检查验证码
     public static final String USER_GET_REAL_NAME = "/index.php/Api/mine/getRealName";//获取真实姓名
     public static final String USER_UP_HEAD = "/index.php/Api/mine/uploadAvatar";//上传头像

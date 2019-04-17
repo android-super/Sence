@@ -1,6 +1,7 @@
 package com.sence.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +71,10 @@ public class ShopCommendAdapter extends RecyclerView.Adapter<ShopCommendAdapter.
         holder.mLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(TextUtils.isEmpty(LoginStatus.getUid())){
+                    ToastUtils.showShort("请先登录");
+                    return;
+                }
                 if(list.get(position).getIsPraise().equals("1")){
                     Like(position);
                     list.get(position).setIsPraise("0");

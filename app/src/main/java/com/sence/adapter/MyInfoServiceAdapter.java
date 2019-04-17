@@ -22,12 +22,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MyInfoServiceAdapter extends RecyclerView.Adapter<MyInfoServiceAdapter.ViewHolder> {
     private Context context;
-    private List<PMyInfoServiceBean.OtherInfoBean> list = new ArrayList<>();
+    private List<PMyInfoServiceBean.ListBean> list = new ArrayList<>();
 
     public MyInfoServiceAdapter(Context context){
         this.context = context;
     }
-    public void setList(List<PMyInfoServiceBean.OtherInfoBean> list){
+    public void setList(List<PMyInfoServiceBean.ListBean> list){
         this.list = list;
         notifyDataSetChanged();
     }
