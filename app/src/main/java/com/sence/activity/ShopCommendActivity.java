@@ -218,7 +218,7 @@ public class ShopCommendActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.ll_shop_shopdetails:
                 Intent intent = new Intent(ShopCommendActivity.this, MainActivity.class);
-                intent.putExtra("type", "3");
+                intent.putExtra("type", 3);
                 startActivity(intent);
                 break;
         }

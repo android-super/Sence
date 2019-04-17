@@ -413,7 +413,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                     return;
                 }
                 Intent intent = new Intent(ShopDetailsActivity.this, MainActivity.class);
-                intent.putExtra("type", "3");
+                intent.putExtra("type", 3);
                 startActivity(intent);
                 break;
 
