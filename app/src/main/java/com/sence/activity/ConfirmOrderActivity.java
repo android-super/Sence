@@ -259,10 +259,12 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             case R.id.ll_zhi_pay:
                 ivZhiPay.setImageResource(R.drawable.xuanzhong);
                 ivWeiPay.setImageResource(R.drawable.weixuan);
+                PAYMENTTYPE = 2;
                 break;
             case R.id.ll_wei_pay:
                 ivWeiPay.setImageResource(R.drawable.xuanzhong);
                 ivZhiPay.setImageResource(R.drawable.weixuan);
+                PAYMENTTYPE = 1;
                 break;
             case R.id.bt_pay_pay:
                 if(PAYMENTTYPE==1){
