@@ -178,6 +178,7 @@ public class PBusBean implements Serializable {
             private String vprice;
             private String postage;
             private String uid;
+            private String id;
             private boolean isSelect = false;
 
             public int getNum() {
@@ -242,6 +243,14 @@ public class PBusBean implements Serializable {
 
             public void setSelect(boolean select) {
                 isSelect = select;
+            }
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
             }
         }
     }

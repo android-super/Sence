@@ -196,7 +196,6 @@ public class SocketUtils {
     }
 
     public void request() {
-        Log.e("TAG",LoginStatus.getUid());
         HttpManager.getInstance().PlayNetCode(HttpCode.BIND_CLIENT_ID, new RBindClientID(LoginStatus.getUid(),
                 client_id, PhoneUtils.getIMEI())).request(new ApiCallBack() {
             @Override

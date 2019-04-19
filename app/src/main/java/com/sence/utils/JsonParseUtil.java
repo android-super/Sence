@@ -2,6 +2,8 @@ package com.sence.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.sence.bean.request.tag.RTagInfo;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -35,6 +37,14 @@ public class JsonParseUtil {
         return t;
     }
 
+    public static List<RTagInfo> parseStringArray(String json) {
+        List<RTagInfo> t = null;
+        if (gson != null)
+            t = gson.fromJson(json, new TypeToken<List<RTagInfo>>() {
+            }.getType());
+        return t;
+    }
+
 
     public static <T> List<T> parseArray(JSONArray json, final Class<T> clazz) {
         List<T> tlist = null;
@@ -47,20 +57,21 @@ public class JsonParseUtil {
         return tlist;
     }
 
-//    public static String toJson(HttpBaseBean clazz) {
-//        String json = null;
-//        if (gson != null) {
-//            json = gson.toJson(clazz);
-//        }
-//        return json;
-//    }
+    public static String toJson(List<RTagInfo> clazz) {
+        String json = null;
+        if (gson != null) {
+            json = gson.toJson(clazz);
+        }
+        return json;
+    }
 
     /**
      * @param s
      * @param clazz
      * @param <T>
      * @return
-     * @describe 解析[{id=100, name=最新}, {id=200, name=校园}, {id=300, name=关注}, {id=1, name=娱乐}, {id=2, name=美美哒}, {id=3, name=酷玩}, {id=4, name=游戏}, {id=5, name=二手货}]
+     * @describe 解析[{id=100, name=最新}, {id=200, name=校园}, {id=300, name=关注}, {id=1, name=娱乐}, {id=2, name=美美哒}, {id
+     * =3, name=酷玩}, {id=4, name=游戏}, {id=5, name=二手货}]
      */
     public static <T> List<T> stringToArray(String s, Class<T[]> clazz) {
         T[] arr = null;
@@ -75,7 +86,8 @@ public class JsonParseUtil {
      * @param clazz
      * @param <T>
      * @return
-     * @describe 解析[{id=100, name=最新}, {id=200, name=校园}, {id=300, name=关注}, {id=1, name=娱乐}, {id=2, name=美美哒}, {id=3, name=酷玩}, {id=4, name=游戏}, {id=5, name=二手货}]
+     * @describe 解析[{id=100, name=最新}, {id=200, name=校园}, {id=300, name=关注}, {id=1, name=娱乐}, {id=2, name=美美哒}, {id
+     * =3, name=酷玩}, {id=4, name=游戏}, {id=5, name=二手货}]
      */
     public static <T> T stringToObject(String s, Class<T> clazz) {
         T arr = null;

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -32,6 +33,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.sence.view.GridStagSpacingItemDecoration;
 
 /**
  * 笔记Fragment
@@ -51,7 +53,6 @@ public class NoteFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_note, container, false);
     }
 
@@ -93,10 +94,11 @@ public class NoteFragment extends Fragment {
         recyclerView = getView().findViewById(R.id.recycle_view);
         smartRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
         smartRefreshLayout.setRefreshFooter(new ClassicsFooter(getActivity()));
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+        StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(2,
+                StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(gridLayoutManager);
-        GridSpacingItemDecoration gridSpacingItemDecoration = new GridSpacingItemDecoration(2, ConvertUtils.dp2px(10),
-                true);
+        GridStagSpacingItemDecoration gridSpacingItemDecoration = new GridStagSpacingItemDecoration(2,
+                ConvertUtils.dp2px(4));
         recyclerView.addItemDecoration(gridSpacingItemDecoration);
         adapter = new NoteAdapter(R.layout.rv_item_note);
         adapter.setEmptyView(R.layout.empty_main_recommend_note, recyclerView);

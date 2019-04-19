@@ -9,7 +9,7 @@
                 tools:context=".fragment.BusFragment">
 
     <androidx.appcompat.widget.Toolbar
-            android:elevation="1dp"
+            android:elevation="0.5dp"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/white"
@@ -75,6 +75,7 @@
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="55dp">
+
         <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"

@@ -9,10 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.*;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.orhanobut.logger.Logger;
@@ -33,6 +30,7 @@ import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.LoginStatus;
 import com.sence.view.GridSpacingItemDecoration;
+import com.sence.view.GridStagSpacingItemDecoration;
 
 import java.util.List;
 
@@ -69,6 +67,7 @@ public class FocusFragment extends Fragment {
         initData();
     }
 
+
     private void initData() {
         HttpManager.getInstance().PlayNetCode(HttpCode.MAIN_FOCUS,
                 new RUidListBean(LoginStatus.getUid(), page + "")).request(new ApiCallBack<PMainBean>() {
@@ -100,12 +99,14 @@ public class FocusFragment extends Fragment {
         recyclerView = getView().findViewById(R.id.recycle_view);
         smartRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
         smartRefreshLayout.setRefreshFooter(new ClassicsFooter(getActivity()));
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        GridStagSpacingItemDecoration gridSpacingItemDecoration = new GridStagSpacingItemDecoration(2,
+                ConvertUtils.dp2px(4)
+        );
+        recyclerView.addItemDecoration(gridSpacingItemDecoration);
         adapter = new MainFocusAdapter(R.layout.rv_item_main_focus);
         recyclerView.setAdapter(adapter);
-        GridSpacingItemDecoration gridSpacingItemDecoration = new GridSpacingItemDecoration(2, ConvertUtils.dp2px(10)
-                , true);
-        recyclerView.addItemDecoration(gridSpacingItemDecoration);
+
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {

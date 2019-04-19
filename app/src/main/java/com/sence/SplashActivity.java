@@ -33,12 +33,13 @@ import io.reactivex.schedulers.Schedulers;
 public class SplashActivity extends AppCompatActivity {
     private PermissionUtil permissionUtil;
     private Disposable disposable;
-    private ImageView ivPicture,ivFullPicture;
+    private ImageView ivPicture, ivFullPicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        StatusBarUtil.setTranslucentForCoordinatorLayout(this, 0);
         StatusBarUtil.setLightMode(this);
         ivPicture = findViewById(R.id.iv_picture);
         ivFullPicture = findViewById(R.id.iv_full_picture);
@@ -62,7 +63,8 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void getStartPicture(String imei) {
-        HttpManager.getInstance().PlayNetCode(HttpCode.START_PICTURE,new RStartPictureBean(imei, LoginStatus.getUid())).request(new ApiCallBack<PStartPictureBean>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.START_PICTURE, new RStartPictureBean(imei,
+                LoginStatus.getUid())).request(new ApiCallBack<PStartPictureBean>() {
             @Override
             public void onFinish() {
 
@@ -76,10 +78,10 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onSuccess(PStartPictureBean o, String msg) {
                 Logger.e("msg==========" + msg);
-                if("0".equals(o.getIs_full())){
-                    GlideUtils.getInstance().loadHead(o.getImg(),ivFullPicture);
-                }else{
-                    GlideUtils.getInstance().loadHead(o.getImg(),ivPicture);
+                if ("0".equals(o.getIs_full())) {
+                    GlideUtils.getInstance().loadHead(o.getImg(), ivFullPicture);
+                } else {
+                    GlideUtils.getInstance().loadHead(o.getImg(), ivPicture);
                 }
 
             }

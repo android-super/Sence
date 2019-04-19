@@ -5,6 +5,7 @@ import com.sence.bean.base.BaseImageRequestBean;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,23 +22,23 @@ public class RNoteFileAddBean extends BaseFileRequestBean {
         this.video = video;
     }
 
-    public File[] getFiles() {
+    public List<File> getFiles() {
         return files;
     }
 
-    public void setFiles(File[] files) {
+    public void setFiles(List<File> files) {
         this.files = files;
     }
 
     private File video;
     private boolean is_video;
 
-    public RNoteFileAddBean(File[] files, boolean is_video) {
+    public RNoteFileAddBean(List<File> files, boolean is_video) {
         this.files = files;
         this.is_video = is_video;
     }
 
-    private File[] files;
+    private List<File> files;
 
     public RNoteFileAddBean(File video, boolean is_video) {
         this.video = video;
@@ -51,8 +52,8 @@ public class RNoteFileAddBean extends BaseFileRequestBean {
         if (is_video) {
             map.put("video_url", getVideo());
         } else {
-            for (int i = 0; i < files.length; i++) {
-                map.put("img_url_" + (i + 1), files[i]);
+            for (int i = 0; i < files.size(); i++) {
+                map.put("img_url_" + (i + 1), files.get(i));
             }
         }
         return map;

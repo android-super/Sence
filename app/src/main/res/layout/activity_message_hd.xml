@@ -6,37 +6,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        android:background="@color/white"
         android:orientation="vertical"
         tools:context=".activity.MessageHDActivity">
 
     <com.sence.view.PubTitle
-        android:id="@+id/rl_head_messagehd"
-        style="@style/NoLeftToolbar"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:is_back="true"
-        app:tool_cover_background="@color/white"
-        app:tool_cover_title="互动消息"/>
-
-    <com.tlz.fucktablayout.FuckTabLayout
-            android:id="@+id/tab_layout"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            app:fTabIndicatorFullWidth="false"
-            app:fTabTextColor="#999999"
-            app:fTabInlineLabel="true"
-            app:fTabUnboundedRipple="true"
-            app:fTabGravity="fill"
-            app:fTabMode="fixed"
-            app:fTabSelectedTextColor="@color/theme_green"
-            app:fTabIndicatorColor="@color/theme_green"
+            app:tool_cover_title="互动消息"
+            app:tool_cover_background="@color/white"
+            app:is_back="true"
+            app:tool_cover_elevation="0"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#F6F6F6"></View>
+            android:layout_height="50dp"/>
+
+    <LinearLayout
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout"
+                app:tabGravity="fill"
+                app:tabBackground="@color/white"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                app:tabTextColor="@color/main_gray"
+                app:tabIndicatorHeight="2dp"
+                app:tabIndicatorColor="@color/theme_green"
+                app:tabIndicatorFullWidth="false"
+                app:tabMode="fixed"
+                app:tabInlineLabel="true"
+                app:tabSelectedTextColor="@color/theme_green"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
+
     <androidx.viewpager.widget.ViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"

@@ -58,6 +58,7 @@ public class MyFocusFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new FansAdapter(R.layout.rv_item_fans);
         recyclerView.setAdapter(adapter);
+        adapter.setEmptyView(R.layout.empty_focus_my, recyclerView);
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {

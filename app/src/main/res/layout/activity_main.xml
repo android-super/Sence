@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -9,139 +9,147 @@
         android:fitsSystemWindows="true"
         tools:context=".MainActivity">
 
-    <FrameLayout
-            android:id="@+id/frame_layout"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            />
-    <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@drawable/shape_bottom_shader"/>
-
     <LinearLayout
-            android:elevation="5dp"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            tools:context=".MainActivity">
+
+        <FrameLayout
+                android:id="@+id/frame_layout"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                />
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@drawable/shape_bottom_shader"/>
 
         <LinearLayout
-                android:id="@+id/main_home"
+                android:elevation="5dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/selectable_background"
-                android:orientation="vertical"
-                android:gravity="center">
+                android:layout_height="50dp"
+                android:orientation="horizontal">
 
-            <ImageView
-                    android:src="@drawable/ic_home_selector"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+            <LinearLayout
+                    android:id="@+id/main_home"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/selectable_background"
+                    android:orientation="vertical"
+                    android:gravity="center">
 
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/title_home"
-                    android:textSize="12sp"
-                    android:textColor="@color/color_state_menu_navi"
-                    android:background="@drawable/selectable_background"/>
+                <ImageView
+                        android:src="@drawable/ic_home_selector"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/title_home"
+                        android:textSize="12sp"
+                        android:textColor="@color/color_state_menu_navi"
+                        android:background="@drawable/selectable_background"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/main_vip"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/selectable_background"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                <ImageView
+                        android:src="@drawable/ic_vip_selector"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/title_vip"
+                        android:textSize="12sp"
+                        android:textColor="@color/color_state_menu_navi"
+                        android:background="@drawable/selectable_background"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/main_kind"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/selectable_background"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                <ImageView
+                        android:src="@drawable/ic_kind_selector"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/title_kind"
+                        android:textSize="12sp"
+                        android:textColor="@color/color_state_menu_navi"
+                        android:background="@drawable/selectable_background"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/main_bus"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/selectable_background"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                <ImageView
+                        android:src="@drawable/ic_bus_selector"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/title_bus"
+                        android:textSize="12sp"
+                        android:textColor="@color/color_state_menu_navi"
+                        android:background="@drawable/selectable_background"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/main_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/selectable_background"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                <ImageView
+                        android:src="@drawable/ic_user_selector"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/title_user"
+                        android:textSize="12sp"
+                        android:textColor="@color/color_state_menu_navi"
+                        android:background="@drawable/selectable_background"/>
+            </LinearLayout>
         </LinearLayout>
-
-        <LinearLayout
-                android:id="@+id/main_vip"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/selectable_background"
-                android:orientation="vertical"
-                android:gravity="center">
-
-            <ImageView
-                    android:src="@drawable/ic_vip_selector"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/title_vip"
-                    android:textSize="12sp"
-                    android:textColor="@color/color_state_menu_navi"
-                    android:background="@drawable/selectable_background"/>
-        </LinearLayout>
-
-        <LinearLayout
-                android:id="@+id/main_kind"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/selectable_background"
-                android:orientation="vertical"
-                android:gravity="center">
-
-            <ImageView
-                    android:src="@drawable/ic_kind_selector"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/title_kind"
-                    android:textSize="12sp"
-                    android:textColor="@color/color_state_menu_navi"
-                    android:background="@drawable/selectable_background"/>
-        </LinearLayout>
-
-        <LinearLayout
-                android:id="@+id/main_bus"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/selectable_background"
-                android:orientation="vertical"
-                android:gravity="center">
-
-            <ImageView
-                    android:src="@drawable/ic_bus_selector"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/title_bus"
-                    android:textSize="12sp"
-                    android:textColor="@color/color_state_menu_navi"
-                    android:background="@drawable/selectable_background"/>
-        </LinearLayout>
-
-        <LinearLayout
-                android:id="@+id/main_user"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/selectable_background"
-                android:orientation="vertical"
-                android:gravity="center">
-
-            <ImageView
-                    android:src="@drawable/ic_user_selector"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/title_user"
-                    android:textSize="12sp"
-                    android:textColor="@color/color_state_menu_navi"
-                    android:background="@drawable/selectable_background"/>
-        </LinearLayout>
-
-
     </LinearLayout>
 
-</LinearLayout>
+    <include layout="@layout/bottom_sheet_release"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

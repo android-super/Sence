@@ -1,4 +1,4 @@
-package com.sence.bean.request;
+package com.sence.bean.request.chat;
 
 import com.sence.bean.base.BaseImageRequestBean;
 

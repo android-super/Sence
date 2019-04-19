@@ -1,10 +1,12 @@
 package com.sence.view;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -42,15 +44,18 @@ public class PubTitle extends Toolbar {
     private String tool_cover_right_text;
     private int tool_cover_right_color = 0xffffff;
     private int tool_cover_right_size = 14;
+    private float tool_cover_elevation = 1f;
 
     public PubTitle(Context context) {
         this(context, null);
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public PubTitle(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
+    @androidx.annotation.RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public PubTitle(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.context = context;
@@ -66,7 +71,9 @@ public class PubTitle extends Toolbar {
                 tool_cover_right_color);
         tool_cover_right_size = array.getDimensionPixelSize(R.styleable.PubTitle_tool_cover_right_size,
                 tool_cover_right_size);
+        tool_cover_elevation = array.getFloat(R.styleable.PubTitle_tool_cover_elevation,tool_cover_elevation);
         array.recycle();
+        setElevation(tool_cover_elevation);
         setBackgroundColor(tool_cover_background);
         addRelativeLayout();
     }

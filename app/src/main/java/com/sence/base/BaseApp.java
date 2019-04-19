@@ -3,6 +3,7 @@ package com.sence.base;
 import android.app.Application;
 import android.content.Context;
 
+import cn.jpush.android.api.JPushInterface;
 import com.blankj.utilcode.util.Utils;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
@@ -33,7 +34,16 @@ public class BaseApp extends Application {
         initHttpManager();
         initUM();
         initSharedPreference();
+        initJPush();
     }
+
+    /**
+     * 极光推送
+     */
+    private void initJPush() {
+        JPushInterface.init(this);
+    }
+
     /**
      * 数据保存
      */

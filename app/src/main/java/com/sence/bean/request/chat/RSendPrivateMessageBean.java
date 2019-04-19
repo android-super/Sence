@@ -1,4 +1,4 @@
-package com.sence.bean.request;
+package com.sence.bean.request.chat;
 
 import com.sence.bean.base.BaseRequestBean;
 
@@ -7,26 +7,15 @@ import com.sence.bean.base.BaseRequestBean;
  * package_name is com.sence.bean.request
  * 描述:SenceGit
  */
-public class RSendMessageBean extends BaseRequestBean {
-    private String vid;
+public class RSendPrivateMessageBean extends BaseRequestBean {
+    private String u_to;
     private String uid;
     private String content;
 
-    public RSendMessageBean(String vid, String uid, String content, String type) {
-        this.vid = vid;
+    public RSendPrivateMessageBean(String u_to, String uid, String content) {
+        this.u_to = u_to;
         this.uid = uid;
         this.content = content;
-        this.type = type;
-    }
-
-    private String type;
-
-    public String getVid() {
-        return vid;
-    }
-
-    public void setVid(String vid) {
-        this.vid = vid;
     }
 
     public String getUid() {
@@ -45,11 +34,11 @@ public class RSendMessageBean extends BaseRequestBean {
         this.content = content;
     }
 
-    public String getType() {
-        return type;
+    public String getU_to() {
+        return u_to;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setU_to(String u_to) {
+        this.u_to = u_to;
     }
 }

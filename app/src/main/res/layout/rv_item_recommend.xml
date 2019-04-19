@@ -2,19 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
-              android:background="@color/white"
+              android:background="#f9f9f9"
               android:layout_width="match_parent"
-              android:paddingTop="15dp"
-              android:layout_height="330dp">
+              android:paddingTop="10dp"
+              android:layout_height="wrap_content">
 
 
     <com.sence.view.NiceImageView
             android:id="@+id/item_img"
             android:src="@drawable/hint_img"
             android:scaleType="centerCrop"
-            app:corner_radius="3.5dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+            app:corner_radius="4dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:transitionName="@string/translation_recommend_name"
             android:layout_width="match_parent"
             android:layout_height="160dp"/>
@@ -28,8 +28,9 @@
             android:layout_marginRight="15dp"
             android:textColor="@color/black"
             android:textSize="16sp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:textStyle="bold"
+            android:layout_marginBottom="6dp"
             android:maxLines="1"
             android:layout_height="match_parent"/>
 
@@ -39,19 +40,13 @@
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:textColor="#333333"
-            android:lineSpacingExtra="8dp"
+            android:lineSpacingExtra="4dp"
             android:textSize="14sp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:textStyle="italic"
+            android:textStyle=""
             android:maxLines="2"
             android:layout_height="match_parent"/>
-    <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="17dp"
-            android:background="#eeeeee"/>
 
     <RelativeLayout
             android:layout_weight="1"
@@ -59,7 +54,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="44dp">
 
 
         <LinearLayout
@@ -152,8 +147,9 @@
 
         </LinearLayout>
     </RelativeLayout>
+
     <View
             android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:background="#f6f6f6"/>
+            android:layout_height="6dp"
+            android:background="#f9f9f9"/>
 </LinearLayout>

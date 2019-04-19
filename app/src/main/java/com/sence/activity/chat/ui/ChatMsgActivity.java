@@ -3,7 +3,6 @@ package com.sence.activity.chat.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.view.View;
 import android.widget.*;
 import androidx.annotation.LayoutRes;
@@ -17,8 +16,8 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.luck.picture.lib.tools.PictureFileUtils;
 import com.sence.R;
-import com.sence.activity.MemberActivity;
 import com.sence.activity.MyInfoActivity;
 import com.sence.activity.chat.adapter.CommonFragmentPagerAdapter;
 import com.sence.activity.chat.bean.ChatSocketBean;
@@ -26,13 +25,12 @@ import com.sence.activity.chat.bean.FullImageInfo;
 import com.sence.activity.chat.util.GlobalOnItemClickManagerUtils;
 import com.sence.activity.chat.util.Utils;
 import com.sence.activity.chat.widght.EmotionInputDetector;
+import com.sence.activity.chat.widght.EmotionPrivateInputDetector;
 import com.sence.activity.chat.widght.NoScrollViewPager;
 import com.sence.base.BaseActivity;
-import com.sence.bean.request.RSendImgFileBean;
-import com.sence.bean.request.RSendImgMessageBean;
-import com.sence.bean.request.RSendMessageBean;
-import com.sence.bean.request.RVidBean;
+import com.sence.bean.request.chat.*;
 import com.sence.bean.response.PChatMessageBean;
+import com.sence.bean.response.PChatPrivateMessageBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.Urls;
@@ -42,7 +40,6 @@ import com.sence.view.PubTitle;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import retrofit2.Retrofit;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -71,7 +68,7 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
     @BindView(R.id.pub_title)
     PubTitle pubTitle;
 
-    private EmotionInputDetector mDetector;
+    private EmotionPrivateInputDetector mDetector;
 
     private ArrayList<Fragment> fragments;
     private ChatEmotionFragment chatEmotionFragment;
@@ -85,18 +82,22 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
     private int page = 1;
 
     private ReAdapter reAdapter;
-    private List<PChatMessageBean.MessageBean> dataList = new ArrayList<>();
+    private List<PChatPrivateMessageBean> dataList = new ArrayList<>();
 
     private long lastVisibleTime;//第一条消息的时间
     private boolean isFirst = true; //是否为第一个  第一个也要显示时间
 
-    private String v_id;//v群id
+    private String u_to;//聊天用戶id
+    private String chat_id;//聊天id(从列表传递过来)
+    private String u_avatar;//聊天用户头像
 
     public void initView() {
         StatusBarUtil.setLightMode(this);
         EventBus.getDefault().register(this);
 
-        v_id = getIntent().getStringExtra("v_id");
+        u_to = getIntent().getStringExtra("u_to");
+        chat_id = getIntent().getStringExtra("chat_id");
+        u_avatar = getIntent().getStringExtra("u_avatar");
         uid = LoginStatus.getUid();
 
         initWidget();
@@ -107,7 +108,7 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
             public void putSocketResult(String str) {
                 ChatSocketBean socketBean = JsonParseUtil.parseString(str, ChatSocketBean.class);
                 if (socketBean.getType().equals("to_uid")) {
-                    PChatMessageBean.MessageBean bean = new PChatMessageBean.MessageBean();
+                    PChatPrivateMessageBean bean = new PChatPrivateMessageBean();
                     bean.setContent(socketBean.getContent());
                     bean.setType(socketBean.getMessage_type());
                     bean.setAdd_time(socketBean.getAdd_time());
@@ -168,12 +169,12 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
                 switch (view.getId()) {
                     case R.id.head_left://左边头像
                         Intent intent = new Intent(ChatMsgActivity.this, MyInfoActivity.class);
-                        intent.putExtra("uid", reAdapter.getData().get(position).getUid());
+                        intent.putExtra("uid", reAdapter.getData().get(position).getU_from());
                         startActivity(intent);
                         break;
                     case R.id.head_right://右边头像 自己
                         intent = new Intent(ChatMsgActivity.this, MyInfoActivity.class);
-                        intent.putExtra("uid", reAdapter.getData().get(position).getUid());
+                        intent.putExtra("uid", reAdapter.getData().get(position).getU_from());
                         startActivity(intent);
                         break;
                     case R.id.left_image://左边大图片
@@ -203,15 +204,6 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
 
         chatFunctionPhoto.setOnClickListener(this);
         chatFunctionPhotograph.setOnClickListener(this);
-
-        pubTitle.setRightOnClick(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ChatMsgActivity.this, MemberActivity.class);
-                intent.putExtra("v_id",v_id);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -227,7 +219,7 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
         viewpager.setAdapter(adapter);
         viewpager.setCurrentItem(0);
 
-        mDetector = EmotionInputDetector.with(this)
+        mDetector = EmotionPrivateInputDetector.with(this)
                 .setEmotionView(emotionLayout)
                 .setViewPager(viewpager)
                 .bindToContent(recyclerView)
@@ -270,12 +262,13 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
         HttpManager httpManager;
         if (isImgMsg) {
             httpManager =
-                    HttpManager.getInstance().PlayNetCode(HttpCode.CHAT_SEND_MESSAGE, new RSendImgMessageBean(v_id,
-                            LoginStatus.getUid(), "2"), new RSendImgFileBean(imgFile));
+                    HttpManager.getInstance().PlayNetCode(HttpCode.CHAT_PRIVATE_SEND,
+                            new RSendPrivateImgMessageBean(u_to,
+                                    LoginStatus.getUid()), new RSendImgFileBean(imgFile));
         } else {
             httpManager =
-                    HttpManager.getInstance().PlayNetCode(HttpCode.CHAT_SEND_MESSAGE, new RSendMessageBean(v_id,
-                            LoginStatus.getUid(), editText.getText().toString(), "1"));
+                    HttpManager.getInstance().PlayNetCode(HttpCode.CHAT_PRIVATE_SEND, new RSendPrivateMessageBean(u_to,
+                            LoginStatus.getUid(), editText.getText().toString()));
         }
         httpManager.request(new ApiCallBack() {
             @Override
@@ -297,7 +290,9 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
 
     //聊天记录
     private void showMessage() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.CHAT_ENTER, new RVidBean(LoginStatus.getUid(), v_id)).request(new ApiCallBack<PChatMessageBean>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.CHAT_PRIVATE_LIST, new RChatListBean(LoginStatus.getUid(),
+                u_to,
+                page + "")).request(new ApiCallBack<List<PChatPrivateMessageBean>>() {
             @Override
             public void onFinish() {
 
@@ -311,8 +306,11 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
             }
 
             @Override
-            public void onSuccess(PChatMessageBean o, String msg) {
-                dataList = o.getMessage();
+            public void onSuccess(List<PChatPrivateMessageBean> o, String msg) {
+                if (o == null || o.size() == 0) {
+                    return;
+                }
+                dataList = o;
                 Collections.reverse(dataList);
                 if (page == 1) {
                     reAdapter.setNewData(dataList);
@@ -348,7 +346,7 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void readMsgData() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.CHAT_READ, new RVidBean(LoginStatus.getUid(), v_id)).request(new ApiCallBack() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.CHAT_PRIVATE_READ, new RUtoBean(LoginStatus.getUid(), u_to)).request(new ApiCallBack() {
             @Override
             public void onFinish() {
 
@@ -372,8 +370,8 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
      * @param messageInfo
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void MessageEventBus(final PChatMessageBean.MessageBean messageInfo) {
-        messageInfo.setUid(uid);
+    public void MessageEventBus(final PChatPrivateMessageBean messageInfo) {
+        messageInfo.setU_from(uid);
         int currentTime = (int) (System.currentTimeMillis() / 1000);
         messageInfo.setAdd_time(currentTime);
         if ((currentTime - lastVisibleTime) / 60 > 10) {
@@ -440,7 +438,7 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
                     if (selectList.get(0).isCompressed()) {
                         Bitmap bitmap = BitmapUtils.getSmallBitmap(selectList.get(0).getCompressPath());
                         imgFile = BitmapUtils.Bitmap2File(bitmap, getPackageName(), 100);
-                        PChatMessageBean.MessageBean bean = new PChatMessageBean.MessageBean();
+                        PChatPrivateMessageBean bean = new PChatPrivateMessageBean();
                         bean.setContent(selectList.get(0).getCompressPath());
                         bean.setType(2);
                         EventBus.getDefault().post(bean);
@@ -453,14 +451,14 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
     /**
      * ReAdapter
      */
-    class ReAdapter extends BaseQuickAdapter<PChatMessageBean.MessageBean, BaseViewHolder> {
+    class ReAdapter extends BaseQuickAdapter<PChatPrivateMessageBean, BaseViewHolder> {
 
         public ReAdapter(@LayoutRes int layoutResId) {
             super(layoutResId);
         }
 
         @Override
-        protected void convert(BaseViewHolder holder, PChatMessageBean.MessageBean dataBean) {
+        protected void convert(BaseViewHolder holder, PChatPrivateMessageBean dataBean) {
             ImageView left_image = holder.getView(R.id.left_image);
             ImageView right_image = holder.getView(R.id.right_image);
             TextView right_msg = holder.getView(R.id.right_msg);
@@ -480,7 +478,7 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
             }
 
             //判断是否是自己   是自己
-            if (dataBean.getUid().equals(uid)) {
+            if (dataBean.getU_from().equals(uid)) {
                 left_image.setVisibility(View.GONE);
                 //判断消息类型   1普通文字  2图片 3部落邀请
                 if (dataBean.getType() == 2) {//2图片
@@ -499,12 +497,6 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
                     holder.getView(R.id.right_layout).setVisibility(View.VISIBLE);
                     right_msg.setText(Utils.getEmotionContent(holder.itemView.getContext(), right_msg,
                             dataBean.getContent()));
-                } else if (dataBean.getType() == 3) {//3部落邀请
-                    right_image.setVisibility(View.GONE);
-                    holder.getView(R.id.right_layout).setVisibility(View.GONE);
-                    holder.getView(R.id.head_right).setVisibility(View.GONE);
-                    join_tribe.setVisibility(View.VISIBLE);
-                    join_tribe.setText("我要请你加入“" + dataBean.getContent() + "”部落");
                 }
 
                 left_layout.setVisibility(View.GONE);
@@ -530,7 +522,7 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
                 holder.getView(R.id.head_left).setVisibility(View.VISIBLE);
                 holder.getView(R.id.right_layout).setVisibility(View.GONE);
                 holder.getView(R.id.head_right).setVisibility(View.GONE);
-                GlideUtils.getInstance().loadHead(dataBean.getAvatar(), (ImageView) holder.getView(R.id.head_left));
+                GlideUtils.getInstance().loadHead(u_avatar, (ImageView) holder.getView(R.id.head_left));
             }
 
             holder.addOnClickListener(R.id.left_image);
@@ -554,5 +546,7 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
         super.onDestroy();
         EventBus.getDefault().removeStickyEvent(this);
         EventBus.getDefault().unregister(this);
+        PictureFileUtils.deleteCacheDirFile(ChatMsgActivity.this);
     }
+
 }

@@ -1,11 +1,15 @@
 package com.sence.activity;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.core.app.NotificationManagerCompat;
 import com.orhanobut.logger.Logger;
 import com.sence.R;
 import com.sence.base.BaseActivity;
@@ -41,6 +45,8 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
     ImageView messageKfPoint;
     @BindView(R.id.message_kf_layout)
     RelativeLayout messageKfLayout;
+    @BindView(R.id.message_open_layout)
+    LinearLayout messageOpenLayout;
 
     @Override
     public int onActLayout() {
@@ -55,6 +61,14 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
         messageXtLayout.setOnClickListener(this);
         messageTzLayout.setOnClickListener(this);
         messageKfLayout.setOnClickListener(this);
+        messageOpenLayout.setOnClickListener(this);
+
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
+        if (notificationManagerCompat.areNotificationsEnabled()) {
+            messageOpenLayout.setVisibility(View.GONE);
+        } else {
+            messageOpenLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -89,6 +103,10 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.message_open:
+                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                Uri uri = Uri.fromParts("package", getPackageName(), null);
+                intent.setData(uri);
+                startActivity(intent);
                 break;
             case R.id.message_hd_layout:
                 startActivity(new Intent(MessageActivity.this, MessageHDActivity.class));

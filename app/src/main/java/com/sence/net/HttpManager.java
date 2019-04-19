@@ -257,7 +257,7 @@ public class HttpManager<P> {
             case CHAT_SEND_MESSAGE:
                 observable = httpService.ChatSendMessage(requestBean.getMap());
                 break;
-            case CHAT_READ:
+            case CHAT_READ_GROUP:
                 observable = httpService.ChatRead(requestBean.getMap());
                 break;
             case COMMENT_DETAIL_ADD:
@@ -275,6 +275,16 @@ public class HttpManager<P> {
             case START_PICTURE:
                 observable = httpService.StartPicture(requestBean.getMap());
                 break;
+            case CHAT_PRIVATE_LIST:
+                observable = httpService.ChatPrivateList(requestBean.getMap());
+                break;
+            case CHAT_PRIVATE_READ:
+                observable = httpService.ChatPrivateRead(requestBean.getMap());
+                break;
+            case CHAT_PRIVATE_SEND:
+                observable = httpService.ChatSendPrivateMessage(requestBean.getMap());
+                break;
+
         }
         observable = observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
         return this;
@@ -299,6 +309,10 @@ public class HttpManager<P> {
             case NOTE_ADD:
                 observable = httpService.NoteAdd(requestBean.getMap(), fileRequestBean.getRequestImg());
                 break;
+            case CHAT_PRIVATE_SEND:
+                observable = httpService.ChatSendPrivateImgMessage(requestBean.getMap(),
+                        fileRequestBean.getRequestImg());
+                break;
         }
         return this;
     }
@@ -317,6 +331,9 @@ public class HttpManager<P> {
                 break;
             case SEARCH_RECOMMEND:
                 observable = HttpClientManager.Instance.httpService.SearchRecommend();
+                break;
+            case VIP_OPEN:
+                observable = HttpClientManager.Instance.httpService.VipOpen();
                 break;
 
         }

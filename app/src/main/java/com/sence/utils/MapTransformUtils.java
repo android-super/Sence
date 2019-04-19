@@ -71,7 +71,6 @@ public class MapTransformUtils {
             }
         } catch (IllegalAccessException e) {
             e.printStackTrace();
-            Log.e("TAG", e.toString());
         }
         return map;
     }

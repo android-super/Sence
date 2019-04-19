@@ -20,6 +20,7 @@ import com.sence.bean.response.PWxPayBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
+import com.sence.utils.LoginStatus;
 import com.sence.utils.StatusBarUtil;
 import com.sence.wxapi.WeiXinPayUtils;
 import com.sence.zhifubao.PayResult;
@@ -48,6 +49,7 @@ public class OpenVipActivity extends BaseActivity implements View.OnClickListene
     TextView payProtocol;
 
 
+    private int open_money;
     private static final int SDK_PAY_FLAG = 1;
 
     @SuppressLint("HandlerLeak")
@@ -82,6 +84,7 @@ public class OpenVipActivity extends BaseActivity implements View.OnClickListene
 
     public void initView() {
         StatusBarUtil.setLightMode(this);
+        open_money = this.getIntent().getIntExtra("open_money", 0);
         payVip.setOnClickListener(this);
         payMake.setOnClickListener(this);
         payShare.setOnClickListener(this);
@@ -110,11 +113,9 @@ public class OpenVipActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.pay_commit:
                 if (payAli.isSelected()) {
-
+                    aLiPay();
                 } else if (payWx.isSelected()) {
-
-                } else {
-
+                    WxPay();
                 }
                 break;
             case R.id.pay_protocol:
@@ -128,7 +129,9 @@ public class OpenVipActivity extends BaseActivity implements View.OnClickListene
      * 支付宝
      */
     private void aLiPay() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.PAY_ALI, new RAliPayBean("", "", "", "")).request(new ApiCallBack<String>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.PAY_ALI, new RAliPayBean("3", LoginStatus.getUid(),
+                open_money + ""
+                , "")).request(new ApiCallBack<String>() {
             @Override
             public void onFinish() {
 
@@ -166,7 +169,9 @@ public class OpenVipActivity extends BaseActivity implements View.OnClickListene
      * 微信支付
      */
     private void WxPay() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.PAY_ALI, new RWxPayBean("", "", "", "")).request(new ApiCallBack<PWxPayBean>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.PAY_ALI, new RWxPayBean(LoginStatus.getUid(), "3",
+                open_money + "",
+                "")).request(new ApiCallBack<PWxPayBean>() {
             @Override
             public void onFinish() {
 
@@ -179,8 +184,8 @@ public class OpenVipActivity extends BaseActivity implements View.OnClickListene
 
             @Override
             public void onSuccess(final PWxPayBean o, String msg) {
-                    WeiXinPayUtils wxpay = new WeiXinPayUtils(OpenVipActivity.this, o);
-                    wxpay.pay();
+                WeiXinPayUtils wxpay = new WeiXinPayUtils(OpenVipActivity.this, o);
+                wxpay.pay();
             }
         });
 

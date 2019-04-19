@@ -59,6 +59,7 @@ public class MyFansFragment extends Fragment {
         recyclerView = getView().findViewById(R.id.recycle_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new FansAdapter(R.layout.rv_item_fans);
+        adapter.setEmptyView(R.layout.empty_focus_my, recyclerView);
         recyclerView.setAdapter(adapter);
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
               xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -9,62 +10,74 @@
               tools:context=".fragment.MainFragment">
 
     <RelativeLayout
-            android:id="@+id/rl_search"
-            android:layout_width="match_parent"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="6dp"
-            android:background="@drawable/shape_main_search"
-            android:layout_height="28dp">
-
-        <ImageView
-                android:src="@drawable/main_sousuo"
-                android:layout_width="38dp"
-                android:scaleType="center"
-                android:layout_height="28dp"/>
-
-        <TextView
-                android:layout_marginLeft="38dp"
-                android:text="@string/main_search_hint"
-                android:layout_width="wrap_content"
-                android:layout_height="28dp"
-                android:textSize="14sp"
-                android:textColor="@color/main_gray"
-                android:gravity="center"/>
-    </RelativeLayout>
-
-    <RelativeLayout
             android:paddingBottom="7dp"
             android:paddingTop="10dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
             android:layout_width="match_parent"
             android:layout_height="45dp">
 
         <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tab_layout"
-                android:layout_width="match_parent"
+                android:layout_width="180dp"
+                android:layout_centerInParent="true"
                 app:tabGravity="fill"
                 app:tabTextColor="@color/main_gray"
-                app:tabSelectedTextColor="@color/theme_green"
+                app:tabSelectedTextColor="#262626"
                 app:tabIndicatorHeight="2dp"
                 app:tabIndicatorFullWidth="false"
                 app:tabInlineLabel="true"
                 app:tabUnboundedRipple="true"
                 app:tabIndicatorColor="@color/theme_green"
                 android:layout_height="wrap_content"/>
+
+        <ImageView
+                android:layout_alignParentRight="true"
+                android:id="@+id/release"
+                android:src="@drawable/main_fabiaobij"
+                android:layout_width="50dp"
+                android:scaleType="center"
+                android:layout_height="28dp"/>
     </RelativeLayout>
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:layout_height="wrap_content">
+
+        <LinearLayout
+                android:id="@+id/ll_search"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:background="@drawable/shape_main_search"
+                android:layout_height="28dp">
+
+            <TextView
+                    android:layout_marginLeft="38dp"
+                    android:text="大家都在搜尖端潮品"
+                    android:drawablePadding="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:textSize="13sp"
+                    android:drawableLeft="@drawable/fangdajing_light"
+                    android:layout_marginRight="50dp"
+                    android:textColor="@color/main_gray"
+                    android:gravity="center"/>
+        </LinearLayout>
+    </LinearLayout>
 
 
     <View
             android:background="@drawable/shape_line"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="0.5dp"/>
 
     <androidx.viewpager.widget.ViewPager
             android:id="@+id/view_pager"
+            android:background="#f9f9f9"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-
 </LinearLayout>

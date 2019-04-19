@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ConvertUtils;
@@ -17,6 +19,7 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sence.R;
 import com.sence.activity.ConfirmOrderActivity;
+import com.sence.activity.OpenVipPageActivity;
 import com.sence.activity.ShopDetailsActivity;
 import com.sence.adapter.BusBottomAdapter;
 import com.sence.adapter.BusTopAdapter;
@@ -55,12 +58,18 @@ public class BusFragment extends Fragment {
     private TextView bus_commit;
     private TextView bus_all_price;
 
+    private RelativeLayout bus_open_layout;
+    private TextView bus_save_money;
+    private ImageView bus_open;
+    private RelativeLayout bus_vip_layout;
+
     private BusTopAdapter topAdapter;
     private BusBottomAdapter bottomAdapter;
 
     private int page = 1;
 
-    private String isMember;//是否是会员
+    private String isMember = "0";//是否是会员
+    private String save_money = "0";//预计一年省
 
     public BusFragment() {
         // Required empty public constructor
@@ -70,7 +79,6 @@ public class BusFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_bus, container, false);
     }
 
@@ -98,6 +106,10 @@ public class BusFragment extends Fragment {
         recycle_view_bottom.setAdapter(bottomAdapter);
         recycle_view_bottom.addItemDecoration(new GridSpacingItemDecoration(2, ConvertUtils.dp2px(10), false));
         View top_head = LayoutInflater.from(getActivity()).inflate(R.layout.rv_item_bus_head, null);
+        bus_open_layout = top_head.findViewById(R.id.bus_open_layout);
+        bus_save_money = top_head.findViewById(R.id.bus_save_money);
+        bus_vip_layout = top_head.findViewById(R.id.bus_vip_layout);
+        bus_open = top_head.findViewById(R.id.bus_open);
         topAdapter.addHeaderView(top_head);
         topAdapter.setEmptyView(R.layout.rv_item_bus_empty, recycle_view);
 
@@ -155,7 +167,7 @@ public class BusFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ConfirmOrderActivity.class);
                 intent.putExtra("data", (Serializable) getAllSelectBean());
-                intent.putExtra("type","shop");
+                intent.putExtra("type", "shop");
                 intent.putExtra("isMember", isMember);
                 startActivity(intent);
             }
@@ -171,6 +183,15 @@ public class BusFragment extends Fragment {
                     setSelect(true);
                 }
                 getValue();
+            }
+        });
+
+        bus_open.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), OpenVipPageActivity.class);
+                intent.putExtra("money", save_money);
+                startActivity(intent);
             }
         });
 
@@ -220,7 +241,11 @@ public class BusFragment extends Fragment {
                 if (goodsBeans.get(j).isSelect()) {
                     double one_price;
                     int num;
-                    one_price = Double.parseDouble(goodsBeans.get(j).getPrice());
+                    if (isMember.equals("1")) {
+                        one_price = Double.parseDouble(goodsBeans.get(j).getVprice());
+                    } else {
+                        one_price = Double.parseDouble(goodsBeans.get(j).getPrice());
+                    }
                     num = goodsBeans.get(j).getNum();
                     Arith.mul(one_price, num);
                     all_price = Arith.add(Arith.mul(one_price, num), all_price);
@@ -229,6 +254,10 @@ public class BusFragment extends Fragment {
             }
             all_count = all_count + all_num;
             all_count_money = Arith.add(all_count_money, all_price);
+            if (topAdapter.getData().get(i).isSelect()) {
+                all_count_money = Arith.sub(all_count_money,
+                        Double.parseDouble(topAdapter.getData().get(i).getFavourable()));
+            }
         }
 
         bus_all_price.setText("￥" + all_count_money);
@@ -250,7 +279,11 @@ public class BusFragment extends Fragment {
                     double one_postage;
                     double one_price;
                     int num;
-                    one_price = Double.parseDouble(goodsBeans.get(j).getPrice());
+                    if (isMember.equals("1")) {
+                        one_price = Double.parseDouble(goodsBeans.get(j).getVprice());
+                    } else {
+                        one_price = Double.parseDouble(goodsBeans.get(j).getPrice());
+                    }
                     num = goodsBeans.get(j).getNum();
                     one_postage = Double.parseDouble(goodsBeans.get(j).getPostage());
                     Arith.mul(one_price, num);
@@ -260,7 +293,9 @@ public class BusFragment extends Fragment {
                     all_num = all_num + num;
                 }
             }
-            all_price = Arith.sub(all_price, Double.parseDouble(cartBean.getFavourable()));
+            if (topAdapter.getData().get(i).isSelect()) {
+                all_price = Arith.sub(all_price, Double.parseDouble(cartBean.getFavourable()));
+            }
             all_money = Arith.add(all_price, all_postage);
             cartBean.setAll_price(all_price + "");
             cartBean.setAll_postage(all_postage + "");
@@ -350,6 +385,16 @@ public class BusFragment extends Fragment {
             @Override
             public void onSuccess(PBusBean o, String msg) {
                 isMember = o.getIsMember();
+                save_money = o.getMoney();
+                if (isMember.equals("1")) {
+                    bus_vip_layout.setVisibility(View.VISIBLE);
+                    bus_open_layout.setVisibility(View.GONE);
+                } else {
+                    bus_open_layout.setVisibility(View.VISIBLE);
+                    bus_vip_layout.setVisibility(View.GONE);
+                }
+                topAdapter.setIsMember(isMember);
+                bus_save_money.setText("一年预计省￥" + save_money);
                 topAdapter.setNewData(o.getCart());
             }
         });

@@ -17,6 +17,12 @@ import androidx.recyclerview.widget.RecyclerView;
  * 描述:Sence
  */
 public class BusTopAdapter extends BaseQuickAdapter<PBusBean.CartBean, BaseViewHolder> {
+    public void setIsMember(String isMember) {
+        this.isMember = isMember;
+    }
+
+    private String isMember;
+
     public SelectChangeListener getListener() {
         return listener;
     }
@@ -65,7 +71,7 @@ public class BusTopAdapter extends BaseQuickAdapter<PBusBean.CartBean, BaseViewH
         }
         RecyclerView recyclerView = helper.getView(R.id.item_recycle);
         recyclerView.setLayoutManager(new LinearLayoutManager(helper.itemView.getContext()));
-        final BusGoodAdapter goodAdapter = new BusGoodAdapter(R.layout.rv_item_bus_good);
+        final BusGoodAdapter goodAdapter = new BusGoodAdapter(R.layout.rv_item_bus_good, isMember);
         recyclerView.setAdapter(goodAdapter);
         goodAdapter.setNewData(item.getGoods());
         goodAdapter.setOnItemChildClickListener(new OnItemChildClickListener() {

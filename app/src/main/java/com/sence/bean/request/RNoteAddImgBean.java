@@ -8,12 +8,13 @@ import com.sence.bean.base.BaseImageRequestBean;
  * 描述:SenceGit
  */
 public class RNoteAddImgBean extends BaseImageRequestBean {
-    public RNoteAddImgBean(String uid, String type, String content, String width, String height) {
+    public RNoteAddImgBean(String uid, String type, String content, String width, String height, String tag_info) {
         this.uid = uid;
         this.type = type;
         this.content = content;
         this.width = width;
         this.height = height;
+        this.tag_info = tag_info;
     }
 
     private String uid;
@@ -21,6 +22,16 @@ public class RNoteAddImgBean extends BaseImageRequestBean {
     private String content;
     private String width;
     private String height;
+
+    public String getTag_info() {
+        return tag_info;
+    }
+
+    public void setTag_info(String tag_info) {
+        this.tag_info = tag_info;
+    }
+
+    private String tag_info;
 
     public String getUid() {
         return uid;

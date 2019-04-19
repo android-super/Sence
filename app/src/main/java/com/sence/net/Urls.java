@@ -109,4 +109,7 @@ public class Urls {
     public static final String PRIVATE_CHAT_LIST = "/index.php/api/chat/privateChatList";//私聊列表
     public static final String CHAT_GROUP_LIST = "/index.php/api/VGroup/getVGroupList";//V群列表
     public static final String CHAT_READ = "/index.php/api/VGroup/readGroupMessage";//消息已读
+    public static final String CHAT_PRIVATE_LIST = "/index.php/api/chat/getChatList";//私聊聊天记录
+    public static final String CHAT_PRIVATE_READ = "/index.php/api/chat/messageRead";//私聊消息已读
+    public static final String CHAT_PRIVATE_SEND = "/index.php/api/chat/addUserChat";//私聊发送消息
 }

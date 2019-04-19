@@ -27,24 +27,32 @@
             android:id="@+id/item_name"
             android:text="@string/hint_describe"
             android:layout_width="wrap_content"
-            android:textSize="15sp"
+            android:textSize="12sp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="2dp"
             android:maxLines="2"
-            android:textColor="#333333"
+            android:lineSpacingExtra="4dp"
+            android:textColor="#666666"
             android:layout_toRightOf="@id/item_img"
             android:layout_alignTop="@id/item_img"
             android:layout_height="wrap_content"/>
 
-    <TextView
+    <com.sence.view.BigMidSmallTextView
             android:id="@+id/item_price"
+            app:left_bold="true"
+            app:left_text="￥"
+            app:left_size="12sp"
+            app:left_color="@color/theme_green"
+            app:right_bold="true"
+            app:right_size="14sp"
+            app:right_text="0.00"
+            app:right_color="@color/theme_green"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/item_img"
             android:layout_alignBottom="@id/item_img"
             android:layout_width="wrap_content"
-            android:textColor="@color/theme_green"
-            android:text="@string/hint_price"
             android:layout_height="wrap_content"/>
+
     <ImageView
             android:id="@+id/item_bus"
             android:layout_alignParentBottom="true"

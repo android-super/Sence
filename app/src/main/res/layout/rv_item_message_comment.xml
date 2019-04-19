@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="85dp">
+
+    <com.sence.view.NiceImageView
+            android:layout_marginTop="15dp"
+            android:layout_width="45dp"
+            app:is_circle="true"
+            android:id="@+id/item_head"
+            android:layout_marginLeft="15dp"
+            android:layout_height="45dp"/>
+
+    <TextView
+            android:id="@+id/item_name"
+            android:layout_marginLeft="8dp"
+            android:layout_alignTop="@id/item_head"
+            android:layout_toRightOf="@id/item_head"
+            android:textColor="#333333"
+            android:text="@string/hint_name"
+            android:textSize="14sp"
+            android:layout_marginTop="1dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:id="@+id/item_describe"
+            android:layout_marginLeft="8dp"
+            android:layout_alignBottom="@id/item_head"
+            android:layout_toRightOf="@id/item_head"
+            android:textColor="#333333"
+            android:text="赞了你的作品"
+            android:textSize="14sp"
+            android:layout_marginBottom="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+    <com.sence.view.NiceImageView
+            android:layout_width="58dp"
+            app:corner_radius="2dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:id="@+id/item_img"
+            android:layout_height="58dp"/>
+
+    <TextView
+            android:id="@+id/item_time"
+            android:layout_alignParentBottom="true"
+            android:textSize="11sp"
+            android:layout_toRightOf="@id/item_head"
+            android:layout_marginLeft="8dp"
+            android:textColor="#999999"
+            android:layout_width="wrap_content"
+            android:layout_marginBottom="7dp"
+            android:layout_height="wrap_content"/>
+</RelativeLayout>

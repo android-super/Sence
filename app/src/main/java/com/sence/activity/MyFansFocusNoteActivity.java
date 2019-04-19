@@ -36,6 +36,8 @@ public class MyFansFocusNoteActivity extends BaseActivity {
     private MyFNAdapter fnAdapter;
     private ViewPagerAdapter pagerAdapter;
 
+    private int position;
+
 
     @Override
     public int onActLayout() {
@@ -44,13 +46,13 @@ public class MyFansFocusNoteActivity extends BaseActivity {
 
     public void initView() {
         StatusBarUtil.setLightMode(this);
+        position = getIntent().getIntExtra("position", 0);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
         recycleTitle.setLayoutManager(linearLayoutManager);
         fnAdapter = new MyFNAdapter(R.layout.rv_item_fn_top);
         recycleTitle.setAdapter(fnAdapter);
         fnAdapter.setNewData(Arrays.asList(titles));
-
         fnAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -79,6 +81,7 @@ public class MyFansFocusNoteActivity extends BaseActivity {
 
             }
         });
+        viewPager.setCurrentItem(position);
         searchLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

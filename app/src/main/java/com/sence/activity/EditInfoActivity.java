@@ -11,6 +11,7 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.luck.picture.lib.tools.PictureFileUtils;
 import com.sence.R;
 import com.sence.base.BaseActivity;
 import com.sence.bean.request.RUserEditBean;
@@ -73,10 +74,10 @@ public class EditInfoActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onClick(View v) {
                 name = editName.getText().toString();
-                if (editBoy.isSelected()){
+                if (editBoy.isSelected()) {
                     sex = "男";
                 }
-                if (editGirl.isSelected()){
+                if (editGirl.isSelected()) {
                     sex = "女";
                 }
                 style = editStyle.getText().toString();
@@ -109,7 +110,7 @@ public class EditInfoActivity extends BaseActivity implements View.OnClickListen
 
     public void editFinish() {
         HttpManager.getInstance().PlayNetCode(HttpCode.USER_EDIT,
-                new RUserEditBean(LoginStatus.getUid(), name, style, sex),new RUserEditHeadBean(head)).request(new ApiCallBack() {
+                new RUserEditBean(LoginStatus.getUid(), name, style, sex), new RUserEditHeadBean(head)).request(new ApiCallBack() {
             @Override
             public void onFinish() {
 
@@ -149,4 +150,9 @@ public class EditInfoActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PictureFileUtils.deleteCacheDirFile(EditInfoActivity.this);
+    }
 }

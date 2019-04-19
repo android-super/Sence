@@ -1,6 +1,8 @@
 package com.sence.adapter;
 
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -23,7 +25,28 @@ public class VipBottomAdapter extends BaseQuickAdapter<PUserVipBean.ServiceBean,
     @Override
     protected void convert(BaseViewHolder helper, PUserVipBean.ServiceBean item) {
         GlideUtils.getInstance().loadNormal(item.getImg(), (ImageView) helper.getView(R.id.item_img));
-        helper.setText(R.id.item_name, item.getTitle());
-        helper.setText(R.id.item_content, item.getContent());
+        TextView item_tag_one = helper.getView(R.id.item_tag_one);
+        TextView item_tag_two = helper.getView(R.id.item_tag_two);
+        TextView[] item_tags = new TextView[]{item_tag_one, item_tag_two};
+        for (int i = 0; i < item.getTag().size(); i++) {
+            if (i < item_tags.length) {
+                item_tags[i].setText(item.getTag().get(i));
+            }
+        }
+        ImageView item_star_one = helper.getView(R.id.item_star_one);
+        ImageView item_star_two = helper.getView(R.id.item_star_two);
+        ImageView item_star_three = helper.getView(R.id.item_star_three);
+        ImageView item_star_four = helper.getView(R.id.item_star_four);
+        ImageView item_star_five = helper.getView(R.id.item_star_five);
+        ImageView[] item_stars = new ImageView[]{item_star_one, item_star_two, item_star_three, item_star_four,
+                item_star_five};
+        for (int i = 0; i < 5; i++) {
+            if (i < Integer.parseInt(item.getStar())) {
+                item_stars[i].setVisibility(View.VISIBLE);
+            } else {
+                item_stars[i].setVisibility(View.GONE);
+            }
+        }
+        helper.setText(R.id.item_num, "体验 " + item.getNum() + " 次");
     }
 }

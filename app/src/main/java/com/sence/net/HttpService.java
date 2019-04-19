@@ -186,7 +186,8 @@ public interface HttpService {
 
     @Multipart
     @POST(Urls.SERVICE_ADDCOMMENT)
-    Observable<BaseResponseBean<String>> SearviceAddComment(@PartMap Map<String, RequestBody> map,@Part List<MultipartBody.Part> partList);//添加服务评价
+    Observable<BaseResponseBean<String>> SearviceAddComment(@PartMap Map<String, RequestBody> map,
+                                                            @Part List<MultipartBody.Part> partList);//添加服务评价
 
     @FormUrlEncoded
     @POST(Urls.MAIN_NOTE_DETAIL)
@@ -270,6 +271,7 @@ public interface HttpService {
     @FormUrlEncoded
     @POST(Urls.MAIN_CONTENT_DETAIL)
     Observable<BaseResponseBean<PContentDetailBean>> ContentDetail(@FieldMap Map<String, Object> map);//内容详情
+
     @FormUrlEncoded
     @POST(Urls.USER_INFO_DATA)
     Observable<BaseResponseBean<PUserMyInfoBean>> UserMyInfo(@FieldMap Map<String, Object> map);//我的信息
@@ -358,7 +360,7 @@ public interface HttpService {
 
     @FormUrlEncoded
     @POST(Urls.PRIVATE_CHAT_LIST)
-    Observable<BaseResponseBean<Object>> PrivateChatList(@FieldMap Map<String, Object> map);//私聊列表
+    Observable<BaseResponseBean<List<PPrivateChatBean>>> PrivateChatList(@FieldMap Map<String, Object> map);//私聊列表
 
     @FormUrlEncoded
     @POST(Urls.CHAT_READ)
@@ -376,5 +378,24 @@ public interface HttpService {
     @POST(Urls.START_PICTURE)
     Observable<BaseResponseBean<PStartPictureBean>> StartPicture(@FieldMap Map<String, Object> map);//启动图片
 
+    @FormUrlEncoded
+    @POST(Urls.CHAT_PRIVATE_SEND)
+    Observable<BaseResponseBean<Object>> ChatSendPrivateMessage(@FieldMap Map<String, Object> map);//发送消息
 
+    @Multipart
+    @POST(Urls.CHAT_PRIVATE_SEND)
+    Observable<BaseResponseBean<Object>> ChatSendPrivateImgMessage(@PartMap Map<String, RequestBody> map,
+                                                                   @Part List<MultipartBody.Part> partList);//发送消息
+
+    @FormUrlEncoded
+    @POST(Urls.CHAT_PRIVATE_LIST)
+    Observable<BaseResponseBean<List<PChatPrivateMessageBean>>> ChatPrivateList(@FieldMap Map<String, Object> map);
+    //消息列表
+
+    @FormUrlEncoded
+    @POST(Urls.CHAT_PRIVATE_READ)
+    Observable<BaseResponseBean<Object>> ChatPrivateRead(@FieldMap Map<String, Object> map);//发送消息
+
+    @POST(Urls.SEARCH_RECOMMEND)
+    Observable<BaseResponseBean<PMoneyBean>> VipOpen();//搜索推荐数据
 }

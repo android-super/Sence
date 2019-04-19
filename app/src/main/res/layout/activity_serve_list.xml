@@ -11,6 +11,7 @@
 
     <com.sence.view.PubTitle
             app:is_back="true"
+            android:elevation="0.5dp"
             app:tool_cover_title="大V分享"
             app:tool_cover_background="@color/white"
             android:layout_width="match_parent"
@@ -19,6 +20,7 @@
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:layout_width="match_parent"
             android:id="@+id/smart_refresh"
+            android:background="@color/white"
             android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView

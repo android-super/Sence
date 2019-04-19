@@ -1,20 +1,18 @@
 package com.sence.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.sence.R;
 import com.sence.adapter.MemberAdapter;
 import com.sence.base.BaseActivity;
 import com.sence.bean.request.RMemberBean;
-import com.sence.bean.request.RVidBean;
+import com.sence.bean.request.chat.RVidBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
@@ -110,7 +108,7 @@ public class MemberActivity extends BaseActivity implements View.OnClickListener
 
             @Override
             public void onSuccess(Object o, String msg) {
-
+                initData();
             }
         });
     }

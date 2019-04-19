@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="125dp"
               android:layout_height="wrap_content">
@@ -40,9 +41,16 @@
             android:layout_marginTop="10dp"
             android:layout_height="wrap_content">
 
-        <TextView
+        <com.sence.view.BigMidSmallTextView
                 android:id="@+id/item_now_price"
-                android:text="@string/hint_price"
+                app:left_bold="true"
+                app:left_color="@color/theme_green"
+                app:left_size="13sp"
+                app:left_text="￥"
+                app:right_color="@color/theme_green"
+                app:right_size="16sp"
+                app:right_text="0.00"
+                app:right_bold="true"
                 android:textColor="@color/theme_green"
                 android:textSize="14sp"
                 android:layout_width="wrap_content"
@@ -53,11 +61,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/hint_price"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="8dp"
                 android:textColor="@color/white"
                 android:paddingLeft="2dp"
                 android:paddingRight="2dp"
-                android:textSize="12sp"
+                android:layout_marginTop="3dp"
+                android:textSize="10sp"
                 android:background="@drawable/shape_rect_theme_green"/>
     </LinearLayout>
 

@@ -1,4 +1,4 @@
-package com.sence.fragment;
+package com.sence.fragment.message;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,9 +7,10 @@ import android.view.ViewGroup;
 
 import com.orhanobut.logger.Logger;
 import com.sence.R;
-import com.sence.adapter.MessagePrivateAdapter;
-import com.sence.bean.request.RUidBean;
-import com.sence.bean.response.PPrivateChatBean;
+import com.sence.adapter.MessageCommentAdapter;
+import com.sence.adapter.MessagelikeAdapter;
+import com.sence.bean.request.RMessageHDBean;
+import com.sence.bean.response.PMessageHdBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
@@ -23,18 +24,18 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MessagePrivateFragment extends Fragment {
-
+public class MessageSupportFragment extends Fragment {
     private RecyclerView mRecyclerView;
-    private int status;
-    private List<PPrivateChatBean> listBeans = new ArrayList<>();
-    private MessagePrivateAdapter mMessagePrivateAdapter;
+    private MessagelikeAdapter mMessagelikeAdapter;
+
 
     @Override
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_messagehd, container, false);
     }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -44,12 +45,12 @@ public class MessagePrivateFragment extends Fragment {
 
     private void init() {
         mRecyclerView = getView().findViewById(R.id.recycle_messagehd);
-        mMessagePrivateAdapter = new MessagePrivateAdapter(getContext());
+        mMessagelikeAdapter = new MessagelikeAdapter(R.layout.rv_item_message_support);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        mRecyclerView.setAdapter(mMessagePrivateAdapter);
-
+        mRecyclerView.setAdapter(mMessagelikeAdapter);
+        mMessagelikeAdapter.setEmptyView(R.layout.empty_message_hd, mRecyclerView);
     }
 
     @Override
@@ -59,7 +60,8 @@ public class MessagePrivateFragment extends Fragment {
     }
 
     private void loadData() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.PRIVATE_CHAT_LIST, new RUidBean(LoginStatus.getUid())).request(new ApiCallBack<List<PPrivateChatBean>>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.MESSAGE_LIST, new RMessageHDBean(LoginStatus.getUid(),
+                "2")).request(new ApiCallBack<List<PMessageHdBean>>() {
             @Override
             public void onFinish() {
             }
@@ -70,12 +72,8 @@ public class MessagePrivateFragment extends Fragment {
             }
 
             @Override
-            public void onSuccess(List<PPrivateChatBean> o, String msg) {
-                Logger.e("msg==========" + msg);
-                listBeans = o;
-
-
-
+            public void onSuccess(List<PMessageHdBean> o, String msg) {
+                mMessagelikeAdapter.setNewData(o);
             }
         });
 

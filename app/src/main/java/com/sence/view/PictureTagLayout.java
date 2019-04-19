@@ -2,10 +2,17 @@ package com.sence.view;
 
 import android.content.Context;
 import android.graphics.Rect;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
+import com.sence.bean.request.tag.RTagInfo;
+import com.sence.bean.request.tag.RTagInfoItem;
+import com.sence.utils.Arith;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PictureTagLayout extends RelativeLayout implements View.OnTouchListener {
     private static final int CLICKRANGE = 5;
@@ -14,6 +21,41 @@ public class PictureTagLayout extends RelativeLayout implements View.OnTouchList
     int startTouchViewLeft = 0;
     int startTouchViewTop = 0;
     private View touchView, clickView;
+    private EditListener listener;
+
+    private int tag = -1;
+
+    public ArrayList<RTagInfoItem> getTagInfoItems() {
+        return tagInfoItems;
+    }
+
+    public void setTagInfoItems(ArrayList<RTagInfoItem> tagInfoItems) {
+        if (tagInfoItems == null) {
+            tagInfoItems = new ArrayList<>();
+        }
+        this.tagInfoItems = tagInfoItems;
+        if (tagInfoItems == null || tagInfoItems.size() == 0) {
+            addItem(200, 300);
+        }
+    }
+
+    public void setTagInfoItems(ArrayList<RTagInfoItem> tagInfoItems, int width, int height) {
+        if (tagInfoItems == null) {
+            tagInfoItems = new ArrayList<>();
+        }
+        this.tagInfoItems = tagInfoItems;
+        addItem(width, height, 0);
+    }
+
+    private ArrayList<RTagInfoItem> tagInfoItems;
+
+    public interface EditListener {
+        void onEditChanged(boolean isEdit);
+    }
+
+    public void addOnEditListener(EditListener listener) {
+        this.listener = listener;
+    }
 
     public PictureTagLayout(Context context) {
         super(context, null);
@@ -35,6 +77,9 @@ public class PictureTagLayout extends RelativeLayout implements View.OnTouchList
                 touchView = null;
                 if (clickView != null) {
                     ((PictureTagView) clickView).setStatus(PictureTagView.Status.Normal);
+                    if (listener != null) {
+                        listener.onEditChanged(false);
+                    }
                     clickView = null;
                 }
                 startX = (int) event.getX();
@@ -59,6 +104,9 @@ public class PictureTagLayout extends RelativeLayout implements View.OnTouchList
                 if (touchView != null && Math.abs(endX - startX) < CLICKRANGE && Math.abs(endY - startY) < CLICKRANGE) {
                     //当前点击的view进入编辑状态
                     ((PictureTagView) touchView).setStatus(PictureTagView.Status.Edit);
+                    if (listener != null) {
+                        listener.onEditChanged(true);
+                    }
                     clickView = touchView;
                 }
                 touchView = null;
@@ -67,8 +115,22 @@ public class PictureTagLayout extends RelativeLayout implements View.OnTouchList
         return true;
     }
 
+    /**
+     * 设置内容
+     *
+     * @param content
+     */
+    public void setContent(String content) {
+        if (TextUtils.isEmpty(content) || clickView == null) {
+            return;
+        }
+        ((PictureTagView) clickView).setContent(content);
+        tagInfoItems.get((Integer) clickView.getTag()).setContent(content);
+    }
+
 
     private void addItem(int x, int y) {
+        tag++;
         View view = null;
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
                 LayoutParams.WRAP_CONTENT);
@@ -79,14 +141,49 @@ public class PictureTagLayout extends RelativeLayout implements View.OnTouchList
             params.leftMargin = x;
             view = new PictureTagView(getContext(), PictureTagView.Direction.Left);
         }
-
         params.topMargin = y;
+        view.setTag(tag);
         //上下位置在视图内
         if (params.topMargin < 0) params.topMargin = 0;
         else if ((params.topMargin + PictureTagView.getViewHeight()) > getHeight())
             params.topMargin = getHeight() - PictureTagView.getViewHeight();
-        
         this.addView(view, params);
+        double width_scale = Arith.div(params.leftMargin, getWidth(), 4);
+        double height_scale = Arith.div(params.topMargin, getHeight(), 4);
+        RTagInfoItem rTagInfoItem = new RTagInfoItem(width_scale, height_scale);
+        tagInfoItems.add(rTagInfoItem);
+    }
+
+    private void addItem(int width, int height, double tag_gap) {
+        for (int i = 0; i < tagInfoItems.size(); i++) {
+            tag++;
+            View view = null;
+            double width_scale = tagInfoItems.get(i).getWidth_scale();
+            double height_scale = tagInfoItems.get(i).getHeight_scale();
+            RelativeLayout.LayoutParams params =
+                    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
+                            RelativeLayout.LayoutParams.WRAP_CONTENT);
+            if (width_scale >= 0.52) {
+                params.leftMargin = (int) (width_scale * width);
+                view = new PictureTagView(getContext(), PictureTagView.Direction.Right);
+            } else if (width_scale <= 0.48) {
+                params.leftMargin = (int) ((width_scale * width));
+                view = new PictureTagView(getContext(), PictureTagView.Direction.Left);
+            } else {
+                params.leftMargin = (int) (width_scale * width);
+                view = new PictureTagView(getContext(), PictureTagView.Direction.Right);
+            }
+            ((PictureTagView) view).setContent(tagInfoItems.get(i).getContent());
+            params.topMargin = (int) (height * height_scale);
+            //上下位置在视图内
+            if (params.topMargin < 0) {
+                params.topMargin = 0;
+            } else if ((params.topMargin + PictureTagView.getViewHeight()) > height) {
+                params.topMargin = height - PictureTagView.getViewHeight();
+            }
+            view.setTag(i);
+            this.addView(view, params);
+        }
     }
 
     private void moveView(int x, int y) {
@@ -101,6 +198,10 @@ public class PictureTagLayout extends RelativeLayout implements View.OnTouchList
         if (params.topMargin < 0 || (params.topMargin + touchView.getHeight()) > getHeight())
             params.topMargin = touchView.getTop();
         touchView.setLayoutParams(params);
+        double width_scale = Arith.div(params.leftMargin, getWidth(), 4);
+        double height_scale = Arith.div(params.topMargin, getHeight(), 4);
+        tagInfoItems.get((Integer) touchView.getTag()).setWidth_scale(width_scale);
+        tagInfoItems.get((Integer) touchView.getTag()).setHeight_scale(height_scale);
     }
 
     private boolean hasView(int x, int y) {

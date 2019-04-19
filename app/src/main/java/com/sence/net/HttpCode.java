@@ -78,11 +78,18 @@ public enum HttpCode {
     CHAT_MEMBER_LIST,//V群成員列表
     CHAT_ENTER,//進入V群
     CHAT_GROUP_LIST,//V群列表
-    CHAT_READ,//消息已读
+    CHAT_READ_GROUP,//消息已读
+    CHAT_PRIVATE_LIST,//私聊记录列表
+    CHAT_PRIVATE_READ,//私聊已读
+    CHAT_PRIVATE_SEND,//私聊发送消息
     COMMENT_DETAIL_ADD,//添加评论
     COMMENT_SUPPORT,//评论点赞
     NOTE_ADD,//添加笔记
     PAY_ALI,//支付宝支付
     PAY_WX,//微信支付
+    MY_PRIVATE_LIST,//我的私聊列表
+    MY_SUPPORT,//我的赞
+    MY_COMMENT,//我的评论
+    VIP_OPEN,//开通会员
     START_PICTURE,//驱动图片
 }

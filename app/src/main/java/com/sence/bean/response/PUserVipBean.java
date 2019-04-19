@@ -11,16 +11,22 @@ public class PUserVipBean {
 
 
     /**
+     * isMember : 0
+     * carousel : 大猫吃小鱼 刚刚加入了Sence会员
      * money : 2365
      * goods : [{"id":"8","name":"一号商品","img":"Public/Uploads/Order/2019-03-26//5c99eb1fc12a5.jpg","price":"5",
      * "saveMoney":"5"},{"id":"3","name":"12aaa01","img":"/Public/Uploads/Goods/2019-03-27/5c9ad66aa3d18.jpg",
      * "price":"4","saveMoney":"11"},{"id":"2","name":"2号商品","img":"Public/Uploads/Order/2019-03-26//5c99eb1fc12a5
      * .jpg","price":"5","saveMoney":"10"},{"id":"1","name":"虹越园艺家 欧洲藤本月季花苗木 龙沙宝石1.5年嫁接盆栽苗 包邮",
      * "img":"/Public/Uploads/Goods/2019-03-27/5c9afaf63f8b8.jpg","price":"40","saveMoney":"10"}]
-     * service : [{"id":"1","title":"专业洗车券","content":"洗车券","img":""}]
+     * service : [{"id":"1","img":"","num":"33","tag":["完好旅游","无知的"],"star":"2"}]
      */
 
+    private String isMember;
+    private String carousel;
     private String money;
+    private List<GoodsBean> goods;
+    private List<ServiceBean> service;
 
     public String getIsMember() {
         return isMember;
@@ -37,11 +43,6 @@ public class PUserVipBean {
     public void setCarousel(String carousel) {
         this.carousel = carousel;
     }
-
-    private String isMember;
-    private String carousel;
-    private List<GoodsBean> goods;
-    private List<ServiceBean> service;
 
     public String getMoney() {
         return money;
@@ -126,15 +127,17 @@ public class PUserVipBean {
     public static class ServiceBean {
         /**
          * id : 1
-         * title : 专业洗车券
-         * content : 洗车券
          * img :
+         * num : 33
+         * tag : ["完好旅游","无知的"]
+         * star : 2
          */
 
         private String id;
-        private String title;
-        private String content;
         private String img;
+        private String num;
+        private String star;
+        private List<String> tag;
 
         public String getId() {
             return id;
@@ -144,28 +147,36 @@ public class PUserVipBean {
             this.id = id;
         }
 
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public String getContent() {
-            return content;
-        }
-
-        public void setContent(String content) {
-            this.content = content;
-        }
-
         public String getImg() {
             return img;
         }
 
         public void setImg(String img) {
             this.img = img;
+        }
+
+        public String getNum() {
+            return num;
+        }
+
+        public void setNum(String num) {
+            this.num = num;
+        }
+
+        public String getStar() {
+            return star;
+        }
+
+        public void setStar(String star) {
+            this.star = star;
+        }
+
+        public List<String> getTag() {
+            return tag;
+        }
+
+        public void setTag(List<String> tag) {
+            this.tag = tag;
         }
     }
 }

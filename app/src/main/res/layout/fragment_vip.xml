@@ -8,7 +8,7 @@
               tools:context=".fragment.VipFragment">
 
     <androidx.appcompat.widget.Toolbar
-            android:elevation="1dp"
+            android:elevation="0.5dp"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/white"
@@ -136,38 +136,51 @@
             <LinearLayout
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:layout_height="wrap_content">
 
                 <TextView
                         android:text="会员专享价"
-                        android:drawablePadding="14dp"
+                        android:drawablePadding="13dp"
                         android:gravity="center"
                         android:layout_weight="1"
-                        android:textSize="13sp"
-                        android:textColor="#222222"
-                        android:drawableTop="@drawable/vip_zhuanxiangjia"
+                        android:textSize="12sp"
+                        android:textColor="#333333"
+                        android:drawableTop="@drawable/enjoyvip_zhuanxiangjia"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"/>
 
                 <TextView
                         android:text="分享赚钱"
-                        android:drawablePadding="14dp"
+                        android:drawablePadding="13dp"
                         android:gravity="center"
                         android:layout_weight="1"
-                        android:textSize="13sp"
-                        android:textColor="#222222"
-                        android:drawableTop="@drawable/vip_fenxiangzhuanq"
+                        android:textSize="12sp"
+                        android:textColor="#333333"
+                        android:drawableTop="@drawable/enjoyvip_fenxiangzhuanq"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"/>
 
                 <TextView
                         android:text="购物省钱"
-                        android:drawablePadding="14dp"
+                        android:drawablePadding="13dp"
                         android:gravity="center"
                         android:layout_weight="1"
-                        android:textSize="13sp"
-                        android:textColor="#222222"
-                        android:drawableTop="@drawable/vip_gouwushengq"
+                        android:textSize="12sp"
+                        android:textColor="#333333"
+                        android:drawableTop="@drawable/enjoyvip_vip"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:text="购物省钱"
+                        android:drawablePadding="13dp"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:textSize="12sp"
+                        android:textColor="#333333"
+                        android:drawableTop="@drawable/enjoyvip_shalong"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -180,7 +193,7 @@
                     android:layout_width="match_parent"
                     android:layout_marginLeft="17dp"
                     android:layout_marginRight="17dp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="43dp"/>
 
             <RelativeLayout
                     android:layout_gravity="center_horizontal"
@@ -236,7 +249,7 @@
                     android:layout_width="match_parent"
                     android:layout_marginLeft="17dp"
                     android:layout_marginRight="17dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
                     android:background="@drawable/vip_baidi"
                     android:layout_height="52dp">
 

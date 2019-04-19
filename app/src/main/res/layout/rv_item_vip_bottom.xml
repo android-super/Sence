@@ -4,32 +4,106 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content">
 
-    <ImageView
-            android:id="@+id/item_img"
+    <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="165dp"
-            android:src="@drawable/hint_img"
-            android:scaleType="centerCrop"/>
+            android:layout_height="165dp">
 
-    <TextView
-            android:id="@+id/item_name"
-            android:text="@string/hint_name"
-            android:textColor="@color/black"
-            android:textSize="13sp"
-            android:maxLines="1"
-            android:layout_marginTop="10dp"
+        <ImageView
+                android:id="@+id/item_img"
+                android:layout_width="match_parent"
+                android:layout_height="165dp"
+                android:src="@drawable/hint_img"
+                android:scaleType="centerCrop"/>
+
+        <ImageView
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/shape_vip_shader"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"/>
+
+        <TextView
+                android:text="体验 35 次"
+                android:textSize="10sp"
+                android:id="@+id/item_num"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="6dp"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="7dp"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:id="@+id/item_tag_one"
+                android:text="@string/hint_name"
+                android:textColor="@color/theme_green"
+                android:textSize="10sp"
+                android:maxLines="1"
+                android:paddingRight="4dp"
+                android:paddingLeft="4dp"
+                android:background="@drawable/shape_rect_theme_green_kuang"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="18dp"/>
+
+        <TextView
+                android:id="@+id/item_tag_two"
+                android:text="@string/hint_name"
+                android:textColor="@color/theme_green"
+                android:textSize="10sp"
+                android:maxLines="1"
+                android:paddingRight="4dp"
+                android:paddingLeft="4dp"
+                android:layout_marginLeft="4dp"
+                android:background="@drawable/shape_rect_theme_green_kuang"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="18dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_marginTop="6dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
 
-    <TextView
-            android:id="@+id/item_content"
-            android:text="@string/hint_describe"
-            android:textColor="@color/main_gray"
-            android:textSize="13sp"
-            android:maxLines="2"
-            android:ellipsize="end"
-            android:layout_marginTop="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        <ImageView
+                android:id="@+id/item_star_one"
+                android:src="@drawable/enjoyvip_xingxing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
+        <ImageView
+                android:id="@+id/item_star_two"
+                android:layout_marginLeft="3dp"
+                android:src="@drawable/enjoyvip_xingxing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <ImageView
+                android:id="@+id/item_star_three"
+                android:layout_marginLeft="3dp"
+                android:src="@drawable/enjoyvip_xingxing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <ImageView
+                android:id="@+id/item_star_four"
+                android:layout_marginLeft="3dp"
+                android:src="@drawable/enjoyvip_xingxing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <ImageView
+                android:id="@+id/item_star_five"
+                android:layout_marginLeft="3dp"
+                android:src="@drawable/enjoyvip_xingxing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
 </LinearLayout>

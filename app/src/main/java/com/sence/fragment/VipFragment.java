@@ -60,6 +60,8 @@ public class VipFragment extends Fragment implements View.OnClickListener {
     private VipTopAdapter topAdapter;
     private VipBottomAdapter bottomAdapter;
 
+    private String save_money ="0";//预计一年省
+
 
     public VipFragment() {
         // Required empty public constructor
@@ -116,6 +118,7 @@ public class VipFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.vip_info_layout:
                 intent = new Intent(getActivity(), OpenVipPageActivity.class);
+                intent.putExtra("money", save_money);
                 startActivity(intent);
                 break;
             case R.id.vip_exclusive_more:
@@ -188,6 +191,7 @@ public class VipFragment extends Fragment implements View.OnClickListener {
                     vip_no_layout.setVisibility(View.GONE);
                     vip_yes_layout.setVisibility(View.VISIBLE);
                 }
+                save_money = o.getMoney();
                 vip_no_content.setText(o.getCarousel());
                 vip_price.setText(o.getMoney());
             }

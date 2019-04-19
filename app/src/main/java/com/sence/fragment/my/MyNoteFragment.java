@@ -33,6 +33,7 @@ public class MyNoteFragment extends Fragment {
 
     private int page = 1;
     private MyNoteAdapter adapter;
+
     public MyNoteFragment() {
         // Required empty public constructor
     }
@@ -55,7 +56,7 @@ public class MyNoteFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new MyNoteAdapter(R.layout.rv_item_note);
         recyclerView.setAdapter(adapter);
-
+        adapter.setEmptyView(R.layout.empty_focus_my, recyclerView);
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -90,9 +91,9 @@ public class MyNoteFragment extends Fragment {
 
             @Override
             public void onSuccess(List<PMainNoteBean> o, String msg) {
-                if (page==1){
+                if (page == 1) {
                     adapter.setNewData(o);
-                }else{
+                } else {
                     adapter.addData(o);
                 }
             }

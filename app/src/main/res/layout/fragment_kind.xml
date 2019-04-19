@@ -10,7 +10,7 @@
     <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:elevation="1dp"
+            android:elevation="0.5dp"
             android:background="@color/white"
             style="@style/NoLeftToolbar"
             >
@@ -27,6 +27,7 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:gravity="center"
+            android:background="#f6f6f6"
             android:layout_height="47dp">
 
         <LinearLayout

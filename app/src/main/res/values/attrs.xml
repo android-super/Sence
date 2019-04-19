@@ -24,6 +24,7 @@
         <attr name="tool_cover_right_text" format="string"/>
         <attr name="tool_cover_right_color" format="color"/>
         <attr name="tool_cover_right_size" format="dimension"/>
+        <attr name="tool_cover_elevation" format="float"/>
     </declare-styleable>
 
     <declare-styleable name="BigMidSmallTextView">

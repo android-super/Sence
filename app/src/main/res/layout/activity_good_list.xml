@@ -13,12 +13,14 @@
             app:is_back="true"
             app:tool_cover_background="@color/white"
             app:tool_cover_title="会员专属"
+            android:elevation="0.5dp"
             android:layout_width="match_parent"
             android:layout_height="50dp"/>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:layout_width="match_parent"
             android:id="@+id/smart_refresh"
+            android:background="@color/white"
             app:srlEnableLoadMoreWhenContentNotFull="false"
             android:layout_height="match_parent">
 
