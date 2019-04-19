@@ -18,6 +18,15 @@ public class PUserMyInfoBean {
      * goods_info : {"id":"2","name":"2号商品","introduce":"方法大放丁放2","describe":"房辅导班女孩33333给能换个你","img":"Public/Uploads/Order/2019-03-26//5c99eb1fc12a5.jpg","price":"4.00"}
      * is_have_service : 1
      */
+    private String inviteCode;
+
+    public String getInviteCode() {
+        return inviteCode;
+    }
+
+    public void setInviteCode(String inviteCode) {
+        this.inviteCode = inviteCode;
+    }
 
     private String uid;
     private String user_name;

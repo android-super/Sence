@@ -1,10 +1,12 @@
 package com.sence.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -96,6 +98,18 @@ public class UserRecommendFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setNestedScrollingEnabled(true);
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mImg.getLayoutParams();
+                //获取当前控件的布局对象
+                Log.i("aaaaaa", dx+"=="+dy);
+                layoutParams.height=dy;//设置当前控件布局的高度
+                mImg.setLayoutParams(layoutParams);
+            }
+        });
+
         adapter = new UserRecommendAdapter(R.layout.rv_item_recommend);
         recyclerView.setAdapter(adapter);
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {

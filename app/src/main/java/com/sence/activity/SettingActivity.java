@@ -45,6 +45,8 @@ public class SettingActivity extends BaseActivity {
     TextView tvCacheSetting;
     @BindView(R.id.ll_binding_setting)
     LinearLayout llBindingSetting;
+    @BindView(R.id.ll_blacklist_setting)
+    LinearLayout llBlacklistSetting;
 
     @Override
     public int onActLayout() {
@@ -69,7 +71,7 @@ public class SettingActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.ll_autonym_setting, R.id.ll_clear_setting, R.id.ll_policy_setting, R.id.ll_about_setting, R.id.tv_quit_setting})
+    @OnClick({R.id.ll_binding_setting,R.id.ll_blacklist_setting,R.id.ll_autonym_setting, R.id.ll_clear_setting, R.id.ll_policy_setting, R.id.ll_about_setting, R.id.tv_quit_setting})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_autonym_setting:
@@ -107,6 +109,12 @@ public class SettingActivity extends BaseActivity {
                     }
                 });
 
+                break;
+            case R.id.ll_binding_setting:
+                startActivity(new Intent(SettingActivity.this, BindingLinkManActivity.class));
+                break;
+            case R.id.ll_blacklist_setting:
+                startActivity(new Intent(SettingActivity.this, BlackListActivity.class));
                 break;
             case R.id.ll_policy_setting:
                 startActivity(new Intent(SettingActivity.this, WebActivity.class));
@@ -176,8 +184,4 @@ public class SettingActivity extends BaseActivity {
         }
     };
 
-    @OnClick(R.id.ll_binding_setting)
-    public void onViewClicked() {
-        startActivity(new Intent(SettingActivity.this, BindingLinkManActivity.class));
-    }
 }

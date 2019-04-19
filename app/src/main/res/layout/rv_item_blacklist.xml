@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="64dp">
+    <com.sence.view.NiceImageView
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        app:is_circle="true"
+        android:src="@drawable/hint_img"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="13dp"
+        android:layout_centerVertical="true"
+        android:id="@+id/iv_img_blacklist"
+        android:scaleType="center"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="无耻之徒"
+        android:id="@+id/tv_name_blacklist"
+        android:layout_toRightOf="@+id/iv_img_blacklist"
+        android:layout_centerVertical="true"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#f6f6f6"
+        android:layout_marginLeft="69dp"
+        android:layout_alignParentBottom="true"></View>
+</RelativeLayout>

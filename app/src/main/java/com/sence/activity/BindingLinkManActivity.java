@@ -27,6 +27,7 @@ import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.GlideUtils;
 import com.sence.utils.LoginStatus;
+import com.sence.utils.SharedPreferencesUtil;
 import com.sence.utils.StatusBarUtil;
 import com.sence.view.NiceImageView;
 import com.sence.view.PubTitle;
@@ -190,7 +191,9 @@ public class BindingLinkManActivity extends BaseActivity implements View.OnClick
             public void onSuccess(String o, String msg) {
                 Logger.e("msg==========" + msg);
                 ToastUtils.showShort(msg);
-                tvNameBindlinkman.setText(inviteUserName);
+                SharedPreferencesUtil.getInstance().putString("upuid", msg);
+                SharedPreferencesUtil.getInstance().putString("inviteUsername",bean.getUsername());
+                tvNameBindlinkman.setText(bean.getUsername());
                 ivImgBindinglinkman.setImageResource(R.drawable.set_yibangding);
                 llBindBindinglinkman.setVisibility(View.VISIBLE);
                 llNotbindBindinglinkman.setVisibility(View.GONE);

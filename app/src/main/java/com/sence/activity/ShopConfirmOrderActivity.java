@@ -22,6 +22,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.orhanobut.logger.Logger;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
+import com.sence.MainActivity;
 import com.sence.R;
 import com.sence.base.BaseActivity;
 import com.sence.bean.request.RAliPayBean;
@@ -137,6 +138,7 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
     private AlertDialog alertDialog;
     private String oid;
     private int PAYMENTTYPE = 2;
+    private AlertDialog dialog;
 
     @Override
     public int onActLayout() {
@@ -186,6 +188,8 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
         mCancel.setText("稍后付款");
         TextView mConfirm = view.findViewById(R.id.tv_confirm_deleteorder);
         mConfirm.setText("继续购买");
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.setCancelable(false);
         mCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -199,6 +203,44 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
             public void onClick(View v) {
                 alertDialog.dismiss();
                 mBottomSheetDialog.show();
+            }
+        });
+    }
+    private void alterDone() {
+        View view = View.inflate(ShopConfirmOrderActivity.this, R.layout.alter_deleteorder, null);
+        dialog = new AlertDialog.Builder(ShopConfirmOrderActivity.this, R.style.AlertDialogStyle).create();
+        dialog.setView(view);
+        dialog.getWindow().setLayout(new DensityUtil().dip2px(270), LinearLayout.LayoutParams.WRAP_CONTENT);
+        dialog.show();
+        TextView mTitle = view.findViewById(R.id.tv_title_deleteorder);
+        mTitle.setText("购买完成");
+        TextView mContent = view.findViewById(R.id.tv_content_deleteorder);
+        mContent.setText("已成功购买这些商品，可以在我的订单里查看订单最新状态。");
+        TextView mCancel = view.findViewById(R.id.tv_cancel_deleteorder);
+        mCancel.setText("我的订单");
+        TextView mConfirm = view.findViewById(R.id.tv_confirm_deleteorder);
+        mConfirm.setText("继续购买");
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+        mCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                Intent intentall = new Intent(ShopConfirmOrderActivity.this, MyOrderActivity.class);
+                intentall.putExtra("type", 0);
+                startActivity(intentall);
+                finish();
+            }
+        });
+
+        mConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                Intent intent = new Intent(ShopConfirmOrderActivity.this, MainActivity.class);
+                intent.putExtra("type",2);
+                startActivity(intent);
+                finish();
             }
         });
     }
@@ -221,6 +263,7 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
             @Override
             public void onSuccess(PWxPayBean o, String msg) {
                 Logger.e("msg==========" + msg);
+                SharedPreferencesUtil.getInstance().putString("paytype", "shop");
                 WeiXinPayUtils wxpay = new WeiXinPayUtils(ShopConfirmOrderActivity.this, o);
                 wxpay.pay();
             }
@@ -281,7 +324,7 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
                     if (TextUtils.equals(resultStatus, "9000")) {
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                         Toast.makeText(ShopConfirmOrderActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
-                        finish();
+                        alterDone();
                     } else {
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
                         Toast.makeText(ShopConfirmOrderActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
@@ -295,6 +338,7 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
     };
     @Override
     public void initData() {
+
         isCheckAddress = LoginStatus.getIsCheckShopAddress();
         idAddress = LoginStatus.getIdAddress();
         address = LoginStatus.getAddress();
@@ -350,7 +394,6 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.i("aaa", json.toString() + "==" + LoginStatus.getUid() + "==" + idAddress);
         HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_COMMIT, new RConfirmOrderBean(json, LoginStatus.getUid(), idAddress,"2")).request(new ApiCallBack<PConfirmOrderBean>() {
 
 

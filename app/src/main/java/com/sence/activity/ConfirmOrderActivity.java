@@ -22,6 +22,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.orhanobut.logger.Logger;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
+import com.sence.MainActivity;
 import com.sence.R;
 import com.sence.adapter.ConfirmOrderAdapter;
 import com.sence.base.BaseActivity;
@@ -115,6 +116,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private int PAYMENTTYPE = 2;
     private String oid;
     private double allprice;
+    private AlertDialog dialog;
 
     @Override
     public int onActLayout() {
@@ -158,6 +160,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void initData() {
+
         isCheckAddress = LoginStatus.getIsCheckAddress();
         idAddress = LoginStatus.getIdAddress();
         address = LoginStatus.getAddress();
@@ -279,7 +282,44 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 break;
         }
     }
+    private void alterDone() {
+        View view = View.inflate(ConfirmOrderActivity.this, R.layout.alter_deleteorder, null);
+        dialog = new AlertDialog.Builder(ConfirmOrderActivity.this, R.style.AlertDialogStyle).create();
+        dialog.setView(view);
+        dialog.getWindow().setLayout(new DensityUtil().dip2px(270), LinearLayout.LayoutParams.WRAP_CONTENT);
+        dialog.show();
+        TextView mTitle = view.findViewById(R.id.tv_title_deleteorder);
+        mTitle.setText("购买完成");
+        TextView mContent = view.findViewById(R.id.tv_content_deleteorder);
+        mContent.setText("已成功购买这些商品，可以在我的订单里查看订单最新状态。");
+        TextView mCancel = view.findViewById(R.id.tv_cancel_deleteorder);
+        mCancel.setText("我的订单");
+        TextView mConfirm = view.findViewById(R.id.tv_confirm_deleteorder);
+        mConfirm.setText("继续购买");
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+        mCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                Intent intentall = new Intent(ConfirmOrderActivity.this, MyOrderActivity.class);
+                intentall.putExtra("type", 0);
+                startActivity(intentall);
+                finish();
+            }
+        });
 
+        mConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                Intent intent = new Intent(ConfirmOrderActivity.this, MainActivity.class);
+                intent.putExtra("type",2);
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
     /**
      * 微信
      */
@@ -299,6 +339,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             public void onSuccess(PWxPayBean o, String msg) {
                 Logger.e("msg==========" + msg);
                 WeiXinPayUtils wxpay = new WeiXinPayUtils(ConfirmOrderActivity.this, o);
+                SharedPreferencesUtil.getInstance().putString("paytype", "shop");
                 wxpay.pay();
             }
         });
@@ -358,7 +399,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                     if (TextUtils.equals(resultStatus, "9000")) {
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                         Toast.makeText(ConfirmOrderActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
-                        finish();
+                        alterDone();
                     } else {
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
                         Toast.makeText(ConfirmOrderActivity.this, "支付失败", Toast.LENGTH_SHORT).show();

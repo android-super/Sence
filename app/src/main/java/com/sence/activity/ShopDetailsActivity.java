@@ -509,12 +509,20 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
             case R.id.tv_cancel_share:
                 mBottomSheetDialog.dismiss();
                 break;
+            case R.id.ll_report_share:
+                startActivity(new Intent(ShopDetailsActivity.this,ReportCauseActivity.class));
+                mBottomSheetDialog.dismiss();
+                break;
+
         }
     }
     private void bottomSheetDialog() {
         View mView = View.inflate(this, R.layout.layout_share, null);
         mBottomSheetDialog = new BottomSheetDialog(this);
         mBottomSheetDialog.setContentView(mView);
+        mView.findViewById(R.id.ll_report_share).setOnClickListener(this);
+        LinearLayout linearLayout = mView.findViewById(R.id.ll_code_share);
+        linearLayout.setVisibility(View.GONE);
         mView.findViewById(R.id.ll_wei_share).setOnClickListener(this);
         mView.findViewById(R.id.ll_friend_share).setOnClickListener(this);
         mView.findViewById(R.id.tv_cancel_share).setOnClickListener(this);

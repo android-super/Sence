@@ -34,6 +34,10 @@ public class LoginStatus {
         String name = SharedPreferencesUtil.getInstance().getString("nick_name");
         return name;
     }
+    public static String getPayType() {
+        String type = SharedPreferencesUtil.getInstance().getString("paytype");
+        return type;
+    }
     public static String getIdStatus() {
         String status = SharedPreferencesUtil.getInstance().getString("id_status");
         return status;

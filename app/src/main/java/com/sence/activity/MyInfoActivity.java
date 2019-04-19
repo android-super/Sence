@@ -1,6 +1,8 @@
 package com.sence.activity;
 
 import android.app.Activity;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -21,10 +23,11 @@ import com.google.android.material.tabs.TabLayout;
 import com.orhanobut.logger.Logger;
 import com.sence.R;
 import com.sence.activity.chat.ui.ChatMsgActivity;
+import com.sence.activity.chat.ui.ChatMsgGroupActivity;
 import com.sence.adapter.MyInfoRecommendViewPagerAdatpter;
 import com.sence.base.BaseActivity;
-import com.sence.bean.request.RUserinfoBean;
 import com.sence.bean.request.RCancelFocusBean;
+import com.sence.bean.request.RUserinfoBean;
 import com.sence.bean.response.PUserMyInfoBean;
 import com.sence.fragment.MyInfoRecommendFragment;
 import com.sence.fragment.UserNoteFragment;
@@ -131,6 +134,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         mIsV = findViewById(R.id.iv_isv_myinfo);
         mBack = findViewById(R.id.iv_back_myinfo);
         mBack.setOnClickListener(this);
+
         recommendFragment = new UserRecommendFragment();
         noteFragment = new UserNoteFragment();
         MyInfoRecommendFragment myInfoRecommendFragment = new MyInfoRecommendFragment();
@@ -280,9 +284,22 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
             case R.id.tv_cancel_share:
                 mBottomSheetDialog.dismiss();
                 break;
+            case R.id.ll_report_share:
+                mBottomSheetDialog.dismiss();
+                break;
+            case R.id.ll_code_share:
+                ToastUtils.showShort("复制成功");
+                CopyToClipboard(this,bean.getInviteCode());
+                mBottomSheetDialog.dismiss();
+                break;
         }
     }
 
+    public static void CopyToClipboard(Context context, String text){
+             ClipboardManager clip = (ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
+             //clip.getText(); // 粘贴
+              clip.setText(text); // 复制
+             }
     @OnClick({R.id.iv_focus_myinfo, R.id.iv_chat_myinfo, R.id.iv_groupchat_myinfo, R.id.iv_edit_myinfo})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -295,13 +312,17 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
 
                 break;
             case R.id.iv_chat_myinfo:
-
+                Intent intentchat = new Intent(MyInfoActivity.this, ChatMsgActivity.class);
+                intentchat.putExtra("u_to", bean.getUid());
+                intentchat.putExtra("chat_id", "");
+                intentchat.putExtra("u_avatar", bean.getAvatar());
+                startActivity(intentchat);
                 break;
             case R.id.iv_edit_myinfo:
                 startActivity(new Intent(MyInfoActivity.this, EditInfoActivity.class));
                 break;
             case R.id.iv_groupchat_myinfo:
-                Intent intent = new Intent(MyInfoActivity.this, ChatMsgActivity.class);
+                Intent intent = new Intent(MyInfoActivity.this, ChatMsgGroupActivity.class);
                 intent.putExtra("v_id", bean.getVid());
                 startActivity(intent);
                 break;
@@ -358,6 +379,15 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         View mView = View.inflate(this, R.layout.layout_share, null);
         mBottomSheetDialog = new BottomSheetDialog(this);
         mBottomSheetDialog.setContentView(mView);
+        ImageView mImg = mView.findViewById(R.id.iv_type_share);
+        TextView mName = mView.findViewById(R.id.tv_type_share);
+        mImg.setImageResource(R.drawable.shape_lahei);
+        mName.setText("拉黑");
+        if (TextUtils.isEmpty(uid) || LoginStatus.getUid().equals(uid)) {
+            mView.findViewById(R.id.ll_layout_share).setVisibility(View.GONE);
+        }
+        mView.findViewById(R.id.ll_report_share).setOnClickListener(this);
+        mView.findViewById(R.id.ll_code_share).setOnClickListener(this);
         mView.findViewById(R.id.ll_wei_share).setOnClickListener(this);
         mView.findViewById(R.id.ll_friend_share).setOnClickListener(this);
         mView.findViewById(R.id.tv_cancel_share).setOnClickListener(this);
