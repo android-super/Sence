@@ -142,7 +142,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
         type = intent.getStringExtra("type");
-
+        Log.i("aaaaa",id+"");
         orderDetailsAdapter = new OrderDetailsAdapter(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -303,7 +303,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void ConfirmTakeGood() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.CONFIRM_TAKEGOOD, new ROrderDetailsBean(id, LoginStatus.getUid())).request(new ApiCallBack<String>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.CONFIRM_TAKE_GOOD, new ROrderDetailsBean(id, LoginStatus.getUid())).request(new ApiCallBack<String>() {
 
 
             @Override
@@ -325,7 +325,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void DeleteOreder() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.DELETE_DONEORDER, new ROrderDetailsBean(id, LoginStatus.getUid())).request(new ApiCallBack<String>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.DELETE_DONE_ORDER, new ROrderDetailsBean(id, LoginStatus.getUid())).request(new ApiCallBack<String>() {
 
 
             @Override
@@ -477,6 +477,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
                 Logger.e("msg==========" + msg);
                 WeiXinPayUtils wxpay = new WeiXinPayUtils(OrderDetailsActivity.this, o);
                 wxpay.pay();
+                finish();
             }
         });
     }
@@ -512,6 +513,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
 
                 Thread payThread = new Thread(payRunnable);
                 payThread.start();
+                finish();
             }
         });
 

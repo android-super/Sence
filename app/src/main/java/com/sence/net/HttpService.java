@@ -86,7 +86,7 @@ public interface HttpService {
 
     @FormUrlEncoded
     @POST(Urls.USER_FOCUS)
-    Observable<BaseResponseBean<Object>> UserFocus(@FieldMap Map<String, Object> map);//关注
+    Observable<BaseResponseBean<String>> UserFocus(@FieldMap Map<String, Object> map);//关注
 
     @FormUrlEncoded
     @POST(Urls.USER_LOGIN)
@@ -131,6 +131,30 @@ public interface HttpService {
     @FormUrlEncoded
     @POST(Urls.USER_CARD_LIST)
     Observable<BaseResponseBean<List<PBankCardBean>>> BankCardList(@FieldMap Map<String, Object> map);//我的银行卡列表
+
+    @FormUrlEncoded
+    @POST(Urls.MESSAGE_INFORM)
+    Observable<BaseResponseBean<List<PInformBean>>> MessageInform(@FieldMap Map<String, Object> map);//通知列表
+
+    @FormUrlEncoded
+    @POST(Urls.GET_INTRODUCER)
+    Observable<BaseResponseBean<String>> GetIntreoducer(@FieldMap Map<String, Object> map);//通过邀请码绑定介绍人
+
+    @FormUrlEncoded
+    @POST(Urls.GET_UPNAME)
+    Observable<BaseResponseBean<PBindingLinkBean>> GetUpName(@FieldMap Map<String, Object> map);//通过邀请码获得用户名
+
+    @FormUrlEncoded
+    @POST(Urls.MESSAGE_LIST)
+    Observable<BaseResponseBean<List<PMessageHdBean>>> MessageList(@FieldMap Map<String, Object> map);//消息中心 - 评论、点赞列表
+
+    @FormUrlEncoded
+    @POST(Urls.SYSTEM_MESSAGE)
+    Observable<BaseResponseBean<List<PInformBean>>> SystemMessage(@FieldMap Map<String, Object> map);//系统消息列表
+
+    @FormUrlEncoded
+    @POST(Urls.MESSAGE_CENTRE)
+    Observable<BaseResponseBean<PMessageBean>> MessageCentre(@FieldMap Map<String, Object> map);//消息中心
 
     @FormUrlEncoded
     @POST(Urls.USER_CARD_DELETE)
@@ -187,7 +211,7 @@ public interface HttpService {
 
     @FormUrlEncoded
     @POST(Urls.MAIN_SEARCH)
-    Observable<BaseResponseBean<PSearchBean>> Search(@FieldMap Map<String, Object> map);//添加笔记
+    Observable<BaseResponseBean<PSearchBean>> Search(@FieldMap Map<String, Object> map);//主页搜索
 
     @FormUrlEncoded
     @POST(Urls.MAIN_NOTE)
@@ -205,23 +229,23 @@ public interface HttpService {
 
     @FormUrlEncoded
     @POST(Urls.USER_ENJOY_VIP)
-    Observable<BaseResponseBean<PEnjoyVipBean>> EnjoyVip(@FieldMap Map<String, Object> map);//分类下的商品列表
+    Observable<BaseResponseBean<PEnjoyVipBean>> EnjoyVip(@FieldMap Map<String, Object> map);//尊享会员界面
 
     @FormUrlEncoded
     @POST(Urls.ORDER_DELETE)
-    Observable<BaseResponseBean<String>> OrderDelete(@FieldMap Map<String, Object> map);//分类下的商品列表
+    Observable<BaseResponseBean<String>> OrderDelete(@FieldMap Map<String, Object> map);//取消待付款，待支付订单
 
     @FormUrlEncoded
     @POST(Urls.GOOD_LIST)
-    Observable<BaseResponseBean<List<PGoodListBean>>> GoodList(@FieldMap Map<String, Object> map);//分类下的商品列表
+    Observable<BaseResponseBean<List<PGoodListBean>>> GoodList(@FieldMap Map<String, Object> map);//商品列表
 
     @FormUrlEncoded
     @POST(Urls.BUS_LIST)
-    Observable<BaseResponseBean<PBusBean>> BusList(@FieldMap Map<String, Object> map);//分类下的商品列表
+    Observable<BaseResponseBean<PBusBean>> BusList(@FieldMap Map<String, Object> map);//购物车列表
 
     @FormUrlEncoded
     @POST(Urls.BUS_RECOMMEND)
-    Observable<BaseResponseBean<List<PBusRecommendBean>>> BusRecommend(@FieldMap Map<String, Object> map);//分类下的商品列表
+    Observable<BaseResponseBean<List<PBusRecommendBean>>> BusRecommend(@FieldMap Map<String, Object> map);//购物车页面推荐商品数据
 
     @FormUrlEncoded
     @POST(Urls.USER_VIP)
@@ -333,6 +357,10 @@ public interface HttpService {
     Observable<BaseResponseBean<Object>> ChatGroupList(@FieldMap Map<String, Object> map);//V群列表
 
     @FormUrlEncoded
+    @POST(Urls.PRIVATE_CHAT_LIST)
+    Observable<BaseResponseBean<Object>> PrivateChatList(@FieldMap Map<String, Object> map);//私聊列表
+
+    @FormUrlEncoded
     @POST(Urls.CHAT_READ)
     Observable<BaseResponseBean<Object>> ChatRead(@FieldMap Map<String, Object> map);//消息已读
 
@@ -343,6 +371,10 @@ public interface HttpService {
     @FormUrlEncoded
     @POST(Urls.PAY_WX)
     Observable<BaseResponseBean<PWxPayBean>> PayWx(@FieldMap Map<String, Object> map);//微信支付
+
+    @FormUrlEncoded
+    @POST(Urls.START_PICTURE)
+    Observable<BaseResponseBean<PStartPictureBean>> StartPicture(@FieldMap Map<String, Object> map);//启动图片
 
 
 }

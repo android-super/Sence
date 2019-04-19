@@ -229,7 +229,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 e.printStackTrace();
             }
         }
-        HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_COMMIT, new RConfirmOrderBean(json, LoginStatus.getUid(), idAddress)).request(new ApiCallBack<PConfirmOrderBean>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_COMMIT, new RConfirmOrderBean(json, LoginStatus.getUid(), idAddress,"1")).request(new ApiCallBack<PConfirmOrderBean>() {
 
 
             @Override

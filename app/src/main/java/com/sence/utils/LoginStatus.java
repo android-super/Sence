@@ -22,11 +22,18 @@ public class LoginStatus {
         return avatar;
     }
 
+    public static String getUpuid() {
+        String name = SharedPreferencesUtil.getInstance().getString("upuid");
+        return name;
+    }
+    public static String getInviteUserName() {
+        String name = SharedPreferencesUtil.getInstance().getString("inviteUsername");
+        return name;
+    }
     public static String getName() {
         String name = SharedPreferencesUtil.getInstance().getString("nick_name");
         return name;
     }
-
     public static String getIdStatus() {
         String status = SharedPreferencesUtil.getInstance().getString("id_status");
         return status;

@@ -140,9 +140,11 @@
                                 android:text="东方福唐文化传媒有限公司"
                                 android:textColor="#cfdfe0"/>
 
-                            <RelativeLayout
+                            <LinearLayout
                                 android:id="@+id/rl_num_myinfo"
+                                android:orientation="horizontal"
                                 android:layout_width="wrap_content"
+                                android:gravity="center_vertical"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/tv_address_myinfo"
                                 android:layout_marginTop="15dp">
@@ -161,9 +163,7 @@
                                     android:id="@+id/tv_focusnum_myinfo"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
                                     android:layout_marginLeft="5dp"
-                                    android:layout_toRightOf="@+id/tv_focus_myinfo"
                                     android:text="0"
                                     android:textColor="@color/white"
                                     android:textSize="14sp"/>
@@ -173,7 +173,7 @@
                                     android:layout_width="1dp"
                                     android:layout_height="13dp"
                                     android:layout_centerVertical="true"
-                                    android:layout_marginLeft="20dp"
+                                    android:layout_marginLeft="8dp"
                                     android:layout_toRightOf="@+id/tv_focus_myinfo"
                                     android:background="#7A797E"
                                     android:text="0"
@@ -195,12 +195,13 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
-                                    android:layout_marginLeft="12dp"
+                                    android:layout_marginLeft="6dp"
                                     android:layout_toRightOf="@+id/tv_fans_myinfo"
                                     android:text="0"
                                     android:textColor="@color/white"
                                     android:textSize="14sp"/>
-                            </RelativeLayout>
+
+                            </LinearLayout>
 
                             <TextView
                                 android:id="@+id/tv_signer_myinfo"

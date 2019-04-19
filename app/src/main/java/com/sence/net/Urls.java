@@ -23,7 +23,14 @@ public class Urls {
     public static final String COMMENT_LIST = "/index.php/Api/Public/getMsgList";//评论列表
     public static final String PAY_ALI = "/index.php/Api/Alipay/alipay_sign";//支付寶支付
     public static final String PAY_WX = "/index.php/Api/Wxpay/wx_prepay";//微信支付
+    public static final String START_PICTURE = "/index.php/Api/Public/getStartImg";//启动图片
     //用户
+    public static final String GET_UPNAME = "/index.php/Api/User/getUsernameByCode";//通过邀请码获得用户名
+    public static final String GET_INTRODUCER = "/index.php/Api/User/bindInviteUser";//通过邀请码绑定介绍人
+    public static final String MESSAGE_INFORM = "/index.php/api/mine/informDetail";//通知列表
+    public static final String SYSTEM_MESSAGE = "/index.php/api/mine/systemMessage";//系统消息列表
+    public static final String MESSAGE_LIST = "/index.php/api/mine/interactiveMessage";//消息中心 - 评论、点赞列表
+    public static final String MESSAGE_CENTRE = "/index.php/api/mine/messageCenter";//消息中心
     public static final String USER_CARD_DELETE = "/index.php/Api/mine/delCard";//删除银行卡
     public static final String USER_CARD_LIST = "/index.php/Api/mine/myCardList";//银行卡列表
     public static final String USER_BANK_CARD_LIST = "/index.php/Api/public/bankList";//获取银行列表
@@ -68,9 +75,7 @@ public class Urls {
     public static final String MAIN_SEARCH = "/index.php/Api/Public/homeSearchList";//主页搜索
     //商品
     public static final String ORDER_COMMENT_SUPPORT = "/index.php/Api/Orders/praise";//订单评论点赞
-    public static final String ORDER_CANCEL = "/index.php/Api/Orders/cancelOrder";//订单取消
     public static final String TIME_REMAINING = "/index.php/Api/Orders/getOrderTime";//订单剩余时间
-    public static final String ORDER_COMMENT_LIST = "/index.php/Api/Goods/getGoodsCommentList";//商品评价列表
     public static final String ORDER_NOTE_GOODS = "/index.php/Api/Goods/getNotesGoods";//笔记立即购买 所有商品数据
     public static final String ORDER_DETAIL = "/index.php/Api/Orders/getOrderDetail";//订单详情
     public static final String BUS_RECOMMEND = "/index.php/Api/Goods/getCommendGoods";//购物车页面推荐商品数据
@@ -101,6 +106,7 @@ public class Urls {
     public static final String CHAT_JOIN = "/index.php/api/VGroup/joinVGroup";//加入微群
     public static final String CHAT_MEMBER_LIST = "/index.php/api/VGroup/getVGroupUserList";//微群成员列表
     public static final String CHAT_ENTER = "/index.php/api/VGroup/enterVGroup";//进入V群
+    public static final String PRIVATE_CHAT_LIST = "/index.php/api/chat/privateChatList";//私聊列表
     public static final String CHAT_GROUP_LIST = "/index.php/api/VGroup/getVGroupList";//V群列表
     public static final String CHAT_READ = "/index.php/api/VGroup/readGroupMessage";//消息已读
 }

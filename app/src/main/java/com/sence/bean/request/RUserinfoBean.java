@@ -2,7 +2,7 @@ package com.sence.bean.request;
 
 import com.sence.bean.base.BaseRequestBean;
 
-public class PUserinfoBean extends BaseRequestBean {
+public class RUserinfoBean extends BaseRequestBean {
     private String uid;
     private String to_uid;
 
@@ -22,7 +22,7 @@ public class PUserinfoBean extends BaseRequestBean {
         this.to_uid = to_uid;
     }
 
-    public PUserinfoBean(String uid, String to_uid) {
+    public RUserinfoBean(String uid, String to_uid) {
         this.uid = uid;
         this.to_uid = to_uid;
     }

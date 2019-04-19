@@ -1,27 +1,31 @@
 package com.sence.activity;
 
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
-import com.scwang.smartrefresh.layout.header.ClassicsHeader;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+import android.os.Bundle;
+import android.widget.ImageView;
+
 import com.sence.R;
 import com.sence.adapter.SystemInformAdapter;
 import com.sence.base.BaseActivity;
+import com.sence.utils.StatusBarUtil;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
+import butterknife.ButterKnife;
+
+/**
+ * 系统通知
+ */
 
 public class SystemInformActivity extends BaseActivity {
 
     @BindView(R.id.recycle_systeminform)
     RecyclerView recycleSysteminform;
-    @BindView(R.id.srl_layout_systeminform)
-    SmartRefreshLayout srlLayoutSysteminform;
+    @BindView(R.id.iv_img_systeminform)
+    ImageView ivImgSysteminform;
     private SystemInformAdapter mSystemInformAdapter;
     private int page = 1;
+
     @Override
     public int onActLayout() {
         return R.layout.activity_system_inform;
@@ -29,39 +33,20 @@ public class SystemInformActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        StatusBarUtil.setLightMode(this);
         mSystemInformAdapter = new SystemInformAdapter(SystemInformActivity.this);
         LinearLayoutManager linearLayout = new LinearLayoutManager(SystemInformActivity.this);
         linearLayout.setOrientation(RecyclerView.VERTICAL);
         recycleSysteminform.setLayoutManager(linearLayout);
         recycleSysteminform.setAdapter(mSystemInformAdapter);
-        srlLayoutSysteminform.setRefreshHeader(new ClassicsHeader(SystemInformActivity.this));
-        srlLayoutSysteminform.setRefreshFooter(new ClassicsFooter(SystemInformActivity.this));
-        srlLayoutSysteminform.setEnableLoadMoreWhenContentNotFull(false);
-        srlLayoutSysteminform.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                page++;
-//                if(listBeans.size()==0){
-//                    ToastUtils.showShort("没有更多了！");
-//                }else{
-//                    initData();
-//                }
-                srlLayoutSysteminform.finishLoadMore();
-            }
-
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                srlLayoutSysteminform.finishRefresh();
-                page=1;
-                initData();
-            }
-        });
     }
+
+
 
     @Override
-    public void initData() {
-
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
-
-
 }

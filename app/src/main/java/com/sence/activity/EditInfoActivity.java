@@ -6,13 +6,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
+
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.sence.R;
-import com.sence.activity.chat.ui.ChatMsgActivity;
 import com.sence.base.BaseActivity;
 import com.sence.bean.request.RUserEditBean;
 import com.sence.bean.request.RUserEditHeadBean;
@@ -21,14 +20,18 @@ import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.BitmapUtils;
+import com.sence.utils.GlideUtils;
 import com.sence.utils.LoginStatus;
 import com.sence.utils.StatusBarUtil;
 import com.sence.view.NiceImageView;
 import com.sence.view.PubTitle;
+
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.util.List;
+
+import butterknife.BindView;
 
 /**
  * 修改个人信息
@@ -132,6 +135,8 @@ public class EditInfoActivity extends BaseActivity implements View.OnClickListen
                     // 图片、视频、音频选择结果回调
                     List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
                     if (selectList.get(0).isCompressed()) {
+//                        Glide.with(EditInfoActivity.this).load(selectList.get(0).getPath()).into(ivImgoneServicecomment);
+                        GlideUtils.getInstance().loadHead(selectList.get(0).getCompressPath(),editHead,true);
                         Bitmap bitmap = BitmapUtils.getSmallBitmap(selectList.get(0).getCompressPath());
                         head = BitmapUtils.Bitmap2File(bitmap, getPackageName(), 100);
                         PChatMessageBean.MessageBean bean = new PChatMessageBean.MessageBean();

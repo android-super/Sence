@@ -69,8 +69,17 @@
                         android:layout_alignParentBottom="true"
                         android:layout_marginLeft="@dimen/dp_10"
                         android:scaleType="center"
-                        android:src="@drawable/fanhui"/>】
+                        android:src="@drawable/fanhui"/>
 
+                    <ImageView
+                        android:id="@+id/iv_share_shopdetails"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:scaleType="center"
+                        android:src="@drawable/shop_fenxiang"/>
                     <LinearLayout
                         android:id="@+id/ll_head_shopdetails"
                         android:layout_width="match_parent"

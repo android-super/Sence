@@ -43,6 +43,8 @@ public class SettingActivity extends BaseActivity {
     TextView tvQuitSetting;
     @BindView(R.id.tv_cache_setting)
     TextView tvCacheSetting;
+    @BindView(R.id.ll_binding_setting)
+    LinearLayout llBindingSetting;
 
     @Override
     public int onActLayout() {
@@ -75,7 +77,7 @@ public class SettingActivity extends BaseActivity {
                 break;
             case R.id.ll_clear_setting:
                 View viewClear = View.inflate(SettingActivity.this, R.layout.alter_deleteorder, null);
-                AlertDialog.Builder builder = new AlertDialog.Builder(SettingActivity.this,R.style.AlertDialogStyle);
+                AlertDialog.Builder builder = new AlertDialog.Builder(SettingActivity.this, R.style.AlertDialogStyle);
                 builder.setView(viewClear);
                 final AlertDialog alertDialog = builder.create();
                 alertDialog.setCancelable(true);
@@ -114,7 +116,7 @@ public class SettingActivity extends BaseActivity {
                 break;
             case R.id.tv_quit_setting:
                 View viewQuit = View.inflate(SettingActivity.this, R.layout.alter_deleteorder, null);
-                AlertDialog.Builder builderviewQuit = new AlertDialog.Builder(SettingActivity.this,R.style.AlertDialogStyle);
+                AlertDialog.Builder builderviewQuit = new AlertDialog.Builder(SettingActivity.this, R.style.AlertDialogStyle);
                 builderviewQuit.setView(viewQuit);
                 final AlertDialog dialog = builderviewQuit.create();
                 dialog.setCancelable(true);
@@ -144,6 +146,7 @@ public class SettingActivity extends BaseActivity {
                 break;
         }
     }
+
     /**
      * 第三方登录回调监听
      */
@@ -172,4 +175,9 @@ public class SettingActivity extends BaseActivity {
 
         }
     };
+
+    @OnClick(R.id.ll_binding_setting)
+    public void onViewClicked() {
+        startActivity(new Intent(SettingActivity.this, BindingLinkManActivity.class));
+    }
 }

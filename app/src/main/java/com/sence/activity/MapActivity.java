@@ -37,6 +37,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+/**
+ * 地图
+ */
 
 public class MapActivity extends AppCompatActivity implements LocationSource, AMapLocationListener, GeocodeSearch.OnGeocodeSearchListener, ActivityCompat.OnRequestPermissionsResultCallback {
 

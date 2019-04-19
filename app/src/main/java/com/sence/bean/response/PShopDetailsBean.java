@@ -51,8 +51,17 @@ public class PShopDetailsBean {
     private String customAvatar;
     private String commentNum;
     private String commentRate;
+    private String isMember;
     private List<String> imgs;
     private List<CommentBean> comment;
+
+    public String getIsMember() {
+        return isMember;
+    }
+
+    public void setIsMember(String isMember) {
+        this.isMember = isMember;
+    }
 
     public String getImg() {
         return img;

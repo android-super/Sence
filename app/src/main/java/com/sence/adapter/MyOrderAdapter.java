@@ -34,6 +34,7 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
     private static final int FOOTER = 2;
     private Context context;
     private List<PMyOrderBean.ListBean> list = new ArrayList<>();
+
     public MyOrderAdapter(Context context) {
         this.context = context;
     }
@@ -68,22 +69,22 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
             holder.mCancel.setText("查看订单");
             holder.mAlipay.setText("评价");
             holder.mState.setText("写评价");
-        }else if ("5".equals(list.get(position).getStatus())) {
+        } else if ("5".equals(list.get(position).getStatus())) {
             holder.mSevice.setVisibility(View.GONE);
             holder.mAlipay.setVisibility(View.GONE);
             holder.mCancel.setText("再次购买");
             holder.mState.setText("用户关闭");
-        }else if ("6".equals(list.get(position).getStatus())) {
+        } else if ("6".equals(list.get(position).getStatus())) {
             holder.mSevice.setVisibility(View.GONE);
             holder.mAlipay.setVisibility(View.GONE);
             holder.mCancel.setText("再次购买");
             holder.mState.setText("后台关闭");
-        }else if ("7".equals(list.get(position).getStatus())) {
+        } else if ("7".equals(list.get(position).getStatus())) {
             holder.mSevice.setVisibility(View.GONE);
             holder.mAlipay.setVisibility(View.GONE);
             holder.mState.setText("已完成");
             holder.mCancel.setText("删除订单");
-        }else if ("8".equals(list.get(position).getStatus())) {
+        } else if ("8".equals(list.get(position).getStatus())) {
             holder.mSevice.setVisibility(View.GONE);
             holder.mAlipay.setVisibility(View.GONE);
             holder.mState.setText("系统取消");
@@ -96,12 +97,12 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
         holder.mRecyclerView.setAdapter(myOrderItemAdapter);
         myOrderItemAdapter.setList(list.get(position).getGoods());
         holder.mTime.setText(list.get(position).getAddtime());
-        if(list.get(position).getNeedpay().contains(".")){
-            holder.mPrice.setText("￥"+list.get(position).getNeedpay());
-        }else{
-            holder.mPrice.setText("￥"+list.get(position).getNeedpay()+".00");
+        if (list.get(position).getNeedpay().contains(".")) {
+            holder.mPrice.setText("￥" + list.get(position).getNeedpay());
+        } else {
+            holder.mPrice.setText("￥" + list.get(position).getNeedpay() + ".00");
         }
-        holder.mNum.setText("共"+list.get(position).getNum()+"件");
+        holder.mNum.setText("共" + list.get(position).getNum() + "件");
         myOrderItemAdapter.result(new MyOrderItemAdapter.OnclickListener() {
             @Override
             public void click() {
@@ -114,31 +115,31 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
         holder.mCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ("4".equals(list.get(position).getStatus())||"3".equals(list.get(position).getStatus())||"2".equals(list.get(position).getStatus())) {
+                if ("4".equals(list.get(position).getStatus()) || "3".equals(list.get(position).getStatus()) || "2".equals(list.get(position).getStatus())) {
                     Intent intent = new Intent(context, OrderDetailsActivity.class);
                     intent.putExtra("id", list.get(position).getId());
                     intent.putExtra("type", list.get(position).getStatus());
                     context.startActivity(intent);
-                } else if("5".equals(list.get(position).getStatus())){
+                } else if ("5".equals(list.get(position).getStatus())) {
                     Intent intent = new Intent(context, OrderDetailsActivity.class);
                     intent.putExtra("id", list.get(position).getId());
                     intent.putExtra("type", list.get(position).getStatus());
                     context.startActivity(intent);
-                }else if("6".equals(list.get(position).getStatus())){
+                } else if ("6".equals(list.get(position).getStatus())) {
                     Intent intent = new Intent(context, OrderDetailsActivity.class);
                     intent.putExtra("id", list.get(position).getId());
                     intent.putExtra("type", list.get(position).getStatus());
                     context.startActivity(intent);
-                }else if("7".equals(list.get(position).getStatus())){
+                } else if ("7".equals(list.get(position).getStatus())) {
                     DeleteOreder(position);
-                }else if("8".equals(list.get(position).getStatus())){
+                } else if ("8".equals(list.get(position).getStatus())) {
                     Intent intent = new Intent(context, OrderDetailsActivity.class);
                     intent.putExtra("id", list.get(position).getId());
                     intent.putExtra("type", list.get(position).getStatus());
                     context.startActivity(intent);
-                }else if("1".equals(list.get(position).getStatus())){
+                } else if ("1".equals(list.get(position).getStatus())) {
                     View view = View.inflate(context, R.layout.alter_deleteorder, null);
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context,R.style.AlertDialogStyle);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AlertDialogStyle);
                     builder.setView(view);
                     final AlertDialog alertDialog = builder.create();
                     alertDialog.setCancelable(true);
@@ -188,9 +189,9 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
                     intent.putExtra("id", list.get(position).getId());
                     context.startActivity(intent);
                     return;
-                }else if("3".equals(list.get(position).getStatus())){
+                } else if ("3".equals(list.get(position).getStatus())) {
                     ConfirmTakeGood(position);
-                }else{
+                } else {
                     Intent intent = new Intent(context, OrderDetailsActivity.class);
                     intent.putExtra("id", list.get(position).getId());
                     intent.putExtra("type", list.get(position).getStatus());
@@ -212,7 +213,7 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
     }
 
     private void ConfirmTakeGood(final int position) {
-        HttpManager.getInstance().PlayNetCode(HttpCode.CONFIRM_TAKEGOOD, new ROrderDetailsBean(list.get(position).getId(), LoginStatus.getUid())).request(new ApiCallBack<String>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.CONFIRM_TAKE_GOOD, new ROrderDetailsBean(list.get(position).getId(), LoginStatus.getUid())).request(new ApiCallBack<String>() {
 
 
             @Override
@@ -235,8 +236,7 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
 
 
     private void DeleteOreder(final int position) {
-        HttpManager.getInstance().PlayNetCode(HttpCode.DELETE_DONEORDER, new ROrderDetailsBean(list.get(position).getId(), LoginStatus.getUid())).request(new ApiCallBack<String>() {
-
+        HttpManager.getInstance().PlayNetCode(HttpCode.DELETE_DONE_ORDER, new ROrderDetailsBean(list.get(position).getId(), LoginStatus.getUid())).request(new ApiCallBack<String>() {
 
             @Override
             public void onFinish() {
@@ -264,7 +264,7 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
         private LinearLayout mLinearLayout;
         private RecyclerView mRecyclerView;
-        private TextView mState, mSevice, mCancel, mAlipay, mTime,mPrice,mNum;
+        private TextView mState, mSevice, mCancel, mAlipay, mTime, mPrice, mNum;
         private RelativeLayout mRelativeLayout;
 
         public ViewHolder(View itemView) {
@@ -281,6 +281,7 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
             mRelativeLayout = itemView.findViewById(R.id.rl_layout_myorder);
         }
     }
+
     private DeleteOrderListener listener;
 
     public void result(DeleteOrderListener listener) {

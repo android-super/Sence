@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -35,6 +36,7 @@ public class UserRecommendFragment extends Fragment {
     private int page = 1;
     private int size = 10;
     private String type;
+    private ImageView mImg;
 
     public UserRecommendFragment() {
         // Required empty public constructor
@@ -45,7 +47,7 @@ public class UserRecommendFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_recommend, container, false);
+        return inflater.inflate(R.layout.fragment_user_recommend, container, false);
     }
 
     @Override
@@ -72,7 +74,11 @@ public class UserRecommendFragment extends Fragment {
 
             @Override
             public void onSuccess(PMyInfoBean o, String msg) {
+                if(o.getList().size()>0){
+                    mImg.setVisibility(View.GONE);
+                }
                 if (page == 1) {
+
                     adapter.setNewData(o.getList());
                 } else {
                     adapter.addData(o.getList());
@@ -84,6 +90,7 @@ public class UserRecommendFragment extends Fragment {
     public void initRefresh() {
         smartRefreshLayout = getView().findViewById(R.id.smart_refresh);
         recyclerView = getView().findViewById(R.id.recycle_view);
+        mImg = getView().findViewById(R.id.iv_img_userrecommend);
         smartRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
         smartRefreshLayout.setRefreshFooter(new ClassicsFooter(getActivity()));
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());

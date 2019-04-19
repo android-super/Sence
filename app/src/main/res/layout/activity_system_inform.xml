@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:background="#f6f6f6"
     android:layout_height="match_parent"
+    android:background="#f6f6f6"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
     tools:context=".activity.InformActivity">
+
     <com.sence.view.PubTitle
         android:id="@+id/rl_head_systeminform"
         style="@style/NoLeftToolbar"
@@ -16,16 +18,18 @@
         app:is_back="true"
         app:tool_cover_background="@color/white"
         app:tool_cover_title="系统通知"/>
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/srl_layout_systeminform">
-
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycle_systeminform"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/recycle_systeminform">
+            android:layout_below="@+id/rl_head_systeminform"
+            android:layout_height="wrap_content">
 
         </androidx.recyclerview.widget.RecyclerView>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-</LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/perch_xitngxiaoxi"
+        android:layout_centerInParent="true"
+        android:id="@+id/iv_img_systeminform"/>
+</RelativeLayout>

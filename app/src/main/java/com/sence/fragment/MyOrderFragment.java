@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
@@ -41,6 +42,7 @@ public class MyOrderFragment extends Fragment {
     private int page=1;
     private int status;
     private List<PMyOrderBean.ListBean> listBeans = new ArrayList<>();
+    private ImageView mNot;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,6 +62,7 @@ public class MyOrderFragment extends Fragment {
         mRecyclerView = getView().findViewById(R.id.recycle_myorder);
         mSmartRefreshLayout = getView().findViewById(R.id.srl_more_myorder);
         mMore = getView().findViewById(R.id.tv_more_myorder);
+        mNot = getView().findViewById(R.id.iv_not_myorder);
         mMyOrderAdapter = new MyOrderAdapter(getContext());
         LinearLayoutManager linearLayout = new LinearLayoutManager(getContext());
         linearLayout.setOrientation(RecyclerView.VERTICAL);
@@ -71,10 +74,10 @@ public class MyOrderFragment extends Fragment {
         mSmartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                page++;
-                if(listBeans.size()==0){
+                if(listBeans.size()<10){
                     ToastUtils.showShort("没有更多了！");
                 }else{
+                    page++;
                     loadData();
                 }
                 mSmartRefreshLayout.finishLoadMore();
@@ -97,9 +100,12 @@ public class MyOrderFragment extends Fragment {
         mMyOrderAdapter.result(new MyOrderAdapter.DeleteOrderListener() {
             @Override
             public void delete(int i) {
+                ((MyOrderActivity)getActivity()).setNum(listBeans.get(i).getStatus());
                 listBeans.remove(i);
+                if(listBeans.size()==0){
+                    mNot.setVisibility(View.VISIBLE);
+                }
                 mMyOrderAdapter.setList(listBeans);
-                ((MyOrderActivity)getActivity()).setTitlen(i,listBeans.size());
             }
         });
 
@@ -131,6 +137,7 @@ public class MyOrderFragment extends Fragment {
                 listBeans = o.getList();
                 if(listBeans.size()>0) {
                     mMyOrderAdapter.setList(listBeans);
+                    mNot.setVisibility(View.GONE);
                 }
 
 

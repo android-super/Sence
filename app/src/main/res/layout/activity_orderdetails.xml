@@ -11,6 +11,7 @@
             android:id="@+id/layout_head"
             app:tool_cover_background="@color/white"
             app:tool_cover_title="订单详情"
+            app:tool_cover_right_text=""
             app:tool_cover_right_size="14sp"
             app:tool_cover_right_color="#999999"
             android:layout_width="match_parent"

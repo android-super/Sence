@@ -1,24 +1,29 @@
 package com.sence.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.tabs.TabLayout;
 import com.orhanobut.logger.Logger;
 import com.sence.R;
 import com.sence.activity.chat.ui.ChatMsgActivity;
 import com.sence.adapter.MyInfoRecommendViewPagerAdatpter;
 import com.sence.base.BaseActivity;
-import com.sence.bean.request.PUserinfoBean;
+import com.sence.bean.request.RUserinfoBean;
 import com.sence.bean.request.RCancelFocusBean;
 import com.sence.bean.response.PUserMyInfoBean;
 import com.sence.fragment.MyInfoRecommendFragment;
@@ -34,16 +39,24 @@ import com.sence.utils.LoginStatus;
 import com.sence.utils.NavigationBarUtil;
 import com.sence.utils.StatusBarUtil;
 import com.sence.view.NiceImageView;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * 个人信息
  */
 public class MyInfoActivity extends BaseActivity implements View.OnClickListener {
+    private static String TAG = "";
     @BindView(R.id.iv_focus_myinfo)
     ImageView ivFocusMyinfo;
     @BindView(R.id.iv_chat_myinfo)
@@ -52,12 +65,14 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     ImageView ivEditMyinfo;
     @BindView(R.id.iv_groupchat_myinfo)
     ImageView ivGroupchatMyinfo;
+    @BindView(R.id.iv_share_myinfo)
+    ImageView ivShareMyinfo;
     private ViewPager mViewPager;
     private AppBarLayout mAppBarLayout;
     private TabLayout mTabLayoutButtom;
-    private ImageView mBack,mShare;
+    private ImageView mBack, mShare;
     private View mView;
-    private TextView  mName, mAddress, mFocusNum, mFansNum, mSigner, mShopName, mShopPrice;
+    private TextView mName, mAddress, mFocusNum, mFansNum, mSigner, mShopName, mShopPrice;
     private NiceImageView mImg, mImageView;
     private LinearLayout mShop;
     private ImageView mHead;
@@ -75,6 +90,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     private Fragment[] fragmentList;
     private View layout;
     private UserRecommendFragment recommendFragment;
+    private BottomSheetDialog mBottomSheetDialog;
 
     @Override
     public int onActLayout() {
@@ -83,6 +99,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void initView() {
+        TAG = getClass().getSimpleName();
         if (NavigationBarUtil.hasNavigationBar(this)) {
             NavigationBarUtil.initActivity(findViewById(android.R.id.content));
         }
@@ -113,9 +130,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         layout = findViewById(R.id.v_layout_myinfo);
         mIsV = findViewById(R.id.iv_isv_myinfo);
         mBack = findViewById(R.id.iv_back_myinfo);
-        ll_group_myinfo = findViewById(R.id.ll_group_myinfo);
         mBack.setOnClickListener(this);
-        ll_group_myinfo.setOnClickListener(this);
         recommendFragment = new UserRecommendFragment();
         noteFragment = new UserNoteFragment();
         MyInfoRecommendFragment myInfoRecommendFragment = new MyInfoRecommendFragment();
@@ -125,7 +140,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         mTabLayoutButtom.setupWithViewPager(mViewPager);
         Intent intent = getIntent();
         uid = intent.getStringExtra("uid");
-        if (TextUtils.isEmpty(uid)||LoginStatus.getUid().equals(uid)) {
+        if (TextUtils.isEmpty(uid) || LoginStatus.getUid().equals(uid)) {
             ivEditMyinfo.setVisibility(View.VISIBLE);
             ivFocusMyinfo.setVisibility(View.GONE);
             ivChatMyinfo.setVisibility(View.GONE);
@@ -151,6 +166,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 }
             }
         });
+        bottomSheetDialog();
         findViewById(R.id.rl_shop_myinfo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,6 +186,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 //  下面的这个方法必须在子线程中执行
                 Bitmap blurBitmap = FastBlurUtil.GetUrlBitmap(url, scaleRatio);
                 Message message = new Message();
+                message.what = 1;
                 message.obj = blurBitmap;
                 handler.sendMessage(message);
                 //                        刷新ui必须在主线程中执行
@@ -181,15 +198,21 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            Bitmap blurBitmap = (Bitmap) msg.obj;
-            mHead.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            mHead.setImageBitmap(blurBitmap);
-            handler.removeCallbacksAndMessages(null);
+            switch (msg.what){
+                case 1:
+                    Bitmap blurBitmap = (Bitmap) msg.obj;
+                    mHead.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    mHead.setImageBitmap(blurBitmap);
+                    handler.removeCallbacksAndMessages(null);
+                    break;
+
+            }
+
         }
     };
 
     public void initData() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.USER_MYINFO, new PUserinfoBean(LoginStatus.getUid(),  uid)).request(new ApiCallBack<PUserMyInfoBean>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.USER_MYINFO, new RUserinfoBean(LoginStatus.getUid(), uid)).request(new ApiCallBack<PUserMyInfoBean>() {
             @Override
             public void onFinish() {
 
@@ -205,18 +228,20 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 Logger.e("msg==========" + msg);
                 bean = o;
                 is_focus = o.getIs_focus();
-                if("1".equals(is_focus)){
+                if ("1".equals(is_focus)) {
                     ivFocusMyinfo.setImageResource(R.drawable.yiguanzhu);
                     ivChatMyinfo.setImageResource(R.drawable.si);
-                }else{
+                } else {
                     ivFocusMyinfo.setImageResource(R.drawable.guanzhu);
                     ivChatMyinfo.setImageResource(R.drawable.sixin);
                 }
-                if("0".equals(o.getIs_kol())){
+                if ("0".equals(o.getIs_kol())) {
                     mShop.setVisibility(View.GONE);
                     layout.setVisibility(View.VISIBLE);
                     mIsV.setVisibility(View.GONE);
-                }else{
+
+                    ivGroupchatMyinfo.setVisibility(View.GONE);
+                } else {
                     mShopName.setText(o.getGoods_info().getName());
                     mShopPrice.setText("￥ " + o.getGoods_info().getPrice());
                     GlideUtils.getInstance().loadHead(o.getGoods_info().getImg(), mImg);
@@ -228,7 +253,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 mSigner.setText(o.getAutograph());
                 GlideUtils.getInstance().loadHead(o.getAvatar(), mImageView);
                 dim(Urls.base_url + o.getAvatar());
-                if("0".equals(o.getIs_have_service())){
+                if ("0".equals(o.getIs_have_service())) {
                     final Fragment[] fragments = {recommendFragment, noteFragment};
                     String[] listTitle = {"推荐", "笔记"};
                     mMyInfoRecommendViewPagerAdatpter.setList(fragments, listTitle);
@@ -237,7 +262,6 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         });
     }
 
-    
 
     @Override
     public void onClick(View v) {
@@ -245,21 +269,27 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
             case R.id.iv_back_myinfo:
                 finish();
                 break;
-            case R.id.ll_group_myinfo:
-                Intent intent = new Intent(MyInfoActivity.this, ChatMsgActivity.class);
-                intent.putExtra("v_id", bean.getVid());
-                startActivity(intent);
+            case R.id.ll_wei_share:
+                shareWeb(MyInfoActivity.this, "http://192.168.1.10:8085/Public/web/share/datum.html?uid="+LoginStatus.getUid()+"&to_uid="+uid, bean.getUser_name()+bean.getNick_name()+"的精彩生活", "女神的日常", SHARE_MEDIA.WEIXIN,bean.getAvatar());
+                mBottomSheetDialog.dismiss();
+                break;
+            case R.id.ll_friend_share:
+                shareWeb(MyInfoActivity.this, "http://192.168.1.10:8085/Public/web/share/datum.html?uid="+LoginStatus.getUid()+"&to_uid="+uid, bean.getUser_name()+bean.getNick_name()+"的精彩生活", "女神的日常", SHARE_MEDIA.WEIXIN_CIRCLE,bean.getAvatar());
+                mBottomSheetDialog.dismiss();
+                break;
+            case R.id.tv_cancel_share:
+                mBottomSheetDialog.dismiss();
                 break;
         }
     }
 
-    @OnClick({R.id.iv_focus_myinfo, R.id.iv_chat_myinfo, R.id.iv_groupchat_myinfo,R.id.iv_edit_myinfo})
+    @OnClick({R.id.iv_focus_myinfo, R.id.iv_chat_myinfo, R.id.iv_groupchat_myinfo, R.id.iv_edit_myinfo})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_focus_myinfo:
-                if("1".equals(is_focus)){
+                if ("1".equals(is_focus)) {
                     cancelFocus();
-                }else{
+                } else {
                     focus();
                 }
 
@@ -268,40 +298,18 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
 
                 break;
             case R.id.iv_edit_myinfo:
-                startActivity(new Intent(MyInfoActivity.this,EditInfoActivity.class));
+                startActivity(new Intent(MyInfoActivity.this, EditInfoActivity.class));
                 break;
             case R.id.iv_groupchat_myinfo:
-                Intent intent = new Intent(MyInfoActivity.this,ChatMsgActivity.class);
-                intent.putExtra("v_id",bean.getVid());
+                Intent intent = new Intent(MyInfoActivity.this, ChatMsgActivity.class);
+                intent.putExtra("v_id", bean.getVid());
                 startActivity(intent);
                 break;
         }
     }
+
     private void focus() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.USER_FOCUS, new RCancelFocusBean(LoginStatus.getUid(),uid)).request(new ApiCallBack<Object>() {
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void Message(int code, String message) {
-
-            }
-
-            @Override
-            public void onSuccess(Object o, String msg) {
-                Logger.e("msg==========" + msg);
-                ToastUtils.showShort(msg);
-                is_focus="1";
-                ivFocusMyinfo.setImageResource(R.drawable.yiguanzhu);
-                ivChatMyinfo.setImageResource(R.drawable.si);
-            }
-        });
-    }
-
-    private void cancelFocus() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.USER_FOCUS_CANCEL, new RCancelFocusBean(LoginStatus.getUid(),uid)).request(new ApiCallBack<String>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.USER_FOCUS, new RCancelFocusBean(LoginStatus.getUid(), uid)).request(new ApiCallBack<String>() {
             @Override
             public void onFinish() {
 
@@ -316,11 +324,139 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
             public void onSuccess(String o, String msg) {
                 Logger.e("msg==========" + msg);
                 ToastUtils.showShort(msg);
-                is_focus="0";
+                is_focus = "1";
+                ivFocusMyinfo.setImageResource(R.drawable.yiguanzhu);
+                ivChatMyinfo.setImageResource(R.drawable.si);
+            }
+        });
+    }
+
+    private void cancelFocus() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.USER_FOCUS_CANCEL, new RCancelFocusBean(LoginStatus.getUid(), uid)).request(new ApiCallBack<String>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(String o, String msg) {
+                Logger.e("msg==========" + msg);
+                ToastUtils.showShort(msg);
+                is_focus = "0";
                 ivFocusMyinfo.setImageResource(R.drawable.guanzhu);
                 ivChatMyinfo.setImageResource(R.drawable.sixin);
             }
         });
     }
 
+    private void bottomSheetDialog() {
+        View mView = View.inflate(this, R.layout.layout_share, null);
+        mBottomSheetDialog = new BottomSheetDialog(this);
+        mBottomSheetDialog.setContentView(mView);
+        mView.findViewById(R.id.ll_wei_share).setOnClickListener(this);
+        mView.findViewById(R.id.ll_friend_share).setOnClickListener(this);
+        mView.findViewById(R.id.tv_cancel_share).setOnClickListener(this);
+    }
+
+    /**
+     * 友盟分享
+     * 上下文activity、分享的链接、标题、内容、类型
+     * 若是要分享视频、音乐可看官方文档
+     */
+    public static void shareWeb(final Activity activity, String WebUrl, String title, String description, SHARE_MEDIA
+            platform, String url) {
+
+        UMImage thumb = new UMImage(activity, url);
+        UMWeb web = new UMWeb(WebUrl);//连接地址(注意链接开头必须包含http)
+        web.setTitle(title);//标题
+        web.setDescription(description);//描述
+        web.setThumb(thumb);//缩略图
+        new ShareAction(activity)
+                //分享的平台
+                .setPlatform(platform)
+                .withMedia(web)
+                .setCallback(new UMShareListener() {
+                    /**
+                     * @descrption 分享开始的回调
+                     * @param share_media 平台类型
+                     */
+                    @Override
+                    public void onStart(SHARE_MEDIA share_media) {
+                        Log.e(TAG, "onStart开始分享的平台: " + share_media);
+                    }
+
+                    /**
+                     * @descrption 分享成功的回调
+                     * @param share_media 平台类型
+                     */
+                    @Override
+                    public void onResult(final SHARE_MEDIA share_media) {
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(activity, " 分享成功 ", Toast.LENGTH_SHORT).show();
+                                Log.e(TAG, "onStart分享成功的平台: " + share_media);
+                            }
+                        });
+                    }
+
+                    /**
+                     * @descrption 分享失败的回调
+                     * @param share_media 平台类型
+                     * @param throwable 错误原因
+                     */
+                    @Override
+                    public void onError(final SHARE_MEDIA share_media, final Throwable throwable) {
+                        if (throwable != null) {
+                            //失败原因
+                            Log.e(TAG, "throw:" + throwable.getMessage());
+                        }
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(activity, share_media + " 分享失败", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+
+                    /**
+                     * @descrption 分享取消的回调
+                     * @param share_media 平台类型
+                     */
+                    @Override
+                    public void onCancel(final SHARE_MEDIA share_media) {
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(activity, " 分享取消 ", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                })
+                .share();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+        Log.e(TAG, "onActivityResult: " + requestCode + "\n" + resultCode + "\n" + data);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+    @OnClick(R.id.iv_share_myinfo)
+    public void onViewClicked() {
+        mBottomSheetDialog.show();
+    }
 }

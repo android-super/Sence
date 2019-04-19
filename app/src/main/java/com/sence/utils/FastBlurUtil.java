@@ -3,6 +3,7 @@ package com.sence.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -10,7 +11,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+
+import static com.chad.library.adapter.base.listener.SimpleClickListener.TAG;
 
 
 /**
@@ -350,8 +355,84 @@ public class FastBlurUtil {
 
         return (bitmap);
     }
+    private static Bitmap bitmap;
 
+    public static Bitmap FastBlurUtil(final String url){
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                URL imageurl = null;
+
+                try {
+                    imageurl = new URL(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    HttpURLConnection conn = (HttpURLConnection)imageurl.openConnection();
+                    conn.setDoInput(true);
+                    conn.connect();
+                    InputStream is = conn.getInputStream();
+                    bitmap = BitmapFactory.decodeStream(is);
+                    //这是一个一步请求，不能直接返回获取，要不然永远为null
+                    //在这里得到BitMap之后记得使用Hanlder或者EventBus传回主线程，不过现在加载图片都是用框架了，很少有转化为Bitmap的需求
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+        return bitmap;
+    }
+    public static Bitmap getBitmap(String imgUrl) {
+        InputStream inputStream=null;
+        ByteArrayOutputStream outputStream=null;
+        URL url = null;
+        try {
+            url=new URL(imgUrl);
+            HttpURLConnection httpURLConnection=(HttpURLConnection) url.openConnection();
+            httpURLConnection.setRequestMethod("GET");
+            httpURLConnection.setReadTimeout(2000);
+            httpURLConnection.connect();
+            if(httpURLConnection.getResponseCode()==200) {
+                //网络连接成功
+                inputStream = httpURLConnection.getInputStream();
+                outputStream = new ByteArrayOutputStream();
+                byte buffer[] = new byte[1024 * 8];
+                int len = -1;
+                while ((len = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, len);
+                }
+                byte[] bu = outputStream.toByteArray();
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bu, 0, bu.length);
+                return bitmap;
+            }else {
+                Log.i(TAG,"网络连接失败----"+httpURLConnection.getResponseCode());
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+        }finally{
+            if(inputStream!=null){
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+            if(outputStream!=null){
+                try {
+                    outputStream.close();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
 }
 
 

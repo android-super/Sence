@@ -10,6 +10,10 @@ import com.sence.utils.StatusBarUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * 关于
+ */
+
 public class AboutActivity extends BaseActivity {
 
     @BindView(R.id.tv_version_about)

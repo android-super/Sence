@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.blankj.utilcode.util.ConvertUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -40,6 +41,7 @@ public class UserNoteFragment extends Fragment {
     private UserNoteAdapter adapter;
     private int page = 1;
     private String type;
+    private ImageView mImg;
 
     public UserNoteFragment() {
         // Required empty public constructor
@@ -50,7 +52,7 @@ public class UserNoteFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_note, container, false);
+        return inflater.inflate(R.layout.fragment_user_note, container, false);
     }
 
     @Override
@@ -77,6 +79,9 @@ public class UserNoteFragment extends Fragment {
 
             @Override
             public void onSuccess(PMyInfoBean o, String msg) {
+                if(o.getList().size()>0){
+                    mImg.setVisibility(View.GONE);
+                }
                 if (page == 1) {
                     adapter.setNewData(o.getList());
                 } else {
@@ -90,6 +95,7 @@ public class UserNoteFragment extends Fragment {
     public void initRefresh() {
         smartRefreshLayout = getView().findViewById(R.id.smart_refresh);
         recyclerView = getView().findViewById(R.id.recycle_view);
+        mImg = getView().findViewById(R.id.iv_img_usernote);
         smartRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
         smartRefreshLayout.setRefreshFooter(new ClassicsFooter(getActivity()));
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);

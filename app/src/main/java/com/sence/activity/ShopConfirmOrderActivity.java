@@ -59,6 +59,9 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+/**
+ * 商品确认订单
+ */
 
 public class ShopConfirmOrderActivity extends BaseActivity implements View.OnClickListener {
 
@@ -348,7 +351,7 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
             e.printStackTrace();
         }
         Log.i("aaa", json.toString() + "==" + LoginStatus.getUid() + "==" + idAddress);
-        HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_COMMIT, new RConfirmOrderBean(json, LoginStatus.getUid(), idAddress)).request(new ApiCallBack<PConfirmOrderBean>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_COMMIT, new RConfirmOrderBean(json, LoginStatus.getUid(), idAddress,"2")).request(new ApiCallBack<PConfirmOrderBean>() {
 
 
             @Override

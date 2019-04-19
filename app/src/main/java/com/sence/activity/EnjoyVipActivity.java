@@ -73,10 +73,10 @@ public class EnjoyVipActivity extends BaseActivity {
         srlLayoutEnjoyvip.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                page++;
-                if(list.size()==0){
+                if(list.size()<10){
                     ToastUtils.showShort("没有更多了！");
                 }else{
+                    page++;
                     initData();
                 }
                 srlLayoutEnjoyvip.finishLoadMore();

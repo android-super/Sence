@@ -21,7 +21,8 @@ public class PUserInfoBean {
      * fans_num : 1
      * note_num : 1
      */
-
+    private String upuid;
+    private String inviteUsername;
     private String uid;
     private String user_name;
     private String nick_name;
@@ -35,6 +36,22 @@ public class PUserInfoBean {
     private String fans_num;
     private String note_num;
     private OrderInfoBean order_info;
+
+    public String getUpuid() {
+        return upuid;
+    }
+
+    public void setUpuid(String upuid) {
+        this.upuid = upuid;
+    }
+
+    public String getInviteUsername() {
+        return inviteUsername;
+    }
+
+    public void setInviteUsername(String inviteUsername) {
+        this.inviteUsername = inviteUsername;
+    }
 
     public OrderInfoBean getOrder_info() {
         return order_info;

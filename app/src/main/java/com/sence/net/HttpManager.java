@@ -92,10 +92,10 @@ public class HttpManager<P> {
             case SERVE_COMMENT_LIST:
                 observable = httpService.ServeCommentList(requestBean.getMap());
                 break;
-            case CONFIRM_TAKEGOOD:
+            case CONFIRM_TAKE_GOOD:
                 observable = httpService.ConfirmTakeGood(requestBean.getMap());
                 break;
-            case DELETE_DONEORDER:
+            case DELETE_DONE_ORDER:
                 observable = httpService.Delete_DoneOrder(requestBean.getMap());
                 break;
             case ORDER_DETAIL:
@@ -148,6 +148,24 @@ public class HttpManager<P> {
                 break;
             case MAIN_RECOMMEND:
                 observable = httpService.MainRecommend(requestBean.getMap());
+                break;
+            case MESSAGE_INFORM:
+                observable = httpService.MessageInform(requestBean.getMap());
+                break;
+            case MESSAGE_LIST:
+                observable = httpService.MessageList(requestBean.getMap());
+                break;
+            case GET_UPNAME:
+                observable = httpService.GetUpName(requestBean.getMap());
+                break;
+            case GET_INTRODUCER:
+                observable = httpService.GetIntreoducer(requestBean.getMap());
+                break;
+            case SYSTEM_MESSAGE:
+                observable = httpService.SystemMessage(requestBean.getMap());
+                break;
+            case MESSAGE_CENTRE:
+                observable = httpService.MessageCentre(requestBean.getMap());
                 break;
             case KIND_GOODS_LIST:
                 observable = httpService.GoodList(requestBean.getMap());
@@ -224,6 +242,9 @@ public class HttpManager<P> {
             case CHAT_GROUP_LIST:
                 observable = httpService.ChatGroupList(requestBean.getMap());
                 break;
+            case PRIVATE_CHAT_LIST:
+                observable = httpService.PrivateChatList(requestBean.getMap());
+                break;
             case CHAT_MEMBER_LIST:
                 observable = httpService.ChatMemberList(requestBean.getMap());
                 break;
@@ -251,6 +272,9 @@ public class HttpManager<P> {
             case PAY_WX:
                 observable = httpService.PayWx(requestBean.getMap());
                 break;
+            case START_PICTURE:
+                observable = httpService.StartPicture(requestBean.getMap());
+                break;
         }
         observable = observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
         return this;
@@ -263,7 +287,7 @@ public class HttpManager<P> {
             case COMMENT_ADD:
                 observable = httpService.CommentOrder(requestBean.getMap(),fileRequestBean.getRequestImg());
                 break;
-            case SERVICE_ADDCOMMENT:
+            case SERVICE_ADD_COMMENT:
                 observable = httpService.SearviceAddComment(requestBean.getMap(),fileRequestBean.getRequestImg());
                 break;
             case USER_EDIT:

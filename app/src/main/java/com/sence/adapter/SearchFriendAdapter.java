@@ -50,7 +50,7 @@ public class SearchFriendAdapter extends RecyclerView.Adapter<SearchFriendAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SearchFriendAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final SearchFriendAdapter.ViewHolder holder, final int position) {
         holder.mName.setText(list.get(position).getUsername());
         if(!TextUtils.isEmpty(list.get(position).getAutograph())){
             holder.mContent.setText(list.get(position).getAutograph());
@@ -71,9 +71,9 @@ public class SearchFriendAdapter extends RecyclerView.Adapter<SearchFriendAdapte
             @Override
             public void onClick(View v) {
                 if(list.get(position).getIsFollow().equals("1")){
-                    cancelFocus(position);
+                    cancelFocus(position,holder);
                 }else{
-                    focus(position);
+                    focus(position,holder);
                 }
             }
         });
@@ -88,8 +88,8 @@ public class SearchFriendAdapter extends RecyclerView.Adapter<SearchFriendAdapte
         GlideUtils.getInstance().loadHead( list.get(position).getAvatar(),holder.mImg);
     }
 
-    private void focus(final int position) {
-        HttpManager.getInstance().PlayNetCode(HttpCode.USER_FOCUS, new RCancelFocusBean(LoginStatus.getUid(),list.get(position).getId())).request(new ApiCallBack<Object>() {
+    private void focus(final int position, final ViewHolder holder) {
+        HttpManager.getInstance().PlayNetCode(HttpCode.USER_FOCUS, new RCancelFocusBean(LoginStatus.getUid(),list.get(position).getId())).request(new ApiCallBack<String>() {
             @Override
             public void onFinish() {
 
@@ -101,16 +101,18 @@ public class SearchFriendAdapter extends RecyclerView.Adapter<SearchFriendAdapte
             }
 
             @Override
-            public void onSuccess(Object o, String msg) {
+            public void onSuccess(String o, String msg) {
                 Logger.e("msg==========" + msg);
                 ToastUtils.showShort(msg);
                 list.get(position).setIsFollow("1");
-                notifyDataSetChanged();
+                holder.mFocus.setText("已关注");
+                holder.mFocus.setTextColor(Color.parseColor("#999999"));
+                holder.mFocus.setBackgroundResource(R.drawable.shape_searchconcern_yetbg);
             }
         });
     }
 
-    private void cancelFocus(final int position) {
+    private void cancelFocus(final int position, final ViewHolder holder) {
         HttpManager.getInstance().PlayNetCode(HttpCode.USER_FOCUS_CANCEL, new RCancelFocusBean(LoginStatus.getUid(),list.get(position).getId())).request(new ApiCallBack<String>() {
             @Override
             public void onFinish() {
@@ -126,8 +128,10 @@ public class SearchFriendAdapter extends RecyclerView.Adapter<SearchFriendAdapte
             public void onSuccess(String o, String msg) {
                 Logger.e("msg==========" + msg);
                 ToastUtils.showShort(msg);
-                list.get(position).setIsFollow("2");
-                notifyDataSetChanged();
+                list.get(position).setIsFollow("0");
+                holder.mFocus.setText("+  关注");
+                holder.mFocus.setTextColor(Color.parseColor("#16A5AF"));
+                holder.mFocus.setBackgroundResource(R.drawable.shape_searchconcern_bg);
             }
         });
     }

@@ -6,11 +6,21 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.orhanobut.logger.Logger;
 import com.sence.R;
 import com.sence.base.BaseActivity;
+import com.sence.bean.request.RUidBean;
+import com.sence.bean.response.PMessageBean;
+import com.sence.net.HttpCode;
+import com.sence.net.HttpManager;
+import com.sence.net.manager.ApiCallBack;
+import com.sence.utils.LoginStatus;
 import com.sence.utils.StatusBarUtil;
 
 import butterknife.BindView;
+/**
+ * 消息中心
+ */
 
 public class MessageActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.message_open)
@@ -45,6 +55,34 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
         messageXtLayout.setOnClickListener(this);
         messageTzLayout.setOnClickListener(this);
         messageKfLayout.setOnClickListener(this);
+    }
+
+    @Override
+    public void initData() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.MESSAGE_CENTRE, new RUidBean(LoginStatus.getUid())).request(new ApiCallBack<PMessageBean>() {
+            @Override
+            public void onFinish() {
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(PMessageBean o, String msg) {
+                Logger.e("msg==========" + msg);
+                if("0".equals(o.getMessage_red())){
+                    messageHdPoint.setVisibility(View.GONE);
+                }
+                if("0".equals(o.getSystem_msg_red())){
+                    messageXtPoint.setVisibility(View.GONE);
+                }
+                if("0".equals(o.getSystem_ntc_red())){
+                    messageTzPoint.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     @Override

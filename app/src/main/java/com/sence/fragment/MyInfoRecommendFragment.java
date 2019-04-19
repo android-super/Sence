@@ -87,17 +87,18 @@ public class MyInfoRecommendFragment extends Fragment {
         mSmartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                page++;
                 if("3".equals(type)){
-                    if(list.size()==0){
+                    if(list.size()<10){
                         ToastUtils.showShort("没有更多了！");
                     }else{
+                        page++;
                         doHttp();
                     }
                 }else{
-                    if(listOther.size()==0){
+                    if(listOther.size()<10){
                         ToastUtils.showShort("没有更多了！");
                     }else{
+                        page++;
                         doHttp();
                     }
                 }

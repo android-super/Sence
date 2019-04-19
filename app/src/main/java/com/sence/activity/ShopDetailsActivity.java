@@ -1,11 +1,13 @@
 package com.sence.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.material.appbar.AppBarLayout;
@@ -43,6 +46,12 @@ import com.sence.utils.LoginStatus;
 import com.sence.utils.NavigationBarUtil;
 import com.sence.utils.StatusBarUtil;
 import com.sence.view.NiceImageView;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,8 +87,6 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
     TextView tvCpriceShopdetails;
     @BindView(R.id.tv_oprice_shopdetails)
     TextView tvOpriceShopdetails;
-    @BindView(R.id.tv_discount_shopdetails)
-    TextView tvDiscountShopdetails;
     @BindView(R.id.tv_vip_shopdetails)
     TextView tvVipShopdetails;
     @BindView(R.id.tv_name_shopdetails)
@@ -114,6 +121,12 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
     NestedScrollView nsvContentShopdetails;
     @BindView(R.id.tv_shopnum_shopdetails)
     TextView tvShopnumShopdetails;
+    @BindView(R.id.iv_share_shopdetails)
+    ImageView ivShareShopdetails;
+    @BindView(R.id.iv_shop_shopdetails)
+    ImageView ivShopShopdetails;
+    @BindView(R.id.view_oprice_shopdetails)
+    View viewOpriceShopdetails;
 
     private ShopDetailsImgAdapter shopDetailsImgAdapter;
     private ShopDetailsCommendAdapter mShopDetailsCommendAdapter;
@@ -131,6 +144,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
     private int numShop;
     private PopupWindow popupWindow;
     private View contentView;
+    private static String TAG = "";
 
     @Override
     public int onActLayout() {
@@ -139,6 +153,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void initView() {
+        TAG = getClass().getSimpleName();
         if (NavigationBarUtil.hasNavigationBar(this)) {
             NavigationBarUtil.initActivity(findViewById(android.R.id.content));
         }
@@ -160,6 +175,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                 startActivity(intentCommend);
             }
         });
+        bottomSheetDialog();
         ivBackShopdetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -200,6 +216,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                 float alpha = (float) Math.abs(i) / appBarLayout.getTotalScrollRange();
                 shopView.setAlpha(alpha);
 //                StatusBarUtil.setTranslucentForCoordinatorLayout(ShopDetailsActivity.this, (int)alpha);
+
                 if (alpha > 0.8) {
                     llHeadShopdetails.setVisibility(View.VISIBLE);
                 } else {
@@ -241,35 +258,39 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                     for (int i = 0; i < imgs.size(); i++) {
                         ImageView imageView = new ImageView(ShopDetailsActivity.this);
                         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                        GlideUtils.getInstance().loadHead( imgs.get(i), imageView);
+                        GlideUtils.getInstance().loadHead(imgs.get(i), imageView);
                         list.add(imageView);
                         final int position = i;
                         imageView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                        Intent intent = new Intent(ShopDetailsActivity.this, ImgFlexActivity.class);
-                                        intent.putStringArrayListExtra("imgs", (ArrayList<String>) imgs);
-                                        intent.putExtra("position",position);
-                                        startActivity(intent);
+                                Intent intent = new Intent(ShopDetailsActivity.this, ImgFlexActivity.class);
+                                intent.putStringArrayListExtra("imgs", (ArrayList<String>) imgs);
+                                intent.putExtra("position", position);
+                                startActivity(intent);
                             }
                         });
                     }
                     shopDetailsImgAdapter.setList(list);
                 }
-                tvOpriceShopdetails.setText(o.getPrice());
-                if("0".equals(o.getVprice())){
-                    tvCpriceShopdetails.setText(o.getPrice());
-                }else{
-                    tvCpriceShopdetails.setText(o.getVprice());
-                }
-                tvDiscountShopdetails.setText(o.getDiscount() + "折");
+
+                tvOpriceShopdetails.setText("￥" + o.getPrice());
+                int measuredWidth = tvOpriceShopdetails.getMeasuredWidth();
+                ViewGroup.LayoutParams params = viewOpriceShopdetails.getLayoutParams();
+                params.width = measuredWidth;
+                params.height = 3;
+                viewOpriceShopdetails.setLayoutParams(params);
                 if ("0".equals(o.getVprice())) {
+                    tvCpriceShopdetails.setText("￥" + o.getPrice());
                     tvVipShopdetails.setVisibility(View.GONE);
+                } else {
+                    tvCpriceShopdetails.setText("￥" + o.getVprice());
                 }
+
                 tvNameShopdetails.setText(o.getName());
                 doData(o.getDescribe());
                 tvShopnameShopdetails.setText(o.getUsername());
-                GlideUtils.getInstance().loadHead( o.getAvatar(), ivShopimgShopdetails);
+                GlideUtils.getInstance().loadHead(o.getAvatar(), ivShopimgShopdetails);
                 tvShopcommendnumShopdetails.setText("商品评价(" + o.getCommentNum() + ")");
                 tvGoodcommendShopdetails.setText("好评" + o.getCommentRate() + "%");
             }
@@ -352,11 +373,15 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
         mJian = contentView.findViewById(R.id.rl_buyshop_jian);
         mAdd = contentView.findViewById(R.id.rl_buyshop_add);
         mConfirm = contentView.findViewById(R.id.bt_buyshop_confirm);
-        GlideUtils.getInstance().loadHead(bean.getImg(),mImg);
-        if("0".equals(bean.getVprice())){
-            tvPrice.setText("￥"+bean.getPrice());
-        }else{
-            tvPrice.setText("￥"+bean.getVprice());
+        GlideUtils.getInstance().loadHead(bean.getImg(), mImg);
+        if ("1".equals(bean.getIsMember())) {
+            if ("0".equals(bean.getVprice())) {
+                tvPrice.setText("￥" + bean.getPrice());
+            } else {
+                tvPrice.setText("￥" + bean.getVprice());
+            }
+        } else {
+            tvPrice.setText("￥" + bean.getPrice());
         }
         mJian.setOnClickListener(this);
         mAdd.setOnClickListener(this);
@@ -364,12 +389,14 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
         numShop = Integer.parseInt(mNum.getText().toString());
         // 按下android回退物理键 PopipWindow消失解决
     }
+
     private void bgAlpha(float bgAlpha) {
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.alpha = bgAlpha; //0.0-1.0
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         getWindow().setAttributes(lp);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -382,17 +409,17 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_addshop_shopdetails:
-                if(LoginStatus.getUid().isEmpty()){
+                if (LoginStatus.getUid().isEmpty()) {
                     ToastUtils.showShort("请先登录");
                     return;
                 }
-                if(num==0){
+                if (num == 0) {
                     tvShopnumShopdetails.setVisibility(View.VISIBLE);
                 }
                 addShop();
                 break;
             case R.id.tv_buy_shopdetails:
-                if(LoginStatus.getUid().isEmpty()){
+                if (LoginStatus.getUid().isEmpty()) {
                     ToastUtils.showShort("请先登录");
                     return;
                 }
@@ -401,14 +428,14 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
 
                 break;
             case R.id.ll_service_shopdetails:
-                if(LoginStatus.getUid().isEmpty()){
+                if (LoginStatus.getUid().isEmpty()) {
                     ToastUtils.showShort("请先登录");
                     return;
                 }
 
                 break;
             case R.id.ll_shop_shopdetails:
-                if(LoginStatus.getUid().isEmpty()){
+                if (LoginStatus.getUid().isEmpty()) {
                     ToastUtils.showShort("请先登录");
                     return;
                 }
@@ -460,9 +487,9 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                 intentBuy.putExtra("id", bean.getId());
                 intentBuy.putExtra("num", mNum.getText().toString());
                 intentBuy.putExtra("postage", bean.getPostage());
-                if("0".equals(bean.getVprice())){
+                if ("0".equals(bean.getVprice())) {
                     intentBuy.putExtra("price", bean.getPrice());
-                }else{
+                } else {
                     intentBuy.putExtra("price", bean.getVprice());
                 }
                 intentBuy.putExtra("name", bean.getName());
@@ -470,7 +497,117 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                 intentBuy.putExtra("username", bean.getUsername());
                 startActivity(intentBuy);
                 break;
+            case R.id.ll_wei_share:
+                shareWeb(ShopDetailsActivity.this, "http://www.baidu.com", bean.getName(), "女神周边，精品生活", SHARE_MEDIA.WEIXIN, bean.getImg());
+
+                mBottomSheetDialog.dismiss();
+                break;
+            case R.id.ll_friend_share:
+                shareWeb(ShopDetailsActivity.this, "http://www.baidu.com", bean.getName(), "女神周边，精品生活", SHARE_MEDIA.WEIXIN_CIRCLE, bean.getImg());
+                mBottomSheetDialog.dismiss();
+                break;
+            case R.id.tv_cancel_share:
+                mBottomSheetDialog.dismiss();
+                break;
         }
+    }
+    private void bottomSheetDialog() {
+        View mView = View.inflate(this, R.layout.layout_share, null);
+        mBottomSheetDialog = new BottomSheetDialog(this);
+        mBottomSheetDialog.setContentView(mView);
+        mView.findViewById(R.id.ll_wei_share).setOnClickListener(this);
+        mView.findViewById(R.id.ll_friend_share).setOnClickListener(this);
+        mView.findViewById(R.id.tv_cancel_share).setOnClickListener(this);
+    }
+
+    /**
+     * 友盟分享
+     * 上下文activity、分享的链接、标题、内容、类型
+     * 若是要分享视频、音乐可看官方文档
+     */
+    public static void shareWeb(final Activity activity, String WebUrl, String title, String description, SHARE_MEDIA
+            platform, String img) {
+
+        UMImage thumb = new UMImage(activity, img);
+        UMWeb web = new UMWeb(WebUrl);//连接地址(注意链接开头必须包含http)
+        web.setTitle(title);//标题
+        web.setDescription(description);//描述
+        web.setThumb(thumb);//缩略图
+        new ShareAction(activity)
+                //分享的平台
+                .setPlatform(platform)
+                .withMedia(web)
+                .setCallback(new UMShareListener() {
+                    /**
+                     * @descrption 分享开始的回调
+                     * @param share_media 平台类型
+                     */
+                    @Override
+                    public void onStart(SHARE_MEDIA share_media) {
+                        Log.e(TAG, "onStart开始分享的平台: " + share_media);
+                    }
+
+                    /**
+                     * @descrption 分享成功的回调
+                     * @param share_media 平台类型
+                     */
+                    @Override
+                    public void onResult(final SHARE_MEDIA share_media) {
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(activity, " 分享成功 ", Toast.LENGTH_SHORT).show();
+                                Log.e(TAG, "onStart分享成功的平台: " + share_media);
+                            }
+                        });
+                    }
+
+                    /**
+                     * @descrption 分享失败的回调
+                     * @param share_media 平台类型
+                     * @param throwable 错误原因
+                     */
+                    @Override
+                    public void onError(final SHARE_MEDIA share_media, final Throwable throwable) {
+                        if (throwable != null) {
+                            //失败原因
+                            Log.e(TAG, "throw:" + throwable.getMessage());
+                        }
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(activity, share_media + " 分享失败", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+
+                    /**
+                     * @descrption 分享取消的回调
+                     * @param share_media 平台类型
+                     */
+                    @Override
+                    public void onCancel(final SHARE_MEDIA share_media) {
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(activity, " 分享取消 ", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                })
+                .share();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+        Log.e(TAG, "onActivityResult: " + requestCode + "\n" + resultCode + "\n" + data);
+    }
+
+    @OnClick(R.id.iv_share_shopdetails)
+    public void onViewClicked() {
+        mBottomSheetDialog.show();
     }
 }
 

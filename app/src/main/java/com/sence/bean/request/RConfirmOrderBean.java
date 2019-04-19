@@ -8,12 +8,23 @@ public class RConfirmOrderBean extends BaseRequestBean {
     private JSONArray goods;
     private String uid;
     private String addrId;
+    private String from;
 
-    public RConfirmOrderBean(JSONArray goods, String uid, String addrId) {
+    public RConfirmOrderBean(JSONArray goods, String uid, String addrId, String from) {
         this.goods = goods;
         this.uid = uid;
         this.addrId = addrId;
+        this.from = from;
     }
+
+    public String getFrom() {
+        return from;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
 
     public JSONArray getGoods() {
         return goods;

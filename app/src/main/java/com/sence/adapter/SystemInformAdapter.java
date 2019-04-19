@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sence.R;
-import com.sence.bean.response.PMyOrderBean;
+import com.sence.bean.response.PInformBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +18,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class SystemInformAdapter extends RecyclerView.Adapter<SystemInformAdapter.ViewHolder> {
     private Context context;
-    private List<PMyOrderBean.ListBean.GoodsBean> list = new ArrayList<>();
+    private List<PInformBean> list = new ArrayList<>();
 
     public SystemInformAdapter(Context context) {
         this.context = context;
     }
 
-    public void setList(List<PMyOrderBean.ListBean.GoodsBean> list) {
+    public void setList(List<PInformBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -38,9 +38,9 @@ public class SystemInformAdapter extends RecyclerView.Adapter<SystemInformAdapte
 
     @Override
     public void onBindViewHolder(@NonNull SystemInformAdapter.ViewHolder holder, final int position) {
-//        holder.mTime.setText( );
-//        holder.mType.setText( );
-//        holder.mContent.setText( );
+        holder.mTime.setText(list.get(position).getAdd_time());
+        holder.mType.setText( list.get(position).getTitle());
+        holder.mContent.setText( list.get(position).getContent());
         holder.mLook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,7 +51,7 @@ public class SystemInformAdapter extends RecyclerView.Adapter<SystemInformAdapte
 
     @Override
     public int getItemCount() {
-        return 5;
+        return list.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

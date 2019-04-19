@@ -75,10 +75,11 @@ public class ManageAddressActivity extends BaseActivity {
         srlLayoutManageaddress.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                page++;
-                if(list.size()==0){
+
+                if(list.size()<10){
                     ToastUtils.showShort("没有更多了！");
                 }else{
+                    page++;
                     dohttp();
                 }
                 srlLayoutManageaddress.finishLoadMore();

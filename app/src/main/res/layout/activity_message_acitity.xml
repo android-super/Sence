@@ -164,6 +164,7 @@
                 android:layout_marginRight="-5dp"
                 android:layout_alignRight="@id/message_kf"
                 android:layout_alignTop="@id/message_kf"
+                android:visibility="gone"
                 android:src="@drawable/shape_message_point"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>

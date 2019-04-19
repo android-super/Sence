@@ -30,6 +30,7 @@ import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.GlideUtils;
 import com.sence.utils.LoginStatus;
+import com.sence.utils.SharedPreferencesUtil;
 import com.sence.view.NiceImageView;
 
 import androidx.annotation.Nullable;
@@ -115,7 +116,8 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         if (o == null) {
             return;
         }
-
+        SharedPreferencesUtil.getInstance().putString("upuid", o.getUpuid());
+        SharedPreferencesUtil.getInstance().putString("inviteUsername", o.getInviteUsername());
         GlideUtils.getInstance().loadHead(LoginStatus.getAvatar(), user_head);
 
         if (o.getIs_kol().equals("1")) {

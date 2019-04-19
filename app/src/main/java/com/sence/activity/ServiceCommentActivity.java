@@ -123,7 +123,7 @@ public class ServiceCommentActivity extends BaseActivity implements View.OnClick
     }
 
     public void uploadImg(String content,File[] imgs){
-        HttpManager.getInstance().PlayNetCode(HttpCode.SERVICE_ADDCOMMENT, new RServiceCommentBean(LoginStatus.getUid(), id, star,
+        HttpManager.getInstance().PlayNetCode(HttpCode.SERVICE_ADD_COMMENT, new RServiceCommentBean(LoginStatus.getUid(), id, star,
                 content),new RImageListBean(imgs)).request(new ApiCallBack<String>() {
             @Override
             public void onFinish() {
@@ -170,6 +170,8 @@ public class ServiceCommentActivity extends BaseActivity implements View.OnClick
             ivClosetweServicecomment.setVisibility(View.VISIBLE);
             ivClosethressServicecomment.setVisibility(View.GONE);
         } else if (selectList.size() == 3) {
+            ivImgtweServicecomment.setVisibility(View.VISIBLE);
+            ivImgthressServicecomment.setVisibility(View.VISIBLE);
             Glide.with(ServiceCommentActivity.this).load(selectList.get(0).getPath()).into(ivImgoneServicecomment);
             Glide.with(ServiceCommentActivity.this).load(selectList.get(1).getPath()).into(ivImgtweServicecomment);
             Glide.with(ServiceCommentActivity.this).load(selectList.get(2).getPath()).into(ivImgthressServicecomment);

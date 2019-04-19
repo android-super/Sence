@@ -2,7 +2,6 @@ package com.sence.activity;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Parcelable;
 import android.text.TextUtils;
@@ -30,8 +29,12 @@ import com.sence.adapter.CommentAdapter;
 import com.sence.adapter.ContentGoodAdapter;
 import com.sence.adapter.GoodsAdapter;
 import com.sence.base.BaseActivity;
-import com.sence.bean.request.*;
-import com.sence.bean.response.PChatMessageBean;
+import com.sence.bean.request.RCommentDetailBean;
+import com.sence.bean.request.RCommentListBean;
+import com.sence.bean.request.RCommentSupportBean;
+import com.sence.bean.request.RContentDetailBean;
+import com.sence.bean.request.RFocusBean;
+import com.sence.bean.request.RNidBean;
 import com.sence.bean.response.PCommentBean;
 import com.sence.bean.response.PContentDetailBean;
 import com.sence.fragment.CommentFragment;
@@ -39,7 +42,6 @@ import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.Urls;
 import com.sence.net.manager.ApiCallBack;
-import com.sence.utils.BitmapUtils;
 import com.sence.utils.LoginStatus;
 import com.sence.utils.StatusBarUtil;
 import com.sence.view.NiceImageView;
@@ -50,7 +52,6 @@ import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
-import org.greenrobot.eventbus.EventBus;
 
 /**
  * 内容详情
@@ -356,7 +357,7 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
     }
 
     public void toFocus() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.USER_FOCUS, new RFocusBean(LoginStatus.getUid(), to_uid)).request(new ApiCallBack() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.USER_FOCUS, new RFocusBean(LoginStatus.getUid(), to_uid)).request(new ApiCallBack<String>() {
             @Override
             public void onFinish() {
 
@@ -368,7 +369,7 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
             }
 
             @Override
-            public void onSuccess(Object o, String msg) {
+            public void onSuccess(String o, String msg) {
                 ToastUtils.showShort(msg);
             }
         });

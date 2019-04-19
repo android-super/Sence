@@ -1,32 +1,47 @@
 package com.sence;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import android.telephony.TelephonyManager;
+import android.widget.ImageView;
+
 import com.blankj.utilcode.util.SPUtils;
+import com.orhanobut.logger.Logger;
+import com.sence.bean.request.RStartPictureBean;
+import com.sence.bean.response.PStartPictureBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
+import com.sence.utils.GlideUtils;
+import com.sence.utils.LoginStatus;
 import com.sence.utils.PermissionUtil;
+import com.sence.utils.StatusBarUtil;
+
+import java.util.concurrent.TimeUnit;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-import java.util.concurrent.TimeUnit;
-
 
 public class SplashActivity extends AppCompatActivity {
     private PermissionUtil permissionUtil;
     private Disposable disposable;
+    private ImageView ivPicture,ivFullPicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        StatusBarUtil.setLightMode(this);
+        ivPicture = findViewById(R.id.iv_picture);
+        ivFullPicture = findViewById(R.id.iv_full_picture);
         permissionUtil = new PermissionUtil(this);
         if (permissionUtil.requestPermissions(PermissionUtil.READ_PHONE_STATE,
                 new String[]{Manifest.permission.READ_PHONE_STATE})) {
@@ -41,7 +56,34 @@ public class SplashActivity extends AppCompatActivity {
                     });
         }
         getSystemTime();
+        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+        @SuppressLint("MissingPermission") String imei = telephonyManager.getDeviceId();
+        getStartPicture(imei);
+    }
 
+    private void getStartPicture(String imei) {
+        HttpManager.getInstance().PlayNetCode(HttpCode.START_PICTURE,new RStartPictureBean(imei, LoginStatus.getUid())).request(new ApiCallBack<PStartPictureBean>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(PStartPictureBean o, String msg) {
+                Logger.e("msg==========" + msg);
+                if("0".equals(o.getIs_full())){
+                    GlideUtils.getInstance().loadHead(o.getImg(),ivFullPicture);
+                }else{
+                    GlideUtils.getInstance().loadHead(o.getImg(),ivPicture);
+                }
+
+            }
+        });
     }
 
     private void getSystemTime() {

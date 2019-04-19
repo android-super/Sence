@@ -19,6 +19,9 @@ import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
+/**
+ * 图片伸缩
+ */
 
 public class ImgFlexActivity extends AppCompatActivity {
 

@@ -11,7 +11,6 @@ public enum HttpCode {
     ADDRESS_ADD,//添加地址
     ADDRESS_EDIT,//编辑地址
     ORDER_LIST,//订单列表
-    ORDER_COMMENT,//评价订单
     ADDRESS_LIST,//地址列表
     ADDRESS_DELETE,//删除地址
     GOOD_DETAIL,//商品详情
@@ -23,7 +22,13 @@ public enum HttpCode {
     MAIN_RECOMMEND,//首页推荐
     VIP_MEMBER,//会员
     KIND_GOODS,//分类
+    MESSAGE_INFORM,//通知列表
+    SYSTEM_MESSAGE,//系统消息列表
+    MESSAGE_CENTRE,//消息中心
+    GET_INTRODUCER,//通过邀请码绑定介绍人
+    GET_UPNAME,//通过邀请码获得用户名字
     KIND_GOODS_LIST,//分类下商品列表
+    MESSAGE_LIST,//消息中心 - 评论、点赞列表
     BUS_GOODS,//购物车
     USER_DETAIL,//账户明细
     USER_INFO,//我的
@@ -35,8 +40,8 @@ public enum HttpCode {
     COMMENT_SHOP_LIST,//商品评论列表
     SERVE_COMMENT_LIST,//服务评论列表
     ORDER_DETAIL,//订单详情
-    CONFIRM_TAKEGOOD,//确认收货
-    DELETE_DONEORDER,//删除已完成订单
+    CONFIRM_TAKE_GOOD,//确认收货
+    DELETE_DONE_ORDER,//删除已完成订单
     TIME_REMAINING,//订单剩余时间
     ORDER_DELETE,//取消待付款，待支付订单
     USER_ENJOY_VIP,//尊享会员
@@ -59,7 +64,7 @@ public enum HttpCode {
     BANK_CARD,//我的银行卡列表
     BANK_LIST,//銀行卡列表
     BANK_ADD,//添加银行卡
-    SERVICE_ADDCOMMENT,//添加服务评价
+    SERVICE_ADD_COMMENT,//添加服务评价
     USER_CASH,//提现
     ORDER_COMMIT,//提交订单
     COMMENT_ADD,//添加评论（订单）
@@ -69,6 +74,7 @@ public enum HttpCode {
     CHAT_SEND_MESSAGE,//发送消息
     CHAT_CREATE_GROUP,//创建V群
     CHAT_JOIN,//加入V群
+    PRIVATE_CHAT_LIST,//私聊列表
     CHAT_MEMBER_LIST,//V群成員列表
     CHAT_ENTER,//進入V群
     CHAT_GROUP_LIST,//V群列表
@@ -78,4 +84,5 @@ public enum HttpCode {
     NOTE_ADD,//添加笔记
     PAY_ALI,//支付宝支付
     PAY_WX,//微信支付
+    START_PICTURE,//驱动图片
 }

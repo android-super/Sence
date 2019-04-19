@@ -1,12 +1,8 @@
 package com.sence.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.sence.R;
 import com.sence.adapter.CardAdapter;
@@ -19,7 +15,14 @@ import com.sence.net.manager.ApiCallBack;
 
 import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+
 import static com.sence.activity.CardAddActivity.BANK_CODE;
+/**
+ * 选择银行卡
+ */
 
 public class CardListActivity extends BaseActivity {
 

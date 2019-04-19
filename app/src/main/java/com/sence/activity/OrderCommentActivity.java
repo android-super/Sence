@@ -230,6 +230,8 @@ public class OrderCommentActivity extends BaseActivity implements View.OnClickLi
             ivClosetweShopcomment.setVisibility(View.VISIBLE);
             ivClosethressShopcomment.setVisibility(View.GONE);
         } else if (selectList.size() == 3) {
+            ivImgtweShopcomment.setVisibility(View.VISIBLE);
+            ivImgthressShopcomment.setVisibility(View.VISIBLE);
             Glide.with(OrderCommentActivity.this).load(selectList.get(0).getPath()).into(ivImgoneShopcomment);
             Glide.with(OrderCommentActivity.this).load(selectList.get(1).getPath()).into(ivImgtweShopcomment);
             Glide.with(OrderCommentActivity.this).load(selectList.get(2).getPath()).into(ivImgthressShopcomment);
