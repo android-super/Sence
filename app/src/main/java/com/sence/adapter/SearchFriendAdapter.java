@@ -70,6 +70,10 @@ public class SearchFriendAdapter extends RecyclerView.Adapter<SearchFriendAdapte
         holder.mFocus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
+                    ToastUtils.showShort("请先登录");
+                    return;
+                }
                 if(LoginStatus.getUid().equals(list.get(position).getId())){
                     ToastUtils.showShort("您不可以关注自己");
                     return;
@@ -84,6 +88,10 @@ public class SearchFriendAdapter extends RecyclerView.Adapter<SearchFriendAdapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
+                    ToastUtils.showShort("请先登录");
+                    return;
+                }
                 Intent intent = new Intent(context, MyInfoActivity.class);
                 intent.putExtra("uid",list.get(position).getId());
                 context.startActivity(intent);

@@ -1,6 +1,7 @@
 package com.sence.fragment;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +45,7 @@ public class MyInfoRecommendFragment extends Fragment {
     private SmartRefreshLayout mSmartRefreshLayout;
     private List<PMyInfoServiceBean.ListBean> list = new ArrayList<>();
     private List<PMyInfoBean.ListBean> listOther = new ArrayList<>();
-
+    private String uid = "";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -56,6 +57,7 @@ public class MyInfoRecommendFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         Bundle arguments = getArguments();
         type = arguments.getString("type");
+        uid = arguments.getString("uid");
         init();
     }
 
@@ -120,7 +122,7 @@ public class MyInfoRecommendFragment extends Fragment {
 
     private void doHttp() {
         if("3".equals(type)){
-            HttpManager.getInstance().PlayNetCode(HttpCode.USER_INFO_DATA_SERVICE, new RMyInfoBean(LoginStatus.getUid(), type,LoginStatus.getUid(),page+"","10")).request(new ApiCallBack<PMyInfoServiceBean>() {
+            HttpManager.getInstance().PlayNetCode(HttpCode.USER_INFO_DATA_SERVICE, new RMyInfoBean(LoginStatus.getUid(), type,uid,page+"","10")).request(new ApiCallBack<PMyInfoServiceBean>() {
                 @Override
                 public void onFinish() {
 
@@ -136,6 +138,9 @@ public class MyInfoRecommendFragment extends Fragment {
                     Logger.e("msg==========" + msg);
                     list = o.getList();
                     if(o.getList().size()>0){
+                        if(!TextUtils.isEmpty(uid)){
+                            myInfoServiceAdapter.setIsSelf(false);
+                        }
                         myInfoServiceAdapter.setList(o.getList());
                     }
 
@@ -143,7 +148,7 @@ public class MyInfoRecommendFragment extends Fragment {
             });
             return;
         }
-        HttpManager.getInstance().PlayNetCode(HttpCode.USER_INFO_DATA, new RMyInfoBean(LoginStatus.getUid(), type,"",page+"","10")).request(new ApiCallBack<PMyInfoBean>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.USER_INFO_DATA, new RMyInfoBean(LoginStatus.getUid(), type,uid,page+"","10")).request(new ApiCallBack<PMyInfoBean>() {
             @Override
             public void onFinish() {
 

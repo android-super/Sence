@@ -23,7 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class MyInfoServiceAdapter extends RecyclerView.Adapter<MyInfoServiceAdapter.ViewHolder> {
     private Context context;
     private List<PMyInfoServiceBean.ListBean> list = new ArrayList<>();
-
+    private boolean isSelf = true;
     public MyInfoServiceAdapter(Context context){
         this.context = context;
     }
@@ -63,6 +63,7 @@ public class MyInfoServiceAdapter extends RecyclerView.Adapter<MyInfoServiceAdap
             public void onClick(View v) {
                 Intent intent = new Intent(context, ServiceDetailsActivity.class);
                 intent.putExtra("id",list.get(position).getId());
+                intent.putExtra("isSelf",isSelf);
                 context.startActivity(intent);
             }
         });
@@ -72,6 +73,11 @@ public class MyInfoServiceAdapter extends RecyclerView.Adapter<MyInfoServiceAdap
     public int getItemCount() {
         return list.size();
     }
+
+    public void setIsSelf(boolean b) {
+        isSelf= b;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
 

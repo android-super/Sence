@@ -104,7 +104,8 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     private boolean touch = true;
     private String type = "1";
     private TextView mType;
-
+    private RelativeLayout mHeadBg;
+    private boolean isshow = true;
     @Override
     public int onActLayout() {
         return R.layout.activity_myinfo;
@@ -116,6 +117,8 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         if (NavigationBarUtil.hasNavigationBar(this)) {
             NavigationBarUtil.initActivity(findViewById(android.R.id.content));
         }
+        Intent intent = getIntent();
+        uid = intent.getStringExtra("uid");
         StatusBarUtil.setTranslucentForCoordinatorLayout(this, 0);
         StatusBarUtil.setLightMode(this);
         mAppBarLayout = findViewById(R.id.al_appbar_myinfo);
@@ -125,6 +128,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         mAddress = findViewById(R.id.tv_address_myinfo);
         mShare = findViewById(R.id.iv_share_myinfo);
         mHead = findViewById(R.id.iv_head_myinfo);
+        mHeadBg = findViewById(R.id.rl_headbg_myinfo);
         mFocusNum = findViewById(R.id.tv_focusnum_myinfo);
         mFansNum = findViewById(R.id.tv_fansnum_myinfo);
         mSigner = findViewById(R.id.tv_signer_myinfo);
@@ -148,11 +152,11 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         noteFragment = new UserNoteFragment();
         MyInfoRecommendFragment myInfoRecommendFragment = new MyInfoRecommendFragment();
         fragmentList = new Fragment[]{recommendFragment, noteFragment, myInfoRecommendFragment};
-        mMyInfoRecommendViewPagerAdatpter = new MyInfoRecommendViewPagerAdatpter(getSupportFragmentManager(), this, fragmentList, list);
+        mMyInfoRecommendViewPagerAdatpter = new MyInfoRecommendViewPagerAdatpter(getSupportFragmentManager(), this, fragmentList, list,uid);
         mViewPager.setAdapter(mMyInfoRecommendViewPagerAdatpter);
         mTabLayoutButtom.setupWithViewPager(mViewPager);
-        Intent intent = getIntent();
-        uid = intent.getStringExtra("uid");
+
+
         if (TextUtils.isEmpty(uid) || LoginStatus.getUid().equals(uid)) {
             ivEditMyinfo.setVisibility(View.VISIBLE);
             ivFocusMyinfo.setVisibility(View.GONE);
@@ -230,9 +234,8 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 DisplayMetrics dm = resources.getDisplayMetrics();
                 int height3 = dm.heightPixels;
                 int height = height3 - y;
-                Log.i("aaas", y + "==" + height3 + "==" + height);
-                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams)ivNotimgMyinfo.getLayoutParams();
-                layoutParams.height =  height/2;
+                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams)ivNotimgMyinfo.getLayoutParams();
+                layoutParams.height =  height;
                 ivNotimgMyinfo.setLayoutParams(layoutParams);
             }
         });
@@ -300,9 +303,20 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 }
                 if ("0".equals(o.getIs_kol())) {
                     mShop.setVisibility(View.GONE);
-                    layout.setVisibility(View.VISIBLE);
-                    mIsV.setVisibility(View.GONE);
+                    if(isshow){
+                        isshow=false;
+                        int height = layout.getHeight();
+                        int headHeight = mHead.getHeight();
+                        RelativeLayout.LayoutParams linearParams =(RelativeLayout.LayoutParams) mHead.getLayoutParams();
+                        linearParams.height=headHeight-height;
+                        mHead.setLayoutParams(linearParams);
+                        RelativeLayout.LayoutParams linearParamsBg =(RelativeLayout.LayoutParams) mHeadBg.getLayoutParams();
+                        linearParamsBg.height=headHeight-height;
+                        mHeadBg.setLayoutParams(linearParamsBg);
+                    }
 
+                    mIsV.setVisibility(View.GONE);
+                    layout.setVisibility(View.GONE);
                     ivGroupchatMyinfo.setVisibility(View.GONE);
                 } else {
                     mShopName.setText(o.getGoods_info().getName());
@@ -422,8 +436,13 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         });
     }
     private void rachel() {
-        Log.i("aaaaa",LoginStatus.getUid()+"=="+uid+"==");
-        HttpManager.getInstance().PlayNetCode(HttpCode.RACHEL, new RRachelBean(LoginStatus.getUid(), uid,type)).request(new ApiCallBack<String>() {
+        String typeRachel ;
+        if("0".equals(type)){
+            typeRachel = "1";
+        }else{
+            typeRachel = "2";
+        }
+        HttpManager.getInstance().PlayNetCode(HttpCode.RACHEL, new RRachelBean(LoginStatus.getUid(), uid,typeRachel)).request(new ApiCallBack<String>() {
             @Override
             public void onFinish() {
 
@@ -437,10 +456,10 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
             @Override
             public void onSuccess(String o, String msg) {
                 Logger.e("msg==========" + msg);
-                if("1".equals(type)){
-                    type = "2";
-                }else{
+                if("0".equals(type)){
                     type = "1";
+                }else{
+                    type = "0";
                 }
                 ToastUtils.showShort(msg);
             }
@@ -580,7 +599,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
 
     @OnClick(R.id.iv_share_myinfo)
     public void onViewClicked() {
-        if("1".equals(type)){
+        if("0".equals(type)){
             mType.setText("拉黑");
         }else{
             mType.setText("解除拉黑");

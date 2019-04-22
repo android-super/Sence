@@ -43,7 +43,7 @@ public class UserNoteFragment extends Fragment {
     private int page = 1;
     private String type;
     private ImageView mImg;
-
+    private String uid = "";
     public UserNoteFragment() {
         // Required empty public constructor
     }
@@ -61,12 +61,13 @@ public class UserNoteFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         Bundle arguments = getArguments();
         type = arguments.getString("type");
+        uid = arguments.getString("uid");
         initRefresh();
         initData();
     }
 
     private void initData() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.USER_INFO_DATA, new RMyInfoBean(LoginStatus.getUid(),type,"",page+"","10")).request(new ApiCallBack<PMyInfoBean>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.USER_INFO_DATA, new RMyInfoBean(LoginStatus.getUid(),type,uid,page+"","10")).request(new ApiCallBack<PMyInfoBean>() {
             @Override
             public void onFinish() {
                 smartRefreshLayout.finishRefresh();

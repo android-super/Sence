@@ -73,6 +73,10 @@ public class ServiceDetailsActivity extends BaseActivity {
         StatusBarUtil.setLightMode(this);
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
+        boolean isSelf = intent.getBooleanExtra("isSelf", true);
+        if(!isSelf){
+            ptPubTitle.setRightImg(0);
+        }
         mServiceDetailsAdapter = new ServiceDetailsAdapter(ServiceDetailsActivity.this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ServiceDetailsActivity.this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);

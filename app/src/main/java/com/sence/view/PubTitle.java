@@ -187,7 +187,7 @@ public class PubTitle extends Toolbar {
         }
     }
     public void setRightOnClick(View.OnClickListener listener) {
-        if (title != null) {
+        if (right_text != null) {
             right_text.setOnClickListener(listener);
         }
         if (right_img != null) {

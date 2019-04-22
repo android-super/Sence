@@ -41,6 +41,8 @@ public class UserRecommendFragment extends Fragment {
     private String type;
     private ImageView mImg;
     private boolean isShow = true;
+    private String uid= "";
+
     public UserRecommendFragment() {
         // Required empty public constructor
     }
@@ -58,12 +60,13 @@ public class UserRecommendFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         Bundle arguments = getArguments();
         type = arguments.getString("type");
+        uid = arguments.getString("uid");
         initRefresh();
         initData();
     }
 
     private void initData() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.USER_INFO_DATA, new RMyInfoBean(LoginStatus.getUid(),type,"",page+"","10")).request(new ApiCallBack<PMyInfoBean>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.USER_INFO_DATA, new RMyInfoBean(LoginStatus.getUid(),type,uid,page+"","10")).request(new ApiCallBack<PMyInfoBean>() {
             @Override
             public void onFinish() {
                 smartRefreshLayout.finishRefresh();

@@ -11,12 +11,13 @@ public class MyInfoRecommendViewPagerAdatpter extends FragmentPagerAdapter {
     private Context context;
     private Fragment[] fragmentList = null;
     private String[] list_Title = null;
-    public MyInfoRecommendViewPagerAdatpter(FragmentManager fm, Context context,Fragment[] fragmentList, String[] list_Title) {
+    private String uid ="";
+    public MyInfoRecommendViewPagerAdatpter(FragmentManager fm, Context context,Fragment[] fragmentList, String[] list_Title,String uid) {
         super(fm);
         this.context = context;
         this.fragmentList = fragmentList;
         this.list_Title = list_Title;
-
+        this.uid=uid;
     }
     public void setList(Fragment[] fragmentList, String[] list_Title){
         this.fragmentList = fragmentList;
@@ -28,6 +29,7 @@ public class MyInfoRecommendViewPagerAdatpter extends FragmentPagerAdapter {
         Fragment fragments = fragmentList[position];
         Bundle bundle = new Bundle();
         bundle.putString("type",position+1  +"");
+        bundle.putString("uid",uid);
         fragments.setArguments(bundle);
         return fragments;
     }

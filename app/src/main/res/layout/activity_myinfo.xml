@@ -41,12 +41,12 @@
                             android:layout_height="279dp"
                             android:scaleType="fitXY"
                             android:src="@drawable/hint_img"
-
                             />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="279dp"
+                            android:id="@+id/rl_headbg_myinfo"
                             android:alpha="0.6"
                             android:background="#000000"/>
 
@@ -220,9 +220,7 @@
                             android:id="@+id/v_layout_myinfo"
                             android:layout_width="match_parent"
                             android:layout_height="25dp"
-                            android:layout_alignParentBottom="true"
-                            android:background="@color/white"
-                            android:visibility="gone"></View>
+                            android:layout_alignParentBottom="true"></View>
 
                     </RelativeLayout>
 
@@ -358,13 +356,19 @@
                     />
 
             </LinearLayout>
-            <ImageView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/perch_genrenzhu"
-                android:id="@+id/iv_notimg_myinfo"
-                android:layout_marginTop="100dp"
-                android:layout_centerHorizontal="true"/>
+                android:layout_centerHorizontal="true">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/perch_genrenzhu"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/iv_notimg_myinfo"
+                   />
+            </LinearLayout>
+
 
         </RelativeLayout>
 
