@@ -102,6 +102,8 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     private UserRecommendFragment recommendFragment;
     private BottomSheetDialog mBottomSheetDialog;
     private boolean touch = true;
+    private String type = "1";
+    private TextView mType;
 
     @Override
     public int onActLayout() {
@@ -307,6 +309,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                     mShopPrice.setText("￥ " + o.getGoods_info().getPrice());
                     GlideUtils.getInstance().loadHead(o.getGoods_info().getImg(), mImg);
                 }
+                type= o.getIs_shield();
                 mName.setText(o.getNick_name());
                 mAddress.setText(o.getDetails());
                 mFocusNum.setText(o.getFocus_num());
@@ -342,6 +345,14 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 mBottomSheetDialog.dismiss();
                 break;
             case R.id.ll_report_share:
+                Intent intent = new Intent(MyInfoActivity.this, ReportCauseActivity.class);
+                intent.putExtra("type","1");
+                intent.putExtra("gid",bean.getUid());
+                intent.putExtra("uid",bean.getUid());
+                startActivity(intent);
+                mBottomSheetDialog.dismiss();
+                break;
+            case R.id.ll_rachel_share:
                 rachel();
                 mBottomSheetDialog.dismiss();
                 break;
@@ -411,7 +422,8 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         });
     }
     private void rachel() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.RACHEL, new RRachelBean(LoginStatus.getUid(), uid,"1")).request(new ApiCallBack<String>() {
+        Log.i("aaaaa",LoginStatus.getUid()+"=="+uid+"==");
+        HttpManager.getInstance().PlayNetCode(HttpCode.RACHEL, new RRachelBean(LoginStatus.getUid(), uid,type)).request(new ApiCallBack<String>() {
             @Override
             public void onFinish() {
 
@@ -425,6 +437,11 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
             @Override
             public void onSuccess(String o, String msg) {
                 Logger.e("msg==========" + msg);
+                if("1".equals(type)){
+                    type = "2";
+                }else{
+                    type = "1";
+                }
                 ToastUtils.showShort(msg);
             }
         });
@@ -456,14 +473,13 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         View mView = View.inflate(this, R.layout.layout_share, null);
         mBottomSheetDialog = new BottomSheetDialog(this);
         mBottomSheetDialog.setContentView(mView);
-        ImageView mImg = mView.findViewById(R.id.iv_type_share);
-        TextView mName = mView.findViewById(R.id.tv_type_share);
-        mImg.setImageResource(R.drawable.shape_lahei);
-        mName.setText("拉黑");
+        mType = mView.findViewById(R.id.tv_type_share);
         if (TextUtils.isEmpty(uid) || LoginStatus.getUid().equals(uid)) {
-            mView.findViewById(R.id.ll_layout_share).setVisibility(View.GONE);
+            mView.findViewById(R.id.ll_report_share).setVisibility(View.GONE);
+            mView.findViewById(R.id.ll_rachel_share).setVisibility(View.GONE);
         }
         mView.findViewById(R.id.ll_report_share).setOnClickListener(this);
+        mView.findViewById(R.id.ll_rachel_share).setOnClickListener(this);
         mView.findViewById(R.id.ll_code_share).setOnClickListener(this);
         mView.findViewById(R.id.ll_wei_share).setOnClickListener(this);
         mView.findViewById(R.id.ll_friend_share).setOnClickListener(this);
@@ -564,6 +580,11 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
 
     @OnClick(R.id.iv_share_myinfo)
     public void onViewClicked() {
+        if("1".equals(type)){
+            mType.setText("拉黑");
+        }else{
+            mType.setText("解除拉黑");
+        }
         mBottomSheetDialog.show();
     }
 

@@ -24,6 +24,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 举报
+ */
 public class ReportCauseActivity extends BaseActivity {
 
 
@@ -39,7 +42,8 @@ public class ReportCauseActivity extends BaseActivity {
     private String content;
     private String gid;
     private String type;
-    private String uid = "";
+    private String to_uid = "";
+    private String uid;
 
     @Override
     public int onActLayout() {
@@ -72,8 +76,10 @@ public class ReportCauseActivity extends BaseActivity {
             case R.id.ll_rachel_report:
                 isslect=!isslect;
                 if(isslect){
+                    to_uid = uid;
                     ivSelectReport.setImageResource(R.drawable.report_xuanzhong);
                 }else{
+                    to_uid = "";
                     ivSelectReport.setImageResource(R.drawable.report_wei);
                 }
                 break;
@@ -90,7 +96,7 @@ public class ReportCauseActivity extends BaseActivity {
 
     private void submint() {
         HttpManager.getInstance().PlayNetCode(HttpCode.REPORT,
-                new RReportBean(LoginStatus.getUid(), gid,type,content,uid)).request(new ApiCallBack<String>() {
+                new RReportBean(LoginStatus.getUid(), gid,type,content,to_uid)).request(new ApiCallBack<String>() {
             @Override
             public void onFinish() {
 

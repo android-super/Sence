@@ -42,6 +42,15 @@ public class PUserMyInfoBean {
     private String is_read;
     private GoodsInfoBean goods_info;
     private String is_have_service;
+    private String is_shield;
+
+    public String getIs_shield() {
+        return is_shield;
+    }
+
+    public void setIs_shield(String is_shield) {
+        this.is_shield = is_shield;
+    }
 
     public String getUid() {
         return uid;

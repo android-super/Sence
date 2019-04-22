@@ -60,7 +60,7 @@ public class BlackListActivity extends BaseActivity {
             @Override
             public void onSuccess(List<PBlackListBean> o, String msg){
                 Logger.e("msg==========" + msg);
-//                blackListAdapter.setList(o);
+                blackListAdapter.setList(o);
             }
         });
 

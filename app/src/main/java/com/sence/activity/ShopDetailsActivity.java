@@ -409,7 +409,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_addshop_shopdetails:
-                if (LoginStatus.getUid().isEmpty()) {
+                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
                     ToastUtils.showShort("请先登录");
                     return;
                 }
@@ -419,7 +419,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                 addShop();
                 break;
             case R.id.tv_buy_shopdetails:
-                if (LoginStatus.getUid().isEmpty()) {
+                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
                     ToastUtils.showShort("请先登录");
                     return;
                 }
@@ -428,14 +428,14 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
 
                 break;
             case R.id.ll_service_shopdetails:
-                if (LoginStatus.getUid().isEmpty()) {
+                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
                     ToastUtils.showShort("请先登录");
                     return;
                 }
 
                 break;
             case R.id.ll_shop_shopdetails:
-                if (LoginStatus.getUid().isEmpty()) {
+                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
                     ToastUtils.showShort("请先登录");
                     return;
                 }
@@ -509,10 +509,6 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
             case R.id.tv_cancel_share:
                 mBottomSheetDialog.dismiss();
                 break;
-            case R.id.ll_report_share:
-                startActivity(new Intent(ShopDetailsActivity.this,ReportCauseActivity.class));
-                mBottomSheetDialog.dismiss();
-                break;
 
         }
     }
@@ -521,11 +517,11 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
         mBottomSheetDialog = new BottomSheetDialog(this);
         mBottomSheetDialog.setContentView(mView);
         mView.findViewById(R.id.ll_report_share).setOnClickListener(this);
-        LinearLayout linearLayout = mView.findViewById(R.id.ll_code_share);
+        LinearLayout linearLayout = mView.findViewById(R.id.ll_layout_share);
         linearLayout.setVisibility(View.GONE);
+        mView.findViewById(R.id.view).setVisibility(View.GONE);
         mView.findViewById(R.id.ll_wei_share).setOnClickListener(this);
         mView.findViewById(R.id.ll_friend_share).setOnClickListener(this);
-        mView.findViewById(R.id.tv_cancel_share).setOnClickListener(this);
     }
 
     /**

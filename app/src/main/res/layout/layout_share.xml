@@ -63,6 +63,7 @@
         android:layout_height="1dp"
         android:layout_marginLeft="23dp"
         android:layout_marginRight="23dp"
+        android:id="@+id/view"
         android:layout_marginTop="15dp"
         android:background="#f6f6f6"></View>
     <LinearLayout
@@ -82,7 +83,6 @@
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:id="@+id/iv_type_share"
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/shape_jubao"/>
 
@@ -92,11 +92,32 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="12dp"
                 android:text="举报"
-                android:id="@+id/tv_type_share"
                 android:textColor="#666666"
                 android:textSize="11sp"/>
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_rachel_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="27dp"
+            android:orientation="vertical">
 
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/shape_lahei"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="12dp"
+                android:id="@+id/tv_type_share"
+                android:text="拉黑"
+                android:textColor="#666666"
+                android:textSize="11sp"/>
+        </LinearLayout>
         <LinearLayout
             android:id="@+id/ll_code_share"
             android:layout_width="wrap_content"

@@ -200,14 +200,14 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.user_message:
-                if (LoginStatus.getUid().isEmpty()) {
+                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
                     ToastUtils.showShort("请先登录");
                     return;
                 }
                 startActivity(new Intent(getContext(), MessageActivity.class));
                 break;
             case R.id.user_head:
-                if (LoginStatus.getUid().isEmpty()) {
+                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
                     ToastUtils.showShort("请先登录");
                     return;
                 }
@@ -216,16 +216,17 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.user_name:
-                if (LoginStatus.isLogin()) {
+                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
+                    startActivity(new Intent(getContext(), LoginActivity.class));
+
+                } else {
                     intent = new Intent(getContext(), MyInfoActivity.class);
                     intent.putExtra("uid", LoginStatus.getUid());
                     startActivity(intent);
-                } else {
-                    startActivity(new Intent(getContext(), LoginActivity.class));
                 }
                 break;
             case R.id.user_focus_layout:
-                if (LoginStatus.getUid().isEmpty()) {
+                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
                     ToastUtils.showShort("请先登录");
                     return;
                 }
@@ -234,7 +235,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.user_fans_layout:
-                if (LoginStatus.getUid().isEmpty()) {
+                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
                     ToastUtils.showShort("请先登录");
                     return;
                 }
@@ -243,7 +244,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.user_release_layout:
-                if (LoginStatus.getUid().isEmpty()) {
+                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
                     ToastUtils.showShort("请先登录");
                     return;
                 }
@@ -252,7 +253,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.user_all_order:
-                if (LoginStatus.getUid().isEmpty()) {
+                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
                     ToastUtils.showShort("请先登录");
                     return;
                 }
@@ -261,7 +262,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 startActivity(intentall);
                 break;
             case R.id.user_pay:
-                if (LoginStatus.getUid().isEmpty()) {
+                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
                     ToastUtils.showShort("请先登录");
                     return;
                 }
@@ -270,7 +271,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 startActivity(intentPay);
                 break;
             case R.id.user_send:
-                if (LoginStatus.getUid().isEmpty()) {
+                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
                     ToastUtils.showShort("请先登录");
                     return;
                 }
@@ -279,7 +280,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 startActivity(intentSend);
                 break;
             case R.id.user_get:
-                if (LoginStatus.getUid().isEmpty()) {
+                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
                     ToastUtils.showShort("请先登录");
                     return;
                 }
@@ -288,7 +289,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 startActivity(intentGet);
                 break;
             case R.id.user_comment:
-                if (LoginStatus.getUid().isEmpty()) {
+                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
                     ToastUtils.showShort("请先登录");
                     return;
                 }
@@ -297,35 +298,35 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 startActivity(intentComment);
                 break;
             case R.id.user_flower:
-                if (LoginStatus.getUid().isEmpty()) {
+                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
                     ToastUtils.showShort("请先登录");
                     return;
                 }
                 startActivity(new Intent(getContext(), WebActivity.class));
                 break;
             case R.id.user_account:
-                if (LoginStatus.getUid().isEmpty()) {
+                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
                     ToastUtils.showShort("请先登录");
                     return;
                 }
                 startActivity(new Intent(getContext(), MyAccountActivity.class));
                 break;
             case R.id.user_address:
-                if (LoginStatus.getUid().isEmpty()) {
+                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
                     ToastUtils.showShort("请先登录");
                     return;
                 }
                 startActivity(new Intent(getContext(), ManageAddressActivity.class));
                 break;
             case R.id.user_set:
-                if (LoginStatus.getUid().isEmpty()) {
+                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
                     ToastUtils.showShort("请先登录");
                     return;
                 }
                 startActivity(new Intent(getContext(), SettingActivity.class));
                 break;
             case R.id.user_open:
-                if (LoginStatus.getUid().isEmpty()) {
+                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
                     ToastUtils.showShort("请先登录");
                     return;
                 }

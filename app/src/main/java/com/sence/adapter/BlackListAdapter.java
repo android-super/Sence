@@ -55,8 +55,8 @@ public class BlackListAdapter extends RecyclerView.Adapter<BlackListAdapter.View
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mImageView = itemView.findViewById(R.id.item_head);
-            mName = itemView.findViewById(R.id.item_name);
+            mImageView = itemView.findViewById(R.id.iv_img_blacklist);
+            mName = itemView.findViewById(R.id.tv_name_blacklist);
         }
     }
 }
