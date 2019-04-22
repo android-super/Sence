@@ -70,6 +70,10 @@ public class SearchFriendAdapter extends RecyclerView.Adapter<SearchFriendAdapte
         holder.mFocus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(LoginStatus.getUid().equals(list.get(position).getId())){
+                    ToastUtils.showShort("您不可能关注自己");
+                    return;
+                }
                 if(list.get(position).getIsFollow().equals("1")){
                     cancelFocus(position,holder);
                 }else{

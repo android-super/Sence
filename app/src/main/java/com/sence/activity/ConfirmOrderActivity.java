@@ -179,7 +179,17 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         tvNameConfirmorder.setText(nameAddress);
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if("paysuccess".equals(LoginStatus.getPayType())){
+            SharedPreferencesUtil.getInstance().putString("paytype", "");
+            alterDone();
+        }else if("payfail".equals(LoginStatus.getPayType())){
+            SharedPreferencesUtil.getInstance().putString("paytype", "");
+            alter();
+        }
+    }
     @OnClick({R.id.rl_address_confirmorder, R.id.bt_submint_confirmorder, R.id.rl_addaddress_confirmorder})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -401,6 +411,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                         Toast.makeText(ConfirmOrderActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
                         alterDone();
                     } else {
+                        alter();
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
                         Toast.makeText(ConfirmOrderActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
                     }
@@ -441,6 +452,9 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void alter(){
+        if(mBottomSheetDialog.isShowing()){
+            mBottomSheetDialog.dismiss();
+        }
         View view = View.inflate(ConfirmOrderActivity.this, R.layout.alter_deleteorder, null);
         final AlertDialog alertDialog = new AlertDialog.Builder(ConfirmOrderActivity.this,R.style.AlertDialogStyle).create();
         alertDialog.getWindow().setLayout(new DensityUtil().dip2px(270), LinearLayout.LayoutParams.WRAP_CONTENT);

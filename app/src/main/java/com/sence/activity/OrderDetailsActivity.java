@@ -21,6 +21,8 @@ import com.alipay.sdk.app.PayTask;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.orhanobut.logger.Logger;
+import com.scwang.smartrefresh.layout.util.DensityUtil;
+import com.sence.MainActivity;
 import com.sence.R;
 import com.sence.adapter.OrderDetailsAdapter;
 import com.sence.base.BaseActivity;
@@ -36,6 +38,7 @@ import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.DateUtils;
 import com.sence.utils.LoginStatus;
+import com.sence.utils.SharedPreferencesUtil;
 import com.sence.utils.StatusBarUtil;
 import com.sence.view.PubTitle;
 import com.sence.wxapi.WeiXinPayUtils;
@@ -129,6 +132,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
     private String address;
     private String nameAddress;
     private String phoneAddress;
+    private AlertDialog dialog;
 
 
     @Override
@@ -301,7 +305,55 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
             }
         });
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if("paysuccess".equals(LoginStatus.getPayType())){
+            SharedPreferencesUtil.getInstance().putString("paytype", "");
+            alterDone();
+        }else if("payfail".equals(LoginStatus.getPayType())){
+            SharedPreferencesUtil.getInstance().putString("paytype", "");
+//            alterDone();
+        }
+    }
+    private void alterDone() {
+        View view = View.inflate(OrderDetailsActivity.this, R.layout.alter_deleteorder, null);
+        dialog = new AlertDialog.Builder(OrderDetailsActivity.this, R.style.AlertDialogStyle).create();
+        dialog.setView(view);
+        dialog.getWindow().setLayout(new DensityUtil().dip2px(270), LinearLayout.LayoutParams.WRAP_CONTENT);
+        dialog.show();
+        TextView mTitle = view.findViewById(R.id.tv_title_deleteorder);
+        mTitle.setText("购买完成");
+        TextView mContent = view.findViewById(R.id.tv_content_deleteorder);
+        mContent.setText("已成功购买这些商品，可以在我的订单里查看订单最新状态。");
+        TextView mCancel = view.findViewById(R.id.tv_cancel_deleteorder);
+        mCancel.setText("我的订单");
+        TextView mConfirm = view.findViewById(R.id.tv_confirm_deleteorder);
+        mConfirm.setText("继续购买");
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+        mCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                Intent intentall = new Intent(OrderDetailsActivity.this, MyOrderActivity.class);
+                intentall.putExtra("type", 0);
+                startActivity(intentall);
+                finish();
+            }
+        });
 
+        mConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                Intent intent = new Intent(OrderDetailsActivity.this, MainActivity.class);
+                intent.putExtra("type",2);
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
     private void ConfirmTakeGood() {
         HttpManager.getInstance().PlayNetCode(HttpCode.CONFIRM_TAKE_GOOD, new ROrderDetailsBean(id, LoginStatus.getUid())).request(new ApiCallBack<String>() {
 
@@ -475,6 +527,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onSuccess(PWxPayBean o, String msg) {
                 Logger.e("msg==========" + msg);
+                SharedPreferencesUtil.getInstance().putString("paytype", "shop");
                 WeiXinPayUtils wxpay = new WeiXinPayUtils(OrderDetailsActivity.this, o);
                 wxpay.pay();
                 finish();
@@ -537,7 +590,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
                     if (TextUtils.equals(resultStatus, "9000")) {
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                         Toast.makeText(OrderDetailsActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
-                        finish();
+                        alterDone();
                     } else {
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
                         Toast.makeText(OrderDetailsActivity.this, "支付失败", Toast.LENGTH_SHORT).show();

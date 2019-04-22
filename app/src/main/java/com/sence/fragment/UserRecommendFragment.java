@@ -15,6 +15,7 @@ import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sence.R;
+import com.sence.activity.MyInfoActivity;
 import com.sence.adapter.UserRecommendAdapter;
 import com.sence.bean.request.RMyInfoBean;
 import com.sence.bean.request.RNidBean;
@@ -39,7 +40,7 @@ public class UserRecommendFragment extends Fragment {
     private int size = 10;
     private String type;
     private ImageView mImg;
-
+    private boolean isShow = true;
     public UserRecommendFragment() {
         // Required empty public constructor
     }
@@ -77,8 +78,9 @@ public class UserRecommendFragment extends Fragment {
             @Override
             public void onSuccess(PMyInfoBean o, String msg) {
                 if(o.getList().size()>0){
-                    mImg.setVisibility(View.GONE);
+                    isShow = false;
                 }
+                ((MyInfoActivity)getActivity()).setRecommendShowImg(isShow);
                 if (page == 1) {
 
                     adapter.setNewData(o.getList());
@@ -104,7 +106,7 @@ public class UserRecommendFragment extends Fragment {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mImg.getLayoutParams();
                 //获取当前控件的布局对象
-                Log.i("aaaaaa", dx+"=="+dy);
+                Log.i("aaaaaa", dx+"=1="+dy);
                 layoutParams.height=dy;//设置当前控件布局的高度
                 mImg.setLayoutParams(layoutParams);
             }

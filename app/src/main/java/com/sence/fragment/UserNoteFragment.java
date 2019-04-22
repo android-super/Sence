@@ -15,6 +15,7 @@ import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sence.R;
+import com.sence.activity.MyInfoActivity;
 import com.sence.adapter.UserNoteAdapter;
 import com.sence.bean.request.RMyInfoBean;
 import com.sence.bean.request.RNidBean;
@@ -37,7 +38,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class UserNoteFragment extends Fragment {
     private SmartRefreshLayout smartRefreshLayout;
     private RecyclerView recyclerView;
-
+    private boolean isShow = true;
     private UserNoteAdapter adapter;
     private int page = 1;
     private String type;
@@ -80,8 +81,9 @@ public class UserNoteFragment extends Fragment {
             @Override
             public void onSuccess(PMyInfoBean o, String msg) {
                 if(o.getList().size()>0){
-                    mImg.setVisibility(View.GONE);
+                    isShow=false;
                 }
+                ((MyInfoActivity)getActivity()).setIsShow(isShow);
                 if (page == 1) {
                     adapter.setNewData(o.getList());
                 } else {

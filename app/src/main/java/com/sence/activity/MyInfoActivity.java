@@ -4,15 +4,18 @@ import android.app.Activity;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +30,7 @@ import com.sence.activity.chat.ui.ChatMsgGroupActivity;
 import com.sence.adapter.MyInfoRecommendViewPagerAdatpter;
 import com.sence.base.BaseActivity;
 import com.sence.bean.request.RCancelFocusBean;
+import com.sence.bean.request.RRachelBean;
 import com.sence.bean.request.RUserinfoBean;
 import com.sence.bean.response.PUserMyInfoBean;
 import com.sence.fragment.MyInfoRecommendFragment;
@@ -49,6 +53,7 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
@@ -70,6 +75,10 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     ImageView ivGroupchatMyinfo;
     @BindView(R.id.iv_share_myinfo)
     ImageView ivShareMyinfo;
+    @BindView(R.id.cl_layout_myinfo)
+    CoordinatorLayout clLayoutMyinfo;
+    @BindView(R.id.iv_notimg_myinfo)
+    ImageView ivNotimgMyinfo;
     private ViewPager mViewPager;
     private AppBarLayout mAppBarLayout;
     private TabLayout mTabLayoutButtom;
@@ -80,13 +89,11 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     private LinearLayout mShop;
     private ImageView mHead;
     private NiceImageView mIsV;
-    private LinearLayout ll_group_myinfo;
-
+    private boolean recommendShow,noteShow;
     private MyInfoRecommendViewPagerAdatpter mMyInfoRecommendViewPagerAdatpter;
     private String[] list = {"推荐", "笔记", "共享"};
     private int scaleRatio;
     private PUserMyInfoBean bean;
-    private int page = 1;
     private String uid = "";
     private String is_focus;
     private UserNoteFragment noteFragment;
@@ -94,6 +101,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     private View layout;
     private UserRecommendFragment recommendFragment;
     private BottomSheetDialog mBottomSheetDialog;
+    private boolean touch = true;
 
     @Override
     public int onActLayout() {
@@ -134,7 +142,6 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         mIsV = findViewById(R.id.iv_isv_myinfo);
         mBack = findViewById(R.id.iv_back_myinfo);
         mBack.setOnClickListener(this);
-
         recommendFragment = new UserRecommendFragment();
         noteFragment = new UserNoteFragment();
         MyInfoRecommendFragment myInfoRecommendFragment = new MyInfoRecommendFragment();
@@ -150,12 +157,14 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
             ivChatMyinfo.setVisibility(View.GONE);
             uid = LoginStatus.getUid();
         }
+
         myInfoRecommendFragment.result(new MyInfoRecommendFragment.DeleteServiceListener() {
             @Override
             public void delete() {
 
             }
         });
+
         mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
@@ -179,7 +188,54 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 startActivity(intent);
             }
         });
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if(position==0){
+                    if(recommendShow){
+                        ivNotimgMyinfo.setVisibility(View.VISIBLE);
+                    }else{
+                        ivNotimgMyinfo.setVisibility(View.GONE);
+                    }
+                }else if(position==1){
+                    if(noteShow){
+                        ivNotimgMyinfo.setVisibility(View.VISIBLE);
+                    }else{
+                        ivNotimgMyinfo.setVisibility(View.GONE);
+                    }
+                }else if(position==2){
+                    ivNotimgMyinfo.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+        mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
+                int[] location = new int[2];
+                mTabLayoutButtom.getLocationOnScreen(location);
+                int y = location[1];
+                Resources resources = getResources();
+                DisplayMetrics dm = resources.getDisplayMetrics();
+                int height3 = dm.heightPixels;
+                int height = height3 - y;
+                Log.i("aaas", y + "==" + height3 + "==" + height);
+                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams)ivNotimgMyinfo.getLayoutParams();
+                layoutParams.height =  height/2;
+                ivNotimgMyinfo.setLayoutParams(layoutParams);
+            }
+        });
     }
+
 
     private void dim(final String url) {
 
@@ -199,10 +255,11 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         }).start();
     }
 
+
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what){
+            switch (msg.what) {
                 case 1:
                     Bitmap blurBitmap = (Bitmap) msg.obj;
                     mHead.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -274,32 +331,34 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 finish();
                 break;
             case R.id.ll_wei_share:
-                shareWeb(MyInfoActivity.this, "http://192.168.1.10:8085/Public/web/share/datum.html?uid="+LoginStatus.getUid()+"&to_uid="+uid, bean.getUser_name()+bean.getNick_name()+"的精彩生活", "女神的日常", SHARE_MEDIA.WEIXIN,bean.getAvatar());
+                shareWeb(MyInfoActivity.this, "http://192.168.1.10:8085/Public/web/share/datum.html?uid=" + LoginStatus.getUid() + "&to_uid=" + uid, bean.getUser_name() + bean.getNick_name() + "的精彩生活", "女神的日常", SHARE_MEDIA.WEIXIN, bean.getAvatar());
                 mBottomSheetDialog.dismiss();
                 break;
             case R.id.ll_friend_share:
-                shareWeb(MyInfoActivity.this, "http://192.168.1.10:8085/Public/web/share/datum.html?uid="+LoginStatus.getUid()+"&to_uid="+uid, bean.getUser_name()+bean.getNick_name()+"的精彩生活", "女神的日常", SHARE_MEDIA.WEIXIN_CIRCLE,bean.getAvatar());
+                shareWeb(MyInfoActivity.this, "http://192.168.1.10:8085/Public/web/share/datum.html?uid=" + LoginStatus.getUid() + "&to_uid=" + uid, bean.getUser_name() + bean.getNick_name() + "的精彩生活", "女神的日常", SHARE_MEDIA.WEIXIN_CIRCLE, bean.getAvatar());
                 mBottomSheetDialog.dismiss();
                 break;
             case R.id.tv_cancel_share:
                 mBottomSheetDialog.dismiss();
                 break;
             case R.id.ll_report_share:
+                rachel();
                 mBottomSheetDialog.dismiss();
                 break;
             case R.id.ll_code_share:
                 ToastUtils.showShort("复制成功");
-                CopyToClipboard(this,bean.getInviteCode());
+                CopyToClipboard(this, bean.getInviteCode());
                 mBottomSheetDialog.dismiss();
                 break;
         }
     }
 
-    public static void CopyToClipboard(Context context, String text){
-             ClipboardManager clip = (ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
-             //clip.getText(); // 粘贴
-              clip.setText(text); // 复制
-             }
+    public static void CopyToClipboard(Context context, String text) {
+        ClipboardManager clip = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        //clip.getText(); // 粘贴
+        clip.setText(text); // 复制
+    }
+
     @OnClick({R.id.iv_focus_myinfo, R.id.iv_chat_myinfo, R.id.iv_groupchat_myinfo, R.id.iv_edit_myinfo})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -351,7 +410,25 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
             }
         });
     }
+    private void rachel() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.RACHEL, new RRachelBean(LoginStatus.getUid(), uid,"1")).request(new ApiCallBack<String>() {
+            @Override
+            public void onFinish() {
 
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(String o, String msg) {
+                Logger.e("msg==========" + msg);
+                ToastUtils.showShort(msg);
+            }
+        });
+    }
     private void cancelFocus() {
         HttpManager.getInstance().PlayNetCode(HttpCode.USER_FOCUS_CANCEL, new RCancelFocusBean(LoginStatus.getUid(), uid)).request(new ApiCallBack<String>() {
             @Override
@@ -488,5 +565,13 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     @OnClick(R.id.iv_share_myinfo)
     public void onViewClicked() {
         mBottomSheetDialog.show();
+    }
+
+    public void setIsShow(boolean isShow) {
+        noteShow = isShow;
+    }
+
+    public void setRecommendShowImg(boolean isShow) {
+        recommendShow = isShow;
     }
 }

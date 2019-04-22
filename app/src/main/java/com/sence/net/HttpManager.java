@@ -158,8 +158,17 @@ public class HttpManager<P> {
             case GET_UPNAME:
                 observable = httpService.GetUpName(requestBean.getMap());
                 break;
+            case BLACK_LIST:
+                observable = httpService.BlackList(requestBean.getMap());
+                break;
             case GET_INTRODUCER:
                 observable = httpService.GetIntreoducer(requestBean.getMap());
+                break;
+            case RACHEL:
+                observable = httpService.Rachel(requestBean.getMap());
+                break;
+            case REPORT:
+                observable = httpService.Report(requestBean.getMap());
                 break;
             case SYSTEM_MESSAGE:
                 observable = httpService.SystemMessage(requestBean.getMap());

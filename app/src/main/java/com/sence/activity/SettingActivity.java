@@ -117,7 +117,11 @@ public class SettingActivity extends BaseActivity {
                 startActivity(new Intent(SettingActivity.this, BlackListActivity.class));
                 break;
             case R.id.ll_policy_setting:
-                startActivity(new Intent(SettingActivity.this, WebActivity.class));
+                Intent intent = new Intent(SettingActivity.this, WebActivity.class);
+                intent.putExtra("private",true);
+                intent.putExtra("url","http://192.168.1.10:8085/Public/web/deal/privacy.html");
+                intent.putExtra("title","隐私政策");
+                startActivity(intent);
                 break;
             case R.id.ll_about_setting:
                 startActivity(new Intent(SettingActivity.this, AboutActivity.class));

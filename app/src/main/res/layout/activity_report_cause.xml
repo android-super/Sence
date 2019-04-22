@@ -40,13 +40,13 @@
         android:id="@+id/ll_rachel_report"
         android:background="@color/white">
         <ImageView
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:layout_width="63dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:src="@drawable/report_wei"
-            android:layout_marginLeft="22dp"
+            android:paddingLeft="22dp"
             android:id="@+id/iv_select_report"
-            android:layout_marginRight="23dp"
+            android:paddingRight="23dp"
             />
         <TextView
             android:layout_width="wrap_content"

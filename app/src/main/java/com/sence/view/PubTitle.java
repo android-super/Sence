@@ -180,9 +180,14 @@ public class PubTitle extends Toolbar {
         title.setText(tool_cover_title);
         parent.addView(title);
     }
-
+    public void setTitleText(String content) {
+        if (title != null) {
+            title.setText(content);
+            invalidate();
+        }
+    }
     public void setRightOnClick(View.OnClickListener listener) {
-        if (right_text != null) {
+        if (title != null) {
             right_text.setOnClickListener(listener);
         }
         if (right_img != null) {

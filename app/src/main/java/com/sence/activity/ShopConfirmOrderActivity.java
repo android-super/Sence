@@ -175,6 +175,9 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
     }
 
     private void alter() {
+        if(mBottomSheetDialog.isShowing()){
+            mBottomSheetDialog.dismiss();
+        }
         View view = View.inflate(ShopConfirmOrderActivity.this, R.layout.alter_deleteorder, null);
         alertDialog = new AlertDialog.Builder(ShopConfirmOrderActivity.this, R.style.AlertDialogStyle).create();
         alertDialog.setView(view);
@@ -206,6 +209,19 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
             }
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if("paysuccess".equals(LoginStatus.getPayType())){
+            SharedPreferencesUtil.getInstance().putString("paytype", "");
+            alterDone();
+        }else if("payfail".equals(LoginStatus.getPayType())){
+            SharedPreferencesUtil.getInstance().putString("paytype", "");
+            alter();
+        }
+    }
+
     private void alterDone() {
         View view = View.inflate(ShopConfirmOrderActivity.this, R.layout.alter_deleteorder, null);
         dialog = new AlertDialog.Builder(ShopConfirmOrderActivity.this, R.style.AlertDialogStyle).create();
@@ -326,6 +342,7 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
                         Toast.makeText(ShopConfirmOrderActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
                         alterDone();
                     } else {
+                        alter();
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
                         Toast.makeText(ShopConfirmOrderActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
                     }

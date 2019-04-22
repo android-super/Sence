@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/perch_genrenzhu"
         android:layout_marginTop="100dp"
+        android:visibility="gone"
         android:layout_centerHorizontal="true"
         android:id="@+id/iv_img_usernote"/>
 </RelativeLayout>

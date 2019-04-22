@@ -141,6 +141,18 @@ public interface HttpService {
     Observable<BaseResponseBean<String>> GetIntreoducer(@FieldMap Map<String, Object> map);//通过邀请码绑定介绍人
 
     @FormUrlEncoded
+    @POST(Urls.BLACK_LIST)
+    Observable<BaseResponseBean<List<PBlackListBean>>> BlackList(@FieldMap Map<String, Object> map);//拉黑列表
+
+    @FormUrlEncoded
+    @POST(Urls.RACHEL)
+    Observable<BaseResponseBean<String>> Rachel(@FieldMap Map<String, Object> map);//拉黑
+
+    @FormUrlEncoded
+    @POST(Urls.REPORT)
+    Observable<BaseResponseBean<String>> Report(@FieldMap Map<String, Object> map);//举报
+
+    @FormUrlEncoded
     @POST(Urls.GET_UPNAME)
     Observable<BaseResponseBean<PBindingLinkBean>> GetUpName(@FieldMap Map<String, Object> map);//通过邀请码获得用户名
 
@@ -218,10 +230,6 @@ public interface HttpService {
     @POST(Urls.MAIN_NOTE)
     Observable<BaseResponseBean<PMainBean>> MainNote(@FieldMap Map<String, Object> map);//首页笔记
 
-
-    @FormUrlEncoded
-    @POST(Urls.SERVE_COMMENT_ADD)
-    Observable<BaseResponseBean<String>> ServeCommentAdd(@FieldMap Map<String, Object> map);//添加服务评价
 
     @FormUrlEncoded
     @POST(Urls.GOOD_KIND)

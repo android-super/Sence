@@ -25,6 +25,9 @@ public class Urls {
     public static final String PAY_WX = "/index.php/Api/Wxpay/wx_prepay";//微信支付
     public static final String START_PICTURE = "/index.php/Api/Public/getStartImg";//启动图片
     //用户
+    public static final String BLACK_LIST = "/index.php/api/user/shieldList";//拉黑列表
+    public static final String RACHEL = "/index.php/api/user/shield";//拉黑
+    public static final String REPORT = "/index.php/api/user/report";//举报
     public static final String GET_UPNAME = "/index.php/Api/User/getUsernameByCode";//通过邀请码获得用户名
     public static final String GET_INTRODUCER = "/index.php/Api/User/bindInviteUser";//通过邀请码绑定介绍人
     public static final String MESSAGE_INFORM = "/index.php/api/mine/informDetail";//通知列表
@@ -99,7 +102,6 @@ public class Urls {
     //服务
     public static final String SERVE_DETAIL = "/index.php/Api/Serve/getServeDetail";//服务详情
     public static final String SERVE_COMMENT_LIST = "/index.php/Api/Serve/getServiceComments";//服务评论列表
-    public static final String SERVE_COMMENT_ADD = "/index.php/Api/Orders/evaluateOrder";//添加服务评价
     //V群
     public static final String CHAT_SEND_MESSAGE = "/index.php/api/VGroup/sendMessageToGroup";//发送消息
     public static final String CHAT_CREATE_GROUP = "/index.php/api/VGroup/createVGroup";//创建微群

@@ -7,7 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.sence.R;
-import com.sence.bean.response.PMyInfoBean;
+import com.sence.bean.response.PBlackListBean;
+import com.sence.utils.GlideUtils;
 import com.sence.view.NiceImageView;
 
 import java.util.ArrayList;
@@ -18,12 +19,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class BlackListAdapter extends RecyclerView.Adapter<BlackListAdapter.ViewHolder> {
     private Context context;
-    private List<PMyInfoBean.ListBean> list = new ArrayList<>();
+    private List<PBlackListBean> list = new ArrayList<>();
 
     public BlackListAdapter(Context context){
         this.context = context;
     }
-    public void setList(List<PMyInfoBean.ListBean> list){
+    public void setList(List<PBlackListBean> list){
         this.list = list;
         notifyDataSetChanged();
     }
@@ -38,13 +39,13 @@ public class BlackListAdapter extends RecyclerView.Adapter<BlackListAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull BlackListAdapter.ViewHolder holder, int position) {
-//        GlideUtils.getInstance().loadHead( list.get(position).getAvatar(),holder.mImageView);
-//        holder.mName.setText(list.get(position).getNick_name());
+        GlideUtils.getInstance().loadHead( list.get(position).getAvatar(),holder.mImageView);
+        holder.mName.setText(list.get(position).getNick_name());
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return list.size();
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
 

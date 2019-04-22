@@ -27,6 +27,9 @@ public enum HttpCode {
     MESSAGE_CENTRE,//消息中心
     GET_INTRODUCER,//通过邀请码绑定介绍人
     GET_UPNAME,//通过邀请码获得用户名字
+    BLACK_LIST,//拉黑列表
+    RACHEL,//拉黑
+    REPORT,//举报
     KIND_GOODS_LIST,//分类下商品列表
     MESSAGE_LIST,//消息中心 - 评论、点赞列表
     BUS_GOODS,//购物车

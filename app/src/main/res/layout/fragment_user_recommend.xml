@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:id="@+id/rl_layout_recommend"
                 xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/smart_refresh"
@@ -17,8 +18,10 @@
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:src="@drawable/perch_genrenzhu"
         android:id="@+id/iv_img_userrecommend"
+        android:visibility="gone"
+        android:layout_marginTop="100dp"
         android:layout_centerHorizontal="true"/>
 </RelativeLayout>
