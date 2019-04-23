@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.PhoneUtils;
 import com.sence.activity.WebActivity;
+import com.sence.activity.web.WebConstans;
 import com.sence.base.BaseActivity;
 import com.sence.bean.request.RLoginBean;
 import com.sence.bean.response.PUserBean;
@@ -78,6 +79,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.login_protocol:
                 Intent intent = new Intent(LoginActivity.this, WebActivity.class);
+                intent.putExtra("code", WebConstans.WebCode.HY);
                 startActivity(intent);
                 break;
             case R.id.login_rule:
@@ -127,7 +129,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 SharedPreferencesUtil.getInstance().putString("id_card", o.getNick_name());
                 SharedPreferencesUtil.getInstance().putString("id_status", o.getId_status());
                 SharedPreferencesUtil.getInstance().putString("img_status", o.getImg_status());
-                SharedPreferencesUtil.getInstance().putString("token",o.getToken());
+                SharedPreferencesUtil.getInstance().putString("token", o.getToken());
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();

@@ -8,7 +8,7 @@ import com.sence.utils.LoginStatus;
  * 描述:SenceGit
  */
 public class WebConstans {
-    enum WebCode {
+    public enum WebCode {
         YSZC,//隐私政策
         HY,//花园
         XKXY,//许可协议
