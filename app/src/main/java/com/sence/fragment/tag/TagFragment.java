@@ -113,6 +113,8 @@ public class TagFragment extends Fragment {
                                                    DataSource dataSource, boolean isFirstResource) {
                         width = resource.getWidth();
                         height = resource.getHeight();
+                        item_height = resource.getHeight();
+                        item_width = resource.getWidth();
                         handler.sendEmptyMessage(0);
                         return false;
                     }
@@ -151,14 +153,11 @@ public class TagFragment extends Fragment {
                     TagUtils.height = height;
                 }
             }
-            item_height = height;
-            item_width = width;
             RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) tag_layout.getLayoutParams();
             layoutParams.width = width;
             layoutParams.height = height;
             tag_layout.setLayoutParams(layoutParams);
             if (!is_add) {
-                List<RTagInfoItem> list = TagUtils.tagInfos.get(position).getTagInfoItems();
                 int width = TagUtils.tagInfos.get(position).getWidth();
                 int height = TagUtils.tagInfos.get(position).getHeight();
                 tag_layout.setTagInfoItems(TagUtils.tagInfos.get(position).getTagInfoItems(), width, height);

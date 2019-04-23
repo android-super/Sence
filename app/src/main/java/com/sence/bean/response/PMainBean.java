@@ -67,6 +67,25 @@ public class PMainBean {
         private String praise_count;
         private String is_like;
 
+        public float getHeight() {
+            return height;
+        }
+
+        public void setHeight(float height) {
+            this.height = height;
+        }
+
+        public float getWidth() {
+            return width;
+        }
+
+        public void setWidth(float width) {
+            this.width = width;
+        }
+
+        private float height;
+        private float width;
+
         public String getDescribe() {
             return describe;
         }

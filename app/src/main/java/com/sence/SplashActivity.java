@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.widget.ImageView;
 
+import com.blankj.utilcode.util.PhoneUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.orhanobut.logger.Logger;
 import com.sence.bean.request.RStartPictureBean;
@@ -57,13 +58,11 @@ public class SplashActivity extends AppCompatActivity {
                     });
         }
         getSystemTime();
-        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-        @SuppressLint("MissingPermission") String imei = telephonyManager.getDeviceId();
-        getStartPicture(imei);
+        getStartPicture();
     }
 
-    private void getStartPicture(String imei) {
-        HttpManager.getInstance().PlayNetCode(HttpCode.START_PICTURE, new RStartPictureBean(imei,
+    private void getStartPicture() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.START_PICTURE, new RStartPictureBean(PhoneUtils.getIMEI(),
                 LoginStatus.getUid())).request(new ApiCallBack<PStartPictureBean>() {
             @Override
             public void onFinish() {
@@ -77,11 +76,10 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(PStartPictureBean o, String msg) {
-                Logger.e("msg==========" + msg);
                 if ("0".equals(o.getIs_full())) {
-                    GlideUtils.getInstance().loadHead(o.getImg(), ivFullPicture);
+                    GlideUtils.getInstance().loadNormal(o.getImg(), ivFullPicture);
                 } else {
-                    GlideUtils.getInstance().loadHead(o.getImg(), ivPicture);
+                    GlideUtils.getInstance().loadNormal(o.getImg(), ivPicture);
                 }
 
             }

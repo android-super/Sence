@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
+import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.luck.picture.lib.PictureSelector;
@@ -197,7 +198,8 @@ public class CommitTagActivity extends BaseActivity implements View.OnClickListe
                     new RNoteFileAddBean(video, true));
         } else {
             type = "1";
-            Log.e("TAG", tagInfo);
+            width = ConvertUtils.px2dp(width);
+            height = ConvertUtils.px2dp(height);
             httpManager = HttpManager.getInstance().PlayNetCode(HttpCode.NOTE_ADD, new RNoteAddImgBean(uid, type,
                             content, width + ""
                             , height +
@@ -291,6 +293,7 @@ public class CommitTagActivity extends BaseActivity implements View.OnClickListe
     protected void onDestroy() {
         super.onDestroy();
         PictureFileUtils.deleteCacheDirFile(CommitTagActivity.this);
+        TagUtils.clear();
     }
 
 }

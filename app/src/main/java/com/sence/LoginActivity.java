@@ -62,8 +62,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
 
-
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -79,10 +77,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 finish();
                 break;
             case R.id.login_protocol:
-                startActivity(new Intent(LoginActivity.this, WebActivity.class));
+                Intent intent = new Intent(LoginActivity.this, WebActivity.class);
+                startActivity(intent);
                 break;
             case R.id.login_rule:
-                startActivity(new Intent(LoginActivity.this, WebActivity.class));
+                intent = new Intent(LoginActivity.this, WebActivity.class);
+                startActivity(intent);
                 break;
             case R.id.login_look:
                 finish();
@@ -104,7 +104,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
             @Override
             public void Message(int code, String message) {
-                if (code==3){//登录失败，未绑定手机号
+                if (code == 3) {//登录失败，未绑定手机号
                     Intent intent = new Intent(LoginActivity.this, BindPhoneActivity.class);
                     for (Map.Entry<String, String> entry : map.entrySet()) {
                         String key = entry.getKey();
@@ -127,6 +127,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 SharedPreferencesUtil.getInstance().putString("id_card", o.getNick_name());
                 SharedPreferencesUtil.getInstance().putString("id_status", o.getId_status());
                 SharedPreferencesUtil.getInstance().putString("img_status", o.getImg_status());
+                SharedPreferencesUtil.getInstance().putString("token",o.getToken());
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
@@ -148,7 +149,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
             if (UMShareAPI.get(LoginActivity.this).isAuthorize(LoginActivity.this, SHARE_MEDIA.WEIXIN)) {
                 String open_id = map.get("openid");
-                Login(open_id,map);
+                Login(open_id, map);
             }
         }
 

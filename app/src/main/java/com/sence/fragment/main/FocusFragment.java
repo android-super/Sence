@@ -111,7 +111,7 @@ public class FocusFragment extends Fragment {
                 ConvertUtils.dp2px(4)
         );
         recyclerView.addItemDecoration(gridSpacingItemDecoration);
-        adapter = new MainFocusAdapter(R.layout.rv_item_main_focus);
+        adapter = new MainFocusAdapter(R.layout.rv_item_note);
         recyclerView.setAdapter(adapter);
 
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {

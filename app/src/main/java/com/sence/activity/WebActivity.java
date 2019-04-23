@@ -54,13 +54,6 @@ public class WebActivity extends BaseActivity {
 
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
-
     private void doData(String url) {
         settings = webView.getSettings();
         settings.setUseWideViewPort(true);

@@ -10,14 +10,13 @@
 
     <com.sence.view.NiceImageView
             android:id="@+id/item_img"
-            android:src="@drawable/hint_img"
-            android:scaleType="centerCrop"
+            android:scaleType="fitCenter"
             app:corner_radius="4dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:transitionName="@string/translation_recommend_name"
             android:layout_width="match_parent"
-            android:layout_height="160dp"/>
+            android:layout_height="200dp"/>
 
     <TextView
             android:text="@string/hint_describe"
@@ -30,7 +29,7 @@
             android:textSize="16sp"
             android:layout_marginTop="10dp"
             android:textStyle="bold"
-            android:layout_marginBottom="6dp"
+            android:layout_marginBottom="2dp"
             android:maxLines="1"
             android:layout_height="match_parent"/>
 
@@ -54,7 +53,9 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_width="match_parent"
-            android:layout_height="44dp">
+            android:gravity="center_vertical"
+            android:layout_marginTop="13dp"
+            android:layout_height="wrap_content">
 
 
         <LinearLayout
@@ -150,6 +151,6 @@
 
     <View
             android:layout_width="match_parent"
-            android:layout_height="6dp"
+            android:layout_height="10dp"
             android:background="#f9f9f9"/>
 </LinearLayout>

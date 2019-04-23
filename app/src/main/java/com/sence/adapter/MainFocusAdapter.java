@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityOptionsCompat;
+import com.blankj.utilcode.util.ConvertUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -53,8 +54,11 @@ public class MainFocusAdapter extends BaseQuickAdapter<PMainBean.NoteListBean, B
         final NiceImageView item_head = helper.getView(R.id.item_head);
         GlideUtils.getInstance().loadHead(item.getAvatar(),
                 item_head);
-        Glide.with(item_img).load(Urls.base_url + item.getAlbum_url()).apply(new RequestOptions().override(0,
-                SIZE_ORIGINAL).fitCenter().placeholder(R.drawable.shape_loading_error).error(R.drawable.shape_loading_error)).into(item_img);
+//        Glide.with(item_img).load(Urls.base_url + item.getAlbum_url()).apply(new RequestOptions().override(0,
+//                SIZE_ORIGINAL).fitCenter().placeholder(R.drawable.shape_loading_error).error(R.drawable.shape_loading_error)).into(item_img);
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) item_img.getLayoutParams();
+        layoutParams.height = ConvertUtils.dp2px(item.getHeight()) / 2;
+        GlideUtils.getInstance().loadNormal(item.getAlbum_url(), item_img);
         helper.setText(R.id.item_describe, item.getContent());
         helper.setText(R.id.item_name, item.getNick_name());
         TextView item_support = helper.getView(R.id.item_support);

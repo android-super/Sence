@@ -1,8 +1,5 @@
 package com.sence.utils;
 
-import android.content.Intent;
-import com.sence.LoginActivity;
-
 /**
  * Created by zwy on 2019/3/26.
  * package_name is com.sence.utils
@@ -98,5 +95,10 @@ public class LoginStatus {
     public static boolean getIsCheckOrderAddress() {
         boolean iscleck = SharedPreferencesUtil.getInstance().getBoolean("ischeck_orderaddress");
         return iscleck;
+    }
+
+    public static String getToken(){
+        String token = SharedPreferencesUtil.getInstance().getString("token");
+        return token;
     }
 }
