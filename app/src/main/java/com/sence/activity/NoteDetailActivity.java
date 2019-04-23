@@ -41,10 +41,7 @@ import com.sence.fragment.tag.TagFragment;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
-import com.sence.utils.GlideUtils;
-import com.sence.utils.LoginStatus;
-import com.sence.utils.StatusBarUtil;
-import com.sence.utils.TagUtils;
+import com.sence.utils.*;
 import com.sence.view.GridSpacingItemDecoration;
 import com.sence.view.NiceImageView;
 
@@ -119,6 +116,9 @@ public class NoteDetailActivity extends BaseActivity implements OnItemClickListe
     }
 
     public void initView() {
+        if (NavigationBarUtil.hasNavigationBar(this)) {
+            NavigationBarUtil.initActivity(findViewById(android.R.id.content));
+        }
         StatusBarUtil.setTranslucentForCoordinatorLayout(this, 0);
         StatusBarUtil.setLightMode(this);
         nid = this.getIntent().getStringExtra("nid");
@@ -159,17 +159,14 @@ public class NoteDetailActivity extends BaseActivity implements OnItemClickListe
 
 
     private void initViewPager(List<PNoteDetailBean.NoteInfoBean.AlbumsBean> albums) {
-        Log.e("TAG", albums.size() + "");
         tagAdapter = new ViewShowTagPagerAdapter(getSupportFragmentManager());
         for (int i = 0; i < albums.size(); i++) {
-            Log.e("TAG", albums.get(i).getAlbum_url() + "");
             tagAdapter.addFragment(ShowTagFragment.newInstance(albums.get(i).getAlbum_url(), i,
                     albums.get(i).getTags()),
                     i + "");
         }
         noteBanner.setAdapter(tagAdapter);
         noteBanner.setOffscreenPageLimit(albums.size());
-        Log.e("TAG", "执行到这里了吗");
     }
 
     /**

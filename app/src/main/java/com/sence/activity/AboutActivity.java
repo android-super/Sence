@@ -1,14 +1,10 @@
 package com.sence.activity;
 
-import android.os.Bundle;
 import android.widget.TextView;
-
+import butterknife.BindView;
 import com.sence.R;
 import com.sence.base.BaseActivity;
 import com.sence.utils.StatusBarUtil;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * 关于

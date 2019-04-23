@@ -23,6 +23,7 @@ import com.sence.activity.MyOrderActivity;
 import com.sence.activity.OpenVipPageActivity;
 import com.sence.activity.SettingActivity;
 import com.sence.activity.WebActivity;
+import com.sence.activity.web.WebConstans;
 import com.sence.bean.request.RUidBean;
 import com.sence.bean.response.PUserInfoBean;
 import com.sence.net.HttpCode;
@@ -122,6 +123,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         }
         SharedPreferencesUtil.getInstance().putString("upuid", o.getUpuid());
         SharedPreferencesUtil.getInstance().putString("inviteUsername", o.getInviteUsername());
+        SharedPreferencesUtil.getInstance().putString("is_vip", o.getIs_kol());
         GlideUtils.getInstance().loadHead(LoginStatus.getAvatar(), user_head);
         save_money = o.getMoney();
         if (o.getIs_kol().equals("1")) {
@@ -262,6 +264,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.user_flower:
                 intent = new Intent(getContext(), WebActivity.class);
+                intent.putExtra("code", WebConstans.WebCode.HY);
                 toLogin(intent);
                 break;
             case R.id.user_account:

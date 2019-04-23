@@ -16,6 +16,7 @@ import com.sence.R;
 import com.sence.activity.web.WebConstans;
 import com.sence.base.BaseActivity;
 import com.sence.utils.LoginStatus;
+import com.sence.utils.StatusBarUtil;
 import com.sence.view.PubTitle;
 
 import butterknife.BindView;
@@ -42,6 +43,7 @@ public class WebActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        StatusBarUtil.setLightMode(this);
         initSetting();
         code = (WebConstans.WebCode) this.getIntent().getSerializableExtra("code");
         switch (code) {

@@ -1,5 +1,7 @@
 package com.sence.utils;
 
+import android.text.TextUtils;
+
 /**
  * Created by zwy on 2019/3/26.
  * package_name is com.sence.utils
@@ -15,6 +17,15 @@ public class LoginStatus {
     public static String getUid() {
         String uid = SharedPreferencesUtil.getInstance().getString("uid");
         return uid == null ? "1" : uid;
+    }
+
+    public static boolean isVip() {
+        String is_vip = SharedPreferencesUtil.getInstance().getString("is_vip");
+        if (!TextUtils.isEmpty(is_vip) && is_vip.equals("1")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public static String getAvatar() {
@@ -97,7 +108,7 @@ public class LoginStatus {
         return iscleck;
     }
 
-    public static String getToken(){
+    public static String getToken() {
         String token = SharedPreferencesUtil.getInstance().getString("token");
         return token;
     }

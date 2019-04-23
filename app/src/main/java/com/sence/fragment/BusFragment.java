@@ -3,6 +3,7 @@ package com.sence.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sence.LoginActivity;
+import com.sence.MainActivity;
 import com.sence.R;
 import com.sence.activity.ConfirmOrderActivity;
 import com.sence.activity.OpenVipPageActivity;
@@ -83,6 +85,7 @@ public class BusFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_bus, container, false);
     }
 
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -113,7 +116,14 @@ public class BusFragment extends Fragment {
         bus_open = top_head.findViewById(R.id.bus_open);
         topAdapter.addHeaderView(top_head);
         topAdapter.setEmptyView(R.layout.rv_item_bus_empty, recycle_view);
-
+        topAdapter.getEmptyView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.putExtra("type", 1);
+                startActivity(intent);
+            }
+        });
         smart_refresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -140,6 +150,7 @@ public class BusFragment extends Fragment {
         topAdapter.setListener(new BusTopAdapter.SelectChangeListener() {
             @Override
             public void selectChanged(int position) {
+                Log.e("TAG", "position==" + position);
                 getItemAllSelect(position - 1);
                 getAllSelect();
                 getValue();
@@ -282,6 +293,7 @@ public class BusFragment extends Fragment {
             double all_money;
             int all_num = 0;
             PBusBean.CartBean cartBean = topAdapter.getItem(i);
+            PBusBean.CartBean newCardBean = new PBusBean.CartBean();
             List<PBusBean.CartBean.GoodsBean> goodsBeans = topAdapter.getData().get(i).getGoods();
             List<PBusBean.CartBean.GoodsBean> newGoodsBeans = new ArrayList<>();
             for (int j = 0; j < goodsBeans.size(); j++) {
@@ -307,12 +319,18 @@ public class BusFragment extends Fragment {
                 all_price = Arith.sub(all_price, Double.parseDouble(cartBean.getFavourable()));
             }
             all_money = Arith.add(all_price, all_postage);
-            cartBean.setAll_price(all_price + "");
-            cartBean.setAll_postage(all_postage + "");
-            cartBean.setAll_num(all_num + "");
-            cartBean.setAll_money(all_money + "");
-            cartBean.setGoods(newGoodsBeans);
-            cartBeans.add(cartBean);
+            newCardBean.setSelect(cartBean.isSelect());
+            newCardBean.setActive(cartBean.getActive());
+            newCardBean.setExpress(cartBean.getExpress());
+            newCardBean.setFavourable(cartBean.getFavourable());
+            newCardBean.setPostage(cartBean.getPostage());
+            newCardBean.setShopname(cartBean.getShopname());
+            newCardBean.setAll_price(all_price + "");
+            newCardBean.setAll_postage(all_postage + "");
+            newCardBean.setAll_num(all_num + "");
+            newCardBean.setAll_money(all_money + "");
+            newCardBean.setGoods(newGoodsBeans);
+            cartBeans.add(newCardBean);
         }
         return cartBeans;
     }

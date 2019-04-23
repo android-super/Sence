@@ -25,6 +25,7 @@
                 app:tabIndicatorHeight="2dp"
                 app:tabIndicatorFullWidth="false"
                 app:tabInlineLabel="true"
+                app:tabTextAppearance="@style/TabLayoutTextStyle"
                 app:tabUnboundedRipple="true"
                 app:tabIndicatorColor="@color/theme_green"
                 android:layout_height="wrap_content"/>

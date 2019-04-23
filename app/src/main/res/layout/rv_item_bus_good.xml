@@ -19,7 +19,6 @@
             android:layout_marginTop="13dp"
             android:id="@+id/item_img"
             app:corner_radius="6dp"
-            android:src="@drawable/hint_img"
             android:layout_width="90dp"
             android:scaleType="centerCrop"
             android:layout_marginBottom="18dp"

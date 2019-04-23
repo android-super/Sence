@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:background="@color/white"
+              android:background="#f9f9f9"
               android:focusableInTouchMode="true"
               android:layout_height="match_parent">
 
@@ -29,6 +29,6 @@
     <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:id="@+id/recycle_view"
-            android:background="@color/white"
+            android:background="#f9f9f9"
             android:layout_height="match_parent"/>
 </LinearLayout>

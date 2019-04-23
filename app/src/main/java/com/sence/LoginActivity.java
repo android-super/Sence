@@ -79,11 +79,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.login_protocol:
                 Intent intent = new Intent(LoginActivity.this, WebActivity.class);
-                intent.putExtra("code", WebConstans.WebCode.HY);
+                intent.putExtra("code", WebConstans.WebCode.XKXY);
                 startActivity(intent);
                 break;
             case R.id.login_rule:
                 intent = new Intent(LoginActivity.this, WebActivity.class);
+                intent.putExtra("code", WebConstans.WebCode.YSZC);
                 startActivity(intent);
                 break;
             case R.id.login_look:

@@ -1,5 +1,6 @@
 package com.sence.adapter;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -71,6 +72,7 @@ public class BusTopAdapter extends BaseQuickAdapter<PBusBean.CartBean, BaseViewH
         }
         RecyclerView recyclerView = helper.getView(R.id.item_recycle);
         recyclerView.setLayoutManager(new LinearLayoutManager(helper.itemView.getContext()));
+        Log.e("TAG",item.getGoods().size()+"" + item.toString());
         final BusGoodAdapter goodAdapter = new BusGoodAdapter(R.layout.rv_item_bus_good, isMember);
         recyclerView.setAdapter(goodAdapter);
         goodAdapter.setNewData(item.getGoods());

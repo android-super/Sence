@@ -24,6 +24,7 @@ import com.sence.adapter.pager.CustomViewPagerAdapter;
 import com.sence.fragment.main.FocusFragment;
 import com.sence.fragment.main.NoteFragment;
 import com.sence.fragment.main.RecommendFragment;
+import com.sence.utils.LoginStatus;
 import com.sence.view.FadeTransformer;
 
 /**
@@ -60,6 +61,11 @@ public class MainFragment extends Fragment {
         mSearch = getView().findViewById(R.id.ll_search);
         release = getView().findViewById(R.id.release);
         initTabLayout();
+        if (LoginStatus.isVip()) {
+            release.setVisibility(View.VISIBLE);
+        } else {
+            release.setVisibility(View.GONE);
+        }
         release.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
