@@ -80,7 +80,8 @@ public class GoodListActivity extends BaseActivity {
         HttpManager.getInstance().PlayNetCode(HttpCode.USER_GOOD_LIST, new RListBean(page + "")).request(new ApiCallBack<List<PGoodBean>>() {
             @Override
             public void onFinish() {
-
+                smartRefresh.finishRefresh();
+                smartRefresh.finishLoadMore();
             }
 
             @Override

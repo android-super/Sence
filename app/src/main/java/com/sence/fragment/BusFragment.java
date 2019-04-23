@@ -17,6 +17,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+import com.sence.LoginActivity;
 import com.sence.R;
 import com.sence.activity.ConfirmOrderActivity;
 import com.sence.activity.OpenVipPageActivity;
@@ -169,7 +170,7 @@ public class BusFragment extends Fragment {
                 intent.putExtra("data", (Serializable) getAllSelectBean());
                 intent.putExtra("type", "shop");
                 intent.putExtra("isMember", isMember);
-                startActivity(intent);
+                toLogin(intent);
             }
         });
         bus_all_select.setOnClickListener(new View.OnClickListener() {
@@ -191,12 +192,21 @@ public class BusFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), OpenVipPageActivity.class);
                 intent.putExtra("money", save_money);
-                startActivity(intent);
+                toLogin(intent);
             }
         });
 
         initBusData();
         initRecommendData();
+    }
+
+    public void toLogin(Intent intent) {
+        if (!LoginStatus.isLogin() || LoginStatus.getUid().isEmpty()) {
+            startActivity(new Intent(getActivity(), LoginActivity.class));
+            return;
+        } else {
+            startActivity(intent);
+        }
     }
 
     /**

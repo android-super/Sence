@@ -73,8 +73,5 @@ public class MessagePrivateFragment extends Fragment {
                 mMessagePrivateAdapter.setNewData(o);
             }
         });
-
     }
-
-
 }

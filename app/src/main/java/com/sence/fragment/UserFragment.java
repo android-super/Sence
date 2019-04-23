@@ -55,6 +55,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     private TextView user_pay, user_send, user_get, user_comment;
     private TextView user_pay_point, user_send_point, user_get_point, user_comment_point;
     private RelativeLayout user_flower;
+    private ImageView user_garden_point;
     private TextView user_account, user_address, user_set;
 
     private String save_money;//预计一年省
@@ -94,6 +95,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         user_account = getView().findViewById(R.id.user_account);
         user_address = getView().findViewById(R.id.user_address);
         user_set = getView().findViewById(R.id.user_set);
+        user_garden_point = getView().findViewById(R.id.user_garden_point);
 
         user_message.setOnClickListener(this);
         user_head.setOnClickListener(this);
@@ -205,140 +207,89 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.user_message:
-                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
-                    ToastUtils.showShort("请先登录");
-                    return;
-                }
-                startActivity(new Intent(getContext(), MessageActivity.class));
+                Intent intent = new Intent(getContext(), MessageActivity.class);
+                toLogin(intent);
                 break;
             case R.id.user_head:
-                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
-                    ToastUtils.showShort("请先登录");
-                    return;
-                }
-                Intent intent = new Intent(getContext(), MyInfoActivity.class);
+                intent = new Intent(getContext(), MyInfoActivity.class);
                 intent.putExtra("uid", LoginStatus.getUid());
-                startActivity(intent);
+                toLogin(intent);
                 break;
             case R.id.user_name:
-                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
-                    startActivity(new Intent(getContext(), LoginActivity.class));
-
-                } else {
-                    intent = new Intent(getContext(), MyInfoActivity.class);
-                    intent.putExtra("uid", LoginStatus.getUid());
-                    startActivity(intent);
-                }
+                intent = new Intent(getContext(), MyInfoActivity.class);
+                intent.putExtra("uid", LoginStatus.getUid());
+                toLogin(intent);
                 break;
             case R.id.user_focus_layout:
-                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
-                    ToastUtils.showShort("请先登录");
-                    return;
-                }
                 intent = new Intent(getContext(), MyFansFocusNoteActivity.class);
                 intent.putExtra("position", 1);
-                startActivity(intent);
+                toLogin(intent);
                 break;
             case R.id.user_fans_layout:
-                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
-                    ToastUtils.showShort("请先登录");
-                    return;
-                }
                 intent = new Intent(getContext(), MyFansFocusNoteActivity.class);
                 intent.putExtra("position", 0);
-                startActivity(intent);
+                toLogin(intent);
                 break;
             case R.id.user_release_layout:
-                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
-                    ToastUtils.showShort("请先登录");
-                    return;
-                }
                 intent = new Intent(getContext(), MyFansFocusNoteActivity.class);
                 intent.putExtra("position", 2);
-                startActivity(intent);
+                toLogin(intent);
                 break;
             case R.id.user_all_order:
-                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
-                    ToastUtils.showShort("请先登录");
-                    return;
-                }
-                Intent intentall = new Intent(getContext(), MyOrderActivity.class);
-                intentall.putExtra("type", 0);
-                startActivity(intentall);
+                intent = new Intent(getContext(), MyOrderActivity.class);
+                intent.putExtra("type", 0);
+                toLogin(intent);
                 break;
             case R.id.user_pay:
-                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
-                    ToastUtils.showShort("请先登录");
-                    return;
-                }
-                Intent intentPay = new Intent(getContext(), MyOrderActivity.class);
-                intentPay.putExtra("type", 1);
-                startActivity(intentPay);
+                intent = new Intent(getContext(), MyOrderActivity.class);
+                intent.putExtra("type", 1);
+                toLogin(intent);
                 break;
             case R.id.user_send:
-                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
-                    ToastUtils.showShort("请先登录");
-                    return;
-                }
-                Intent intentSend = new Intent(getContext(), MyOrderActivity.class);
-                intentSend.putExtra("type", 2);
-                startActivity(intentSend);
+                intent = new Intent(getContext(), MyOrderActivity.class);
+                intent.putExtra("type", 2);
+                toLogin(intent);
                 break;
             case R.id.user_get:
-                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
-                    ToastUtils.showShort("请先登录");
-                    return;
-                }
-                Intent intentGet = new Intent(getContext(), MyOrderActivity.class);
-                intentGet.putExtra("type", 3);
-                startActivity(intentGet);
+                intent = new Intent(getContext(), MyOrderActivity.class);
+                intent.putExtra("type", 3);
+                toLogin(intent);
                 break;
             case R.id.user_comment:
-                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
-                    ToastUtils.showShort("请先登录");
-                    return;
-                }
-                Intent intentComment = new Intent(getContext(), MyOrderActivity.class);
-                intentComment.putExtra("type", 4);
-                startActivity(intentComment);
+                intent = new Intent(getContext(), MyOrderActivity.class);
+                intent.putExtra("type", 4);
+                toLogin(intent);
                 break;
             case R.id.user_flower:
-                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
-                    ToastUtils.showShort("请先登录");
-                    return;
-                }
-                startActivity(new Intent(getContext(), WebActivity.class));
+                intent = new Intent(getContext(), WebActivity.class);
+                toLogin(intent);
                 break;
             case R.id.user_account:
-                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
-                    ToastUtils.showShort("请先登录");
-                    return;
-                }
-                startActivity(new Intent(getContext(), MyAccountActivity.class));
+                intent = new Intent(getContext(), MyAccountActivity.class);
+                toLogin(intent);
                 break;
             case R.id.user_address:
-                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
-                    ToastUtils.showShort("请先登录");
-                    return;
-                }
-                startActivity(new Intent(getContext(), ManageAddressActivity.class));
+                intent = new Intent(getContext(), ManageAddressActivity.class);
+                toLogin(intent);
                 break;
             case R.id.user_set:
-                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
-                    ToastUtils.showShort("请先登录");
-                    return;
-                }
-                startActivity(new Intent(getContext(), SettingActivity.class));
+                intent = new Intent(getContext(), SettingActivity.class);
+                toLogin(intent);
                 break;
             case R.id.user_open:
-                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
-                    ToastUtils.showShort("请先登录");
-                    return;
-                }
                 intent = new Intent(getActivity(), OpenVipPageActivity.class);
                 intent.putExtra("money", save_money);
-                startActivity(intent);
+                toLogin(intent);
                 break;
+        }
+    }
+
+    public void toLogin(Intent intent) {
+        if (!LoginStatus.isLogin() || LoginStatus.getUid().isEmpty()) {
+            startActivity(new Intent(getActivity(), LoginActivity.class));
+            return;
+        } else {
+            startActivity(intent);
         }
     }
 }

@@ -28,7 +28,7 @@ public class GlideUtils {
 
     private RequestOptions initHeadOption() {
         RequestOptions requestOptions = new RequestOptions();
-        requestOptions.placeholder(R.drawable.hint_head).error(R.drawable.hint_head_error);
+        requestOptions.placeholder(R.drawable.hint_head).error(R.drawable.hint_head);
         return requestOptions;
     }
 

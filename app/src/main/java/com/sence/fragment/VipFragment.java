@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.sence.LoginActivity;
 import com.sence.R;
 import com.sence.activity.*;
 import com.sence.adapter.VipBottomAdapter;
@@ -60,7 +61,7 @@ public class VipFragment extends Fragment implements View.OnClickListener {
     private VipTopAdapter topAdapter;
     private VipBottomAdapter bottomAdapter;
 
-    private String save_money ="0";//预计一年省
+    private String save_money = "0";//预计一年省
 
 
     public VipFragment() {
@@ -114,12 +115,12 @@ public class VipFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.vip_pass:
                 Intent intent = new Intent(getActivity(), EnjoyVipActivity.class);
-                startActivity(intent);
+                toLogin(intent);
                 break;
             case R.id.vip_info_layout:
                 intent = new Intent(getActivity(), OpenVipPageActivity.class);
                 intent.putExtra("money", save_money);
-                startActivity(intent);
+                toLogin(intent);
                 break;
             case R.id.vip_exclusive_more:
                 intent = new Intent(getActivity(), GoodListActivity.class);
@@ -129,6 +130,15 @@ public class VipFragment extends Fragment implements View.OnClickListener {
                 intent = new Intent(getActivity(), ServeListActivity.class);
                 startActivity(intent);
                 break;
+        }
+    }
+
+    public void toLogin(Intent intent) {
+        if (!LoginStatus.isLogin() || LoginStatus.getUid().isEmpty()) {
+            startActivity(new Intent(getActivity(), LoginActivity.class));
+            return;
+        } else {
+            startActivity(intent);
         }
     }
 

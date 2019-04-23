@@ -15,6 +15,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+import com.sence.LoginActivity;
 import com.sence.R;
 import com.sence.activity.SearchActivity;
 import com.sence.activity.ShopDetailsActivity;
@@ -148,6 +149,10 @@ public class KindFragment extends Fragment {
         rightAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if (!LoginStatus.isLogin() || LoginStatus.getUid().isEmpty()) {
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                    return;
+                }
                 if (view.getId() == R.id.item_bus) {
                     addBus(rightAdapter.getData().get(position).getId());
                 }

@@ -84,7 +84,8 @@ public class ServeListActivity extends BaseActivity {
         HttpManager.getInstance().PlayNetCode(HttpCode.USER_SERVE_LIST, new RListBean(page + "")).request(new ApiCallBack<List<PServeBean>>() {
             @Override
             public void onFinish() {
-
+                smartRefresh.finishRefresh();
+                smartRefresh.finishLoadMore();
             }
 
             @Override
@@ -94,9 +95,9 @@ public class ServeListActivity extends BaseActivity {
 
             @Override
             public void onSuccess(List<PServeBean> o, String msg) {
-                if (page==1){
+                if (page == 1) {
                     adapter.setNewData(o);
-                }else {
+                } else {
                     adapter.addData(o);
                 }
             }

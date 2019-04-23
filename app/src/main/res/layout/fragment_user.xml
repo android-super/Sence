@@ -449,6 +449,14 @@
                 android:src="@drawable/user_garden"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
+
+        <ImageView
+                android:id="@+id/user_garden_point"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/shape_message_point"
+                android:layout_width="wrap_content"
+                android:layout_margin="2dp"
+                android:layout_height="wrap_content"/>
     </RelativeLayout>
 
     <RelativeLayout

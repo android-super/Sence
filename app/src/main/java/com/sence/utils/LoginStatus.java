@@ -1,5 +1,8 @@
 package com.sence.utils;
 
+import android.content.Intent;
+import com.sence.LoginActivity;
+
 /**
  * Created by zwy on 2019/3/26.
  * package_name is com.sence.utils
@@ -26,18 +29,22 @@ public class LoginStatus {
         String name = SharedPreferencesUtil.getInstance().getString("upuid");
         return name;
     }
+
     public static String getInviteUserName() {
         String name = SharedPreferencesUtil.getInstance().getString("inviteUsername");
         return name;
     }
+
     public static String getName() {
         String name = SharedPreferencesUtil.getInstance().getString("nick_name");
         return name;
     }
+
     public static String getPayType() {
         String type = SharedPreferencesUtil.getInstance().getString("paytype");
         return type;
     }
+
     public static String getIdStatus() {
         String status = SharedPreferencesUtil.getInstance().getString("id_status");
         return status;
@@ -77,14 +84,17 @@ public class LoginStatus {
         String status = SharedPreferencesUtil.getInstance().getString("phone_address");
         return status;
     }
+
     public static boolean getIsCheckAddress() {
         boolean iscleck = SharedPreferencesUtil.getInstance().getBoolean("ischeck_address");
         return iscleck;
     }
+
     public static boolean getIsCheckShopAddress() {
         boolean iscleck = SharedPreferencesUtil.getInstance().getBoolean("ischeck_shopaddress");
         return iscleck;
     }
+
     public static boolean getIsCheckOrderAddress() {
         boolean iscleck = SharedPreferencesUtil.getInstance().getBoolean("ischeck_orderaddress");
         return iscleck;

@@ -7,6 +7,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.sence.R;
 import com.sence.bean.response.PBankCardBean;
 import com.sence.net.Urls;
+import com.sence.utils.GlideUtils;
 
 /**
  * Created by zwy on 2019/4/8.
@@ -20,8 +21,8 @@ public class BankCardAdapter extends BaseQuickAdapter<PBankCardBean, BaseViewHol
 
     @Override
     protected void convert(BaseViewHolder helper, PBankCardBean item) {
-        helper.setText(R.id.item_name,item.getBank_name());
-        helper.setText(R.id.item_num,item.getCard_num());
-        Glide.with(helper.itemView.getContext()).load(Urls.base_url+item.getBank_img()).into((ImageView) helper.getView(R.id.item_img));
+        helper.setText(R.id.item_name, item.getBank_name());
+        helper.setText(R.id.item_num, item.getCard_num());
+        GlideUtils.getInstance().loadNormal(item.getBank_img(), (ImageView) helper.getView(R.id.item_img));
     }
 }

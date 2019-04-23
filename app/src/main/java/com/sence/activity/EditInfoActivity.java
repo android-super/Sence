@@ -81,7 +81,12 @@ public class EditInfoActivity extends BaseActivity implements View.OnClickListen
                     sex = "女";
                 }
                 style = editStyle.getText().toString();
-                editFinish();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        editFinish();
+                    }
+                }).start();
             }
         });
     }
@@ -113,7 +118,7 @@ public class EditInfoActivity extends BaseActivity implements View.OnClickListen
                 new RUserEditBean(LoginStatus.getUid(), name, style, sex), new RUserEditHeadBean(head)).request(new ApiCallBack() {
             @Override
             public void onFinish() {
-
+                finish();
             }
 
             @Override
@@ -136,8 +141,7 @@ public class EditInfoActivity extends BaseActivity implements View.OnClickListen
                     // 图片、视频、音频选择结果回调
                     List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
                     if (selectList.get(0).isCompressed()) {
-//                        Glide.with(EditInfoActivity.this).load(selectList.get(0).getPath()).into(ivImgoneServicecomment);
-                        GlideUtils.getInstance().loadHead(selectList.get(0).getCompressPath(),editHead,true);
+                        GlideUtils.getInstance().loadHead(selectList.get(0).getCompressPath(), editHead, true);
                         Bitmap bitmap = BitmapUtils.getSmallBitmap(selectList.get(0).getCompressPath());
                         head = BitmapUtils.Bitmap2File(bitmap, getPackageName(), 100);
                         PChatMessageBean.MessageBean bean = new PChatMessageBean.MessageBean();

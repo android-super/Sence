@@ -3,6 +3,7 @@ package com.sence.net;
 import android.widget.Toast;
 
 import com.blankj.utilcode.util.NetworkUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.orhanobut.logger.Logger;
@@ -381,6 +382,7 @@ public class HttpManager<P> {
                         } else {
                             apiCallBack.onSuccess(result.getData(), result.getMsg());
                         }
+                        ToastUtils.showShort(result.getMsg());
                     } else {
                         apiCallBack.Message(result.getStatus(), result.getMsg());
                     }

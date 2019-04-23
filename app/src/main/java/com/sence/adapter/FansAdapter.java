@@ -9,6 +9,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.sence.R;
 import com.sence.bean.response.PFansBean;
 import com.sence.net.Urls;
+import com.sence.utils.GlideUtils;
 
 /**
  * Created by zwy on 2019/3/22.
@@ -23,7 +24,7 @@ public class FansAdapter extends BaseQuickAdapter<PFansBean, BaseViewHolder> {
     @Override
     protected void convert(BaseViewHolder helper, PFansBean item) {
         helper.setText(R.id.item_name, item.getNick_name());
-        Glide.with(helper.itemView.getContext()).load(Urls.base_url + item.getAvatar()).into((ImageView) helper.getView(R.id.item_head));
+        GlideUtils.getInstance().loadHead(item.getAvatar(), (ImageView) helper.getView(R.id.item_head));
         helper.setText(R.id.item_content, item.getAutograph());
         TextView item_focus = helper.getView(R.id.item_focus);
         if (item.getIs_focus().equals("1")) {
@@ -35,10 +36,10 @@ public class FansAdapter extends BaseQuickAdapter<PFansBean, BaseViewHolder> {
             item_focus.setText("+ 关注");
             item_focus.setTextColor(Color.parseColor("#16a5af"));
         }
-        if (item.getIs_kol().equals("1")){
-            helper.setGone(R.id.item_vip,true);
-        }else {
-            helper.setGone(R.id.item_vip,false);
+        if (item.getIs_kol().equals("1")) {
+            helper.setGone(R.id.item_vip, true);
+        } else {
+            helper.setGone(R.id.item_vip, false);
         }
     }
 }

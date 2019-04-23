@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -206,7 +207,6 @@ public class CommitTagActivity extends BaseActivity implements View.OnClickListe
         httpManager.request(new ApiCallBack() {
             @Override
             public void onFinish() {
-
             }
 
             @Override
@@ -216,7 +216,7 @@ public class CommitTagActivity extends BaseActivity implements View.OnClickListe
 
             @Override
             public void onSuccess(Object o, String msg) {
-
+                finish();
             }
         });
     }

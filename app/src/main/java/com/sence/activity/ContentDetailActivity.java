@@ -9,10 +9,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.text.TextUtils;
-import android.view.KeyboardShortcutInfo;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.WindowManager;
+import android.view.*;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.*;
 import android.widget.EditText;
@@ -292,14 +290,6 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
             case R.id.content_focus_tv:
                 toFocus();
                 break;
-            case R.id.comment_release:
-                content = comment_release.getText().toString();
-                if (TextUtils.isEmpty(content)) {
-                    ToastUtils.showShort("评论内容不能为空");
-                    return;
-                }
-                addMsg(LoginStatus.getUid(), nid, p_uid, content, "2");
-                break;
             case R.id.comment_close:
                 dismissDialog(commentSheet);
                 break;
@@ -387,7 +377,20 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
                 showSoftInputFromWindow(comment_release);
             }
         });
-        comment_release.setOnClickListener(this);
+        comment_release.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEND) {
+                    content = comment_release.getText().toString();
+                    if (TextUtils.isEmpty(content)) {
+                        ToastUtils.showShort("评论内容不能为空");
+                        return false;
+                    }
+                    addMsg(LoginStatus.getUid(), nid, p_uid, content, "2");
+                }
+                return false;
+            }
+        });
         comment_close.setOnClickListener(this);
         commentSheet.show();
     }
@@ -502,7 +505,8 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
 
             @Override
             public void onSuccess(Object o, String msg) {
-
+                comment_release.setText("");
+                KeyboardUtils.hideSoftInput(comment_release);
             }
         });
     }
