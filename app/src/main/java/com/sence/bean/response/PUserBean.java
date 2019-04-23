@@ -36,8 +36,8 @@ public class PUserBean {
     private String sex;
     private String login_device;
     private String last_login;
-    private Object real_name;
-    private Object id_card;
+    private String real_name;
+    private String id_card;
     private String id_status;
     private String img_status;
 
@@ -129,21 +129,6 @@ public class PUserBean {
         this.last_login = last_login;
     }
 
-    public Object getReal_name() {
-        return real_name;
-    }
-
-    public void setReal_name(Object real_name) {
-        this.real_name = real_name;
-    }
-
-    public Object getId_card() {
-        return id_card;
-    }
-
-    public void setId_card(Object id_card) {
-        this.id_card = id_card;
-    }
 
     public String getId_status() {
         return id_status;
@@ -159,5 +144,21 @@ public class PUserBean {
 
     public void setImg_status(String img_status) {
         this.img_status = img_status;
+    }
+
+    public void setReal_name(String real_name) {
+        this.real_name = real_name;
+    }
+
+    public String getId_card() {
+        return id_card;
+    }
+
+    public void setId_card(String id_card) {
+        this.id_card = id_card;
+    }
+
+    public String getReal_name() {
+        return real_name;
     }
 }

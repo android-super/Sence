@@ -102,11 +102,9 @@ public class AddTagActivity extends BaseActivity implements View.OnClickListener
         for (int i = 0; i < adapter.getmFragments().size(); i++) {
             RTagInfo rTagInfo = new RTagInfo();
             ArrayList<RTagInfoItem> tagInfoItems = adapter.getmFragments().get(i).getTagItemInfo();
-            String path = adapter.getmFragments().get(i).getPath();
             int item_width = adapter.getmFragments().get(i).getItem_width();
             int item_height = adapter.getmFragments().get(i).getItem_height();
             rTagInfo.setTagInfoItems(tagInfoItems);
-            rTagInfo.setUrl(path);
             rTagInfo.setHeight(item_height);
             rTagInfo.setWidth(item_width);
             rTagInfos.add(rTagInfo);

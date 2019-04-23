@@ -10,12 +10,6 @@ import java.io.Serializable;
  * 描述:SenceGit
  */
 public class RTagInfoItem implements Serializable {
-    public RTagInfoItem(double width_scale, double height_scale, String content) {
-        this.width_scale = width_scale;
-        this.height_scale = height_scale;
-        this.content = content;
-    }
-
     public double getWidth_scale() {
         return width_scale;
     }
@@ -51,5 +45,14 @@ public class RTagInfoItem implements Serializable {
 
     private double width_scale;
     private double height_scale;
+    private int Direction;
     private String content;
+
+    public int getDirection() {
+        return Direction;
+    }
+
+    public void setDirection(int direction) {
+        Direction = direction;
+    }
 }

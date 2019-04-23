@@ -1,18 +1,21 @@
 package com.sence;
 
+import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Message;
 import android.os.Parcelable;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.*;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
 import cn.jpush.android.api.JPushInterface;
+import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -21,19 +24,21 @@ import com.luck.picture.lib.entity.LocalMedia;
 import com.sence.activity.AddTagActivity;
 import com.sence.activity.CommitTagActivity;
 import com.sence.base.BaseActivity;
+import com.sence.bean.request.RUpdateAppBean;
+import com.sence.bean.response.PUpDataAppInfo;
 import com.sence.fragment.*;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
-import com.sence.utils.LoginStatus;
-import com.sence.utils.SocketUtils;
-import com.sence.utils.StatusBarUtil;
+import com.sence.utils.*;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
     public static final int bus_code = 3;
+    private static final String APP_NAME = "Sence";
 
     @BindView(R.id.main_home)
     LinearLayout mainHome;
@@ -101,6 +106,28 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mains = new LinearLayout[]{mainHome, mainVip, mainKind, mainBus, mainUser};
 
         setSelect(0);
+
+//        initUpdataApp();
+    }
+
+    private void initUpdataApp() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.UPDATE_APP, new RUpdateAppBean("android",
+                AppUtils.getAppVersionName())).request(new ApiCallBack<PUpDataAppInfo>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(PUpDataAppInfo o, String msg) {
+                UpdateApp(o);
+            }
+        });
     }
 
     /**
@@ -150,14 +177,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             if (i == position) {
                 mains[i].setSelected(true);
                 if (fragments[i].isAdded()) {
-                    getSupportFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).show(fragments[i]).commit();
+//                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    getSupportFragmentManager().beginTransaction().show(fragments[i]).commit();
                 } else {
-                    getSupportFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).add(R.id.frame_layout, fragments[i]).show(fragments[i]).commit();
+                    getSupportFragmentManager().beginTransaction().add(R.id.frame_layout, fragments[i]).show(fragments[i]).commit();
                 }
             } else {
                 mains[i].setSelected(false);
                 if (fragments[i].isAdded()) {
-                    getSupportFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).hide(fragments[i]).commit();
+                    getSupportFragmentManager().beginTransaction().hide(fragments[i]).commit();
                 }
             }
         }
@@ -214,5 +242,71 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onResume() {
         super.onResume();
         JPushInterface.setAlias(getApplicationContext(), -1, LoginStatus.getUid());
+    }
+
+    private void UpdateApp(final PUpDataAppInfo versionBean) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("版本更新");
+        builder.setIcon(R.mipmap.ic_launcher);
+        builder.setMessage("更新提示：" + versionBean.getContents());
+        builder.setPositiveButton("更新", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                updateApp(APP_NAME, versionBean.getLink());
+                dialog.dismiss();
+            }
+        });
+        if (versionBean.getUpgrade_type() == 1) {
+            builder.setNegativeButton("取消", null);
+        }
+        builder.setCancelable(false);
+        builder.create();
+        builder.show();
+    }
+
+    /**
+     * 检查版本并更新
+     */
+    private void updateApp(final String appName, final String appUrl) {
+        final UpdateService.DownloadCallback downloadCallback = new UpdateService.DownloadCallback() {
+            @Override
+            public void onStart() {
+                HProgressDialogUtils.showHorizontalProgressDialog(MainActivity.this, "下载进度", false);
+            }
+
+            @Override
+            public void onProgress(float progress, long totalSize) {
+                HProgressDialogUtils.setProgress(Math.round(progress));
+            }
+
+            @Override
+            public void setMax(long totalSize) {
+
+            }
+
+            @Override
+            public boolean onFinish(File file) {
+                HProgressDialogUtils.cancel();
+                return false;
+            }
+
+            @Override
+            public void onError(String msg) {
+                Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                HProgressDialogUtils.cancel();
+            }
+        };
+
+        UpdateService.bindService(getApplicationContext(), new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                ((UpdateService.DownloadBinder) service).start(downloadCallback, appName, appUrl);
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+
+            }
+        });
     }
 }

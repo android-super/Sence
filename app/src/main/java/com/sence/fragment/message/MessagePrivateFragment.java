@@ -70,7 +70,6 @@ public class MessagePrivateFragment extends Fragment {
 
             @Override
             public void onSuccess(List<PPrivateChatBean> o, String msg) {
-                Logger.e("msg==========" + msg);
                 mMessagePrivateAdapter.setNewData(o);
             }
         });

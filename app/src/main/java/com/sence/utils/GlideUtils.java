@@ -34,7 +34,7 @@ public class GlideUtils {
 
     private RequestOptions initNormalOption() {
         RequestOptions requestOptions = new RequestOptions();
-        requestOptions.placeholder(R.drawable.hint_img).error(R.drawable.hint_img_error);
+        requestOptions.placeholder(R.drawable.shape_loading_error).error(R.drawable.shape_loading_error);
         return requestOptions;
     }
 

@@ -404,6 +404,7 @@ public interface HttpService {
     @POST(Urls.CHAT_PRIVATE_READ)
     Observable<BaseResponseBean<Object>> ChatPrivateRead(@FieldMap Map<String, Object> map);//发送消息
 
-    @POST(Urls.SEARCH_RECOMMEND)
-    Observable<BaseResponseBean<PMoneyBean>> VipOpen();//搜索推荐数据
+    @FormUrlEncoded
+    @POST(Urls.USER_VIP_OPEN)
+    Observable<BaseResponseBean<PMoneyBean>> VipOpen(@FieldMap Map<String, Object> map);//搜索推荐数据
 }

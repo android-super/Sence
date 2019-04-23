@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.core.app.NotificationManagerCompat;
 import com.orhanobut.logger.Logger;
 import com.sence.R;
+import com.sence.activity.chat.ui.ChatMsgActivity;
 import com.sence.base.BaseActivity;
 import com.sence.bean.request.RUidBean;
 import com.sence.bean.response.PMessageBean;
@@ -22,6 +23,7 @@ import com.sence.utils.LoginStatus;
 import com.sence.utils.StatusBarUtil;
 
 import butterknife.BindView;
+
 /**
  * 消息中心
  */
@@ -47,6 +49,10 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
     RelativeLayout messageKfLayout;
     @BindView(R.id.message_open_layout)
     LinearLayout messageOpenLayout;
+
+    private String service_uid;
+    private String service_avatar;
+    private String service_name;
 
     @Override
     public int onActLayout() {
@@ -85,14 +91,17 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
 
             @Override
             public void onSuccess(PMessageBean o, String msg) {
-                Logger.e("msg==========" + msg);
-                if("0".equals(o.getMessage_red())){
+                service_uid = o.getService_uid();
+                service_avatar = o.getAvatar();
+                service_name = o.getService_name();
+
+                if ("0".equals(o.getMessage_red())) {
                     messageHdPoint.setVisibility(View.GONE);
                 }
-                if("0".equals(o.getSystem_msg_red())){
+                if ("0".equals(o.getSystem_msg_red())) {
                     messageXtPoint.setVisibility(View.GONE);
                 }
-                if("0".equals(o.getSystem_ntc_red())){
+                if ("0".equals(o.getSystem_ntc_red())) {
                     messageTzPoint.setVisibility(View.GONE);
                 }
             }
@@ -118,6 +127,12 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
                 startActivity(new Intent(MessageActivity.this, InformActivity.class));
                 break;
             case R.id.message_kf_layout:
+                intent = new Intent(MessageActivity.this, ChatMsgActivity.class);
+                intent.putExtra("u_to", service_uid);
+                intent.putExtra("chat_id", "");
+                intent.putExtra("name", service_name);
+                intent.putExtra("u_avatar", service_avatar);
+                startActivity(intent);
                 break;
         }
     }

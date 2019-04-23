@@ -173,6 +173,11 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initView();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         initMyInfo();
     }
 

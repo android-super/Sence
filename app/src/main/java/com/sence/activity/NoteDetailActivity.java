@@ -1,21 +1,19 @@
 package com.sence.activity;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
@@ -24,11 +22,13 @@ import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.sence.R;
 import com.sence.adapter.CommentAdapter;
 import com.sence.adapter.NoteRecommendAdapter;
+import com.sence.adapter.pager.ViewShowTagPagerAdapter;
+import com.sence.adapter.pager.ViewTagPagerAdapter;
 import com.sence.base.BaseActivity;
 import com.sence.bean.request.RCommentDetailBean;
 import com.sence.bean.request.RCommentListBean;
@@ -36,12 +36,15 @@ import com.sence.bean.request.RCommentSupportBean;
 import com.sence.bean.request.RNoteDetailBean;
 import com.sence.bean.response.PCommentBean;
 import com.sence.bean.response.PNoteDetailBean;
+import com.sence.fragment.tag.ShowTagFragment;
+import com.sence.fragment.tag.TagFragment;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.GlideUtils;
 import com.sence.utils.LoginStatus;
 import com.sence.utils.StatusBarUtil;
+import com.sence.utils.TagUtils;
 import com.sence.view.GridSpacingItemDecoration;
 import com.sence.view.NiceImageView;
 
@@ -52,8 +55,8 @@ import java.util.List;
  */
 public class NoteDetailActivity extends BaseActivity implements OnItemClickListener,
         ViewPager.OnPageChangeListener, View.OnClickListener {
-    @BindView(R.id.note_banner)
-    ConvenientBanner noteBanner;
+    @BindView(R.id.view_pager)
+    ViewPager noteBanner;
     @BindView(R.id.tool_view)
     View toolView;
     @BindView(R.id.tool_back)
@@ -94,6 +97,8 @@ public class NoteDetailActivity extends BaseActivity implements OnItemClickListe
     private int msg_page = 1;
     private String p_uid = LoginStatus.getUid();
 
+    private ViewShowTagPagerAdapter tagAdapter;
+
     @Override
     public int onActLayout() {
         return R.layout.activity_note_detail;
@@ -110,12 +115,7 @@ public class NoteDetailActivity extends BaseActivity implements OnItemClickListe
         noteLook.setText(o.getNote_info().getClick_num());
         noteContent.setText(o.getNote_info().getContent());
 
-        noteBanner.setPages(new CBViewHolderCreator() {
-            @Override
-            public Object createHolder() {
-                return new LocalImageHolderView();
-            }
-        }, o.getNote_info().getAlbums()).setOnPageChangeListener(this).setOnItemClickListener(this);
+        initViewPager(o.getNote_info().getAlbums());
     }
 
     public void initView() {
@@ -139,6 +139,37 @@ public class NoteDetailActivity extends BaseActivity implements OnItemClickListe
                 showCommentDialog();
             }
         });
+        noteBanner.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
+
+    private void initViewPager(List<PNoteDetailBean.NoteInfoBean.AlbumsBean> albums) {
+        Log.e("TAG", albums.size() + "");
+        tagAdapter = new ViewShowTagPagerAdapter(getSupportFragmentManager());
+        for (int i = 0; i < albums.size(); i++) {
+            Log.e("TAG", albums.get(i).getAlbum_url() + "");
+            tagAdapter.addFragment(ShowTagFragment.newInstance(albums.get(i).getAlbum_url(), i,
+                    albums.get(i).getTags()),
+                    i + "");
+        }
+        noteBanner.setAdapter(tagAdapter);
+        noteBanner.setOffscreenPageLimit(albums.size());
+        Log.e("TAG", "执行到这里了吗");
     }
 
     /**
@@ -164,23 +195,6 @@ public class NoteDetailActivity extends BaseActivity implements OnItemClickListe
     @Override
     public void onPageScrollStateChanged(int state) {
 
-    }
-
-
-    public class LocalImageHolderView implements Holder<PNoteDetailBean.NoteInfoBean.AlbumsBean> {
-        private ImageView banner_tag_img;
-
-        @Override
-        public View createView(Context context) {
-            View view = LayoutInflater.from(context).inflate(R.layout.banner_tag, null);
-            banner_tag_img = view.findViewById(R.id.banner_tag_img);
-            return view;
-        }
-
-        @Override
-        public void UpdateUI(Context context, final int position, PNoteDetailBean.NoteInfoBean.AlbumsBean data) {
-            GlideUtils.getInstance().loadNormal(data.getAlbum_url(), banner_tag_img);
-        }
     }
 
 

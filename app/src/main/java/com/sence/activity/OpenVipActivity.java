@@ -169,7 +169,7 @@ public class OpenVipActivity extends BaseActivity implements View.OnClickListene
      * 微信支付
      */
     private void WxPay() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.PAY_ALI, new RWxPayBean(LoginStatus.getUid(), "3",
+        HttpManager.getInstance().PlayNetCode(HttpCode.PAY_WX, new RWxPayBean(LoginStatus.getUid(), "3",
                 open_money + "",
                 "")).request(new ApiCallBack<PWxPayBean>() {
             @Override

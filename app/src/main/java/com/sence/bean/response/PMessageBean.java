@@ -15,6 +15,7 @@ public class PMessageBean {
     private String system_ntc_red;
     private String service_uid;
     private String service_name;
+    private String avatar;
 
     public String getMessage_red() {
         return message_red;
@@ -54,5 +55,13 @@ public class PMessageBean {
 
     public void setService_name(String service_name) {
         this.service_name = service_name;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

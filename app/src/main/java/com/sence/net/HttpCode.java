@@ -95,4 +95,5 @@ public enum HttpCode {
     MY_COMMENT,//我的评论
     VIP_OPEN,//开通会员
     START_PICTURE,//驱动图片
+    UPDATE_APP,//更新版本
 }

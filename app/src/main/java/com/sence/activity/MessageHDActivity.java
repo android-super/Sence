@@ -10,6 +10,7 @@ import com.sence.base.BaseActivity;
 import com.sence.fragment.message.MessageCommentFragment;
 import com.sence.fragment.message.MessagePrivateFragment;
 import com.sence.fragment.message.MessageSupportFragment;
+import com.sence.utils.StatusBarUtil;
 import com.sence.view.FadeTransformer;
 
 /**
@@ -31,6 +32,7 @@ public class MessageHDActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        StatusBarUtil.setLightMode(this);
         initTabLayout();
     }
 

@@ -1,5 +1,8 @@
 package com.sence.adapter;
 
+import android.graphics.Color;
+import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
 
 import android.widget.TextView;
@@ -23,24 +26,40 @@ public class CommentAdapter extends BaseQuickAdapter<PCommentBean, BaseViewHolde
 
     @Override
     protected void convert(BaseViewHolder helper, PCommentBean item) {
-        GlideUtils.getInstance().loadHead( item.getUser().getAvatar(),(ImageView) helper.getView(R.id.item_img));
-        helper.setText(R.id.item_name,item.getUser().getNick_name());
+        GlideUtils.getInstance().loadHead(item.getUser().getAvatar(), (ImageView) helper.getView(R.id.item_img));
+        helper.setText(R.id.item_name, item.getUser().getNick_name());
         helper.setText(R.id.item_time,
-                DateUtils.convertTimeNew(item.getDiff_time(),item.getNow_time(),item.getAdd_time()));
-        helper.setText(R.id.item_content,item.getContent());
-        helper.setText(R.id.item_replay_content,item.getOld_message());
+                DateUtils.convertTimeNew(item.getDiff_time(), item.getNow_time(), item.getAdd_time()));
+        helper.setText(R.id.item_content, item.getContent());
+        helper.setText(R.id.item_replay_content, item.getOld_message());
         MyTextView item_content = helper.getView(R.id.item_content);
         MyTextView item_replay_content = helper.getView(R.id.item_replay_content);
         TextView item_support = helper.getView(R.id.item_support);
-        if (item.getIs_like().equals("1")){
+        if (item.getIs_like().equals("1")) {
             item_support.setSelected(true);
-        }else{
+        } else {
             item_support.setSelected(false);
         }
-        item_content.setText(item.getContent());
 
-        item_replay_content.setText(item.getOld_message());
-//        item_content.setSpecifiedTextsColor(item_content.getText().toString(), item.getReply().getNick_name(), Color.parseColor(
+        if (!TextUtils.isEmpty(item.getOld_message())) {
+            item_replay_content.setVisibility(View.VISIBLE);
+            item_replay_content.setText("@" + item.getUser().getNick_name() + "：" + item.getOld_message());
+            item_replay_content.setSpecifiedTextsColor(item_replay_content.getText().toString(),
+                    "@" + item.getUser().getNick_name(),
+                    Color.parseColor(
+                            "#507daf"));
+            item_content.setText("回复" + "@" + item.getUser().getNick_name() + "：" + item.getContent());
+            item_content.setSpecifiedTextsColor(item_content.getText().toString(),
+                    "@" + item.getUser().getNick_name(),
+                    Color.parseColor(
+                            "#507daf"));
+        } else {
+            item_replay_content.setVisibility(View.GONE);
+            item_content.setText(item.getContent());
+        }
+
+//        item_content.setSpecifiedTextsColor(item_content.getText().toString(), item.getReply().getNick_name(),
+// Color.parseColor(
 //                "#507daf"));
         helper.addOnClickListener(R.id.item_support);
     }

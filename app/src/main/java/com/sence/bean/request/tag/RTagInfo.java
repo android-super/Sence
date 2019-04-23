@@ -40,15 +40,6 @@ public class RTagInfo implements Serializable {
     }
 
     private int width;//图片宽
-    private String url;//图片地址
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
 
     private ArrayList<RTagInfoItem> tagInfoItems;//图片标签信息
 }

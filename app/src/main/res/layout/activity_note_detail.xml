@@ -18,12 +18,10 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 android:layout_height="match_parent">
 
-            <com.bigkoo.convenientbanner.ConvenientBanner
-                    android:id="@+id/note_banner"
-                    android:layout_width="500dp"
-                    android:minHeight="375dp"
-                    android:transitionName="@string/translation_note_name"
-                    android:layout_height="wrap_content"/>
+            <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/view_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="515dp"/>
 
             <androidx.appcompat.widget.Toolbar
                     style="@style/NoLeftToolbar"
@@ -32,7 +30,6 @@
                     android:layout_width="match_parent"
                     android:background="@android:color/transparent"
                     android:layout_height="@dimen/status_tool_bar_height">
-
 
                 <RelativeLayout
                         android:layout_width="match_parent"

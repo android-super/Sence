@@ -8,7 +8,7 @@ package com.sence.net;
 public class Urls {
     public static boolean isTest = true;
 
-    public static final String true_ip = "http://192.168.1.10:8085";
+    public static final String true_ip = "http://sence.forhour.com";
     public static final String test_ip = "http://192.168.1.10:8085";
     public static final String IP_ = "192.168.1.10";//长连接测试
     public static final int POST_ = 6681;//端口号

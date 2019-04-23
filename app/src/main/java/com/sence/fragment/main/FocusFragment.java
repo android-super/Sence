@@ -2,6 +2,7 @@ package com.sence.fragment.main;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,10 +87,16 @@ public class FocusFragment extends Fragment {
             public void onSuccess(PMainBean o, String msg) {
                 if (page == 1) {
                     adapter.setNewData(o.getNote_list());
+                    if (o.getNote_list() == null || o.getNote_list().size() == 0) {
+                        smartRefreshLayout.setEnableLoadMore(false);
+                        recommendFocusAdapter.setNewData(o.getGoodess_recommend());
+                    } else {
+                        smartRefreshLayout.setEnableLoadMore(true);
+                    }
                 } else {
                     adapter.addData(o.getNote_list());
                 }
-                recommendFocusAdapter.setNewData(o.getGoodess_recommend());
+
             }
         });
     }
@@ -139,6 +146,8 @@ public class FocusFragment extends Fragment {
         empty_recycle.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         recommendFocusAdapter = new MainRecommendFocusAdapter(R.layout.rv_item_main_focus);
         empty_recycle.setAdapter(recommendFocusAdapter);
+        empty_recycle.addItemDecoration(new GridSpacingItemDecoration(2, ConvertUtils.dp2px(10), true));
+        empty_recycle.setNestedScrollingEnabled(false);
     }
 
     /**

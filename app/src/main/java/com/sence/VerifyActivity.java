@@ -206,21 +206,13 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
                 SharedPreferencesUtil.getInstance().putString("nick_name", o.getNick_name());
                 SharedPreferencesUtil.getInstance().putString("sex", o.getSex());
                 SharedPreferencesUtil.getInstance().putString("avatar", o.getAvatar());
-                String name = o.getReal_name().toString();
-                StringBuffer userName = null;
-                for (int i = 0; i <name.length() ; i++) {
-                    if(i==0){
-                        userName.append(name.substring(0,1));
-                    }else{
-                        userName.append("*");
-                    }
-                }
-                SharedPreferencesUtil.getInstance().putString("real_name", userName.toString());
+                SharedPreferencesUtil.getInstance().putString("real_name", o.getReal_name());
                 SharedPreferencesUtil.getInstance().putString("id_card", o.getNick_name());
                 SharedPreferencesUtil.getInstance().putString("id_status", o.getId_status());
                 SharedPreferencesUtil.getInstance().putString("img_status", o.getImg_status());
                 Intent intent = new Intent(VerifyActivity.this, MainActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

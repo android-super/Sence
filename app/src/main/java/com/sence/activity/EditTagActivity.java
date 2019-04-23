@@ -48,7 +48,7 @@ public class EditTagActivity extends BaseActivity implements View.OnClickListene
         tagNext.setOnClickListener(this);
         adapter = new ViewTagPagerAdapter(getSupportFragmentManager());
         for (int i = 0; i < TagUtils.tagInfos.size(); i++) {
-            adapter.addFragment(TagFragment.newInstance(TagUtils.tagInfos.get(i).getUrl(), i, false),
+            adapter.addFragment(TagFragment.newInstance(TagUtils.localMedia.get(i).getCompressPath(), i, false),
                     i + "");
         }
         viewPager.setAdapter(adapter);

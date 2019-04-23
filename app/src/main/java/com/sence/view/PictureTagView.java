@@ -35,6 +35,11 @@ public class PictureTagView extends RelativeLayout {
         super(context);
         this.context = context;
         this.direction = direction;
+        if (direction == Direction.Left) {
+            isChange = false;
+        } else {
+            isChange = true;
+        }
         initViews();
         init();
     }
@@ -80,27 +85,49 @@ public class PictureTagView extends RelativeLayout {
         tag_img.setVisibility(GONE);
     }
 
+    private boolean isChange = false;
+
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
         View parent = (View) getParent();
         int halfParentW = (int) (parent.getWidth() * 0.5);
-        int center = (int) ((l + (this.getWidth() * 0.5)));
-        if (center <= halfParentW) {
-            direction = Direction.Left;
-        } else {
-            direction = Direction.Right;
+        int center = l;
+        if (!isChange) {
+            if (center <= halfParentW) {
+                if (direction == Direction.Right) {
+                    direction = Direction.Left;
+                    directionChange();
+                }
+                direction = Direction.Left;
+            } else {
+                direction = Direction.Right;
+                isChange = true;
+                directionChange();
+            }
         }
-        directionChange();
+        if (isChange) {
+            if ((center + this.getWidth()) >= halfParentW) {
+                direction = Direction.Right;
+            } else {
+                if (direction == Direction.Right) {
+                    direction = Direction.Left;
+                    directionChange();
+                }
+                direction = Direction.Left;
+                isChange = false;
+            }
+        }
     }
 
     private void directionChange() {
+        Log.e("TAG", direction + "");
         switch (direction) {
             case Left:
-                loTag.setBackgroundResource(R.drawable.note_tag_zuo);
+                loTag.setBackgroundResource(R.drawable.note_tag_you);
                 break;
             case Right:
-                loTag.setBackgroundResource(R.drawable.note_tag_you);
+                loTag.setBackgroundResource(R.drawable.note_tag_zuo);
                 break;
         }
     }

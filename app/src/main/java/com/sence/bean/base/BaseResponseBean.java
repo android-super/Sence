@@ -7,6 +7,7 @@ package com.sence.bean.base;
  */
 public class BaseResponseBean<P> {
     private int status;
+    private int count;
     private String msg;
     private P data;
 
@@ -32,5 +33,13 @@ public class BaseResponseBean<P> {
 
     public void setData(P data) {
         this.data = data;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }

@@ -1,24 +1,37 @@
 package com.sence.activity;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.net.http.SslError;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.text.TextUtils;
+import android.view.KeyboardShortcutInfo;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.webkit.WebView;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.webkit.*;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.bigkoo.convenientbanner.ConvenientBanner;
+import androidx.core.app.ActivityCompat;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.blankj.utilcode.util.ConvertUtils;
+import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -29,12 +42,7 @@ import com.sence.adapter.CommentAdapter;
 import com.sence.adapter.ContentGoodAdapter;
 import com.sence.adapter.GoodsAdapter;
 import com.sence.base.BaseActivity;
-import com.sence.bean.request.RCommentDetailBean;
-import com.sence.bean.request.RCommentListBean;
-import com.sence.bean.request.RCommentSupportBean;
-import com.sence.bean.request.RContentDetailBean;
-import com.sence.bean.request.RFocusBean;
-import com.sence.bean.request.RNidBean;
+import com.sence.bean.request.*;
 import com.sence.bean.response.PCommentBean;
 import com.sence.bean.response.PContentDetailBean;
 import com.sence.fragment.CommentFragment;
@@ -42,23 +50,20 @@ import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.Urls;
 import com.sence.net.manager.ApiCallBack;
+import com.sence.net.manager.MessageApiCallBack;
+import com.sence.utils.GlideUtils;
 import com.sence.utils.LoginStatus;
 import com.sence.utils.StatusBarUtil;
 import com.sence.view.NiceImageView;
 
 import java.util.List;
 
-import androidx.core.widget.NestedScrollView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
+import static com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED;
 
 /**
  * 内容详情
  */
 public class ContentDetailActivity extends BaseActivity implements View.OnClickListener {
-    @BindView(R.id.content_banner)
-    ConvenientBanner contentBanner;
     @BindView(R.id.tool_view)
     View toolView;
     @BindView(R.id.tool_back)
@@ -105,8 +110,10 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
     TextView contentBuyNum;
     @BindView(R.id.tool_title_layout)
     LinearLayout toolTitleLayout;
+    @BindView(R.id.content_img)
+    ImageView contentImg;
 
-    private EditText comment_release;
+    public EditText comment_release;
     private TextView comment_title;
     private TextView comment_num;
     private String content;
@@ -123,6 +130,7 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
     private BottomSheetDialog goodSheet;
 
     private int page = 1;
+    private boolean isShowKeyBorad = false;
 
     private void initDataView(PContentDetailBean o) {
         if (o == null) {
@@ -131,9 +139,10 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
         noteInfoBean = o.getNote_info();
         to_uid = o.getNote_info().getUid();
         PContentDetailBean.NoteInfoBean noteInfoBean = o.getNote_info();
-        Glide.with(this).load(Urls.base_url + noteInfoBean.getAvatar()).into(toolHead);
         toolName.setText(noteInfoBean.getNick_name());
-        Glide.with(this).load(Urls.base_url + noteInfoBean.getAvatar()).into(contentHead);
+        GlideUtils.getInstance().loadHead(noteInfoBean.getAvatar(), toolHead);
+        GlideUtils.getInstance().loadHead(noteInfoBean.getAvatar(), contentHead);
+        GlideUtils.getInstance().loadNormal(noteInfoBean.getAlbums().get(0).getAlbum_url(), contentImg);
         contentName.setText(noteInfoBean.getNick_name());
         contentDescribe.setText(noteInfoBean.getAutograph());
         contentTitle.setText(noteInfoBean.getTitle());
@@ -161,7 +170,6 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
         goodsInfoBeans = noteInfoBean.getGoods_info();
         adapter.setNewData(noteInfoBean.getGoods_info());
         contentWeb.loadUrl(noteInfoBean.getContent());
-//        contentWeb.loadData(noteInfoBean.getContent(), "text/html; charset=UTF-8", null);
     }
 
     @Override
@@ -204,6 +212,8 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, CommentFragment.newInstance(nid,
                 "2")).commit();
 
+        initWebSetting();
+
         contentComment.setOnClickListener(this);
         contentHead.setOnClickListener(this);
         toolHead.setOnClickListener(this);
@@ -214,11 +224,57 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
         toolShare.setOnClickListener(this);
     }
 
+    private void initWebSetting() {
+        WebSettings settings = contentWeb.getSettings();
+        settings.setUseWideViewPort(true);
+        settings.setLoadWithOverviewMode(true);
+        settings.setDomStorageEnabled(true);
+        settings.setAllowFileAccess(false);
+        settings.setAllowFileAccess(false);
+        settings.setUseWideViewPort(false);//禁止webview做自动缩放
+        settings.setBuiltInZoomControls(false);
+        settings.setSupportZoom(false);
+        settings.setDisplayZoomControls(false);
+        settings.setJavaScriptEnabled(true);
+        settings.setAppCacheEnabled(true);
+        settings.setSupportMultipleWindows(false);
+        settings.setAppCachePath(getDir("cache", Context.MODE_PRIVATE).getPath());
+        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        contentWeb.setFocusable(true);
+        contentWeb.requestFocus();
+        contentWeb.setWebChromeClient(new WebChromeClient());  //解决android与H5协议交互,弹不出对话框问题
+        contentWeb.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                //页面加载完成之后
+            }
+
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                handler.proceed();
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                contentWeb.loadUrl(url);
+                if (url.startsWith("tel:")) {
+                    Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(url));
+                    startActivity
+                            (intent);
+                    return true;
+                }
+                return true;
+
+            }
+        });
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.content_comment:
-                showCommentDialog();
+                showCommentDialog(false);
                 break;
             case R.id.content_head:
             case R.id.tool_head:
@@ -265,7 +321,7 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
                 case PictureConfig.CHOOSE_REQUEST:
                     // 图片、视频、音频选择结果回调
                     List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
-                    Intent intent = new Intent(ContentDetailActivity.this,AddTagActivity.class);
+                    Intent intent = new Intent(ContentDetailActivity.this, AddTagActivity.class);
                     intent.putExtra("data", (Parcelable) selectList);
                     startActivity(intent);
                     break;
@@ -279,7 +335,7 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
         toolBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                ActivityCompat.finishAfterTransition(ContentDetailActivity.this);
             }
         });
 
@@ -307,11 +363,12 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
     }
 
 
-    public void showCommentDialog() {
+    public void showCommentDialog(final boolean isShow) {
+        isShowKeyBorad = isShow;
         getMsgList();
         commentSheet = new BottomSheetDialog(this);
         View view = LayoutInflater.from(this).inflate(R.layout.bottom_sheet_comment, null);
-        RecyclerView recycle_view = view.findViewById(R.id.recycle_view);
+        final RecyclerView recycle_view = view.findViewById(R.id.recycle_view);
         recycle_view.setLayoutManager(new LinearLayoutManager(this));
         comment_release = view.findViewById(R.id.comment_release);
         comment_title = view.findViewById(R.id.comment_title);
@@ -320,21 +377,29 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
         commentAdapter = new CommentAdapter(R.layout.rv_item_comment);
         recycle_view.setAdapter(commentAdapter);
         commentSheet.setContentView(view);
+        BottomSheetBehavior mBehavior = BottomSheetBehavior.from((View) view.getParent());
+        mBehavior.setState(STATE_EXPANDED);
         commentAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
                 p_uid = commentAdapter.getData().get(position).getId();
-            }
-        });
-        commentAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                CommentSupport(commentAdapter.getData().get(position).getId(), position);
+                recycle_view.scrollToPosition(commentAdapter.getData().size() - 1);
+                showSoftInputFromWindow(comment_release);
             }
         });
         comment_release.setOnClickListener(this);
         comment_close.setOnClickListener(this);
         commentSheet.show();
+    }
+
+    public void showSoftInputFromWindow(EditText editText) {
+        editText.setFocusable(true);
+        editText.setFocusableInTouchMode(true);
+        editText.requestFocus();
+        //显示软键盘
+        //如果上面的代码没有弹出软键盘 可以使用下面另一种方式
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(editText, 0);
     }
 
     public void dismissDialog(BottomSheetDialog bottomSheetDialog) {
@@ -352,6 +417,8 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
         recycle_view.setAdapter(adapter);
         adapter.setNewData(goodsInfoBeans);
         goodSheet.setContentView(view);
+        BottomSheetBehavior mBehavior = BottomSheetBehavior.from((View) view.getParent());
+        mBehavior.setState(STATE_EXPANDED);
         goodSheet.show();
 
     }
@@ -445,33 +512,21 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
      */
     private void getMsgList() {
         HttpManager.getInstance().PlayNetCode(HttpCode.COMMENT_LIST,
-                new RCommentListBean(LoginStatus.getUid(), nid, "2", page + "")).request(new ApiCallBack<List<PCommentBean>>() {
+                new RCommentListBean(LoginStatus.getUid(), nid, "2", page + "")).request(new MessageApiCallBack<List<PCommentBean>>() {
             @Override
-            public void onFinish() {
-                comment_title.setText(adapter.getData().size() + "条评论");
-                comment_num.setText("(" + adapter.getData().size() + ")");
-            }
-
-            @Override
-            public void Message(int code, String message) {
-
-            }
-
-            @Override
-            public void onSuccess(List<PCommentBean> o, String msg) {
+            public void onSuccessCount(List<PCommentBean> pCommentBeans, String msg, int count) {
                 if (page == 1) {
-                    commentAdapter.setNewData(o);
+                    commentAdapter.setNewData(pCommentBeans);
+                    if (isShowKeyBorad) {
+                        showSoftInputFromWindow(comment_release);
+                    }
                 } else {
-                    commentAdapter.addData(o);
+                    commentAdapter.addData(pCommentBeans);
                 }
-
+                comment_title.setText(count + "条评论");
+                comment_num.setText("(" + count + ")");
             }
-        });
-    }
 
-    public void CommentSupport(String mid, final int position) {
-        HttpManager.getInstance().PlayNetCode(HttpCode.COMMENT_SUPPORT,
-                new RCommentSupportBean(LoginStatus.getUid(), mid)).request(new ApiCallBack() {
             @Override
             public void onFinish() {
 
@@ -484,16 +539,7 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
 
             @Override
             public void onSuccess(Object o, String msg) {
-                int support_num = Integer.parseInt(commentAdapter.getData().get(position).getLike_num());
-                if (commentAdapter.getData().get(position).getIs_like().equals("0")) {
-                    commentAdapter.getData().get(position).setIs_like("1");
-                    support_num = support_num + 1;
-                } else {
-                    commentAdapter.getData().get(position).setIs_like("0");
-                    support_num = support_num - 1;
-                }
-                commentAdapter.getData().get(position).setLike_num(support_num + "");
-                commentAdapter.notifyDataSetChanged();
+
             }
         });
     }

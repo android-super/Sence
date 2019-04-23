@@ -34,6 +34,8 @@ import com.sence.utils.*;
 import com.sence.view.GridSpacingItemDecoration;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -194,7 +196,7 @@ public class CommitTagActivity extends BaseActivity implements View.OnClickListe
                     new RNoteFileAddBean(video, true));
         } else {
             type = "1";
-            Log.e("TAG",tagInfo);
+            Log.e("TAG", tagInfo);
             httpManager = HttpManager.getInstance().PlayNetCode(HttpCode.NOTE_ADD, new RNoteAddImgBean(uid, type,
                             content, width + ""
                             , height +

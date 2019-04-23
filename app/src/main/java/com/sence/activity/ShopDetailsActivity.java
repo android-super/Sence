@@ -499,7 +499,6 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.ll_wei_share:
                 shareWeb(ShopDetailsActivity.this, "http://www.baidu.com", bean.getName(), "女神周边，精品生活", SHARE_MEDIA.WEIXIN, bean.getImg());
-
                 mBottomSheetDialog.dismiss();
                 break;
             case R.id.ll_friend_share:

@@ -12,19 +12,19 @@ import com.sence.utils.GlideUtils;
  * package_name is com.sence.adapter
  * 描述:SenceGit
  */
-public class MemberAdapter extends BaseQuickAdapter<RMemberBean, BaseViewHolder> {
+public class MemberAdapter extends BaseQuickAdapter<RMemberBean.ListBean, BaseViewHolder> {
     public MemberAdapter(int layoutResId) {
         super(layoutResId);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, RMemberBean item) {
+    protected void convert(BaseViewHolder helper, RMemberBean.ListBean item) {
         GlideUtils.getInstance().loadHead(item.getAvatar(), (ImageView) helper.getView(R.id.item_head));
-        if ("1".equals(item.getIs_kol())){
-            helper.setGone(R.id.item_serve,true);
-        }else {
-            helper.setGone(R.id.item_serve,false);
+        if ("1".equals(item.getIs_kol())) {
+            helper.setGone(R.id.item_serve, true);
+        } else {
+            helper.setGone(R.id.item_serve, false);
         }
-        helper.setText(R.id.item_name,item.getNick_name());
+        helper.setText(R.id.item_name, item.getNick_name());
     }
 }

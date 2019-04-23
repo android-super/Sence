@@ -5,15 +5,20 @@
                                                    android:layout_width="match_parent"
                                                    android:layout_height="match_parent"
                                                    android:id="@+id/smart_refresh"
+                                                   android:background="@color/white"
                                                    app:srlEnableLoadMoreWhenContentNotFull="false"
                                                    tools:context=".fragment.main.FocusFragment">
 
-
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycle_view"
+    <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycle_view"
+                android:layout_width="match_parent"
+                android:paddingRight="4dp"
+                android:paddingLeft="4dp"
+                android:layout_height="match_parent"/>
+    </androidx.core.widget.NestedScrollView>
 
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>

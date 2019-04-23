@@ -3,6 +3,7 @@ package com.sence.activity.chat.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.*;
 import androidx.annotation.LayoutRes;
@@ -290,9 +291,19 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
 
     //聊天记录
     private void showMessage() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.CHAT_PRIVATE_LIST, new RChatListBean(LoginStatus.getUid(),
-                u_to,
-                page + "")).request(new ApiCallBack<List<PChatPrivateMessageBean>>() {
+        HttpManager httpManager;
+        if (TextUtils.isEmpty(chat_id)) {
+            httpManager = HttpManager.getInstance().PlayNetCode(HttpCode.CHAT_PRIVATE_LIST,
+                    new RChatListBean(LoginStatus.getUid(),
+                            u_to,
+                            page + ""));
+        } else {
+            httpManager = HttpManager.getInstance().PlayNetCode(HttpCode.CHAT_PRIVATE_LIST,
+                    new RChatListIdBean(LoginStatus.getUid(),
+                            u_to,
+                            page + "", chat_id));
+        }
+        httpManager.request(new ApiCallBack<List<PChatPrivateMessageBean>>() {
             @Override
             public void onFinish() {
 
@@ -342,7 +353,6 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
 
             }
         });
-
     }
 
     private void readMsgData() {

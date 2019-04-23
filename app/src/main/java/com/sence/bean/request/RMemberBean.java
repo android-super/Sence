@@ -1,5 +1,7 @@
 package com.sence.bean.request;
 
+import java.util.List;
+
 /**
  * Created by zwy on 2019/4/11.
  * package_name is com.sence.bean.request
@@ -8,96 +10,144 @@ package com.sence.bean.request;
 public class RMemberBean {
 
     /**
-     * uid : 1
-     * user_name : 18500121621
-     * nick_name : 辣啦啦啦啦
-     * avatar : /Public/Home/img/default_avatar.png
-     * details :
-     * autograph :
-     * is_kol : 1
-     * is_focus : 1
-     * vid :
+     * is_join : 1
+     * vgroup_name : 风散的聊天室
+     * list : [{"uid":"4","user_name":"17600183077","nick_name":"风散",
+     * "avatar":"/Public/Uploads/avatar/2019-04-02/5ca3479793176.jpg","details":"我的简介","autograph":"我改了个性签名哦",
+     * "is_focus":"0","is_kol":"1","vid":"6","state":"0"}]
      */
 
-    private String uid;
-    private String user_name;
-    private String nick_name;
-    private String avatar;
-    private String details;
-    private String autograph;
-    private String is_kol;
-    private String is_focus;
-    private String vid;
+    private String is_join;
+    private String vgroup_name;
+    private List<ListBean> list;
 
-    public String getUid() {
-        return uid;
+    public String getIs_join() {
+        return is_join;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setIs_join(String is_join) {
+        this.is_join = is_join;
     }
 
-    public String getUser_name() {
-        return user_name;
+    public String getVgroup_name() {
+        return vgroup_name;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setVgroup_name(String vgroup_name) {
+        this.vgroup_name = vgroup_name;
     }
 
-    public String getNick_name() {
-        return nick_name;
+    public List<ListBean> getList() {
+        return list;
     }
 
-    public void setNick_name(String nick_name) {
-        this.nick_name = nick_name;
+    public void setList(List<ListBean> list) {
+        this.list = list;
     }
 
-    public String getAvatar() {
-        return avatar;
-    }
+    public static class ListBean {
+        /**
+         * uid : 4
+         * user_name : 17600183077
+         * nick_name : 风散
+         * avatar : /Public/Uploads/avatar/2019-04-02/5ca3479793176.jpg
+         * details : 我的简介
+         * autograph : 我改了个性签名哦
+         * is_focus : 0
+         * is_kol : 1
+         * vid : 6
+         * state : 0
+         */
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
+        private String uid;
+        private String user_name;
+        private String nick_name;
+        private String avatar;
+        private String details;
+        private String autograph;
+        private String is_focus;
+        private String is_kol;
+        private String vid;
+        private String state;
 
-    public String getDetails() {
-        return details;
-    }
+        public String getUid() {
+            return uid;
+        }
 
-    public void setDetails(String details) {
-        this.details = details;
-    }
+        public void setUid(String uid) {
+            this.uid = uid;
+        }
 
-    public String getAutograph() {
-        return autograph;
-    }
+        public String getUser_name() {
+            return user_name;
+        }
 
-    public void setAutograph(String autograph) {
-        this.autograph = autograph;
-    }
+        public void setUser_name(String user_name) {
+            this.user_name = user_name;
+        }
 
-    public String getIs_kol() {
-        return is_kol;
-    }
+        public String getNick_name() {
+            return nick_name;
+        }
 
-    public void setIs_kol(String is_kol) {
-        this.is_kol = is_kol;
-    }
+        public void setNick_name(String nick_name) {
+            this.nick_name = nick_name;
+        }
 
-    public String getIs_focus() {
-        return is_focus;
-    }
+        public String getAvatar() {
+            return avatar;
+        }
 
-    public void setIs_focus(String is_focus) {
-        this.is_focus = is_focus;
-    }
+        public void setAvatar(String avatar) {
+            this.avatar = avatar;
+        }
 
-    public String getVid() {
-        return vid;
-    }
+        public String getDetails() {
+            return details;
+        }
 
-    public void setVid(String vid) {
-        this.vid = vid;
+        public void setDetails(String details) {
+            this.details = details;
+        }
+
+        public String getAutograph() {
+            return autograph;
+        }
+
+        public void setAutograph(String autograph) {
+            this.autograph = autograph;
+        }
+
+        public String getIs_focus() {
+            return is_focus;
+        }
+
+        public void setIs_focus(String is_focus) {
+            this.is_focus = is_focus;
+        }
+
+        public String getIs_kol() {
+            return is_kol;
+        }
+
+        public void setIs_kol(String is_kol) {
+            this.is_kol = is_kol;
+        }
+
+        public String getVid() {
+            return vid;
+        }
+
+        public void setVid(String vid) {
+            this.vid = vid;
+        }
+
+        public String getState() {
+            return state;
+        }
+
+        public void setState(String state) {
+            this.state = state;
+        }
     }
 }

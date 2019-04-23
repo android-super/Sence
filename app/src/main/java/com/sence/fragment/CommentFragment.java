@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.blankj.utilcode.util.KeyboardUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.sence.R;
 import com.sence.activity.ContentDetailActivity;
@@ -20,6 +21,7 @@ import com.sence.bean.response.PCommentBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
+import com.sence.net.manager.MessageApiCallBack;
 import com.sence.utils.LoginStatus;
 
 import java.util.List;
@@ -86,13 +88,13 @@ public class CommentFragment extends Fragment {
         comment_write.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((ContentDetailActivity) getActivity()).showCommentDialog();
+                ((ContentDetailActivity) getActivity()).showCommentDialog(true);
             }
         });
         comment_look.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((ContentDetailActivity) getActivity()).showCommentDialog();
+                ((ContentDetailActivity) getActivity()).showCommentDialog(false);
             }
         });
         commentAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
@@ -105,12 +107,24 @@ public class CommentFragment extends Fragment {
         initData();
     }
 
+
+
     private void initData() {
         HttpManager.getInstance().PlayNetCode(HttpCode.COMMENT_LIST,
-                new RCommentListBean(LoginStatus.getUid(), rid, type, page + "")).request(new ApiCallBack<List<PCommentBean>>() {
+                new RCommentListBean(LoginStatus.getUid(), rid, type, page + "")).request(new MessageApiCallBack<List<PCommentBean>>() {
+            @Override
+            public void onSuccessCount(List<PCommentBean> pCommentBeans, String msg, int count) {
+                if (page == 1) {
+                    commentAdapter.setNewData(pCommentBeans);
+                } else {
+                    commentAdapter.addData(pCommentBeans);
+                }
+                comment_num.setText("(" + count + ")");
+            }
+
             @Override
             public void onFinish() {
-                comment_num.setText("(" + commentAdapter.getData().size() + ")");
+
             }
 
             @Override
@@ -119,12 +133,7 @@ public class CommentFragment extends Fragment {
             }
 
             @Override
-            public void onSuccess(List<PCommentBean> o, String msg) {
-                if (page == 1) {
-                    commentAdapter.setNewData(o);
-                } else {
-                    commentAdapter.addData(o);
-                }
+            public void onSuccess(Object o, String msg) {
 
             }
         });

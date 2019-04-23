@@ -9,6 +9,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.sence.R;
 import com.sence.base.BaseActivity;
+import com.sence.bean.request.RUidBean;
 import com.sence.bean.response.PMoneyBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
@@ -60,7 +61,7 @@ public class OpenVipPageActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.VIP_OPEN).request(new ApiCallBack<PMoneyBean>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.VIP_OPEN,new RUidBean(LoginStatus.getUid())).request(new ApiCallBack<PMoneyBean>() {
             @Override
             public void onFinish() {
 

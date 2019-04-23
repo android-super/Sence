@@ -160,14 +160,12 @@ public class PictureTagLayout extends RelativeLayout implements View.OnTouchList
             View view = null;
             double width_scale = tagInfoItems.get(i).getWidth_scale();
             double height_scale = tagInfoItems.get(i).getHeight_scale();
+            int direction = tagInfoItems.get(i).getDirection();
             RelativeLayout.LayoutParams params =
                     new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
                             RelativeLayout.LayoutParams.WRAP_CONTENT);
-            if (width_scale >= 0.52) {
+            if (direction == 0) {
                 params.leftMargin = (int) (width_scale * width);
-                view = new PictureTagView(getContext(), PictureTagView.Direction.Right);
-            } else if (width_scale <= 0.48) {
-                params.leftMargin = (int) ((width_scale * width));
                 view = new PictureTagView(getContext(), PictureTagView.Direction.Left);
             } else {
                 params.leftMargin = (int) (width_scale * width);
@@ -202,6 +200,12 @@ public class PictureTagLayout extends RelativeLayout implements View.OnTouchList
         double height_scale = Arith.div(params.topMargin, getHeight(), 4);
         tagInfoItems.get((Integer) touchView.getTag()).setWidth_scale(width_scale);
         tagInfoItems.get((Integer) touchView.getTag()).setHeight_scale(height_scale);
+        PictureTagView.Direction direction = ((PictureTagView) touchView).getDirection();
+        if (direction == PictureTagView.Direction.Left) {
+            tagInfoItems.get((Integer) touchView.getTag()).setDirection(0);
+        } else {
+            tagInfoItems.get((Integer) touchView.getTag()).setDirection(1);
+        }
     }
 
     private boolean hasView(int x, int y) {

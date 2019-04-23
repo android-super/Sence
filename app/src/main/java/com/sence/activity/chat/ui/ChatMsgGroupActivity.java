@@ -311,6 +311,9 @@ public class ChatMsgGroupActivity extends BaseActivity implements View.OnClickLi
 
             @Override
             public void onSuccess(PChatMessageBean o, String msg) {
+                if (o.getMessage()==null||o.getMessage().size()==0){
+                    return;
+                }
                 dataList = o.getMessage();
                 Collections.reverse(dataList);
                 if (page == 1) {

@@ -46,6 +46,7 @@
 
         <TextView
                 android:id="@+id/item_support"
+                android:visibility="gone"
                 android:layout_toLeftOf="@id/item_support_img"
                 android:text="@string/hint_num"
                 android:layout_alignParentRight="true"
@@ -85,7 +86,7 @@
     <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="#999999"
+            android:background="#ebebeb"
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="68dp"
             android:layout_marginTop="10dp"/>

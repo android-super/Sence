@@ -20,6 +20,7 @@ import java.io.EOFException;
 import java.net.SocketTimeoutException;
 import java.util.concurrent.TimeoutException;
 
+import com.sence.net.manager.MessageApiCallBack;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -293,6 +294,9 @@ public class HttpManager<P> {
             case CHAT_PRIVATE_SEND:
                 observable = httpService.ChatSendPrivateMessage(requestBean.getMap());
                 break;
+            case VIP_OPEN:
+                observable = httpService.VipOpen(requestBean.getMap());
+                break;
 
         }
         observable = observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
@@ -304,13 +308,13 @@ public class HttpManager<P> {
         HttpService httpService = HttpClientManager.Instance.httpService;
         switch (code) {
             case COMMENT_ADD:
-                observable = httpService.CommentOrder(requestBean.getMap(),fileRequestBean.getRequestImg());
+                observable = httpService.CommentOrder(requestBean.getMap(), fileRequestBean.getRequestImg());
                 break;
             case SERVICE_ADD_COMMENT:
-                observable = httpService.SearviceAddComment(requestBean.getMap(),fileRequestBean.getRequestImg());
+                observable = httpService.SearviceAddComment(requestBean.getMap(), fileRequestBean.getRequestImg());
                 break;
             case USER_EDIT:
-                observable = httpService.UserEdit(requestBean.getMap(),fileRequestBean.getRequestImg());
+                observable = httpService.UserEdit(requestBean.getMap(), fileRequestBean.getRequestImg());
                 break;
             case CHAT_SEND_MESSAGE:
                 observable = httpService.ChatSendImgMessage(requestBean.getMap(), fileRequestBean.getRequestImg());
@@ -341,9 +345,7 @@ public class HttpManager<P> {
             case SEARCH_RECOMMEND:
                 observable = HttpClientManager.Instance.httpService.SearchRecommend();
                 break;
-            case VIP_OPEN:
-                observable = HttpClientManager.Instance.httpService.VipOpen();
-                break;
+
 
         }
         observable = observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
@@ -373,7 +375,12 @@ public class HttpManager<P> {
                 Logger.e("status is " + result.getStatus() + "\nmsg is " + result.getMsg() + "\ndata is " + result.getData().toString());
                 if (!disposable.isDisposed()) {
                     if (result.getStatus() == 1) {
-                        apiCallBack.onSuccess(result.getData(), result.getMsg());
+                        if (apiCallBack instanceof MessageApiCallBack) {
+                            ((MessageApiCallBack) apiCallBack).onSuccessCount(result.getData(), result.getMsg(),
+                                    result.getCount());
+                        } else {
+                            apiCallBack.onSuccess(result.getData(), result.getMsg());
+                        }
                     } else {
                         apiCallBack.Message(result.getStatus(), result.getMsg());
                     }
