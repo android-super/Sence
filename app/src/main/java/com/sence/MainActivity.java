@@ -106,7 +106,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mains = new LinearLayout[]{mainHome, mainVip, mainKind, mainBus, mainUser};
 
         setSelect(0);
-
 //        initUpdataApp();
     }
 
@@ -178,6 +177,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 mains[i].setSelected(true);
                 if (fragments[i].isAdded()) {
                     getSupportFragmentManager().beginTransaction().show(fragments[i]).commit();
+                    fragments[i].onRefresh();
                 } else {
                     getSupportFragmentManager().beginTransaction().add(R.id.frame_layout, fragments[i]).show(fragments[i]).commit();
                 }
@@ -240,7 +240,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e("TAG", "onResume");
         JPushInterface.setAlias(getApplicationContext(), -1, LoginStatus.getUid());
         for (int i = 0; i < fragments.length; i++) {
             if (fragments[i].isAdded()) {
