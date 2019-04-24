@@ -147,6 +147,7 @@ public class SettingActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
+                        SharedPreferencesUtil.getInstance().removeAll();
                         SharedPreferencesUtil.getInstance().putBoolean("is_login", false);
                         SharedPreferencesUtil.getInstance().putString("uid", "");
                         UMShareAPI.get(SettingActivity.this).deleteOauth(SettingActivity.this, SHARE_MEDIA.WEIXIN,

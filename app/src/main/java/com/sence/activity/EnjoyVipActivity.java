@@ -84,7 +84,7 @@ public class EnjoyVipActivity extends BaseActivity {
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                srlLayoutEnjoyvip.autoLoadMore();
+                srlLayoutEnjoyvip.finishLoadMore();
                 page = 1;
                 initData();
             }
