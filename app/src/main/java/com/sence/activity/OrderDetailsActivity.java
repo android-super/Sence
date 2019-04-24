@@ -24,6 +24,7 @@ import com.orhanobut.logger.Logger;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 import com.sence.MainActivity;
 import com.sence.R;
+import com.sence.activity.chat.ui.ChatMsgActivity;
 import com.sence.adapter.OrderDetailsAdapter;
 import com.sence.base.BaseActivity;
 import com.sence.bean.request.RAliPayBean;
@@ -99,10 +100,6 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
     Button btSubmintOrderdetails;
     @BindView(R.id.layout_head)
     PubTitle layoutHead;
-    @BindView(R.id.rl_number_orderdetails)
-    LinearLayout rlNumberOrderdetails;
-    @BindView(R.id.iv_toaddress_orderdetails)
-    ImageView ivToaddressOrderdetails;
     @BindView(R.id.ll_order_orderdetails)
     LinearLayout llOrderOrderdetails;
     @BindView(R.id.ll_buttom_orderdetails)
@@ -128,10 +125,6 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
     private Button btPayPay;
     private boolean isstart = true;
     private int time = 1800;
-    private String idAddress;
-    private String address;
-    private String nameAddress;
-    private String phoneAddress;
     private AlertDialog dialog;
 
 
@@ -178,9 +171,6 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
             tvSpriceOrderdetails.setVisibility(View.GONE);
             btSubmintOrderdetails.setText("删除订单");
         }
-        if (!"1".equals(type)) {
-            ivToaddressOrderdetails.setVisibility(View.GONE);
-        }
         bottomSheetDialog();
         layoutHead.setRightOnClick(new View.OnClickListener() {
             @Override
@@ -225,16 +215,6 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
     }
 
     public void initData() {
-        boolean isCheckOrderAddress = LoginStatus.getIsCheckOrderAddress();
-        if (isCheckOrderAddress) {
-            idAddress = LoginStatus.getIdAddress();
-            address = LoginStatus.getAddress();
-            nameAddress = LoginStatus.getNameAddress();
-            phoneAddress = LoginStatus.getPhoneAddress();
-            tvAddressOrderdetails.setText(address);
-            tvPhoneOrderdetails.setText(phoneAddress);
-            tvNameOrderdetails.setText(nameAddress);
-        }
         HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_DETAIL, new ROrderDetailsBean(id, LoginStatus.getUid())).request(new ApiCallBack<POrderDetailsBean>() {
 
 
@@ -296,15 +276,11 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
                 }else{
                     tvPricePay.setText("￥" + o.getNeedpay()+".00");
                 }
-
-
-
-
-
-
             }
         });
     }
+
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -421,18 +397,20 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
         });
 
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(dialog != null) {
+            dialog.dismiss();
+        }
+        if(mBottomSheetDialog != null) {
+            mBottomSheetDialog.dismiss();
+        }
+    }
 
-
-    @OnClick({R.id.rl_address_orderdetails, R.id.bt_submint_orderdetails})
+    @OnClick({ R.id.bt_submint_orderdetails})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.rl_address_orderdetails:
-                if ("1".equals(type)) {
-                    Intent intentAddress = new Intent(OrderDetailsActivity.this, ManageAddressActivity.class);
-                    intentAddress.putExtra("type", "order");
-                    startActivity(intentAddress);
-                }
-                break;
             case R.id.bt_submint_orderdetails:
                 if ("4".equals(type)) {
                     Intent intent = new Intent(OrderDetailsActivity.this, OrderCommentActivity.class);
@@ -444,7 +422,12 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
                     ConfirmTakeGood();
 
                 } else if ("2".equals(type)) {
-
+                    Intent intent = new Intent(OrderDetailsActivity.this, ChatMsgActivity.class);
+                    intent.putExtra("u_to", bean.getCustomId());
+                    intent.putExtra("chat_id", "");
+                    intent.putExtra("name", bean.getCustomName());
+                    intent.putExtra("u_avatar", bean.getCustomAvatar());
+                    startActivity(intent);
                 } else if ("1".equals(type)) {
                     mBottomSheetDialog.show();
                     if (isstart) {

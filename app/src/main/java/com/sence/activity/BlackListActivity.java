@@ -14,6 +14,7 @@ import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.LoginStatus;
 import com.sence.utils.StatusBarUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,6 +29,8 @@ public class BlackListActivity extends BaseActivity {
     RecyclerView recycleBlacklist;
     private BlackListAdapter blackListAdapter;
     private int page = 1;
+    private List<PBlackListBean> bean = new ArrayList<>();
+
     @Override
     public int onActLayout() {
         return R.layout.activity_black_list;
@@ -41,6 +44,13 @@ public class BlackListActivity extends BaseActivity {
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         recycleBlacklist.setLayoutManager(linearLayoutManager);
         recycleBlacklist.setAdapter(blackListAdapter);
+        blackListAdapter.result(new BlackListAdapter.DeleteBlackListener() {
+            @Override
+            public void delete(int i) {
+                bean.remove(i);
+                blackListAdapter.setList(bean);
+            }
+        });
     }
 
     @Override
@@ -60,6 +70,7 @@ public class BlackListActivity extends BaseActivity {
             @Override
             public void onSuccess(List<PBlackListBean> o, String msg){
                 Logger.e("msg==========" + msg);
+                bean = o;
                 blackListAdapter.setList(o);
             }
         });

@@ -60,6 +60,8 @@ public class ShopCommendActivity extends BaseActivity implements View.OnClickLis
     LinearLayout llFoolerShopdetails;
     @BindView(R.id.tv_shopnum_shopdetails)
     TextView tvShopnumShopdetails;
+    @BindView(R.id.tv_notdata_shopcommend)
+    TextView tvNotdataShopcommend;
 
     private ShopCommendAdapter mShopCommendAdapter;
     private int page = 1;
@@ -98,7 +100,7 @@ public class ShopCommendActivity extends BaseActivity implements View.OnClickLis
         name = intent.getStringExtra("name");
         username = intent.getStringExtra("username");
         img = intent.getStringExtra("img");
-        if(num>0){
+        if (num > 0) {
             tvShopnumShopdetails.setVisibility(View.VISIBLE);
             tvShopnumShopdetails.setText(num + "");
         }
@@ -150,6 +152,7 @@ public class ShopCommendActivity extends BaseActivity implements View.OnClickLis
                 Logger.e("msg==========" + msg);
                 beanList = o;
                 if (o.size() > 0) {
+                    tvNotdataShopcommend.setVisibility(View.GONE);
                     mShopCommendAdapter.setList(o);
                 }
 
@@ -183,7 +186,7 @@ public class ShopCommendActivity extends BaseActivity implements View.OnClickLis
         mJian = contentView.findViewById(R.id.rl_buyshop_jian);
         mAdd = contentView.findViewById(R.id.rl_buyshop_add);
         mConfirm = contentView.findViewById(R.id.bt_buyshop_confirm);
-        GlideUtils.getInstance().loadHead(img, mImg);
+        GlideUtils.getInstance().loadNormal(img, mImg);
         tvPrice.setText("￥" + price);
         mJian.setOnClickListener(this);
         mAdd.setOnClickListener(this);
@@ -203,7 +206,7 @@ public class ShopCommendActivity extends BaseActivity implements View.OnClickLis
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_addshop_shopdetails:
-                if(num==0){
+                if (num == 0) {
                     tvShopnumShopdetails.setVisibility(View.VISIBLE);
                 }
                 addShop();

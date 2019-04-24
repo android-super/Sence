@@ -43,7 +43,7 @@ public class SearchShopAdapter extends RecyclerView.Adapter<SearchShopAdapter.Vi
     public void onBindViewHolder(@NonNull SearchShopAdapter.ViewHolder holder, final int position) {
         holder.mName.setText(list.get(position).getName());
         holder.mPrice.setText("￥"+list.get(position).getPrice());
-        GlideUtils.getInstance().loadHead(list.get(position).getImg(),holder.mImg);
+        GlideUtils.getInstance().loadNormal(list.get(position).getImg(),holder.mImg);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

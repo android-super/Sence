@@ -27,8 +27,10 @@ import com.sence.R;
 import com.sence.base.BaseActivity;
 import com.sence.bean.request.RAliPayBean;
 import com.sence.bean.request.RConfirmOrderBean;
+import com.sence.bean.request.RUidBean;
 import com.sence.bean.request.RWxPayBean;
 import com.sence.bean.response.PConfirmOrderBean;
+import com.sence.bean.response.PDefaultAddressBean;
 import com.sence.bean.response.PWxPayBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
@@ -105,8 +107,6 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
     TextView tvMaxpriceConfirmorder;
     @BindView(R.id.rl_confirmorder)
     RelativeLayout rlConfirmorder;
-    @BindView(R.id.iv_to_confirmorder)
-    ImageView ivToConfirmorder;
     @BindView(R.id.tv_sprice_confrimorder)
     TextView tvSpriceConfrimorder;
     @BindView(R.id.bt_submint_confirmorder)
@@ -167,13 +167,26 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
         tvMaxpriceConfirmorder.setText("￥" + shopMaxPrice);
         tvSpriceConfrimorder.setText("￥" + shopMaxPrice);
         tvPostpriceConfirmorder.setText("￥" + ShopPostPrice);
-        GlideUtils.getInstance().loadHead(img, ivImgConfirmorder);
+        GlideUtils.getInstance().loadNormal(img, ivImgConfirmorder);
         tvShopnameConfirmorder.setText(name);
         tvStroenameConfirmorder.setText(username);
         tvShopnumConfirmorder.setText("共" + num + "件商品");
         bottomSheetDialog();
+        defaultAddress();
     }
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(dialog != null) {
+            dialog.dismiss();
+        }
+        if(alertDialog != null) {
+            alertDialog.dismiss();
+        }
+        if(mBottomSheetDialog != null) {
+            mBottomSheetDialog.dismiss();
+        }
+    }
     private void alter() {
         if(mBottomSheetDialog.isShowing()){
             mBottomSheetDialog.dismiss();
@@ -353,25 +366,52 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
             }
         }
     };
+
     @Override
     public void initData() {
-
         isCheckAddress = LoginStatus.getIsCheckShopAddress();
-        idAddress = LoginStatus.getIdAddress();
         address = LoginStatus.getAddress();
         nameAddress = LoginStatus.getNameAddress();
         phoneAddress = LoginStatus.getPhoneAddress();
-        SharedPreferencesUtil.getInstance().putBoolean("ischeck_shopaddress", false);
-        if (isCheckAddress) {
-            rlAddaddressConfirmorder.setVisibility(View.GONE);
-            rlAddressConfirmorder.setVisibility(View.VISIBLE);
-        } else {
-            rlAddaddressConfirmorder.setVisibility(View.VISIBLE);
-            rlAddressConfirmorder.setVisibility(View.GONE);
+        if(!TextUtils.isEmpty(phoneAddress)){
+            isCheckAddress=true;
+            idAddress = LoginStatus.getIdAddress();
+            tvAddressConfirmorder.setText(address);
+            tvPhoneConfirmorder.setText(phoneAddress);
+            tvNameConfirmorder.setText(nameAddress);
         }
-        tvAddressConfirmorder.setText(address);
-        tvPhoneConfirmorder.setText(phoneAddress);
-        tvNameConfirmorder.setText(nameAddress);
+        SharedPreferencesUtil.getInstance().putBoolean("ischeck_shopaddress", false);
+
+
+    }
+
+    private void defaultAddress() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.DEFAULT_ADDRESS, new RUidBean(LoginStatus.getUid())).request(new ApiCallBack<PDefaultAddressBean>() {
+            @Override
+            public void onFinish() {
+            }
+
+            @Override
+            public void Message(int code, String message) {
+            }
+
+            @Override
+            public void onSuccess(PDefaultAddressBean o, String msg) {
+                Logger.e("msg==========" + msg );
+                if(null == o){
+                    rlAddaddressConfirmorder.setVisibility(View.VISIBLE);
+                    rlAddressConfirmorder.setVisibility(View.GONE);
+                }else {
+                    idAddress = o.getId();
+                    rlAddaddressConfirmorder.setVisibility(View.GONE);
+                    rlAddressConfirmorder.setVisibility(View.VISIBLE);
+                    isCheckAddress=true;
+                    tvAddressConfirmorder.setText(o.getArea()+o.getAddress());
+                    tvPhoneConfirmorder.setText(o.getPhone());
+                    tvNameConfirmorder.setText(o.getUsername());
+                }
+            }
+        });
     }
 
 
@@ -387,7 +427,6 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
                 if (isCheckAddress) {
                     mBottomSheetDialog.show();
                     createOrder();
-
                 } else {
                     ToastUtils.showShort("请先选择地址");
                 }

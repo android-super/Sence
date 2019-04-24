@@ -36,7 +36,7 @@ public class ImgFlexActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_img_flex);
-        StatusBarUtil.setLightMode(this);
+        StatusBarUtil.setTransparent(this);
         initData();
     }
 

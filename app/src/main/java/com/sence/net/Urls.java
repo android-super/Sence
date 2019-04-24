@@ -78,6 +78,7 @@ public class Urls {
     public static final String MAIN_SEARCH = "/index.php/Api/Public/homeSearchList";//主页搜索
     //商品
     public static final String ORDER_COMMENT_SUPPORT = "/index.php/Api/Orders/praise";//订单评论点赞
+    public static final String DEFAULT_ADDRESS = "/index.php/Api/Address/getDefaultAddress";//用户默认地址
     public static final String TIME_REMAINING = "/index.php/Api/Orders/getOrderTime";//订单剩余时间
     public static final String ORDER_NOTE_GOODS = "/index.php/Api/Goods/getNotesGoods";//笔记立即购买 所有商品数据
     public static final String ORDER_DETAIL = "/index.php/Api/Orders/getOrderDetail";//订单详情

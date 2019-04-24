@@ -99,7 +99,7 @@ public class OrderCommentActivity extends BaseActivity implements View.OnClickLi
         Intent intent = getIntent();
         url = intent.getStringExtra("url");
         id = intent.getStringExtra("id");
-        GlideUtils.getInstance().loadHead(url, ivShopimgShopcomment);
+        GlideUtils.getInstance().loadNormal(url, ivShopimgShopcomment);
         View view = View.inflate(this, R.layout.bottom_dialog, null);
         TextView mTakePhoto = (TextView) view.findViewById(R.id.tv_takephoto);
         TextView mPhoto = (TextView) view.findViewById(R.id.tv_photo);

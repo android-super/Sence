@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.orhanobut.logger.Logger;
+import com.sence.LoginActivity;
 import com.sence.R;
 import com.sence.activity.MyInfoActivity;
 import com.sence.bean.request.RCancelFocusBean;
@@ -71,7 +72,7 @@ public class SearchFriendAdapter extends RecyclerView.Adapter<SearchFriendAdapte
             @Override
             public void onClick(View v) {
                 if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
-                    ToastUtils.showShort("请先登录");
+                    context.startActivity(new Intent(context, LoginActivity.class));
                     return;
                 }
                 if(LoginStatus.getUid().equals(list.get(position).getId())){
@@ -89,7 +90,7 @@ public class SearchFriendAdapter extends RecyclerView.Adapter<SearchFriendAdapte
             @Override
             public void onClick(View v) {
                 if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
-                    ToastUtils.showShort("请先登录");
+                    context.startActivity(new Intent(context, LoginActivity.class));
                     return;
                 }
                 Intent intent = new Intent(context, MyInfoActivity.class);

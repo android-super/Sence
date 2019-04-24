@@ -52,7 +52,7 @@ public class MyInfoRecommendAdapter extends RecyclerView.Adapter<MyInfoRecommend
         holder.mComment.setText(list.get(position).getMessage_count());
         holder.mLike.setText(list.get(position).getPraise_count());
         GlideUtils.getInstance().loadHead( list.get(position).getAvatar(),holder.mImageView);
-        GlideUtils.getInstance().loadHead( list.get(position).getAlbum_url(),holder.mImg);
+        GlideUtils.getInstance().loadNormal( list.get(position).getAlbum_url(),holder.mImg);
     }
 
     @Override

@@ -1,8 +1,5 @@
 package com.sence.activity;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
 import com.orhanobut.logger.Logger;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
@@ -63,8 +60,11 @@ public class UserDetailActivity extends BaseActivity {
 
             @Override
             public void onSuccess(List<PUserDetailBean> o, String msg) {
-                Logger.e("msg==========" + msg + o.get(0).getImg());
-                mUserDetailAdapter.setList(o);
+                Logger.e("msg==========" + msg );
+                if(o.size()>0){
+                    mUserDetailAdapter.setList(o);
+                }
+
             }
         });
     }

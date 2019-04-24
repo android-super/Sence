@@ -30,8 +30,10 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.orhanobut.logger.Logger;
+import com.sence.LoginActivity;
 import com.sence.MainActivity;
 import com.sence.R;
+import com.sence.activity.web.WebConstans;
 import com.sence.adapter.ShopDetailsCommendAdapter;
 import com.sence.adapter.ShopDetailsImgAdapter;
 import com.sence.base.BaseActivity;
@@ -127,6 +129,8 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
     ImageView ivShopShopdetails;
     @BindView(R.id.view_oprice_shopdetails)
     View viewOpriceShopdetails;
+    @BindView(R.id.tv_notdata_shopdetails)
+    TextView tvNotdataShopdetails;
 
     private ShopDetailsImgAdapter shopDetailsImgAdapter;
     private ShopDetailsCommendAdapter mShopDetailsCommendAdapter;
@@ -145,7 +149,8 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
     private PopupWindow popupWindow;
     private View contentView;
     private static String TAG = "";
-
+    private boolean textsize = true;
+    private boolean page = true;
     @Override
     public int onActLayout() {
         return R.layout.activity_shopdetails;
@@ -245,6 +250,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                 imgs = o.getImgs();
                 bean = o;
                 if (o.getComment().size() > 0) {
+                    tvNotdataShopdetails.setVisibility(View.GONE);
                     mShopDetailsCommendAdapter.setList(o.getComment());
                 }
                 num = Integer.parseInt(o.getCartNum());
@@ -253,12 +259,16 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                     tvShopnumShopdetails.setText(num + "");
                 }
                 if (o.getImgs().size() > 0) {
-                    tvImgnumShopdetails.setText("1/" + imgs.size());
+                    if(page){
+                        page = false;
+                        tvImgnumShopdetails.setText("1/" + imgs.size());
+                    }
+
                     List<ImageView> list = new ArrayList<>();
                     for (int i = 0; i < imgs.size(); i++) {
                         ImageView imageView = new ImageView(ShopDetailsActivity.this);
                         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                        GlideUtils.getInstance().loadHead(imgs.get(i), imageView);
+                        GlideUtils.getInstance().loadNormal(imgs.get(i), imageView);
                         list.add(imageView);
                         final int position = i;
                         imageView.setOnClickListener(new View.OnClickListener() {
@@ -273,13 +283,19 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                     }
                     shopDetailsImgAdapter.setList(list);
                 }
+                if (textsize) {
+                    textsize = false;
+                    int width = tvOpriceShopdetails.getWidth();
+                    RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) viewOpriceShopdetails.getLayoutParams();
+                    int round = o.getPrice().length() / 2;
+                    if (o.getPrice().length() % 2 == 1) {
+                        round++;
+                    }
+                    layoutParams.width = width * round;
+                    viewOpriceShopdetails.setLayoutParams(layoutParams);
+                }
 
                 tvOpriceShopdetails.setText("￥" + o.getPrice());
-                int measuredWidth = tvOpriceShopdetails.getMeasuredWidth();
-                ViewGroup.LayoutParams params = viewOpriceShopdetails.getLayoutParams();
-                params.width = measuredWidth;
-                params.height = 3;
-                viewOpriceShopdetails.setLayoutParams(params);
                 if ("0".equals(o.getVprice())) {
                     tvCpriceShopdetails.setText("￥" + o.getPrice());
                     tvVipShopdetails.setVisibility(View.GONE);
@@ -300,16 +316,20 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
 
     private void doData(final String url) {
         settings = wvContentShopdetails.getSettings();
+        settings.setDefaultTextEncodingName("UTF-8");
         settings.setUseWideViewPort(true);
         settings.setLoadWithOverviewMode(true);
         settings.setDomStorageEnabled(true);
         settings.setAllowFileAccess(false);
+        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         settings.setAllowFileAccess(false);
-        settings.setUseWideViewPort(false);//禁止webview做自动缩放
+        settings.setBuiltInZoomControls(false); // 设置显示缩放按钮
+        settings.setSupportZoom(false); // 支持缩放
         settings.setBuiltInZoomControls(false);
         settings.setSupportZoom(false);
         settings.setDisplayZoomControls(false);
         settings.setJavaScriptEnabled(true);
+        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         settings.setAppCacheEnabled(true);
         settings.setSupportMultipleWindows(false);
         settings.setAppCachePath(getDir("cache", Context.MODE_PRIVATE).getPath());
@@ -373,7 +393,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
         mJian = contentView.findViewById(R.id.rl_buyshop_jian);
         mAdd = contentView.findViewById(R.id.rl_buyshop_add);
         mConfirm = contentView.findViewById(R.id.bt_buyshop_confirm);
-        GlideUtils.getInstance().loadHead(bean.getImg(), mImg);
+        GlideUtils.getInstance().loadNormal(bean.getImg(), mImg);
         if ("1".equals(bean.getIsMember())) {
             if ("0".equals(bean.getVprice())) {
                 tvPrice.setText("￥" + bean.getPrice());
@@ -409,8 +429,8 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_addshop_shopdetails:
-                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
-                    ToastUtils.showShort("请先登录");
+                if (!LoginStatus.isLogin() || LoginStatus.getUid().isEmpty()) {
+                    startActivity(new Intent(ShopDetailsActivity.this, LoginActivity.class));
                     return;
                 }
                 if (num == 0) {
@@ -419,8 +439,8 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                 addShop();
                 break;
             case R.id.tv_buy_shopdetails:
-                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
-                    ToastUtils.showShort("请先登录");
+                if (!LoginStatus.isLogin() || LoginStatus.getUid().isEmpty()) {
+                    startActivity(new Intent(ShopDetailsActivity.this, LoginActivity.class));
                     return;
                 }
                 bgAlpha(0.5f);
@@ -428,15 +448,15 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
 
                 break;
             case R.id.ll_service_shopdetails:
-                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
-                    ToastUtils.showShort("请先登录");
+                if (!LoginStatus.isLogin() || LoginStatus.getUid().isEmpty()) {
+                    startActivity(new Intent(ShopDetailsActivity.this, LoginActivity.class));
                     return;
                 }
 
                 break;
             case R.id.ll_shop_shopdetails:
-                if (!LoginStatus.isLogin()||LoginStatus.getUid().isEmpty()) {
-                    ToastUtils.showShort("请先登录");
+                if (!LoginStatus.isLogin() || LoginStatus.getUid().isEmpty()) {
+                    startActivity(new Intent(ShopDetailsActivity.this, LoginActivity.class));
                     return;
                 }
                 Intent intent = new Intent(ShopDetailsActivity.this, MainActivity.class);
@@ -444,6 +464,17 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                 startActivity(intent);
                 break;
 
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(popupWindow != null) {
+            popupWindow.dismiss();
+        }
+        if(mBottomSheetDialog != null) {
+            mBottomSheetDialog.dismiss();
         }
     }
 
@@ -498,11 +529,13 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                 startActivity(intentBuy);
                 break;
             case R.id.ll_wei_share:
-                shareWeb(ShopDetailsActivity.this, "http://www.baidu.com", bean.getName(), "女神周边，精品生活", SHARE_MEDIA.WEIXIN, bean.getImg());
+
+                shareWeb(ShopDetailsActivity.this, WebConstans.SPXQ + "?id=" + LoginStatus.getUid() + "&token=" + bean.getId(), bean.getName(), "女神周边，精品生活", SHARE_MEDIA.WEIXIN, bean.getImg());
                 mBottomSheetDialog.dismiss();
                 break;
             case R.id.ll_friend_share:
-                shareWeb(ShopDetailsActivity.this, "http://www.baidu.com", bean.getName(), "女神周边，精品生活", SHARE_MEDIA.WEIXIN_CIRCLE, bean.getImg());
+
+                shareWeb(ShopDetailsActivity.this, WebConstans.SPXQ + "?id=" + LoginStatus.getUid() + "&token=" + bean.getId(), bean.getName(), "女神周边，精品生活", SHARE_MEDIA.WEIXIN_CIRCLE, bean.getImg());
                 mBottomSheetDialog.dismiss();
                 break;
             case R.id.tv_cancel_share:
@@ -511,6 +544,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
 
         }
     }
+
     private void bottomSheetDialog() {
         View mView = View.inflate(this, R.layout.layout_share, null);
         mBottomSheetDialog = new BottomSheetDialog(this);
@@ -521,6 +555,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
         mView.findViewById(R.id.view).setVisibility(View.GONE);
         mView.findViewById(R.id.ll_wei_share).setOnClickListener(this);
         mView.findViewById(R.id.ll_friend_share).setOnClickListener(this);
+        mView.findViewById(R.id.tv_cancel_share).setOnClickListener(this);
     }
 
     /**

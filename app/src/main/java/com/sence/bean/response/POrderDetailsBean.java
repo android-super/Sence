@@ -20,7 +20,52 @@ public class POrderDetailsBean {
      * goods : [{"price":"12","id":"2","img":"Public/Uploads/Order/2019-03-26//5c99eb1fc12a5.jpg","name":"2号商品","num":"3"}]
      * fee : 0
      */
+    private String customId;
+    private String customName;
+    private String customAvatar;
 
+    public String getCustomId() {
+        return customId;
+    }
+
+    public void setCustomId(String customId) {
+        this.customId = customId;
+    }
+
+    public String getCustomName() {
+        return customName;
+    }
+
+    public void setCustomName(String customName) {
+        this.customName = customName;
+    }
+
+    public String getCustomAvatar() {
+        return customAvatar;
+    }
+
+    public void setCustomAvatar(String customAvatar) {
+        this.customAvatar = customAvatar;
+    }
+
+    public String getSellerUid() {
+        return sellerUid;
+    }
+
+    public void setSellerUid(String sellerUid) {
+        this.sellerUid = sellerUid;
+    }
+
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    private String sellerUid;
+    private String orderStatus;
     private String id;
     private String aid;
     private String oid;

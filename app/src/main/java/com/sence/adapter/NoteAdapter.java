@@ -3,37 +3,21 @@ package com.sence.adapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Build;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import com.blankj.utilcode.util.ConvertUtils;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.Target;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sence.R;
 import com.sence.activity.NoteDetailActivity;
 import com.sence.bean.response.PMainBean;
-import com.sence.bean.response.PMainNoteBean;
-import com.sence.net.Urls;
 import com.sence.utils.GlideUtils;
 import com.sence.view.NiceImageView;
 
 import androidx.core.app.ActivityOptionsCompat;
-
-import static com.bumptech.glide.request.target.Target.SIZE_ORIGINAL;
 
 /**
  * Created by zwy on 2019/3/18.
@@ -50,9 +34,7 @@ public class NoteAdapter extends BaseQuickAdapter<PMainBean.NoteListBean, BaseVi
         final NiceImageView item_img = helper.getView(R.id.item_img);
         final Activity activity = (Activity) helper.itemView.getContext();
         final NiceImageView item_head = helper.getView(R.id.item_head);
-        GlideUtils.getInstance().loadHead(item.getAvatar(), item_head);
-//        Glide.with(item_img).load(Urls.base_url + item.getAlbum_url()).apply(new RequestOptions().override(0,
-//                SIZE_ORIGINAL).fitCenter().placeholder(R.drawable.shape_loading_error).error(R.drawable.shape_loading_error)).into(item_img);
+        GlideUtils.getInstance().loadNormal(item.getAvatar(), item_head);
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) item_img.getLayoutParams();
         layoutParams.height = ConvertUtils.dp2px(item.getHeight()) / 2;
         GlideUtils.getInstance().loadNormal(item.getAlbum_url(), item_img);

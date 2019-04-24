@@ -16,12 +16,12 @@ import com.sence.net.bean.ErrorConstants;
 import com.sence.net.bean.HttpJsonErrorBean;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.net.manager.HttpClientManager;
+import com.sence.net.manager.MessageApiCallBack;
 
 import java.io.EOFException;
 import java.net.SocketTimeoutException;
 import java.util.concurrent.TimeoutException;
 
-import com.sence.net.manager.MessageApiCallBack;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -229,6 +229,9 @@ public class HttpManager<P> {
             case USER_CASH:
                 observable = httpService.UserCash(requestBean.getMap());
                 break;
+            case DEFAULT_ADDRESS:
+                observable = httpService.DefaultAddress(requestBean.getMap());
+                break;
             case USER_GOOD_LIST:
                 observable = httpService.UserGoodList(requestBean.getMap());
                 break;
@@ -376,14 +379,15 @@ public class HttpManager<P> {
                 Logger.e("status is " + result.getStatus() + "\nmsg is " + result.getMsg() + "\ndata is " + result.getData().toString());
                 if (!disposable.isDisposed()) {
                     if (result.getStatus() == 1) {
+
                         if (apiCallBack instanceof MessageApiCallBack) {
                             ((MessageApiCallBack) apiCallBack).onSuccessCount(result.getData(), result.getMsg(),
                                     result.getCount());
                         } else {
                             apiCallBack.onSuccess(result.getData(), result.getMsg());
                         }
-                        ToastUtils.showShort(result.getMsg());
                     } else {
+                        ToastUtils.showShort(result.getMsg());
                         apiCallBack.Message(result.getStatus(), result.getMsg());
                     }
                     disposable.dispose();

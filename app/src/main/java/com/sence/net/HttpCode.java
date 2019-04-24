@@ -72,6 +72,7 @@ public enum HttpCode {
     ORDER_COMMIT,//提交订单
     COMMENT_ADD,//添加评论（订单）
     USER_EDIT,//用戶信息修改
+    DEFAULT_ADDRESS,//用户默认地址
     USER_GOOD_LIST,//会员商品列表
     USER_SERVE_LIST,//会员vip服务列表
     CHAT_SEND_MESSAGE,//发送消息

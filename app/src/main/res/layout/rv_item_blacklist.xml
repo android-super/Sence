@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.mcxtzhang.swipemenulib.SwipeMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="64dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <com.sence.view.NiceImageView
         android:layout_width="45dp"
         android:layout_height="45dp"
@@ -28,4 +31,12 @@
         android:background="#f6f6f6"
         android:layout_marginLeft="69dp"
         android:layout_alignParentBottom="true"></View>
-</RelativeLayout>
+    </RelativeLayout>
+    <TextView
+        android:layout_width="74dp"
+        android:text="解除拉黑"
+        android:background="#f6f6f6"
+        android:id="@+id/tv_relieve_blacklist"
+        android:gravity="center"
+        android:layout_height="match_parent"/>
+</com.mcxtzhang.swipemenulib.SwipeMenuLayout>

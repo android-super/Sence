@@ -44,7 +44,7 @@ public class ShopDetailsCommendAdapter extends RecyclerView.Adapter<ShopDetailsC
     public void onBindViewHolder(@NonNull ShopDetailsCommendAdapter.ViewHolder holder, final int position) {
         holder.mName.setText(list.get(position).getNickname());
         holder.mContent.setText(list.get(position).getContent());
-        GlideUtils.getInstance().loadHead( list.get(position).getImg(),holder.mImageView);
+        GlideUtils.getInstance().loadNormal( list.get(position).getImg(),holder.mImageView);
         GlideUtils.getInstance().loadHead( list.get(position).getAvatar(),holder.mImg);
         final String img = list.get(position).getImg();
         holder.mImageView.setOnClickListener(new View.OnClickListener() {

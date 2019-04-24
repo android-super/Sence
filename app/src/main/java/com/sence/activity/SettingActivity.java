@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 import com.sence.R;
+import com.sence.activity.web.WebConstans;
 import com.sence.base.BaseActivity;
 import com.sence.utils.DataCleanManager;
 import com.sence.utils.SharedPreferencesUtil;
@@ -118,9 +119,7 @@ public class SettingActivity extends BaseActivity {
                 break;
             case R.id.ll_policy_setting:
                 Intent intent = new Intent(SettingActivity.this, WebActivity.class);
-                intent.putExtra("private",true);
-                intent.putExtra("url","http://192.168.1.10:8085/Public/web/deal/privacy.html");
-                intent.putExtra("title","隐私政策");
+                intent.putExtra("code", WebConstans.WebCode.YSZC);
                 startActivity(intent);
                 break;
             case R.id.ll_about_setting:

@@ -85,6 +85,7 @@ public class SearchActivity extends BaseActivity {
                     llFlowSearch.setVisibility(View.GONE);
                     doHttp(content);
                 }else{
+                    llResultSearch.setVisibility(View.GONE);
                     llFlowSearch.setVisibility(View.VISIBLE);
                 }
             }

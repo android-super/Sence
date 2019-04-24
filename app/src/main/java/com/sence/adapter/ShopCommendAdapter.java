@@ -1,6 +1,7 @@
 package com.sence.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.orhanobut.logger.Logger;
+import com.sence.LoginActivity;
 import com.sence.R;
 import com.sence.bean.request.RShopDetailsBean;
 import com.sence.bean.response.PShopCommendBean;
@@ -61,7 +63,6 @@ public class ShopCommendAdapter extends RecyclerView.Adapter<ShopCommendAdapter.
         holder.mName.setText(list.get(position).getNickname());
         holder.mLikeNum.setText(list.get(position).getPraise());
         GlideUtils.getInstance().loadHead( list.get(position).getAvatar(),holder.mImageView);
-
         if("1".equals(list.get(position).getIsPraise())){
             holder.mLike.setImageResource(R.drawable.shopcommend_dianzan_y);
         }else{
@@ -72,7 +73,7 @@ public class ShopCommendAdapter extends RecyclerView.Adapter<ShopCommendAdapter.
             @Override
             public void onClick(View v) {
                 if(TextUtils.isEmpty(LoginStatus.getUid())){
-                    ToastUtils.showShort("请先登录");
+                    context.startActivity(new Intent(context, LoginActivity.class));
                     return;
                 }
                 if(list.get(position).getIsPraise().equals("1")){

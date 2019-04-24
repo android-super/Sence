@@ -305,6 +305,10 @@ public interface HttpService {
     Observable<BaseResponseBean<Object>> UserCash(@FieldMap Map<String, Object> map);//余额提现
 
     @FormUrlEncoded
+    @POST(Urls.DEFAULT_ADDRESS)
+    Observable<BaseResponseBean<PDefaultAddressBean>> DefaultAddress(@FieldMap Map<String, Object> map);//余额提现
+
+    @FormUrlEncoded
     @POST(Urls.ORDER_COMMIT)
     Observable<BaseResponseBean<PConfirmOrderBean>> OrderCommit(@FieldMap Map<String, Object> map);//提交订单
 

@@ -127,7 +127,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 SharedPreferencesUtil.getInstance().putString("sex", o.getSex());
                 SharedPreferencesUtil.getInstance().putString("avatar", o.getAvatar());
                 SharedPreferencesUtil.getInstance().putString("real_name", o.getReal_name());
-                SharedPreferencesUtil.getInstance().putString("id_card", o.getNick_name());
+                SharedPreferencesUtil.getInstance().putString("id_card", o.getId_card());
                 SharedPreferencesUtil.getInstance().putString("id_status", o.getId_status());
                 SharedPreferencesUtil.getInstance().putString("img_status", o.getImg_status());
                 SharedPreferencesUtil.getInstance().putString("token", o.getToken());

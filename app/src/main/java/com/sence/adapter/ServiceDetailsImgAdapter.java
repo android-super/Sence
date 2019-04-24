@@ -39,7 +39,7 @@ public class ServiceDetailsImgAdapter extends RecyclerView.Adapter<ServiceDetail
 
     @Override
     public void onBindViewHolder(@NonNull ServiceDetailsImgAdapter.ViewHolder holder, final int position) {
-        GlideUtils.getInstance().loadHead( list.get(position),holder.mImageView);
+        GlideUtils.getInstance().loadNormal( list.get(position),holder.mImageView);
         holder.mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

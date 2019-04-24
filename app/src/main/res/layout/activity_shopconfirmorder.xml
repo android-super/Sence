@@ -304,41 +304,6 @@
             </RelativeLayout>
 
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_40"
-                android:layout_below="@+id/rl_confirmorder"
-                android:layout_marginTop="@dimen/dp_10"
-                android:background="#ffffff">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp_10"
-                    android:textColor="#050505"
-                    android:textSize="13sp"
-                    android:layout_centerVertical="true"
-                    android:text="优惠卷"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/confirmorder_xia"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="14dp"
-                    android:id="@+id/iv_to_confirmorder"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="11dp"
-                    android:layout_toLeftOf="@+id/iv_to_confirmorder"
-                    android:textSize="13sp"
-                    android:text="不可用"
-                    android:textColor="#808080"/>
-            </RelativeLayout>
 
 
         </LinearLayout>

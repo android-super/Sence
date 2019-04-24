@@ -29,9 +29,11 @@ import com.sence.base.BaseActivity;
 import com.sence.bean.request.RAliPayBean;
 import com.sence.bean.request.RConfirmOrderBean;
 import com.sence.bean.request.RConfirmOrderGoodBean;
+import com.sence.bean.request.RUidBean;
 import com.sence.bean.request.RWxPayBean;
 import com.sence.bean.response.PBusBean;
 import com.sence.bean.response.PConfirmOrderBean;
+import com.sence.bean.response.PDefaultAddressBean;
 import com.sence.bean.response.PWxPayBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
@@ -85,8 +87,6 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     RelativeLayout rlAddressConfirmorder;
     @BindView(R.id.recycle_confirmorder)
     RecyclerView recycleConfirmorder;
-    @BindView(R.id.iv_to_confirmorder)
-    ImageView ivToConfirmorder;
     @BindView(R.id.tv_sprice_confrimorder)
     TextView tvSpriceConfrimorder;
     @BindView(R.id.bt_submint_confirmorder)
@@ -156,29 +156,62 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             confirmOrderAdapter.setList(listData);
         }
         bottomSheetDialog();
+        defaultAddress();
     }
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(dialog != null) {
+            dialog.dismiss();
+        }
+        if(mBottomSheetDialog != null) {
+            mBottomSheetDialog.dismiss();
+        }
+    }
     @Override
     public void initData() {
-
-        isCheckAddress = LoginStatus.getIsCheckAddress();
-        idAddress = LoginStatus.getIdAddress();
+        isCheckAddress = LoginStatus.getIsCheckShopAddress();
         address = LoginStatus.getAddress();
         nameAddress = LoginStatus.getNameAddress();
         phoneAddress = LoginStatus.getPhoneAddress();
-        SharedPreferencesUtil.getInstance().putBoolean("ischeck_address", false);
-        if (isCheckAddress) {
-            rlAddaddressConfirmorder.setVisibility(View.GONE);
-            rlAddressConfirmorder.setVisibility(View.VISIBLE);
-        } else {
-            rlAddaddressConfirmorder.setVisibility(View.VISIBLE);
-            rlAddressConfirmorder.setVisibility(View.GONE);
+        if(!TextUtils.isEmpty(phoneAddress)){
+            isCheckAddress=true;
+            idAddress = LoginStatus.getIdAddress();
+            tvAddressConfirmorder.setText(address);
+            tvPhoneConfirmorder.setText(phoneAddress);
+            tvNameConfirmorder.setText(nameAddress);
         }
-        tvAddressConfirmorder.setText(address);
-        tvPhoneConfirmorder.setText(phoneAddress);
-        tvNameConfirmorder.setText(nameAddress);
+        SharedPreferencesUtil.getInstance().putBoolean("ischeck_shopaddress", false);
     }
 
+    private void defaultAddress() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.DEFAULT_ADDRESS, new RUidBean(LoginStatus.getUid())).request(new ApiCallBack<PDefaultAddressBean>() {
+            @Override
+            public void onFinish() {
+            }
+
+            @Override
+            public void Message(int code, String message) {
+            }
+
+            @Override
+            public void onSuccess(PDefaultAddressBean o, String msg) {
+                Logger.e("msg==========" + msg );
+                if(null == o){
+                    rlAddaddressConfirmorder.setVisibility(View.VISIBLE);
+                    rlAddressConfirmorder.setVisibility(View.GONE);
+                }else {
+                    idAddress = o.getId();
+                    rlAddaddressConfirmorder.setVisibility(View.GONE);
+                    rlAddressConfirmorder.setVisibility(View.VISIBLE);
+                    isCheckAddress=true;
+                    tvAddressConfirmorder.setText(o.getArea()+o.getAddress());
+                    tvPhoneConfirmorder.setText(o.getPhone());
+                    tvNameConfirmorder.setText(o.getUsername());
+                }
+            }
+        });
+    }
     @Override
     protected void onResume() {
         super.onResume();

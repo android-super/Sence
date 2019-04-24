@@ -43,7 +43,7 @@ public class MyInfoNoteAdapter extends RecyclerView.Adapter<MyInfoNoteAdapter.Vi
         holder.mName.setText(list.get(position).getNick_name());
         holder.mContent.setText(list.get(position).getContent());
         holder.mLike.setText(list.get(position).getPraise_count());
-        GlideUtils.getInstance().loadHead( list.get(position).getAlbum_url(),holder.mImg);
+        GlideUtils.getInstance().loadNormal( list.get(position).getAlbum_url(),holder.mImg);
     }
 
     @Override

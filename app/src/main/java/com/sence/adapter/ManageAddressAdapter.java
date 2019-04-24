@@ -104,13 +104,6 @@ public class ManageAddressAdapter extends RecyclerView.Adapter<ManageAddressAdap
                     SharedPreferencesUtil.getInstance().putBoolean("ischeck_shopaddress", true);
                     ((ManageAddressActivity) context).finish();
 
-                } else if ("order".equals(type)) {
-                    SharedPreferencesUtil.getInstance().putString("name_address", list.get(position).getUsername());
-                    SharedPreferencesUtil.getInstance().putString("id_address", list.get(position).getId());
-                    SharedPreferencesUtil.getInstance().putString("address", list.get(position).getArea() + list.get(position).getAddress());
-                    SharedPreferencesUtil.getInstance().putString("phone_address", list.get(position).getPhone());
-                    SharedPreferencesUtil.getInstance().putBoolean("ischeck_orderaddress", true);
-                    ((ManageAddressActivity) context).finish();
                 }
             }
         });

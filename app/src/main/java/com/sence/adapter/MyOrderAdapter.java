@@ -16,6 +16,7 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
 import com.sence.R;
 import com.sence.activity.OrderCommentActivity;
 import com.sence.activity.OrderDetailsActivity;
+import com.sence.activity.chat.ui.ChatMsgActivity;
 import com.sence.bean.request.ROrderDetailsBean;
 import com.sence.bean.response.PMyOrderBean;
 import com.sence.net.HttpCode;
@@ -209,7 +210,17 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
                 context.startActivity(intent);
             }
         });
-
+        holder.mSevice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ChatMsgActivity.class);
+                intent.putExtra("u_to", list.get(position).getCustom().getId());
+                intent.putExtra("chat_id", "");
+                intent.putExtra("name", list.get(position).getCustom().getName());
+                intent.putExtra("u_avatar", list.get(position).getCustom().getAvatar());
+                context.startActivity(intent);
+            }
+        });
     }
 
     private void ConfirmTakeGood(final int position) {

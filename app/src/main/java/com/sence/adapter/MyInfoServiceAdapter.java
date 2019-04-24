@@ -42,7 +42,7 @@ public class MyInfoServiceAdapter extends RecyclerView.Adapter<MyInfoServiceAdap
 
     @Override
     public void onBindViewHolder(@NonNull MyInfoServiceAdapter.ViewHolder holder, final int position) {
-        GlideUtils.getInstance().loadHead( list.get(position).getImg(),holder.mImageView);
+        GlideUtils.getInstance().loadNormal( list.get(position).getImg(),holder.mImageView);
         if(list.get(position).getTag().size()==2){
             holder.mOlaber.setText(list.get(position).getTag().get(0));
             holder.mTlaber.setText(list.get(position).getTag().get(1));

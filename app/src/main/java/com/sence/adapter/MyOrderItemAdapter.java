@@ -39,7 +39,7 @@ public class MyOrderItemAdapter extends RecyclerView.Adapter<MyOrderItemAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull MyOrderItemAdapter.ViewHolder holder, final int position) {
-        GlideUtils.getInstance().loadHead( list.get(position).getImg(),holder.mImageView);
+        GlideUtils.getInstance().loadNormal( list.get(position).getImg(),holder.mImageView);
         holder.mName.setText(list.get(position).getName());
 
         if (list.get(position).getPrice().contains(".")) {

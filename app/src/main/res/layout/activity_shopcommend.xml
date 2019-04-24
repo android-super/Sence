@@ -18,6 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:id="@+id/srl_layout_shopcommend"
+        app:srlEnableLoadMoreWhenContentNotFull="false"
         android:layout_weight="1">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -27,6 +28,15 @@
 
     </androidx.recyclerview.widget.RecyclerView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F9F9F9"
+        android:id="@+id/tv_notdata_shopcommend"
+        android:textColor="#B3B3B3"
+        android:textSize="@dimen/sp_14"
+        android:gravity="center"
+        android:text="目前还没有评价"/>
     <include
         layout="@layout/shop_buttom_layout"
         android:layout_width="match_parent"

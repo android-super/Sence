@@ -137,7 +137,7 @@ public class ServiceDetailsActivity extends BaseActivity {
                 for (int i = 0; i < o.getImgs().size(); i++) {
                     ImageView imageView = new ImageView(ServiceDetailsActivity.this);
                     imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                    GlideUtils.getInstance().loadHead(o.getImgs().get(i), imageView);
+                    GlideUtils.getInstance().loadNormal(o.getImgs().get(i), imageView);
                     list.add(imageView);
                     final int position = i;
                     imageView.setOnClickListener(new View.OnClickListener() {

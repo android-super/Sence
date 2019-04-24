@@ -16,6 +16,7 @@
             android:layout_height="50dp"/>
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:layout_width="match_parent"
+        app:srlEnableLoadMoreWhenContentNotFull="false"
         android:layout_height="match_parent"
         android:id="@+id/srl_layout_enjoyvip">
 

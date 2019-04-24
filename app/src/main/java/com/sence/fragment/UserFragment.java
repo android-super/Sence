@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.ToastUtils;
 import com.sence.LoginActivity;
 import com.sence.R;
 import com.sence.activity.ManageAddressActivity;
@@ -58,7 +57,6 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     private TextView user_pay, user_send, user_get, user_comment;
     private TextView user_pay_point, user_send_point, user_get_point, user_comment_point;
     private RelativeLayout user_flower;
-    private ImageView user_garden_point;
     private TextView user_account, user_address, user_set;
 
     private String save_money;//预计一年省
@@ -100,7 +98,6 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         user_account = getView().findViewById(R.id.user_account);
         user_address = getView().findViewById(R.id.user_address);
         user_set = getView().findViewById(R.id.user_set);
-        user_garden_point = getView().findViewById(R.id.user_garden_point);
 
         user_message_layout.setOnClickListener(this);
         user_head.setOnClickListener(this);

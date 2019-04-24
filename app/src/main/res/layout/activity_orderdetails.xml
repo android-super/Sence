@@ -115,14 +115,7 @@
                     android:textColor="#666666"
                     android:textSize="14sp"/>
 
-                <ImageView
-                    android:id="@+id/iv_toaddress_orderdetails"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="14dp"
-                    android:src="@drawable/confirmorder_xia"/>
+
             </RelativeLayout>
             <View
                 android:layout_width="match_parent"

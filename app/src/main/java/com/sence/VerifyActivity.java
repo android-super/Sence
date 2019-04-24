@@ -202,11 +202,11 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
             public void onSuccess(PUserBean o, String msg) {
                 SharedPreferencesUtil.getInstance().putBoolean("is_login", true);
                 SharedPreferencesUtil.getInstance().putString("uid", o.getId());
-                SharedPreferencesUtil.getInstance().putString("user_name", o.getUser_name());
+//                SharedPreferencesUtil.getInstance().putString("user_name", o.getUser_name());
                 SharedPreferencesUtil.getInstance().putString("nick_name", o.getNick_name());
                 SharedPreferencesUtil.getInstance().putString("sex", o.getSex());
                 SharedPreferencesUtil.getInstance().putString("avatar", o.getAvatar());
-                SharedPreferencesUtil.getInstance().putString("real_name", o.getReal_name());
+//                SharedPreferencesUtil.getInstance().putString("real_name", o.getReal_name());
                 SharedPreferencesUtil.getInstance().putString("id_card", o.getNick_name());
                 SharedPreferencesUtil.getInstance().putString("id_status", o.getId_status());
                 SharedPreferencesUtil.getInstance().putString("img_status", o.getImg_status());

@@ -17,7 +17,7 @@ public class MessageCommentAdapter extends BaseQuickAdapter<PMessageHdBean, Base
         GlideUtils.getInstance().loadHead(item.getAvatar(), (ImageView) helper.getView(R.id.item_head));
         helper.setText(R.id.item_name, item.getNick_name());
         helper.setText(R.id.item_time, item.getAdd_time());
-        GlideUtils.getInstance().loadHead(item.getAlbum_url(), (ImageView) helper.getView(R.id.item_img));
+        GlideUtils.getInstance().loadNormal(item.getAlbum_url(), (ImageView) helper.getView(R.id.item_img));
         helper.setText(R.id.item_describe, item.getContent());
     }
 }

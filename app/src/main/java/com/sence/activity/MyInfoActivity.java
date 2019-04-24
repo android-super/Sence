@@ -27,6 +27,7 @@ import com.orhanobut.logger.Logger;
 import com.sence.R;
 import com.sence.activity.chat.ui.ChatMsgActivity;
 import com.sence.activity.chat.ui.ChatMsgGroupActivity;
+import com.sence.activity.web.WebConstans;
 import com.sence.adapter.MyInfoRecommendViewPagerAdatpter;
 import com.sence.base.BaseActivity;
 import com.sence.bean.request.RCancelFocusBean;
@@ -102,7 +103,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     private UserRecommendFragment recommendFragment;
     private BottomSheetDialog mBottomSheetDialog;
     private boolean touch = true;
-    private String type = "1";
+    private String type = "0";
     private TextView mType;
     private RelativeLayout mHeadBg;
     private boolean isshow = true;
@@ -121,6 +122,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         uid = intent.getStringExtra("uid");
         StatusBarUtil.setTranslucentForCoordinatorLayout(this, 0);
         StatusBarUtil.setLightMode(this);
+//        StatusBarUtil.setTransparent(this);
         mAppBarLayout = findViewById(R.id.al_appbar_myinfo);
         mTabLayoutButtom = findViewById(R.id.tl_tabhid_myinfo);
         mView = findViewById(R.id.shop_view_myinfo);
@@ -254,7 +256,6 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 message.what = 1;
                 message.obj = blurBitmap;
                 handler.sendMessage(message);
-                //                        刷新ui必须在主线程中执行
 
             }
         }).start();
@@ -348,11 +349,11 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 finish();
                 break;
             case R.id.ll_wei_share:
-                shareWeb(MyInfoActivity.this, "http://192.168.1.10:8085/Public/web/share/datum.html?uid=" + LoginStatus.getUid() + "&to_uid=" + uid, bean.getUser_name() + bean.getNick_name() + "的精彩生活", "女神的日常", SHARE_MEDIA.WEIXIN, bean.getAvatar());
+                shareWeb(MyInfoActivity.this, WebConstans.GRZL+"?token=" + LoginStatus.getUid() + "&to_uid=" + uid, bean.getUser_name() + bean.getNick_name() + "的精彩生活", "女神的日常", SHARE_MEDIA.WEIXIN, bean.getAvatar());
                 mBottomSheetDialog.dismiss();
                 break;
             case R.id.ll_friend_share:
-                shareWeb(MyInfoActivity.this, "http://192.168.1.10:8085/Public/web/share/datum.html?uid=" + LoginStatus.getUid() + "&to_uid=" + uid, bean.getUser_name() + bean.getNick_name() + "的精彩生活", "女神的日常", SHARE_MEDIA.WEIXIN_CIRCLE, bean.getAvatar());
+                shareWeb(MyInfoActivity.this, WebConstans.GRZL+"?token="  + LoginStatus.getUid() + "&to_uid=" + uid, bean.getUser_name() + bean.getNick_name() + "的精彩生活", "女神的日常", SHARE_MEDIA.WEIXIN_CIRCLE, bean.getAvatar());
                 mBottomSheetDialog.dismiss();
                 break;
             case R.id.tv_cancel_share:
@@ -609,9 +610,19 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
 
     public void setIsShow(boolean isShow) {
         noteShow = isShow;
+        if(noteShow){
+            ivNotimgMyinfo.setVisibility(View.VISIBLE);
+        }else{
+            ivNotimgMyinfo.setVisibility(View.GONE);
+        }
     }
 
     public void setRecommendShowImg(boolean isShow) {
         recommendShow = isShow;
+        if(recommendShow){
+            ivNotimgMyinfo.setVisibility(View.VISIBLE);
+        }else{
+            ivNotimgMyinfo.setVisibility(View.GONE);
+        }
     }
 }
