@@ -162,7 +162,7 @@ public interface HttpService {
 
     @FormUrlEncoded
     @POST(Urls.SYSTEM_MESSAGE)
-    Observable<BaseResponseBean<List<PInformBean>>> SystemMessage(@FieldMap Map<String, Object> map);//系统消息列表
+    Observable<BaseResponseBean<List<PSystemInformBean>>> SystemMessage(@FieldMap Map<String, Object> map);//系统消息列表
 
     @FormUrlEncoded
     @POST(Urls.MESSAGE_CENTRE)

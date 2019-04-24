@@ -3,6 +3,7 @@ package com.sence.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
@@ -27,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -42,6 +44,12 @@ public class EnjoyVipActivity extends BaseActivity {
     RecyclerView recycleEnjoyvip;
     @BindView(R.id.srl_layout_enjoyvip)
     SmartRefreshLayout srlLayoutEnjoyvip;
+    @BindView(R.id.tv_prices_enjoyvip)
+    TextView tvPricesEnjoyvip;
+    @BindView(R.id.ll_notdata_enjoyvip)
+    LinearLayout llNotdataEnjoyvip;
+    @BindView(R.id.nsl_layout_enjoyvip)
+    NestedScrollView nslLayoutEnjoyvip;
 
 
     private EnjoyVipAdapter mEnjoyVipAdapter;
@@ -73,9 +81,9 @@ public class EnjoyVipActivity extends BaseActivity {
         srlLayoutEnjoyvip.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                if(list.size()<10){
+                if (list.size() < 10) {
                     ToastUtils.showShort("没有更多了！");
-                }else{
+                } else {
                     page++;
                     initData();
                 }
@@ -84,7 +92,7 @@ public class EnjoyVipActivity extends BaseActivity {
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                srlLayoutEnjoyvip.finishLoadMore();
+                srlLayoutEnjoyvip.finishRefresh();
                 page = 1;
                 initData();
             }
@@ -107,9 +115,12 @@ public class EnjoyVipActivity extends BaseActivity {
             @Override
             public void onSuccess(PEnjoyVipBean o, String msg) {
                 Logger.e("msg==========" + msg);
-                tvPriceEnjoyvip.setText("￥" + o.getMoney());
+                tvPricesEnjoyvip.setText("￥" + o.getMoney());
                 list = o.getService();
                 if (list.size() > 0) {
+                    tvPriceEnjoyvip.setText("￥" + o.getMoney());
+                    llNotdataEnjoyvip.setVisibility(View.GONE);
+                    nslLayoutEnjoyvip.setVisibility(View.VISIBLE);
                     mEnjoyVipAdapter.setList(o.getService());
                 }
             }

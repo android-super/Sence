@@ -1,9 +1,10 @@
 package com.sence.activity;
 
-import android.text.Editable;
+import android.os.Bundle;
 import android.text.TextUtils;
-import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,6 +22,7 @@ import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.LoginStatus;
+import com.sence.utils.SharedPreferencesUtil;
 import com.sence.utils.StatusBarUtil;
 import com.sence.view.FlowLayout;
 
@@ -30,6 +32,8 @@ import java.util.List;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 搜索
@@ -55,6 +59,8 @@ public class SearchActivity extends BaseActivity {
     LinearLayout llShopSearch;
     @BindView(R.id.ll_friend_search)
     LinearLayout llFriendSearch;
+    @BindView(R.id.tv_clear_search)
+    TextView tvClearSearch;
     private List<PSearchRecommendBean> list = new ArrayList<>();
     private SearchFriendAdapter mSearchFriendAdapter;
     private SearchShopAdapter mSearchShopAdapter;
@@ -67,27 +73,28 @@ public class SearchActivity extends BaseActivity {
     @Override
     public void initView() {
         StatusBarUtil.setLightMode(this);
-        etContentSearch.addTextChangedListener(new TextWatcher() {
+        etContentSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    String content = etContentSearch.getText().toString().trim();
+                    if (!TextUtils.isEmpty(content)) {
+                        llFlowSearch.setVisibility(View.GONE);
+                        llResultSearch.setVisibility(View.VISIBLE);
+                        String histroy = LoginStatus.getHistroy();
+                        if(TextUtils.isEmpty(histroy)){
+                            SharedPreferencesUtil.getInstance().putString("histroy", content);
+                        }else{
+                            SharedPreferencesUtil.getInstance().putString("histroy", histroy+","+content);
+                        }
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                String content = etContentSearch.getText().toString().trim();
-                if (!TextUtils.isEmpty(content)) {
-                    llFlowSearch.setVisibility(View.GONE);
-                    doHttp(content);
-                }else{
-                    llResultSearch.setVisibility(View.GONE);
-                    llFlowSearch.setVisibility(View.VISIBLE);
+                        doHttp(content);
+                    } else {
+                        llResultSearch.setVisibility(View.GONE);
+                        llFlowSearch.setVisibility(View.VISIBLE);
+                    }
                 }
+                return false;
             }
         });
         tvCancelSearch.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +109,6 @@ public class SearchActivity extends BaseActivity {
 
             }
         });
-
         mSearchFriendAdapter = new SearchFriendAdapter(SearchActivity.this);
         recycleSearchfriend.setLayoutManager(new LinearLayoutManager(SearchActivity.this));
         recycleSearchfriend.setAdapter(mSearchFriendAdapter);
@@ -110,38 +116,50 @@ public class SearchActivity extends BaseActivity {
         mSearchShopAdapter = new SearchShopAdapter(SearchActivity.this);
         recycleSearchshop.setLayoutManager(new LinearLayoutManager(SearchActivity.this));
         recycleSearchshop.setAdapter(mSearchShopAdapter);
-
+        flFlowSearch.result(new FlowLayout.SearchListener() {
+            @Override
+            public void search(String data) {
+                doHttp(data);
+            }
+        });
     }
 
     public void initData() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.SEARCH_RECOMMEND).request(new ApiCallBack<List<PSearchRecommendBean>>() {
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void Message(int code, String message) {
-
-            }
-
-            @Override
-            public void onSuccess(List<PSearchRecommendBean> o, String msg) {
-                Logger.e("msg==========" + msg);
-                if(o.size()>0){
-                    list = o;
-                    flFlowSearch.addList(o);
-                }
-            }
-        });
+//        HttpManager.getInstance().PlayNetCode(HttpCode.SEARCH_RECOMMEND).request(new ApiCallBack<List<PSearchRecommendBean>>() {
+//            @Override
+//            public void onFinish() {
+//
+//            }
+//
+//            @Override
+//            public void Message(int code, String message) {
+//
+//            }
+//
+//            @Override
+//            public void onSuccess(List<PSearchRecommendBean> o, String msg) {
+//                Logger.e("msg==========" + msg);
+//                if(o.size()>0){
+//                    list = o;
+//                    flFlowSearch.addList(o);
+//                }
+//            }
+//        });
+        String histroy = LoginStatus.getHistroy();
+        if(TextUtils.isEmpty(histroy)){
+            flFlowSearch.clear();
+        }else{
+            String[] split = histroy.split(",");
+            flFlowSearch.addList(split);
+        }
         String content = etContentSearch.getText().toString().trim();
-        if(!TextUtils.isEmpty(content)){
+        if (!TextUtils.isEmpty(content)) {
             doHttp(content);
         }
     }
 
 
-    private void doHttp(String content) {
+    private void doHttp(final String content) {
         HttpManager.getInstance().PlayNetCode(HttpCode.MAIN_SEARCH, new RSearchBean(content, LoginStatus.getUid())).request(new ApiCallBack<PSearchBean>() {
             @Override
             public void onFinish() {
@@ -156,18 +174,18 @@ public class SearchActivity extends BaseActivity {
             @Override
             public void onSuccess(PSearchBean o, String msg) {
                 Logger.e("msg==========" + msg);
-                if(o.getGoodsList().size()>0){
+                if (o.getGoodsList().size() > 0) {
                     llResultSearch.setVisibility(View.VISIBLE);
                     llShopSearch.setVisibility(View.VISIBLE);
                     mSearchShopAdapter.setList(o.getGoodsList());
-                }else{
+                } else {
                     llShopSearch.setVisibility(View.GONE);
                 }
-                if(o.getUserList().size()>0){
+                if (o.getUserList().size() > 0) {
                     llResultSearch.setVisibility(View.VISIBLE);
                     llFriendSearch.setVisibility(View.VISIBLE);
                     mSearchFriendAdapter.setList(o.getUserList());
-                }else{
+                } else {
                     llFriendSearch.setVisibility(View.GONE);
                 }
             }
@@ -175,4 +193,16 @@ public class SearchActivity extends BaseActivity {
     }
 
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+    @OnClick(R.id.tv_clear_search)
+    public void onViewClicked() {
+        SharedPreferencesUtil.getInstance().putString("histroy", "");
+        flFlowSearch.clear();
+    }
 }

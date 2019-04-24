@@ -7,7 +7,6 @@ public class RAddAddressBean extends BaseRequestBean {
     private String address;
     private String area;
     private String phone;
-    private String zipcode;
     private String username;
 
     public String getUid() {
@@ -42,13 +41,6 @@ public class RAddAddressBean extends BaseRequestBean {
         this.phone = phone;
     }
 
-    public String getZipcode() {
-        return zipcode;
-    }
-
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
-    }
 
     public String getUsername() {
         return username;
@@ -58,12 +50,11 @@ public class RAddAddressBean extends BaseRequestBean {
         this.username = username;
     }
 
-    public RAddAddressBean(String uid, String address, String area, String phone, String zipcode, String username) {
+    public RAddAddressBean(String uid, String address, String area, String phone, String username) {
         this.uid = uid;
         this.address = address;
         this.area = area;
         this.phone = phone;
-        this.zipcode = zipcode;
         this.username = username;
     }
 }

@@ -3,6 +3,7 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:fitsSystemWindows="true"
+              android:background="@color/white"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_height="match_parent">
     <com.sence.view.PubTitle
@@ -15,8 +16,8 @@
             />
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:paddingLeft="16dp"
+        android:layout_height="59dp"
+        android:paddingLeft="21dp"
         android:textSize="@dimen/sp_16"
         android:background="@color/white"
         android:textCursorDrawable="@drawable/shape_cursor"
@@ -29,11 +30,12 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginLeft="20dp"
         android:background="#efefef"></View>
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:paddingLeft="16dp"
+        android:layout_height="59dp"
+        android:paddingLeft="21dp"
         android:textSize="@dimen/sp_16"
         android:textColor="#333333"
         android:lines="1"
@@ -46,18 +48,19 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginLeft="20dp"
         android:background="#efefef"></View>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="59dp"
         android:background="@color/white"
         android:id="@+id/ll_address_addaddress"
         android:orientation="horizontal">
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="50dp"
-            android:paddingLeft="16dp"
+            android:layout_height="59dp"
+            android:paddingLeft="21dp"
             android:textSize="@dimen/sp_16"
             android:textColor="#333333"
             android:gravity="center_vertical"
@@ -67,41 +70,25 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:padding="18dp"
+            android:layout_gravity="center_vertical"
             android:src="@drawable/pingjia_jiantou"/>
     </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginLeft="20dp"
         android:background="#efefef"></View>
+
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:paddingLeft="16dp"
-        android:textSize="@dimen/sp_16"
-        android:background="@color/white"
-        android:lines="1"
-        android:inputType="phone"
-        android:textCursorDrawable="@drawable/shape_cursor"
-        android:textColor="#333333"
-        android:gravity="center_vertical"
-        android:id="@+id/et_postcode_addaddress"
-        android:hint="邮政编码"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#efefef"></View>
-    <EditText
-        android:layout_width="match_parent"
-        android:minHeight="100dp"
-        android:layout_height="wrap_content"
-        android:paddingTop="18dp"
+        android:layout_height="59dp"
         android:textCursorDrawable="@drawable/shape_cursor"
         android:paddingLeft="16dp"
         android:textSize="@dimen/sp_16"
         android:background="@color/white"
         android:maxLines="2"
         android:ellipsize="end"
-        android:gravity="top"
+        android:gravity="center_vertical"
         android:inputType="textMultiLine"
         android:lineSpacingExtra="9dp"
         android:textColor="#333333"
@@ -110,16 +97,22 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginLeft="20dp"
         android:background="#efefef"></View>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"></View>
     <Button
         android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:text="保存"
+        android:layout_height="40dp"
+        android:text="确定"
+        android:layout_marginBottom="20dp"
         android:textColor="#ffffff"
         android:textSize="18sp"
-        android:background="@drawable/shape_addaddress_bg"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:background="@drawable/shape_buyshop_bg"
+        android:layout_marginLeft="63dp"
+        android:layout_marginRight="63dp"
         android:id="@+id/bt_save_addaddress"
         android:layout_marginTop="25dp"/>
 

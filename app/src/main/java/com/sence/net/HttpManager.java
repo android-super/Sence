@@ -387,7 +387,11 @@ public class HttpManager<P> {
                             ((MessageApiCallBack) apiCallBack).onSuccessCount(result.getData(), result.getMsg(),
                                     result.getCount());
                         } else {
-                            apiCallBack.onSuccess(result.getData(), result.getMsg());
+                            try {
+                                apiCallBack.onSuccess(result.getData(), result.getMsg());
+                            } catch (IllegalAccessException e) {
+                                e.printStackTrace();
+                            }
                         }
                     } else {
                         ToastUtils.showShort(result.getMsg());

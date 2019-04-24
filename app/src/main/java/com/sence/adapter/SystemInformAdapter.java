@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sence.R;
-import com.sence.bean.response.PInformBean;
+import com.sence.bean.response.PSystemInformBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +18,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class SystemInformAdapter extends RecyclerView.Adapter<SystemInformAdapter.ViewHolder> {
     private Context context;
-    private List<PInformBean> list = new ArrayList<>();
+    private List<PSystemInformBean> list = new ArrayList<>();
 
     public SystemInformAdapter(Context context) {
         this.context = context;
     }
 
-    public void setList(List<PInformBean> list) {
+    public void setList(List<PSystemInformBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }

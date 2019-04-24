@@ -4,76 +4,92 @@ public class PDefaultAddressBean {
 
 
     /**
-     * id : 18
-     * username : 李四
-     * phone : 18736105461
-     * area : 北京市北京市昌平区
-     * address : 天通苑
-     * zipcode : 100070
-     * tel : 187****5461
+     * list : {"id":"20","username":"冷雨","phone":"18735610120","area":"安徽省安庆市枞阳县","address":"你看着","zipcode":"052668","tel":"187****0120"}
      */
 
-    private String id;
-    private String username;
-    private String phone;
-    private String area;
-    private String address;
-    private String zipcode;
-    private String tel;
+    private ListBean list;
 
-    public String getId() {
-        return id;
+    public ListBean getList() {
+        return list;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setList(ListBean list) {
+        this.list = list;
     }
 
-    public String getUsername() {
-        return username;
-    }
+    public static class ListBean {
+        /**
+         * id : 20
+         * username : 冷雨
+         * phone : 18735610120
+         * area : 安徽省安庆市枞阳县
+         * address : 你看着
+         * zipcode : 052668
+         * tel : 187****0120
+         */
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+        private String id;
+        private String username;
+        private String phone;
+        private String area;
+        private String address;
+        private String zipcode;
+        private String tel;
 
-    public String getPhone() {
-        return phone;
-    }
+        public String getId() {
+            return id;
+        }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+        public void setId(String id) {
+            this.id = id;
+        }
 
-    public String getArea() {
-        return area;
-    }
+        public String getUsername() {
+            return username;
+        }
 
-    public void setArea(String area) {
-        this.area = area;
-    }
+        public void setUsername(String username) {
+            this.username = username;
+        }
 
-    public String getAddress() {
-        return address;
-    }
+        public String getPhone() {
+            return phone;
+        }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+        public void setPhone(String phone) {
+            this.phone = phone;
+        }
 
-    public String getZipcode() {
-        return zipcode;
-    }
+        public String getArea() {
+            return area;
+        }
 
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
-    }
+        public void setArea(String area) {
+            this.area = area;
+        }
 
-    public String getTel() {
-        return tel;
-    }
+        public String getAddress() {
+            return address;
+        }
 
-    public void setTel(String tel) {
-        this.tel = tel;
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        public String getZipcode() {
+            return zipcode;
+        }
+
+        public void setZipcode(String zipcode) {
+            this.zipcode = zipcode;
+        }
+
+        public String getTel() {
+            return tel;
+        }
+
+        public void setTel(String tel) {
+            this.tel = tel;
+        }
     }
 }

@@ -1,7 +1,6 @@
 package com.sence.view;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -11,8 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sence.R;
-import com.sence.activity.ShopDetailsActivity;
-import com.sence.bean.response.PSearchRecommendBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +23,7 @@ public class FlowLayout extends ViewGroup {
 
     //每行的高度
     private List<Integer> heightList = new ArrayList<>();
-    private String data=null;
-    private List<PSearchRecommendBean> listData = new ArrayList<>();
+    private String[] listData = null;
 
     public FlowLayout(Context context) {
         super(context);
@@ -81,9 +77,7 @@ public class FlowLayout extends ViewGroup {
                     //必须把view强转成一个新控件,不然一直都是最后一个item
                     TextView tv= (TextView) view;
                     String  h=  tv.getText().toString();
-                    Intent intent = new Intent(getContext(), ShopDetailsActivity.class);
-                    intent.putExtra("id",listData.get(postion).getId());
-                    getContext().startActivity(intent);
+                    listener.search(h);
                 }
             });
 
@@ -177,17 +171,17 @@ public class FlowLayout extends ViewGroup {
     }
 
 
-    public void addList(final List<PSearchRecommendBean> list) {
+    public void addList(final String[] list) {
         listData = list;
         //往容器内添加TextView数据
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParams.setMargins(15, 8, 15, 8);
         removeAllViews();
-        for (int i = 0; i < list.size(); i++) {
+        for (int i = 0; i < list.length; i++) {
             TextView tv = new TextView(getContext());
             tv.setPadding(25, 8, 25, 8);
-            tv.setText(list.get(i).getName());
+            tv.setText(list[i]);
             tv.setMaxLines(1);
             tv.setMaxEms(8);
             tv.setEllipsize(TextUtils.TruncateAt.END);
@@ -198,5 +192,17 @@ public class FlowLayout extends ViewGroup {
 
             addView(tv, layoutParams);
         }
+    }
+    public void clear(){
+        removeAllViews();
+    }
+    private SearchListener listener;
+
+    public void result(SearchListener listener) {
+        this.listener = listener;
+    }
+
+    public interface SearchListener {
+        void search(String data);
     }
 }

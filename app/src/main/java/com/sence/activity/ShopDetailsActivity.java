@@ -151,6 +151,8 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
     private static String TAG = "";
     private boolean textsize = true;
     private boolean page = true;
+    private boolean isAddShop = false;
+
     @Override
     public int onActLayout() {
         return R.layout.activity_shopdetails;
@@ -436,7 +438,9 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                 if (num == 0) {
                     tvShopnumShopdetails.setVisibility(View.VISIBLE);
                 }
-                addShop();
+                isAddShop = true;
+                bgAlpha(0.5f);
+                popupWindow.showAtLocation(contentView, Gravity.BOTTOM, 0, 0);
                 break;
             case R.id.tv_buy_shopdetails:
                 if (!LoginStatus.isLogin() || LoginStatus.getUid().isEmpty()) {
@@ -478,8 +482,8 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
-    private void addShop() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.BUS_ADD, new RBusAddBean(bean.getId(), LoginStatus.getUid())).request(new ApiCallBack() {
+    private void addShop(final String s) {
+        HttpManager.getInstance().PlayNetCode(HttpCode.BUS_ADD, new RBusAddBean(bean.getId(), LoginStatus.getUid(),s,"1")).request(new ApiCallBack() {
             @Override
             public void onFinish() {
 
@@ -493,7 +497,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onSuccess(Object o, String msg) {
                 ToastUtils.showShort("成功加入购物车");
-                num++;
+                num = num+Integer.parseInt(s);
                 tvShopnumShopdetails.setText(num + "");
             }
         });
@@ -514,6 +518,10 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.bt_buyshop_confirm:
                 popupWindow.dismiss();
+                if(isAddShop){
+                    addShop(mNum.getText().toString());
+                    return;
+                }
                 Intent intentBuy = new Intent(ShopDetailsActivity.this, ShopConfirmOrderActivity.class);
                 intentBuy.putExtra("id", bean.getId());
                 intentBuy.putExtra("num", mNum.getText().toString());

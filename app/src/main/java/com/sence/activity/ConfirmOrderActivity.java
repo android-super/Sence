@@ -171,17 +171,17 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void initData() {
         isCheckAddress = LoginStatus.getIsCheckShopAddress();
-        address = LoginStatus.getAddress();
-        nameAddress = LoginStatus.getNameAddress();
-        phoneAddress = LoginStatus.getPhoneAddress();
-        if(!TextUtils.isEmpty(phoneAddress)){
-            isCheckAddress=true;
+        if(isCheckAddress){
+            address = LoginStatus.getAddress();
+            nameAddress = LoginStatus.getNameAddress();
+            phoneAddress = LoginStatus.getPhoneAddress();
             idAddress = LoginStatus.getIdAddress();
             tvAddressConfirmorder.setText(address);
             tvPhoneConfirmorder.setText(phoneAddress);
             tvNameConfirmorder.setText(nameAddress);
+            SharedPreferencesUtil.getInstance().putBoolean("ischeck_shopaddress", false);
         }
-        SharedPreferencesUtil.getInstance().putBoolean("ischeck_shopaddress", false);
+
     }
 
     private void defaultAddress() {
@@ -197,17 +197,17 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onSuccess(PDefaultAddressBean o, String msg) {
                 Logger.e("msg==========" + msg );
-                if(null == o){
+                if(null == o.getList().getId()){
                     rlAddaddressConfirmorder.setVisibility(View.VISIBLE);
                     rlAddressConfirmorder.setVisibility(View.GONE);
                 }else {
-                    idAddress = o.getId();
+                    idAddress = o.getList().getId();
                     rlAddaddressConfirmorder.setVisibility(View.GONE);
                     rlAddressConfirmorder.setVisibility(View.VISIBLE);
                     isCheckAddress=true;
-                    tvAddressConfirmorder.setText(o.getArea()+o.getAddress());
-                    tvPhoneConfirmorder.setText(o.getPhone());
-                    tvNameConfirmorder.setText(o.getUsername());
+                    tvAddressConfirmorder.setText(o.getList().getArea()+o.getList().getAddress());
+                    tvPhoneConfirmorder.setText(o.getList().getPhone());
+                    tvNameConfirmorder.setText(o.getList().getUsername());
                 }
             }
         });

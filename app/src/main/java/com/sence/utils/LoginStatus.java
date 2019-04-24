@@ -37,7 +37,10 @@ public class LoginStatus {
         String name = SharedPreferencesUtil.getInstance().getString("upuid");
         return name;
     }
-
+    public static String getHistroy() {
+        String histroy = SharedPreferencesUtil.getInstance().getString("histroy");
+        return histroy;
+    }
     public static String getInviteUserName() {
         String name = SharedPreferencesUtil.getInstance().getString("inviteUsername");
         return name;

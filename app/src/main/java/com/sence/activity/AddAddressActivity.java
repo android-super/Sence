@@ -40,8 +40,6 @@ public class AddAddressActivity extends BaseActivity {
     TextView tvAddressAddaddress;
     @BindView(R.id.ll_address_addaddress)
     LinearLayout llAddressAddaddress;
-    @BindView(R.id.et_postcode_addaddress)
-    EditText etPostcodeAddaddress;
     @BindView(R.id.et_detailsaddress_addaddress)
     EditText etDetailsaddressAddaddress;
     @BindView(R.id.bt_save_addaddress)
@@ -52,7 +50,7 @@ public class AddAddressActivity extends BaseActivity {
     private String name;
     private String phone;
     private String detailsAddress;
-    private String postCode, address;
+    private String  address;
 
     private PManageAddressBean bean = null;
 
@@ -76,7 +74,6 @@ public class AddAddressActivity extends BaseActivity {
             etPhoneAddaddress.setText(bean.getPhone());
             tvAddressAddaddress.setText(bean.getArea());
             etDetailsaddressAddaddress.setText(bean.getAddress());
-            etPostcodeAddaddress.setText(bean.getZipcode());
         }
         llAddressAddaddress.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,7 +141,6 @@ public class AddAddressActivity extends BaseActivity {
         phone = etPhoneAddaddress.getText().toString().trim();
         detailsAddress = etDetailsaddressAddaddress.getText().toString().trim();
         address = tvAddressAddaddress.getText().toString().trim();
-        postCode = etPostcodeAddaddress.getText().toString().trim();
         if (TextUtils.isEmpty(name)) {
             ToastUtils.showShort("请输入您的姓名");
             return;
@@ -161,11 +157,6 @@ public class AddAddressActivity extends BaseActivity {
             ToastUtils.showShort("请输入详细地址");
             return;
         }
-
-        if (TextUtils.isEmpty(postCode)) {
-            ToastUtils.showShort("请输入当地邮政编码");
-            return;
-        }
         if (bean == null) {
             addAddress();
         } else {
@@ -175,7 +166,7 @@ public class AddAddressActivity extends BaseActivity {
 
     private void editorAddress() {
         HttpManager.getInstance().PlayNetCode(HttpCode.ADDRESS_EDIT, new REditroAddressBean(LoginStatus.getUid(),
-                bean.getId(), detailsAddress, address, phone, postCode, name)).request(new ApiCallBack<String>() {
+                bean.getId(), detailsAddress, address, phone, name)).request(new ApiCallBack<String>() {
             @Override
             public void onFinish() {
 
@@ -197,7 +188,7 @@ public class AddAddressActivity extends BaseActivity {
 
     private void addAddress() {
         HttpManager.getInstance().PlayNetCode(HttpCode.ADDRESS_ADD, new RAddAddressBean(LoginStatus.getUid(),
-                detailsAddress, address, phone, postCode, name)).request(new ApiCallBack<String>() {
+                detailsAddress, address, phone, name)).request(new ApiCallBack<String>() {
             @Override
             public void onFinish() {
 
