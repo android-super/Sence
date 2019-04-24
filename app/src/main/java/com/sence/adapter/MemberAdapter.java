@@ -20,10 +20,15 @@ public class MemberAdapter extends BaseQuickAdapter<RMemberBean.ListBean, BaseVi
     @Override
     protected void convert(BaseViewHolder helper, RMemberBean.ListBean item) {
         GlideUtils.getInstance().loadHead(item.getAvatar(), (ImageView) helper.getView(R.id.item_head));
-        if ("1".equals(item.getIs_kol())) {
+        if ("1".equals(item.getIs_service())) {
             helper.setGone(R.id.item_serve, true);
         } else {
             helper.setGone(R.id.item_serve, false);
+        }
+        if (item.getState().equals("1")){
+            helper.setGone(R.id.item_ban,true);
+        }else {
+            helper.setGone(R.id.item_ban,false);
         }
         helper.setText(R.id.item_name, item.getNick_name());
     }

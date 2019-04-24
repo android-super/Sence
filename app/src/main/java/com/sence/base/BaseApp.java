@@ -37,6 +37,12 @@ public class BaseApp extends Application {
         initJPush();
     }
 
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
+
     /**
      * 极光推送
      */

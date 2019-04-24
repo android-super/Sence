@@ -301,6 +301,9 @@ public class HttpManager<P> {
             case VIP_OPEN:
                 observable = httpService.VipOpen(requestBean.getMap());
                 break;
+            case CHAT_BAN:
+                observable = httpService.ChatBan(requestBean.getMap());
+                break;
 
         }
         observable = observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());

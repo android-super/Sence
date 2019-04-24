@@ -121,7 +121,6 @@ public class PictureTagView extends RelativeLayout {
     }
 
     private void directionChange() {
-        Log.e("TAG", direction + "");
         switch (direction) {
             case Left:
                 loTag.setBackgroundResource(R.drawable.note_tag_you);

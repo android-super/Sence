@@ -69,6 +69,7 @@ public class RMemberBean {
         private String is_kol;
         private String vid;
         private String state;
+        private String is_service;
 
         public String getUid() {
             return uid;
@@ -148,6 +149,14 @@ public class RMemberBean {
 
         public void setState(String state) {
             this.state = state;
+        }
+
+        public String getIs_service() {
+            return is_service;
+        }
+
+        public void setIs_service(String is_service) {
+            this.is_service = is_service;
         }
     }
 }

@@ -104,6 +104,7 @@ public class Urls {
     public static final String SERVE_DETAIL = "/index.php/Api/Serve/getServeDetail";//服务详情
     public static final String SERVE_COMMENT_LIST = "/index.php/Api/Serve/getServiceComments";//服务评论列表
     //V群
+    public static final String CHAT_BAN = "/index.php/api/VGroup/banned";//禁言
     public static final String CHAT_SEND_MESSAGE = "/index.php/api/VGroup/sendMessageToGroup";//发送消息
     public static final String CHAT_CREATE_GROUP = "/index.php/api/VGroup/createVGroup";//创建微群
     public static final String CHAT_JOIN = "/index.php/api/VGroup/joinVGroup";//加入微群

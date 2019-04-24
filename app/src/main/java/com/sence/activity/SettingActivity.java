@@ -72,7 +72,8 @@ public class SettingActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.ll_binding_setting,R.id.ll_blacklist_setting,R.id.ll_autonym_setting, R.id.ll_clear_setting, R.id.ll_policy_setting, R.id.ll_about_setting, R.id.tv_quit_setting})
+    @OnClick({R.id.ll_binding_setting, R.id.ll_blacklist_setting, R.id.ll_autonym_setting, R.id.ll_clear_setting,
+            R.id.ll_policy_setting, R.id.ll_about_setting, R.id.tv_quit_setting})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_autonym_setting:
@@ -85,7 +86,8 @@ public class SettingActivity extends BaseActivity {
                 final AlertDialog alertDialog = builder.create();
                 alertDialog.setCancelable(true);
                 alertDialog.show();
-                alertDialog.getWindow().setLayout(new DensityUtil().dip2px(270), LinearLayout.LayoutParams.WRAP_CONTENT);
+                alertDialog.getWindow().setLayout(new DensityUtil().dip2px(270),
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
                 TextView mContent = viewClear.findViewById(R.id.tv_content_deleteorder);
                 mContent.setText("您确认要清除缓存吗");
                 TextView mCancel = viewClear.findViewById(R.id.tv_cancel_deleteorder);
@@ -127,7 +129,8 @@ public class SettingActivity extends BaseActivity {
                 break;
             case R.id.tv_quit_setting:
                 View viewQuit = View.inflate(SettingActivity.this, R.layout.alter_deleteorder, null);
-                AlertDialog.Builder builderviewQuit = new AlertDialog.Builder(SettingActivity.this, R.style.AlertDialogStyle);
+                AlertDialog.Builder builderviewQuit = new AlertDialog.Builder(SettingActivity.this,
+                        R.style.AlertDialogStyle);
                 builderviewQuit.setView(viewQuit);
                 final AlertDialog dialog = builderviewQuit.create();
                 dialog.setCancelable(true);
@@ -148,8 +151,6 @@ public class SettingActivity extends BaseActivity {
                     public void onClick(View v) {
                         dialog.dismiss();
                         SharedPreferencesUtil.getInstance().removeAll();
-                        SharedPreferencesUtil.getInstance().putBoolean("is_login", false);
-                        SharedPreferencesUtil.getInstance().putString("uid", "");
                         UMShareAPI.get(SettingActivity.this).deleteOauth(SettingActivity.this, SHARE_MEDIA.WEIXIN,
                                 umAuthListener);
                         finish();

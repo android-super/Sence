@@ -411,4 +411,8 @@ public interface HttpService {
     @FormUrlEncoded
     @POST(Urls.USER_VIP_OPEN)
     Observable<BaseResponseBean<PMoneyBean>> VipOpen(@FieldMap Map<String, Object> map);//搜索推荐数据
+
+    @FormUrlEncoded
+    @POST(Urls.CHAT_BAN)
+    Observable<BaseResponseBean<Object>> ChatBan(@FieldMap Map<String, Object> map);//搜索推荐数据
 }

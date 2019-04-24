@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AlertDialog;
@@ -24,6 +25,7 @@ import com.luck.picture.lib.entity.LocalMedia;
 import com.sence.activity.AddTagActivity;
 import com.sence.activity.CommitTagActivity;
 import com.sence.base.BaseActivity;
+import com.sence.base.BaseMainFragment;
 import com.sence.bean.request.RUpdateAppBean;
 import com.sence.bean.response.PUpDataAppInfo;
 import com.sence.fragment.*;
@@ -37,7 +39,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
-    public static final int bus_code = 3;
     private static final String APP_NAME = "Sence";
 
     @BindView(R.id.main_home)
@@ -62,8 +63,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private KindFragment kindFragment;
     private BusFragment busFragment;
     private UserFragment userFragment;
-    private Fragment[] fragments;
-
+    private BaseMainFragment[] fragments;
 
     @Override
     public int onActLayout() {
@@ -102,7 +102,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         kindFragment = new KindFragment();
         busFragment = new BusFragment();
         userFragment = new UserFragment();
-        fragments = new Fragment[]{mainFragment, vipFragment, kindFragment, busFragment, userFragment};
+        fragments = new BaseMainFragment[]{mainFragment, vipFragment, kindFragment, busFragment, userFragment};
         mains = new LinearLayout[]{mainHome, mainVip, mainKind, mainBus, mainUser};
 
         setSelect(0);
@@ -177,7 +177,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             if (i == position) {
                 mains[i].setSelected(true);
                 if (fragments[i].isAdded()) {
-//                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                     getSupportFragmentManager().beginTransaction().show(fragments[i]).commit();
                 } else {
                     getSupportFragmentManager().beginTransaction().add(R.id.frame_layout, fragments[i]).show(fragments[i]).commit();
@@ -241,7 +240,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
+        Log.e("TAG", "onResume");
         JPushInterface.setAlias(getApplicationContext(), -1, LoginStatus.getUid());
+        for (int i = 0; i < fragments.length; i++) {
+            if (fragments[i].isAdded()) {
+                fragments[i].onRefresh();
+            }
+        }
     }
 
     private void UpdateApp(final PUpDataAppInfo versionBean) {
@@ -309,4 +314,5 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             }
         });
     }
+
 }

@@ -266,10 +266,8 @@ public class MapActivity extends AppCompatActivity implements LocationSource, AM
                 aMap.moveCamera(CameraUpdateFactory.zoomTo(15));    //设置显示级数//将视图中心点自动移动到次此置
                 aMap.moveCamera(CameraUpdateFactory.changeLatLng(new LatLng(amapLocation.getLatitude(), amapLocation.getLongitude())));
                 deactivate();  //我只定位了一次，所以成功之后就调用此方法，如果想一直重复定位不需要写此方法
-//                Log.e("--Main--", localAddress);
             } else {
                 String errText = "定位失败," + amapLocation.getErrorCode() + ": " + amapLocation.getErrorInfo();
-                Log.e("AmapErr", errText);
             }
         }
     }

@@ -26,6 +26,7 @@ import com.sence.activity.OpenVipPageActivity;
 import com.sence.activity.ShopDetailsActivity;
 import com.sence.adapter.BusBottomAdapter;
 import com.sence.adapter.BusTopAdapter;
+import com.sence.base.BaseMainFragment;
 import com.sence.bean.request.RUidBean;
 import com.sence.bean.request.RUidListBean;
 import com.sence.bean.response.PBusBean;
@@ -52,7 +53,7 @@ import androidx.recyclerview.widget.RecyclerView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BusFragment extends Fragment {
+public class BusFragment extends BaseMainFragment {
     private SmartRefreshLayout smart_refresh;
     private RecyclerView recycle_view;
     private RecyclerView recycle_view_bottom;
@@ -120,7 +121,7 @@ public class BusFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), MainActivity.class);
-                intent.putExtra("type", 1);
+                intent.putExtra("type", 2);
                 startActivity(intent);
             }
         });
@@ -146,11 +147,17 @@ public class BusFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
+        topAdapter.setDeleteListener(new BusTopAdapter.DeleteListener() {
+            @Override
+            public void deleteChange(int position) {
+                if (topAdapter.getData().get(position - 1).getGoods().size() == 0) {
+                    topAdapter.remove(position - 1);
+                }
+            }
+        });
         topAdapter.setListener(new BusTopAdapter.SelectChangeListener() {
             @Override
             public void selectChanged(int position) {
-                Log.e("TAG", "position==" + position);
                 getItemAllSelect(position - 1);
                 getAllSelect();
                 getValue();
@@ -426,5 +433,11 @@ public class BusFragment extends Fragment {
                 topAdapter.setNewData(o.getCart());
             }
         });
+    }
+
+    @Override
+    public void onRefresh() {
+        initBusData();
+        initRecommendData();
     }
 }

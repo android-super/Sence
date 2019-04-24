@@ -21,6 +21,7 @@ import com.sence.MainActivity;
 import com.sence.R;
 import com.sence.activity.SearchActivity;
 import com.sence.adapter.pager.CustomViewPagerAdapter;
+import com.sence.base.BaseMainFragment;
 import com.sence.fragment.main.FocusFragment;
 import com.sence.fragment.main.NoteFragment;
 import com.sence.fragment.main.RecommendFragment;
@@ -30,7 +31,7 @@ import com.sence.view.FadeTransformer;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MainFragment extends Fragment {
+public class MainFragment extends BaseMainFragment {
     private ViewPager viewPager;
     private TabLayout tab_layout;
     private ImageView release;
@@ -98,5 +99,10 @@ public class MainFragment extends Fragment {
             }
         }
         tab_layout.getTabAt(0).getCustomView().setSelected(true);
+    }
+
+    @Override
+    public void onRefresh() {
+        
     }
 }

@@ -21,6 +21,7 @@ import com.sence.activity.SearchActivity;
 import com.sence.activity.ShopDetailsActivity;
 import com.sence.adapter.KindLeftAdapter;
 import com.sence.adapter.KindRightAdapter;
+import com.sence.base.BaseMainFragment;
 import com.sence.bean.request.RBusAddBean;
 import com.sence.bean.request.REmptyBean;
 import com.sence.bean.request.RIdListBean;
@@ -42,7 +43,7 @@ import androidx.recyclerview.widget.RecyclerView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class KindFragment extends Fragment {
+public class KindFragment extends BaseMainFragment {
     private RecyclerView recycle_view_horizontal;
     private RecyclerView recycle_view_vertical;
     private SmartRefreshLayout smart_refresh;
@@ -214,5 +215,10 @@ public class KindFragment extends Fragment {
                 ToastUtils.showShort("成功加入购物车");
             }
         });
+    }
+
+    @Override
+    public void onRefresh() {
+        initKindList();
     }
 }

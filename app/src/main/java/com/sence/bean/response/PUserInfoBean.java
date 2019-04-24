@@ -35,6 +35,8 @@ public class PUserInfoBean {
     private String follow_num;
     private String fans_num;
     private String note_num;
+    private String gardenRed;
+    private String msg_num;
     private OrderInfoBean order_info;
 
     public String getUpuid() {
@@ -59,6 +61,22 @@ public class PUserInfoBean {
 
     public void setOrder_info(OrderInfoBean order_info) {
         this.order_info = order_info;
+    }
+
+    public String getGardenRed() {
+        return gardenRed;
+    }
+
+    public void setGardenRed(String gardenRed) {
+        this.gardenRed = gardenRed;
+    }
+
+    public String getMsg_num() {
+        return msg_num;
+    }
+
+    public void setMsg_num(String msg_num) {
+        this.msg_num = msg_num;
     }
 
     public static class OrderInfoBean {

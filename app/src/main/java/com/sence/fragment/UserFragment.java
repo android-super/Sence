@@ -23,6 +23,7 @@ import com.sence.activity.OpenVipPageActivity;
 import com.sence.activity.SettingActivity;
 import com.sence.activity.WebActivity;
 import com.sence.activity.web.WebConstans;
+import com.sence.base.BaseMainFragment;
 import com.sence.bean.request.RUidBean;
 import com.sence.bean.response.PUserInfoBean;
 import com.sence.net.HttpCode;
@@ -39,8 +40,7 @@ import androidx.fragment.app.Fragment;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class UserFragment extends Fragment implements View.OnClickListener {
-    private ImageView user_message;
+public class UserFragment extends BaseMainFragment implements View.OnClickListener {
     private RelativeLayout user_message_layout;
     private TextView user_message_num;
     private NiceImageView user_head;
@@ -57,6 +57,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     private TextView user_pay, user_send, user_get, user_comment;
     private TextView user_pay_point, user_send_point, user_get_point, user_comment_point;
     private RelativeLayout user_flower;
+    private ImageView user_garden_point;
     private TextView user_account, user_address, user_set;
 
     private String save_money;//预计一年省
@@ -66,13 +67,11 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initView() {
-
         user_open_layout = getView().findViewById(R.id.user_open_layout);
         user_price = getView().findViewById(R.id.user_price);
         user_open = getView().findViewById(R.id.user_open);
         user_vip_layout = getView().findViewById(R.id.user_vip_layout);
 
-        user_message = getView().findViewById(R.id.user_message);
         user_head = getView().findViewById(R.id.user_head);
         user_name = getView().findViewById(R.id.user_name);
         user_focus_layout = getView().findViewById(R.id.user_focus_layout);
@@ -98,6 +97,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         user_account = getView().findViewById(R.id.user_account);
         user_address = getView().findViewById(R.id.user_address);
         user_set = getView().findViewById(R.id.user_set);
+        user_garden_point = getView().findViewById(R.id.user_garden_point);
 
         user_message_layout.setOnClickListener(this);
         user_head.setOnClickListener(this);
@@ -115,8 +115,25 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         user_address.setOnClickListener(this);
         user_set.setOnClickListener(this);
         user_open.setOnClickListener(this);
+
+        initMyInfo();
     }
 
+    public void initFirstView() {
+        GlideUtils.getInstance().loadHead(LoginStatus.getAvatar(), user_head);
+        user_open_layout.setVisibility(View.VISIBLE);
+        user_vip_layout.setVisibility(View.GONE);
+        user_name.setText("登录 / 注册");
+        user_focus.setText("0");
+        user_fans.setText("0");
+        user_release.setText("0");
+        user_pay_point.setVisibility(View.GONE);
+        user_send_point.setVisibility(View.GONE);
+        user_get_point.setVisibility(View.GONE);
+        user_comment_point.setVisibility(View.GONE);
+        user_garden_point.setVisibility(View.GONE);
+        user_message_num.setVisibility(View.GONE);
+    }
 
     private void initDataView(PUserInfoBean o) {
         if (o == null) {
@@ -163,6 +180,17 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         } else {
             user_comment_point.setText(o.getOrder_info().getWait_evaluate());
         }
+        if (o.getGardenRed().equals("0")) {
+            user_garden_point.setVisibility(View.GONE);
+        } else {
+            user_garden_point.setVisibility(View.VISIBLE);
+        }
+        if (o.getMsg_num().equals("0")) {
+            user_message_num.setVisibility(View.GONE);
+        } else {
+            user_message_num.setVisibility(View.VISIBLE);
+            user_message_num.setText(o.getMsg_num());
+        }
 
 
     }
@@ -178,12 +206,6 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initView();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        initMyInfo();
     }
 
     private void initMyInfo() {
@@ -295,5 +317,11 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         } else {
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        initFirstView();
+        initMyInfo();
     }
 }

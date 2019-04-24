@@ -97,4 +97,5 @@ public enum HttpCode {
     VIP_OPEN,//开通会员
     START_PICTURE,//驱动图片
     UPDATE_APP,//更新版本
+    CHAT_BAN,//禁言
 }

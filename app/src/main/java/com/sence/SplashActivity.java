@@ -47,6 +47,7 @@ public class SplashActivity extends AppCompatActivity {
         permissionUtil = new PermissionUtil(this);
         if (permissionUtil.requestPermissions(PermissionUtil.READ_PHONE_STATE,
                 new String[]{Manifest.permission.READ_PHONE_STATE})) {
+            getStartPicture();
             disposable =
                     Observable.interval(2, TimeUnit.SECONDS).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Long>() {
                         @Override
@@ -58,7 +59,6 @@ public class SplashActivity extends AppCompatActivity {
                     });
         }
         getSystemTime();
-        getStartPicture();
     }
 
     private void getStartPicture() {

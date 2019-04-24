@@ -26,6 +26,7 @@ import com.sence.R;
 import com.sence.activity.*;
 import com.sence.adapter.VipBottomAdapter;
 import com.sence.adapter.VipTopAdapter;
+import com.sence.base.BaseMainFragment;
 import com.sence.bean.request.RUidBean;
 import com.sence.bean.response.PUserVipBean;
 import com.sence.net.HttpCode;
@@ -41,7 +42,7 @@ import com.sence.view.NiceImageView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class VipFragment extends Fragment implements View.OnClickListener {
+public class VipFragment extends BaseMainFragment implements View.OnClickListener {
     private RelativeLayout vip_no_layout;
     private LinearLayout vip_info_layout;
     private NiceImageView vip_head;
@@ -107,7 +108,11 @@ public class VipFragment extends Fragment implements View.OnClickListener {
             GlideUtils.getInstance().loadHead(LoginStatus.getAvatar(), vip_head);
             vip_name.setText(LoginStatus.getName());
         }
+    }
 
+    private void initFirstView(){
+        GlideUtils.getInstance().loadHead(LoginStatus.getAvatar(), vip_head);
+        vip_name.setText("请登录");
     }
 
     @Override
@@ -209,4 +214,9 @@ public class VipFragment extends Fragment implements View.OnClickListener {
     }
 
 
+    @Override
+    public void onRefresh() {
+        initFirstView();
+        initData();
+    }
 }
