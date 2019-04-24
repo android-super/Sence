@@ -42,6 +42,8 @@ import androidx.fragment.app.Fragment;
  */
 public class UserFragment extends Fragment implements View.OnClickListener {
     private ImageView user_message;
+    private RelativeLayout user_message_layout;
+    private TextView user_message_num;
     private NiceImageView user_head;
     private TextView user_name;
     private LinearLayout user_focus_layout, user_fans_layout, user_release_layout;
@@ -82,6 +84,8 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         user_fans = getView().findViewById(R.id.user_fans);
         user_release = getView().findViewById(R.id.user_release);
         user_all_order = getView().findViewById(R.id.user_all_order);
+        user_message_layout = getView().findViewById(R.id.user_message_layout);
+        user_message_num = getView().findViewById(R.id.user_message_num);
 
         user_pay = getView().findViewById(R.id.user_pay);
         user_send = getView().findViewById(R.id.user_send);
@@ -98,7 +102,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         user_set = getView().findViewById(R.id.user_set);
         user_garden_point = getView().findViewById(R.id.user_garden_point);
 
-        user_message.setOnClickListener(this);
+        user_message_layout.setOnClickListener(this);
         user_head.setOnClickListener(this);
         user_name.setOnClickListener(this);
         user_focus_layout.setOnClickListener(this);
@@ -208,7 +212,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.user_message:
+            case R.id.user_message_layout:
                 Intent intent = new Intent(getContext(), MessageActivity.class);
                 toLogin(intent);
                 break;

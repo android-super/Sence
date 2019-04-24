@@ -36,6 +36,7 @@ import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.sence.R;
+import com.sence.activity.web.WebConstans;
 import com.sence.adapter.CommentAdapter;
 import com.sence.adapter.ContentGoodAdapter;
 import com.sence.adapter.GoodsAdapter;
@@ -315,13 +316,16 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
                 break;
 
             case R.id.ll_wei_share:
-                shareWeb(ContentDetailActivity.this, "http://www.baidu.com", contentTitle.getText().toString(), "精品生活，从sence开始",
+                shareWeb(ContentDetailActivity.this, WebConstans.buildToken(WebConstans.WZXQ, "nid", nid),
+                        contentTitle.getText().toString(),
+                        "精品生活，从sence开始",
                         SHARE_MEDIA.WEIXIN,
                         content_img);
                 mBottomSheetDialog.dismiss();
                 break;
             case R.id.ll_friend_share:
-                shareWeb(ContentDetailActivity.this, "http://www.baidu.com", contentTitle.getText().toString(),
+                shareWeb(ContentDetailActivity.this, WebConstans.buildToken(WebConstans.WZXQ, "nid", nid),
+                        contentTitle.getText().toString(),
                         "精品生活，从sence开始", SHARE_MEDIA.WEIXIN_CIRCLE, content_img);
                 mBottomSheetDialog.dismiss();
                 break;
@@ -330,9 +334,9 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.ll_report_share:
                 intent = new Intent(ContentDetailActivity.this, ReportCauseActivity.class);
-                intent.putExtra("type","1");
-//                intent.putExtra("gid",bean.getUid());
-//                intent.putExtra("uid",bean.getUid());
+                intent.putExtra("type", "2");
+                intent.putExtra("gid", nid);
+                intent.putExtra("uid", to_uid);
                 startActivity(intent);
                 mBottomSheetDialog.dismiss();
                 break;

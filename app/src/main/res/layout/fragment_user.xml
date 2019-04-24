@@ -8,13 +8,36 @@
               android:background="@color/white"
               tools:context=".fragment.UserFragment">
 
-    <ImageView
-            android:id="@+id/user_message"
-            android:layout_gravity="right"
-            android:src="@drawable/user_xiaoxi"
+    <RelativeLayout
+            android:id="@+id/user_message_layout"
             android:layout_width="60dp"
-            android:scaleType="center"
-            android:layout_height="50dp"/>
+            android:layout_gravity="right"
+            android:layout_height="50dp">
+
+        <ImageView
+                android:id="@+id/user_message"
+                android:src="@drawable/user_xiaoxi"
+                android:layout_width="30dp"
+                android:scaleType="center"
+                android:layout_centerInParent="true"
+                android:layout_height="30dp"/>
+
+        <TextView
+                android:id="@+id/user_message_num"
+                android:text="5"
+                android:background="@drawable/shape_circle_theme_green_kuang"
+                android:layout_width="wrap_content"
+                android:minWidth="15dp"
+                android:minHeight="15dp"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:textColor="@color/theme_green"
+                android:gravity="center"
+                android:textSize="10sp"
+                android:layout_alignRight="@id/user_message"
+                android:layout_alignTop="@id/user_message"
+                android:layout_height="15dp"/>
+    </RelativeLayout>
 
     <RelativeLayout
             android:layout_width="match_parent"
