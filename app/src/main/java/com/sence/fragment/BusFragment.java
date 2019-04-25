@@ -431,16 +431,21 @@ public class BusFragment extends BaseMainFragment {
                 topAdapter.setIsMember(isMember);
                 bus_save_money.setText("一年预计省￥" + save_money);
                 topAdapter.setNewData(o.getCart());
-                setSelect(true);
-                bus_all_select.setSelected(true);
-                getValue();
+                if (o.getCart().size() > 0) {
+                    setSelect(true);
+                    bus_all_select.setSelected(true);
+                    getValue();
+                } else {
+                    bus_all_select.setSelected(false);
+                }
+
             }
         });
     }
 
     @Override
     public void onRefresh() {
-//        initBusData();
+        initBusData();
         initRecommendData();
     }
 }

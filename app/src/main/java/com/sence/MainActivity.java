@@ -107,17 +107,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         fragments = new BaseMainFragment[]{mainFragment, vipFragment, kindFragment, busFragment, userFragment};
         mains = new LinearLayout[]{mainHome, mainVip, mainKind, mainBus, mainUser};
 
-        addFragment();
         setSelect(0);
 //        initUpdataApp();
-    }
-
-    private void addFragment() {
-        for (int i = 0; i < mains.length; i++) {
-            if (!fragments[i].isAdded()) {
-                getSupportFragmentManager().beginTransaction().add(R.id.frame_layout, fragments[i]).commit();
-            }
-        }
     }
 
     private void initUpdataApp() {
@@ -192,11 +183,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         for (int i = 0; i < mains.length; i++) {
             if (i == position) {
                 mains[i].setSelected(true);
-                getSupportFragmentManager().beginTransaction().show(fragments[i]).commit();
-                fragments[i].onRefresh();
+                if (fragments[i].isAdded()) {
+                    getSupportFragmentManager().beginTransaction().show(fragments[i]).commit();
+                    fragments[i].onRefresh();
+                } else {
+                    getSupportFragmentManager().beginTransaction().add(R.id.frame_layout, fragments[i]).show(fragments[i]).commit();
+                }
             } else {
                 mains[i].setSelected(false);
-                getSupportFragmentManager().beginTransaction().hide(fragments[i]).commit();
+                if (fragments[i].isAdded()) {
+                    getSupportFragmentManager().beginTransaction().hide(fragments[i]).commit();
+                }
             }
         }
     }
@@ -204,7 +201,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.e("MainActivity", "onDestroy");
         SocketUtils.getInstance().stopSocket();
     }
 
@@ -245,9 +241,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        Log.e("MainActivity", "onNewIntent");
         if (intent != null) {
-            Log.e("MainActivity", "onNewIntent");
             int type = intent.getIntExtra("type", 0);
             setSelect(type);
         }
@@ -256,10 +250,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e("MainActivity", "onResume");
         JPushInterface.setAlias(getApplicationContext(), -1, LoginStatus.getUid());
         for (int i = 0; i < fragments.length; i++) {
-            fragments[i].onRefresh();
+            if (fragments[i].isAdded()) {
+                fragments[i].onRefresh();
+            }
         }
     }
 
@@ -328,6 +323,5 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             }
         });
     }
-
 
 }
