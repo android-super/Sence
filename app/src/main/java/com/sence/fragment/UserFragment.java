@@ -143,7 +143,7 @@ public class UserFragment extends BaseMainFragment implements View.OnClickListen
         SharedPreferencesUtil.getInstance().putString("inviteUsername", o.getInviteUsername());
         SharedPreferencesUtil.getInstance().putString("is_vip", o.getIs_kol());
         GlideUtils.getInstance().loadHead(LoginStatus.getAvatar(), user_head);
-        save_money = o.getMoney();
+        save_money = o.getSave_money();
         if (o.getIs_kol().equals("1")) {
             user_vip_layout.setVisibility(View.VISIBLE);
             user_open_layout.setVisibility(View.GONE);
@@ -155,7 +155,7 @@ public class UserFragment extends BaseMainFragment implements View.OnClickListen
         user_focus.setText(o.getFollow_num());
         user_fans.setText(o.getFans_num());
         user_release.setText(o.getNote_num());
-        user_price.setText("一年预计省￥" + o.getMoney());
+        user_price.setText("一年预计省￥" + o.getSave_money());
 
         if (o.getOrder_info().getWait_pay().equals("0")) {
             user_pay_point.setVisibility(View.GONE);

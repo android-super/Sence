@@ -17,12 +17,6 @@
             app:corner_radius="4dp"
             android:layout_height="75dp"/>
 
-    <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/shape_line"/>
-
     <TextView
             android:id="@+id/item_name"
             android:text="@string/hint_describe"

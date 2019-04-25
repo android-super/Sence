@@ -5,11 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.view.View;
-import android.webkit.SslErrorHandler;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.webkit.*;
 import android.widget.RelativeLayout;
 
 import com.sence.R;
@@ -93,6 +89,7 @@ public class WebActivity extends BaseActivity {
         webView.setFocusable(true);
         webView.requestFocus();
         webView.setWebChromeClient(new WebChromeClient());  //解决android与H5协议交互,弹不出对话框问题
+        webView.addJavascriptInterface(new JsInterface(this), "Android");
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
@@ -118,5 +115,26 @@ public class WebActivity extends BaseActivity {
 
             }
         });
+    }
+
+    private class JsInterface {
+        private Context mContext;
+
+        public JsInterface(Context context) {
+            this.mContext = context;
+        }
+
+        //在js中调用window.AndroidWebView.showInfoFromJs(name)，便会触发此方法。
+        @JavascriptInterface
+        public void closeBtnClick() {
+            finish();
+        }
+
+        @JavascriptInterface
+        public void accountClick(){
+            Intent intent = new Intent(WebActivity.this,MyAccountActivity.class);
+            startActivity(intent);
+        }
+
     }
 }

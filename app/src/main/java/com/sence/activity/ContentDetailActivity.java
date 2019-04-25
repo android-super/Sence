@@ -41,11 +41,7 @@ import com.sence.adapter.CommentAdapter;
 import com.sence.adapter.ContentGoodAdapter;
 import com.sence.adapter.GoodsAdapter;
 import com.sence.base.BaseActivity;
-import com.sence.bean.request.RCommentDetailBean;
-import com.sence.bean.request.RCommentListBean;
-import com.sence.bean.request.RContentDetailBean;
-import com.sence.bean.request.RFocusBean;
-import com.sence.bean.request.RNidBean;
+import com.sence.bean.request.*;
 import com.sence.bean.response.PCommentBean;
 import com.sence.bean.response.PContentDetailBean;
 import com.sence.fragment.CommentFragment;
@@ -58,6 +54,8 @@ import com.sence.utils.GlideUtils;
 import com.sence.utils.LoginStatus;
 import com.sence.utils.NavigationBarUtil;
 import com.sence.utils.StatusBarUtil;
+import com.sence.view.DividerGoodSpacingItemDecoration;
+import com.sence.view.DividerSpacingItemDecoration;
 import com.sence.view.NiceImageView;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareAPI;
@@ -140,15 +138,18 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
     private PContentDetailBean.NoteInfoBean noteInfoBean;
 
     private List<PContentDetailBean.NoteInfoBean.GoodsInfoBean> goodsInfoBeans;
-    private String p_uid = LoginStatus.getUid();
+    private String p_uid;
     private CommentAdapter commentAdapter;
     private BottomSheetDialog commentSheet;
     private BottomSheetDialog goodSheet;
     private BottomSheetDialog mBottomSheetDialog;
 
+    private CommentFragment commentFragment;
+
     private int page = 1;
     private boolean isShowKeyBorad = false;
     private String content_img;
+    private String pid;
 
     private void initDataView(PContentDetailBean o) {
         if (o == null) {
@@ -156,6 +157,7 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
         }
         noteInfoBean = o.getNote_info();
         to_uid = o.getNote_info().getUid();
+        p_uid = o.getNote_info().getUid();
         PContentDetailBean.NoteInfoBean noteInfoBean = o.getNote_info();
         toolName.setText(noteInfoBean.getNick_name());
         GlideUtils.getInstance().loadHead(noteInfoBean.getAvatar(), toolHead);
@@ -229,13 +231,22 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
 
         contentRecycle.setLayoutManager(new LinearLayoutManager(ContentDetailActivity.this));
         adapter = new ContentGoodAdapter(R.layout.rv_item_goods);
+        contentRecycle.addItemDecoration(new DividerSpacingItemDecoration(DividerSpacingItemDecoration.VERTICAL,
+                ConvertUtils.dp2px(15)));
         contentRecycle.setAdapter(adapter);
         contentRecycle.setNestedScrollingEnabled(false);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, CommentFragment.newInstance(nid,
-                "2")).commit();
+        commentFragment = CommentFragment.newInstance(nid, "2");
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, commentFragment).commit();
 
         initWebSetting();
+        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
+
+                addBus(adapter.getData().get(position).getId());
+            }
+        });
 
         contentComment.setOnClickListener(this);
         contentHead.setOnClickListener(this);
@@ -245,6 +256,7 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
         contentBuy.setOnClickListener(this);
         contentFocusTv.setOnClickListener(this);
         toolShare.setOnClickListener(this);
+        toolContentFocus.setOnClickListener(this);
 
         bottomSheetDialog();
     }
@@ -323,7 +335,6 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
             case R.id.tool_share:
                 mBottomSheetDialog.show();
                 break;
-
             case R.id.ll_wei_share:
                 shareWeb(ContentDetailActivity.this, WebConstans.buildToken(WebConstans.WZXQ, "nid", nid),
                         contentTitle.getText().toString(),
@@ -406,6 +417,7 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
 
     public void showCommentDialog(final boolean isShow) {
         isShowKeyBorad = isShow;
+        pid = "";
         getMsgList();
         commentSheet = new BottomSheetDialog(this);
         View view = LayoutInflater.from(this).inflate(R.layout.bottom_sheet_comment, null);
@@ -423,7 +435,8 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
         commentAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
-                p_uid = commentAdapter.getData().get(position).getId();
+                pid = commentAdapter.getData().get(position).getId();
+                comment_release.setHint("回复" + commentAdapter.getData().get(position).getUser().getNick_name());
                 recycle_view.scrollToPosition(commentAdapter.getData().size() - 1);
                 showSoftInputFromWindow(comment_release);
             }
@@ -437,7 +450,7 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
                         ToastUtils.showShort("评论内容不能为空");
                         return false;
                     }
-                    addMsg(LoginStatus.getUid(), nid, p_uid, content, "2");
+                    addMsg(LoginStatus.getUid(), nid, p_uid, content, "2", pid);
                 }
                 return false;
             }
@@ -465,14 +478,31 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
     public void showGoodDialog() {
         goodSheet = new BottomSheetDialog(this);
         View view = LayoutInflater.from(this).inflate(R.layout.bottom_sheet_goods, null);
+        TextView bottom_good_num = view.findViewById(R.id.bottom_good_num);
         RecyclerView recycle_view = view.findViewById(R.id.recycle_view);
+        final ImageView good_close = view.findViewById(R.id.good_close);
         final GoodsAdapter adapter = new GoodsAdapter(R.layout.rv_item_goods);
         recycle_view.setLayoutManager(new LinearLayoutManager(this));
         recycle_view.setAdapter(adapter);
+        recycle_view.addItemDecoration(new DividerGoodSpacingItemDecoration(DividerGoodSpacingItemDecoration.VERTICAL
+                , ConvertUtils.dp2px(15)));
         adapter.setNewData(goodsInfoBeans);
+        bottom_good_num.setText(goodsInfoBeans.size() + "个商品");
         goodSheet.setContentView(view);
         BottomSheetBehavior mBehavior = BottomSheetBehavior.from((View) view.getParent());
         mBehavior.setState(STATE_EXPANDED);
+        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
+                addBus(adapter.getData().get(position).getId());
+            }
+        });
+        good_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goodSheet.dismiss();
+            }
+        });
         goodSheet.show();
     }
 
@@ -577,6 +607,8 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
 
             @Override
             public void onSuccess(String o, String msg) {
+                contentFocus.setVisibility(View.GONE);
+                contentFocusTv.setVisibility(View.GONE);
                 ToastUtils.showShort(msg);
             }
         });
@@ -627,9 +659,19 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
      * @param content
      * @param type
      */
-    public void addMsg(String uid, String rid, String p_uid, String content, String type) {
-        HttpManager.getInstance().PlayNetCode(HttpCode.COMMENT_DETAIL_ADD, new RCommentDetailBean(uid, rid, p_uid,
-                content, type)).request(new ApiCallBack() {
+    public void addMsg(String uid, String rid, String p_uid, String content, String type, String pid) {
+        HttpManager httpManager;
+        if (TextUtils.isEmpty(pid)) {
+            httpManager = HttpManager.getInstance().PlayNetCode(HttpCode.COMMENT_DETAIL_ADD,
+                    new RCommentDetailBean(uid, rid, p_uid,
+                            content, type));
+        } else {
+            httpManager = HttpManager.getInstance().PlayNetCode(HttpCode.COMMENT_DETAIL_ADD,
+                    new RCommentDetailPidBean(uid
+                            , rid, p_uid,
+                            content, type, pid));
+        }
+        httpManager.request(new ApiCallBack() {
             @Override
             public void onFinish() {
 
@@ -644,6 +686,8 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
             public void onSuccess(Object o, String msg) {
                 comment_release.setText("");
                 KeyboardUtils.hideSoftInput(comment_release);
+                getMsgList();
+                commentFragment.initData();
             }
         });
     }
@@ -681,6 +725,28 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onSuccess(Object o, String msg) {
 
+            }
+        });
+    }
+
+    /**
+     * 加入购物车
+     */
+    private void addBus(String gid) {
+        HttpManager.getInstance().PlayNetCode(HttpCode.BUS_ADD, new RBusAddBean(gid, LoginStatus.getUid())).request(new ApiCallBack() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(Object o, String msg) {
+                ToastUtils.showShort("成功加入购物车");
             }
         });
     }

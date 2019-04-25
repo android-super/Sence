@@ -22,9 +22,11 @@
                     android:id="@+id/content_img"
                     android:layout_width="match_parent"
                     android:scaleType="fitXY"
+                    android:maxHeight="700dp"
                     android:adjustViewBounds="true"
+                    android:minHeight="220dp"
                     android:transitionName="@string/translation_recommend_name"
-                    android:layout_height="220dp"/>
+                    android:layout_height="wrap_content"/>
 
             <androidx.appcompat.widget.Toolbar
                     android:elevation="5dp"
@@ -64,7 +66,7 @@
                         <com.sence.view.NiceImageView
                                 android:id="@+id/tool_head"
                                 app:is_circle="true"
-                                android:src="@drawable/hint_img"
+                                android:src="@drawable/hint_head"
                                 android:scaleType="center"
                                 android:layout_width="25dp"
                                 android:layout_height="25dp"/>

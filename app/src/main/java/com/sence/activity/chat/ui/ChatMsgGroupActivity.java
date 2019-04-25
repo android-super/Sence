@@ -409,6 +409,7 @@ public class ChatMsgGroupActivity extends BaseActivity implements View.OnClickLi
                         .openGallery(PictureMimeType.ofImage())
                         .maxSelectNum(1)
                         .compress(true)
+                        .imageFormat(PictureMimeType.PNG)
                         .forResult(PictureConfig.CHOOSE_REQUEST);
                 break;
             case R.id.chat_function_photograph://拍照
@@ -416,6 +417,7 @@ public class ChatMsgGroupActivity extends BaseActivity implements View.OnClickLi
                         .openCamera(PictureMimeType.ofImage())
                         .maxSelectNum(1)
                         .compress(true)
+                        .imageFormat(PictureMimeType.PNG)
                         .forResult(PictureConfig.CHOOSE_REQUEST);
                 break;
         }

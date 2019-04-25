@@ -6,14 +6,28 @@
               android:background="@drawable/shape_round"
               android:layout_height="wrap_content">
 
-    <com.sence.view.NiceImageView
-            android:id="@+id/item_img"
-            app:corner_top_left_radius="4dp"
-            app:corner_top_right_radius="4dp"
+    <RelativeLayout
             android:layout_width="match_parent"
-            android:scaleType="centerCrop"
-            android:transitionName="@string/translation_note_name"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content">
+
+        <com.sence.view.NiceImageView
+                android:id="@+id/item_img"
+                app:corner_top_left_radius="4dp"
+                app:corner_top_right_radius="4dp"
+                android:layout_width="match_parent"
+                android:scaleType="centerCrop"
+                android:transitionName="@string/translation_note_name"
+                android:layout_height="wrap_content"/>
+
+        <ImageView
+                android:layout_alignParentRight="true"
+                android:layout_margin="7dp"
+                android:id="@+id/item_video"
+                android:src="@drawable/bofang"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+    </RelativeLayout>
 
     <TextView
             android:id="@+id/item_describe"

@@ -213,7 +213,6 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
                 SharedPreferencesUtil.getInstance().putString("token",o.getToken());
                 Intent intent = new Intent(VerifyActivity.this, MainActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
     }

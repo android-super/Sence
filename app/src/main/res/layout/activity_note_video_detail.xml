@@ -17,10 +17,11 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 android:layout_height="match_parent">
 
-            <androidx.viewpager.widget.ViewPager
-                    android:id="@+id/view_pager"
+            <cn.jzvd.JzvdStd
+                    android:id="@+id/note_video"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:minHeight="220dp"/>
 
             <androidx.appcompat.widget.Toolbar
                     style="@style/NoLeftToolbar"

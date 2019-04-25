@@ -65,6 +65,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private UserFragment userFragment;
     private BaseMainFragment[] fragments;
 
+    private int tag = 0;//底部点击Tag防止多次点击
+
     @Override
     public int onActLayout() {
         return R.layout.activity_main;
@@ -136,7 +138,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
      */
     @Override
     public void onClick(View view) {
-        setSelect((Integer) view.getTag());
+        if (tag == (int) view.getTag()) {
+            return;
+        }
+        tag = (int) view.getTag();
+        setSelect(tag);
     }
 
     /**
@@ -151,6 +157,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                             .openGallery(PictureMimeType.ofImage())
                             .maxSelectNum(9)
                             .compress(true)
+                            .imageFormat(PictureMimeType.PNG)
                             .forResult(PictureConfig.CHOOSE_REQUEST);
                     break;
                 case R.id.sheet_video:
@@ -158,6 +165,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                             .openGallery(PictureMimeType.ofVideo())
                             .maxSelectNum(1)
                             .compress(true)
+                            .imageFormat(PictureMimeType.PNG)
                             .forResult(PictureConfig.REQUEST_CAMERA);
                     break;
                 case R.id.sheet_close:

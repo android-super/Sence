@@ -207,7 +207,7 @@ public class VipFragment extends BaseMainFragment implements View.OnClickListene
                     vip_yes_layout.setVisibility(View.VISIBLE);
                 }
                 save_money = o.getMoney();
-                vip_no_content.setText(o.getCarousel());
+//                vip_no_content.setText(o.getCarousel());
                 vip_price.setText(o.getMoney());
             }
         });

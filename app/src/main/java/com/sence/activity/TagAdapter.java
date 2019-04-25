@@ -2,10 +2,7 @@ package com.sence.activity;
 
 import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.chad.library.adapter.base.entity.MultiItemEntity;
-import com.luck.picture.lib.entity.LocalMedia;
 import com.sence.R;
 import com.sence.bean.request.tag.RTagMultiItem;
 import com.sence.utils.GlideUtils;
@@ -18,7 +15,6 @@ import java.util.List;
  * 描述:SenceGit
  */
 public class TagAdapter extends BaseMultiItemQuickAdapter<RTagMultiItem, BaseViewHolder> {
-
     /**
      * Same as QuickAdapter#QuickAdapter(Context,int) but with
      * some initialization data.

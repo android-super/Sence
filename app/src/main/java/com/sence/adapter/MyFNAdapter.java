@@ -1,5 +1,6 @@
 package com.sence.adapter;
 
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -24,13 +25,13 @@ public class MyFNAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
         helper.setText(R.id.item_name, item);
 
         if (position == helper.getAdapterPosition()) {
-            helper.setGone(R.id.item_point, true);
+            helper.setVisible(R.id.item_point, true);
+            item_name.setTextColor(Color.parseColor("#262626"));
             item_name.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-            item_name.setTextSize(23);
         } else {
-            helper.setGone(R.id.item_point, false);
+            helper.setVisible(R.id.item_point, false);
+            item_name.setTextColor(Color.parseColor("#999999"));
             item_name.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
-            item_name.setTextSize(15);
         }
     }
 

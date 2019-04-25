@@ -4,17 +4,18 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              tools:context=".fragment.tag.TagFragment">
+              android:fitsSystemWindows="true"
+              tools:context=".fragment.tag.ShowTagFragment">
 
     <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
         <ImageView
                 android:id="@+id/tag_img"
                 android:layout_width="match_parent"
                 android:layout_centerInParent="true"
-                android:scaleType="fitCenter"
+                android:scaleType="fitXY"
                 android:src="@drawable/hint_img"
                 android:layout_height="match_parent"/>
 

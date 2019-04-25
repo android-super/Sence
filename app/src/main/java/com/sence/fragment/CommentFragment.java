@@ -84,6 +84,7 @@ public class CommentFragment extends Fragment {
         comment_recycle.setLayoutManager(new LinearLayoutManager(getActivity()));
         commentAdapter = new CommentAdapter(R.layout.rv_item_comment);
         comment_recycle.setAdapter(commentAdapter);
+        commentAdapter.setEmptyView(R.layout.empty_comment, comment_recycle);
 
         comment_write.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,9 +108,7 @@ public class CommentFragment extends Fragment {
         initData();
     }
 
-
-
-    private void initData() {
+    public void initData() {
         HttpManager.getInstance().PlayNetCode(HttpCode.COMMENT_LIST,
                 new RCommentListBean(LoginStatus.getUid(), rid, type, page + "")).request(new MessageApiCallBack<List<PCommentBean>>() {
             @Override
@@ -119,7 +118,14 @@ public class CommentFragment extends Fragment {
                 } else {
                     commentAdapter.addData(pCommentBeans);
                 }
-                comment_num.setText("(" + count + ")");
+                if (count == 0) {
+                    comment_num.setVisibility(View.INVISIBLE);
+                    comment_look.setVisibility(View.GONE);
+                } else {
+                    comment_look.setVisibility(View.VISIBLE);
+                    comment_num.setVisibility(View.VISIBLE);
+                    comment_num.setText("(" + count + ")");
+                }
             }
 
             @Override

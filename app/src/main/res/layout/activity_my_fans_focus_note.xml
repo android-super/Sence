@@ -10,20 +10,26 @@
         android:fitsSystemWindows="true"
         tools:context=".activity.MyFansFocusNoteActivity">
 
-    <com.sence.view.PubTitle
-            app:is_back="true"
-            style="@style/NoLeftToolbar"
-            app:tool_cover_background="@color/white"
-            app:tool_cover_title="我的粉丝"
+    <RelativeLayout
+            android:background="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="50dp"/>
+            android:layout_height="50dp">
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycle_title"
-            android:layout_marginLeft="18dp"
-            android:layout_marginRight="18dp"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"/>
+        <ImageView
+                android:id="@+id/back"
+                android:src="@drawable/fanhui"
+                android:scaleType="center"
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycle_title"
+                android:layout_marginLeft="18dp"
+                android:layout_marginRight="18dp"
+                android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_height="40dp"/>
+    </RelativeLayout>
 
     <LinearLayout
             android:id="@+id/search_layout"

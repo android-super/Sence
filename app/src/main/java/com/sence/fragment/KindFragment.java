@@ -110,7 +110,6 @@ public class KindFragment extends BaseMainFragment {
         recycle_view_horizontal.setLayoutManager(new LinearLayoutManager(getActivity()));
         recycle_view_vertical.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-
         recycle_view_horizontal.setAdapter(leftAdapter);
         rightAdapter = new KindRightAdapter(R.layout.rv_item_kind_right);
         recycle_view_vertical.setAdapter(rightAdapter);

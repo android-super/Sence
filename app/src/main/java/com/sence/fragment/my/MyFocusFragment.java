@@ -83,7 +83,8 @@ public class MyFocusFragment extends Fragment {
                 new RMyFocusBean(LoginStatus.getUid(), keyword,page+"")).request(new ApiCallBack<List<PFansBean>>() {
             @Override
             public void onFinish() {
-
+                smartRefreshLayout.finishRefresh();
+                smartRefreshLayout.finishLoadMore();
             }
 
             @Override

@@ -51,17 +51,23 @@ public class OpenVipPageActivity extends BaseActivity {
         vipOpen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(OpenVipPageActivity.this, OpenVipActivity.class);
-                intent.putExtra("open_money", open_money);
-                startActivity(intent);
-                finish();
+                if (LoginStatus.getIdStatus().equals("2")) {
+                    Intent intent = new Intent(OpenVipPageActivity.this, OpenVipActivity.class);
+                    intent.putExtra("open_money", open_money);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Intent intent = new Intent(OpenVipPageActivity.this, AutonymActivity.class);
+                    startActivity(intent);
+                }
+
             }
         });
     }
 
     @Override
     public void initData() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.VIP_OPEN,new RUidBean(LoginStatus.getUid())).request(new ApiCallBack<PMoneyBean>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.VIP_OPEN, new RUidBean(LoginStatus.getUid())).request(new ApiCallBack<PMoneyBean>() {
             @Override
             public void onFinish() {
 

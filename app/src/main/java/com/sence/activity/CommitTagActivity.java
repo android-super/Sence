@@ -2,6 +2,7 @@ package com.sence.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.MediaMetadataRetriever;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
@@ -22,6 +23,7 @@ import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.tools.PictureFileUtils;
 import com.orhanobut.logger.Logger;
+import com.sence.MainActivity;
 import com.sence.R;
 import com.sence.base.BaseActivity;
 import com.sence.bean.request.RNoteAddImgBean;
@@ -69,6 +71,7 @@ public class CommitTagActivity extends BaseActivity implements View.OnClickListe
     private TagAdapter adapter;
 
     private File video;
+    private File video_img;
 
     @Override
     public int onActLayout() {
@@ -103,8 +106,6 @@ public class CommitTagActivity extends BaseActivity implements View.OnClickListe
             width = intent.getIntExtra("width", 0);
             height = intent.getIntExtra("height", 0);
             tagInfos = JsonParseUtil.parseStringArray(tagInfo);
-        } else {
-            getVideoPath(true);
         }
         adapter.setNewData(getPaths());
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -123,12 +124,14 @@ public class CommitTagActivity extends BaseActivity implements View.OnClickListe
                                 .openGallery(PictureMimeType.ofVideo())
                                 .maxSelectNum(1)
                                 .compress(true)
+                                .imageFormat(PictureMimeType.PNG)
                                 .forResult(PictureConfig.REQUEST_CAMERA);
                     } else {
                         PictureSelector.create(CommitTagActivity.this)
                                 .openGallery(PictureMimeType.ofImage())
                                 .maxSelectNum(9 - paths.size())
                                 .compress(true)
+                                .imageFormat(PictureMimeType.PNG)
                                 .forResult(PictureConfig.CHOOSE_REQUEST);
                     }
                 }
@@ -190,12 +193,19 @@ public class CommitTagActivity extends BaseActivity implements View.OnClickListe
     public void addTag(boolean is_video) {
         uid = LoginStatus.getUid();
         content = tagContent.getText().toString();
-        HttpManager httpManager = null;
+        HttpManager httpManager;
         if (is_video) {
             type = "2";
+            width = ConvertUtils.px2dp(adapter.getData().get(0).getLocalMedia().getWidth());
+            height = ConvertUtils.px2dp(adapter.getData().get(0).getLocalMedia().getHeight());
+            video_img = BitmapUtils.Bitmap2File(getVideoThumb(adapter.getData().get(0).getLocalMedia().getPath()),
+                    getPackageName(), 100);
+            video = new File(adapter.getData().get(0).getLocalMedia().getPath());
+            Log.e("TAG",
+                    width + "====" + height + "====" + video_img.getAbsolutePath() + "====" + video.getAbsolutePath());
             httpManager = HttpManager.getInstance().PlayNetCode(HttpCode.NOTE_ADD, new RNoteAddVideoBean(uid, type,
-                            content),
-                    new RNoteFileAddBean(video, true));
+                            content, width + "", height + ""),
+                    new RNoteFileAddBean(video, video_img, true));
         } else {
             type = "1";
             width = ConvertUtils.px2dp(width);
@@ -218,25 +228,18 @@ public class CommitTagActivity extends BaseActivity implements View.OnClickListe
 
             @Override
             public void onSuccess(Object o, String msg) {
-                finish();
+                Intent intent = new Intent(CommitTagActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
     }
 
-    /**
-     * 获取视频文件
-     *
-     * @param is_out 外部与内部获取
-     */
-    public void getVideoPath(boolean is_out) {
-        if (is_out) {
-            video = new File(paths.get(0).getPath());
-            Logger.e(video.exists() + "" + video.getAbsolutePath());
-        } else {
-            paths = localMedia;
-            video = new File(localMedia.get(0).getPath());
-            Logger.e(video.exists() + "" + video.getAbsolutePath());
-        }
+
+    public static Bitmap getVideoThumb(String path) {
+        MediaMetadataRetriever media = new MediaMetadataRetriever();
+        media.setDataSource(path);
+        return media.getFrameAtTime();
+
     }
 
     @Override
@@ -283,7 +286,6 @@ public class CommitTagActivity extends BaseActivity implements View.OnClickListe
                 startActivity(intent);
             }
             if (msg.what == 1) {
-                getVideoPath(false);
                 adapter.setNewData(getPaths());
             }
         }

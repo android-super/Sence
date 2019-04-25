@@ -325,6 +325,7 @@ public class PNoteDetailBean {
             private String tags;
             private String height;
             private String width;
+            private String img_url;
 
             public String getId() {
                 return id;
@@ -365,6 +366,14 @@ public class PNoteDetailBean {
             public void setWidth(String width) {
                 this.width = width;
             }
+
+            public String getImg_url() {
+                return img_url;
+            }
+
+            public void setImg_url(String img_url) {
+                this.img_url = img_url;
+            }
         }
     }
 
@@ -372,7 +381,8 @@ public class PNoteDetailBean {
         /**
          * nid : 3
          * uid : 4
-         * content : 测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记
+         * content :
+         * 测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记测试发布我的笔记
          * click_num : 299
          * type : 2
          * avatar : /Public/Uploads/avatar/2019-04-02/5ca3479793176.jpg
@@ -394,7 +404,7 @@ public class PNoteDetailBean {
         private String click_num;
         private String type;
         private String avatar;
-//        private String user_name;
+        //        private String user_name;
         private String nick_name;
         private String praise_count;
         private String album_url;
@@ -403,7 +413,27 @@ public class PNoteDetailBean {
         private String is_focus;
         private String is_kol;
         private String vid;
+        private String note_type;
         private String is_like;
+
+        public float getWidth() {
+            return width;
+        }
+
+        public void setWidth(float width) {
+            this.width = width;
+        }
+
+        public float getHeight() {
+            return height;
+        }
+
+        public void setHeight(float height) {
+            this.height = height;
+        }
+
+        private float width;
+        private float height;
 
         public String getNid() {
             return nid;
@@ -531,6 +561,14 @@ public class PNoteDetailBean {
 
         public void setIs_like(String is_like) {
             this.is_like = is_like;
+        }
+
+        public String getNote_type() {
+            return note_type;
+        }
+
+        public void setNote_type(String note_type) {
+            this.note_type = note_type;
         }
     }
 }

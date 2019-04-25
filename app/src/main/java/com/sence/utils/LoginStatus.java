@@ -16,7 +16,7 @@ public class LoginStatus {
 
     public static String getUid() {
         String uid = SharedPreferencesUtil.getInstance().getString("uid");
-        return uid == null ? "1" : uid;
+        return uid == null ? "" : uid;
     }
 
     public static boolean isVip() {

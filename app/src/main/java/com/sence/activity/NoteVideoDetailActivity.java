@@ -7,18 +7,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.*;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
+import cn.jzvd.Jzvd;
+import cn.jzvd.JzvdStd;
+import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -35,12 +38,14 @@ import com.sence.bean.response.PNoteDetailBean;
 import com.sence.fragment.tag.ShowTagFragment;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
+import com.sence.net.Urls;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.net.manager.MessageApiCallBack;
 import com.sence.utils.GlideUtils;
 import com.sence.utils.LoginStatus;
 import com.sence.utils.NavigationBarUtil;
 import com.sence.utils.StatusBarUtil;
+import com.sence.view.GridSpacingItemDecoration;
 import com.sence.view.GridStagSpacingItemDecoration;
 import com.sence.view.NiceImageView;
 
@@ -51,9 +56,9 @@ import static com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_
 /**
  * 笔记详情
  */
-public class NoteDetailActivity extends BaseActivity implements View.OnClickListener {
-    @BindView(R.id.view_pager)
-    ViewPager noteBanner;
+public class NoteVideoDetailActivity extends BaseActivity implements View.OnClickListener {
+    @BindView(R.id.note_video)
+    JzvdStd noteVideo;
     @BindView(R.id.tool_view)
     View toolView;
     @BindView(R.id.tool_back)
@@ -99,11 +104,9 @@ public class NoteDetailActivity extends BaseActivity implements View.OnClickList
     private boolean isShowKeyBorad = false;
     private String pid;
 
-    private ViewShowTagPagerAdapter tagAdapter;
-
     @Override
     public int onActLayout() {
-        return R.layout.activity_note_detail;
+        return R.layout.activity_note_video_detail;
     }
 
     private void initDataView(PNoteDetailBean o) {
@@ -119,7 +122,7 @@ public class NoteDetailActivity extends BaseActivity implements View.OnClickList
         noteLook.setText(o.getNote_info().getClick_num());
         noteContent.setText(o.getNote_info().getContent());
 
-        initViewPager(o.getNote_info().getAlbums());
+        initVideo(o.getNote_info().getAlbums().get(0));
     }
 
     public void initView() {
@@ -133,7 +136,7 @@ public class NoteDetailActivity extends BaseActivity implements View.OnClickList
         height = this.getIntent().getFloatExtra("height", 0);
         initAppBarLayout();
         CollapsingToolbarLayout.LayoutParams layoutParams =
-                (CollapsingToolbarLayout.LayoutParams) noteBanner.getLayoutParams();
+                (CollapsingToolbarLayout.LayoutParams) noteVideo.getLayoutParams();
         layoutParams.height = ConvertUtils.dp2px(height);
         StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL);
@@ -157,42 +160,21 @@ public class NoteDetailActivity extends BaseActivity implements View.OnClickList
                 support(adapter.getData().get(position).getNid(), true, position);
             }
         });
-
         noteCommentRelease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showCommentDialog(false);
             }
         });
-        noteBanner.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
     }
 
 
-    private void initViewPager(List<PNoteDetailBean.NoteInfoBean.AlbumsBean> albums) {
-        tagAdapter = new ViewShowTagPagerAdapter(getSupportFragmentManager());
-        for (int i = 0; i < albums.size(); i++) {
-            tagAdapter.addFragment(ShowTagFragment.newInstance(albums.get(i).getAlbum_url(), i,
-                    albums.get(i).getTags()),
-                    i + "");
-        }
-        noteBanner.setAdapter(tagAdapter);
-        noteBanner.setOffscreenPageLimit(albums.size());
+    private void initVideo(PNoteDetailBean.NoteInfoBean.AlbumsBean albumsBean) {
+        noteVideo.setUp(Urls.base_url + albumsBean.getAlbum_url()
+                , "", JzvdStd.SCREEN_NORMAL);
+        GlideUtils.getInstance().loadNormal(albumsBean.getImg_url(), noteVideo.thumbImageView);
     }
+
 
     public void initData() {
         HttpManager.getInstance().PlayNetCode(HttpCode.NOTE_DETAIL,
@@ -230,7 +212,7 @@ public class NoteDetailActivity extends BaseActivity implements View.OnClickList
         toolBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityCompat.finishAfterTransition(NoteDetailActivity.this);
+                ActivityCompat.finishAfterTransition(NoteVideoDetailActivity.this);
             }
         });
     }

@@ -9,40 +9,28 @@ import java.util.List;
  */
 public class PUserVipBean {
 
-
     /**
+     * money : 6891
+     * goods : [{"id":"27","name":"臭臭的香水打发士大夫的绯闻多多沟通的地方地方的","img":"/Public/Uploads/Goods/2019-04-23/5cbe8d9f8ec6c
+     * .png","price":"560","subhead":"","saveMoney":"39"},{"id":"26","name":"美美的女装的说法多发点发大水发射点法大师傅打发士",
+     * "img":"/Public/Uploads/Goods/2019-04-23/5cbe8dbdf3ba0.png","price":"833","subhead":"","saveMoney":"67"},{"id
+     * ":"25","name":"好好学习的健身器基于哦黄金矿工花椒粉胡椒粉和南非和甲方","img":"/Public/Uploads/Goods/2019-04-23/5cbe8c9063292.jpg",
+     * "price":"13000","subhead":"","saveMoney":"1000"},{"id":"24","name":"天天向上的红酒 215g 刷了卡给快递的结果打开两个",
+     * "img":"/Public/Uploads/Goods/2019-04-23/5cbe8c053be23.png","price":"7033","subhead":"0","saveMoney":"-5953"},{
+     * "id":"23","name":"2019最新款耳机机构行家有同居体育等法规和小伙伴幸福感","img":"/Public/Uploads/Goods/2019-04-23/5cbe8b5ddb8db.png",
+     * "price":"630","subhead":"","saveMoney":"20"}]
+     * service : [{"id":"115","img":"/Public/Uploads/Service/2019-04-24/5cc0357143600.png","star":"0","tag":["快捷洗车",
+     * "高品质保养"],"content":"好好学习 天天向上","title":"国贸洗车","num":"12"}]
      * isMember : 0
-     * carousel : 大猫吃小鱼 刚刚加入了Sence会员
-     * money : 2365
-     * goods : [{"id":"8","name":"一号商品","img":"Public/Uploads/Order/2019-03-26//5c99eb1fc12a5.jpg","price":"5",
-     * "saveMoney":"5"},{"id":"3","name":"12aaa01","img":"/Public/Uploads/Goods/2019-03-27/5c9ad66aa3d18.jpg",
-     * "price":"4","saveMoney":"11"},{"id":"2","name":"2号商品","img":"Public/Uploads/Order/2019-03-26//5c99eb1fc12a5
-     * .jpg","price":"5","saveMoney":"10"},{"id":"1","name":"虹越园艺家 欧洲藤本月季花苗木 龙沙宝石1.5年嫁接盆栽苗 包邮",
-     * "img":"/Public/Uploads/Goods/2019-03-27/5c9afaf63f8b8.jpg","price":"40","saveMoney":"10"}]
-     * service : [{"id":"1","img":"","num":"33","tag":["完好旅游","无知的"],"star":"2"}]
+     * carousel : ["Joe 刚刚加入了Sence会员","lzy 刚刚加入了Sence会员","相濡以沫ふ 刚刚加入了Sence会员","请多指教 刚刚加入了Sence会员","o～糖菓菓o_O
+     * 刚刚加入了Sence会员"]
      */
 
-    private String isMember;
-    private String carousel;
     private String money;
+    private String isMember;
     private List<GoodsBean> goods;
     private List<ServiceBean> service;
-
-    public String getIsMember() {
-        return isMember;
-    }
-
-    public void setIsMember(String isMember) {
-        this.isMember = isMember;
-    }
-
-    public String getCarousel() {
-        return carousel;
-    }
-
-    public void setCarousel(String carousel) {
-        this.carousel = carousel;
-    }
+    private List<String> carousel;
 
     public String getMoney() {
         return money;
@@ -50,6 +38,14 @@ public class PUserVipBean {
 
     public void setMoney(String money) {
         this.money = money;
+    }
+
+    public String getIsMember() {
+        return isMember;
+    }
+
+    public void setIsMember(String isMember) {
+        this.isMember = isMember;
     }
 
     public List<GoodsBean> getGoods() {
@@ -68,19 +64,29 @@ public class PUserVipBean {
         this.service = service;
     }
 
+    public List<String> getCarousel() {
+        return carousel;
+    }
+
+    public void setCarousel(List<String> carousel) {
+        this.carousel = carousel;
+    }
+
     public static class GoodsBean {
         /**
-         * id : 8
-         * name : 一号商品
-         * img : Public/Uploads/Order/2019-03-26//5c99eb1fc12a5.jpg
-         * price : 5
-         * saveMoney : 5
+         * id : 27
+         * name : 臭臭的香水打发士大夫的绯闻多多沟通的地方地方的
+         * img : /Public/Uploads/Goods/2019-04-23/5cbe8d9f8ec6c.png
+         * price : 560
+         * subhead :
+         * saveMoney : 39
          */
 
         private String id;
         private String name;
         private String img;
         private String price;
+        private String subhead;
         private String saveMoney;
 
         public String getId() {
@@ -115,6 +121,14 @@ public class PUserVipBean {
             this.price = price;
         }
 
+        public String getSubhead() {
+            return subhead;
+        }
+
+        public void setSubhead(String subhead) {
+            this.subhead = subhead;
+        }
+
         public String getSaveMoney() {
             return saveMoney;
         }
@@ -126,17 +140,21 @@ public class PUserVipBean {
 
     public static class ServiceBean {
         /**
-         * id : 1
-         * img :
-         * num : 33
-         * tag : ["完好旅游","无知的"]
-         * star : 2
+         * id : 115
+         * img : /Public/Uploads/Service/2019-04-24/5cc0357143600.png
+         * star : 0
+         * tag : ["快捷洗车","高品质保养"]
+         * content : 好好学习 天天向上
+         * title : 国贸洗车
+         * num : 12
          */
 
         private String id;
         private String img;
-        private String num;
         private String star;
+        private String content;
+        private String title;
+        private String num;
         private List<String> tag;
 
         public String getId() {
@@ -155,20 +173,36 @@ public class PUserVipBean {
             this.img = img;
         }
 
-        public String getNum() {
-            return num;
-        }
-
-        public void setNum(String num) {
-            this.num = num;
-        }
-
         public String getStar() {
             return star;
         }
 
         public void setStar(String star) {
             this.star = star;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getNum() {
+            return num;
+        }
+
+        public void setNum(String num) {
+            this.num = num;
         }
 
         public List<String> getTag() {

@@ -11,6 +11,25 @@ public class RNoteAddVideoBean extends BaseImageRequestBean {
     private String uid;
     private String type;
 
+    public String getWidth() {
+        return width;
+    }
+
+    public void setWidth(String width) {
+        this.width = width;
+    }
+
+    public String getHeight() {
+        return height;
+    }
+
+    public void setHeight(String height) {
+        this.height = height;
+    }
+
+    private String width;
+    private String height;
+
     public String getUid() {
         return uid;
     }
@@ -37,10 +56,11 @@ public class RNoteAddVideoBean extends BaseImageRequestBean {
 
     private String content;
 
-    public RNoteAddVideoBean(String uid, String type, String content) {
+    public RNoteAddVideoBean(String uid, String type, String content, String width, String height) {
         this.uid = uid;
         this.type = type;
         this.content = content;
+        this.width = width;
+        this.height = height;
     }
-
 }

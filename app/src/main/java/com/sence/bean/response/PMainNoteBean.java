@@ -34,6 +34,9 @@ public class PMainNoteBean {
     private String praise_count;
     private String message_count;
     private String is_like;
+    private float width;
+    private float height;
+    private String note_type;
 
     public String getNid() {
         return nid;
@@ -129,5 +132,29 @@ public class PMainNoteBean {
 
     public void setIs_like(String is_like) {
         this.is_like = is_like;
+    }
+
+    public float getWidth() {
+        return width;
+    }
+
+    public void setWidth(float width) {
+        this.width = width;
+    }
+
+    public float getHeight() {
+        return height;
+    }
+
+    public void setHeight(float height) {
+        this.height = height;
+    }
+
+    public String getNote_type() {
+        return note_type;
+    }
+
+    public void setNote_type(String note_type) {
+        this.note_type = note_type;
     }
 }

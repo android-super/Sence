@@ -1,7 +1,9 @@
 package com.sence.adapter;
 
+import android.graphics.Paint;
 import android.widget.ImageView;
 
+import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sence.R;
@@ -13,7 +15,8 @@ import com.sence.utils.GlideUtils;
  * package_name is com.sence.adapter
  * 描述:SenceGit
  */
-public class ContentGoodAdapter extends BaseQuickAdapter<PContentDetailBean.NoteInfoBean.GoodsInfoBean, BaseViewHolder> {
+public class ContentGoodAdapter extends BaseQuickAdapter<PContentDetailBean.NoteInfoBean.GoodsInfoBean,
+        BaseViewHolder> {
 
     public ContentGoodAdapter(int layoutResId) {
         super(layoutResId);
@@ -21,9 +24,14 @@ public class ContentGoodAdapter extends BaseQuickAdapter<PContentDetailBean.Note
 
     @Override
     protected void convert(BaseViewHolder helper, PContentDetailBean.NoteInfoBean.GoodsInfoBean item) {
-        GlideUtils.getInstance().loadHead( item.getImg(),(ImageView) helper.getView(R.id.item_img));
-        helper.setText(R.id.item_content,item.getName());
-        helper.setText(R.id.item_price,item.getVprice());
-        helper.setText(R.id.item_pre_price,item.getPrice());
+        GlideUtils.getInstance().loadHead(item.getImg(), (ImageView) helper.getView(R.id.item_img));
+        helper.setText(R.id.item_content, item.getName());
+        helper.setText(R.id.item_price, item.getVprice());
+        helper.setText(R.id.item_pre_price, item.getPrice());
+        TextView item_pre_price_describe = helper.getView(R.id.item_pre_price_describe);
+        TextView item_pre_price = helper.getView(R.id.item_pre_price);
+        item_pre_price_describe.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+        item_pre_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+        helper.addOnClickListener(R.id.item_bus);
     }
 }

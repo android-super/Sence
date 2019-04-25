@@ -37,6 +37,7 @@ public class PUserInfoBean {
     private String note_num;
     private String gardenRed;
     private String msg_num;
+    private String save_money;
     private OrderInfoBean order_info;
 
     public String getUpuid() {
@@ -77,6 +78,14 @@ public class PUserInfoBean {
 
     public void setMsg_num(String msg_num) {
         this.msg_num = msg_num;
+    }
+
+    public String getSave_money() {
+        return save_money;
+    }
+
+    public void setSave_money(String save_money) {
+        this.save_money = save_money;
     }
 
     public static class OrderInfoBean {

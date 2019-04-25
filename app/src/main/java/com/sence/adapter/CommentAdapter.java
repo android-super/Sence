@@ -57,10 +57,6 @@ public class CommentAdapter extends BaseQuickAdapter<PCommentBean, BaseViewHolde
             item_replay_content.setVisibility(View.GONE);
             item_content.setText(item.getContent());
         }
-
-//        item_content.setSpecifiedTextsColor(item_content.getText().toString(), item.getReply().getNick_name(),
-// Color.parseColor(
-//                "#507daf"));
         helper.addOnClickListener(R.id.item_support);
     }
 }

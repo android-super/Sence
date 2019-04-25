@@ -66,7 +66,7 @@
             android:textSize="15sp"
             android:textColor="#999999"
             android:background="@android:color/transparent"
-            android:hint="说说你的穿搭感受，会对他人有很大的帮助哦~"
+            android:hint="分享你的品质生活"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 </LinearLayout>

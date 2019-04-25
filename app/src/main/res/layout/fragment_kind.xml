@@ -63,8 +63,12 @@
         <androidx.recyclerview.widget.RecyclerView
                 android:background="@color/white"
                 android:id="@+id/recycle_view_horizontal"
-                android:layout_width="wrap_content"
-                android:minWidth="90dp"
+                android:layout_width="90dp"
+                android:layout_height="match_parent"/>
+
+        <View
+                android:layout_width="1dp"
+                android:background="#f6f6f6"
                 android:layout_height="match_parent"/>
 
         <com.scwang.smartrefresh.layout.SmartRefreshLayout

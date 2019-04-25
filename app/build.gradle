@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.sence"
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -27,6 +27,12 @@ android {
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']
+        }
+    }
+    android {
+        compileOptions {
+            sourceCompatibility 1.8
+            targetCompatibility 1.8
         }
     }
 }
@@ -94,4 +100,5 @@ dependencies {
     implementation files('libs/org.apache.http.legacy.jar')
     implementation files('libs/jcore-android-1.2.7.jar')
     implementation files('libs/jpush-android-3.2.0.jar')
+    implementation 'cn.jzvd:jiaozivideoplayer:7.0_preview'
 }

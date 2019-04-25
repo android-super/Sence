@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import cn.jpush.android.api.JPushInterface;
+import com.blankj.utilcode.util.CrashUtils;
 import com.blankj.utilcode.util.Utils;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
@@ -35,6 +36,7 @@ public class BaseApp extends Application {
         initUM();
         initSharedPreference();
         initJPush();
+        CrashUtils.init();
     }
 
     @Override

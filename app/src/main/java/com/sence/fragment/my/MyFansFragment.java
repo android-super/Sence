@@ -86,7 +86,8 @@ public class MyFansFragment extends Fragment {
                 new RFansBean(LoginStatus.getUid(), keyword, page + "")).request(new ApiCallBack<List<PFansBean>>() {
             @Override
             public void onFinish() {
-
+                smartRefreshLayout.finishRefresh();
+                smartRefreshLayout.finishLoadMore();
             }
 
             @Override

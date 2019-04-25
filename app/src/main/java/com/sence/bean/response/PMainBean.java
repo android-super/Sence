@@ -52,6 +52,7 @@ public class PMainBean {
         private String nid;
         private String uid;
         private String content;
+        private String note_type;
         private String click_num;
         private String type;
         private String add_time;
@@ -238,6 +239,14 @@ public class PMainBean {
 
         public void setTitle(String title) {
             this.title = title;
+        }
+
+        public String getNote_type() {
+            return note_type;
+        }
+
+        public void setNote_type(String note_type) {
+            this.note_type = note_type;
         }
     }
 

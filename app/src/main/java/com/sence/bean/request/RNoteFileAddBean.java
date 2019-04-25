@@ -31,6 +31,7 @@ public class RNoteFileAddBean extends BaseFileRequestBean {
     }
 
     private File video;
+    private File video_img;
     private boolean is_video;
 
     public RNoteFileAddBean(List<File> files, boolean is_video) {
@@ -40,9 +41,10 @@ public class RNoteFileAddBean extends BaseFileRequestBean {
 
     private List<File> files;
 
-    public RNoteFileAddBean(File video, boolean is_video) {
+    public RNoteFileAddBean(File video, File video_img, boolean is_video) {
         this.video = video;
         this.is_video = is_video;
+        this.video_img = video_img;
     }
 
 
@@ -51,11 +53,20 @@ public class RNoteFileAddBean extends BaseFileRequestBean {
         Map<String, File> map = new HashMap<>();
         if (is_video) {
             map.put("video_url", getVideo());
+            map.put("img_url", getVideo_img());
         } else {
             for (int i = 0; i < files.size(); i++) {
                 map.put("img_url_" + (i + 1), files.get(i));
             }
         }
         return map;
+    }
+
+    public File getVideo_img() {
+        return video_img;
+    }
+
+    public void setVideo_img(File video_img) {
+        this.video_img = video_img;
     }
 }
