@@ -192,7 +192,9 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
                     return;
                 } else if ("3".equals(list.get(position).getStatus())) {
                     ConfirmTakeGood(position);
-                } else {
+                } else if ("1".equals(list.get(position).getStatus())) {
+                    listener.pay(position);
+                } else{
                     Intent intent = new Intent(context, OrderDetailsActivity.class);
                     intent.putExtra("id", list.get(position).getId());
                     intent.putExtra("type", list.get(position).getStatus());
@@ -301,6 +303,7 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
 
     public interface DeleteOrderListener {
         void delete(int i);
+        void pay(int i);
     }
 
 }

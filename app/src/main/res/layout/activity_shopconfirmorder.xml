@@ -179,6 +179,7 @@
                         android:layout_marginLeft="@dimen/dp_10"
                         android:id="@+id/tv_shopname_confirmorder"
                         android:maxLines="2"
+                        android:paddingRight="14dp"
                         android:layout_marginTop="16dp"
                         android:lineSpacingExtra="5dp"
                         android:ellipsize="end"

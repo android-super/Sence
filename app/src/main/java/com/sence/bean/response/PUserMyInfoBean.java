@@ -19,6 +19,15 @@ public class PUserMyInfoBean {
      * is_have_service : 1
      */
     private String inviteCode;
+    private String avatarUrl;
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
 
     public String getInviteCode() {
         return inviteCode;

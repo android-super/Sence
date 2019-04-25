@@ -43,7 +43,12 @@ public class UserDetailAdapter extends RecyclerView.Adapter<UserDetailAdapter.Vi
         GlideUtils.getInstance().loadHead( list.get(position).getImg(),holder.mImg);
         holder.mName.setText(list.get(position).getNote());
         holder.mTime.setText(list.get(position).getAdd_time());
-        holder.mPrice.setText(list.get(position).getNum());
+        if(list.get(position).getNum().contains("-")){
+            holder.mPrice.setText(list.get(position).getNum());
+        }else{
+            holder.mPrice.setText("+"+list.get(position).getNum());
+        }
+
     }
 
     @Override

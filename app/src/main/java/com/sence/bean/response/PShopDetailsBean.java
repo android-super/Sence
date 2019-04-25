@@ -6,6 +6,10 @@ public class PShopDetailsBean {
 
 
     /**
+     * imgUrl : http://192.168.1.10:8085//Public/Uploads/Goods/2019-03-27/5c9afaf63f8b8.jpg
+     * favourable : 1
+     * isMember :
+     * id : 1
      * img : /Public/Uploads/Goods/2019-03-27/5c9afaf63f8b8.jpg
      * postage : 6
      * imgs : ["/Public/Uploads/see_shop/4/5bfe2d5ed0b1f.jpg","/Public/Uploads/see_shop/4/5bfe2d5ed0f34.jpg","/Public/Uploads/see_shop/4/5bfe2d5ed12aa.jpg","/Public/Uploads/see_shop/4/5bfe2d5ed1548.jpg"]
@@ -25,16 +29,11 @@ public class PShopDetailsBean {
      * commentRate : 97.7
      * comment : [{"nickname":"我是昵称","avatar":"我应该是头像地址","img":"我是评价的图片地址","content":"我是评价的内容"},{"nickname":"我是昵称2","avatar":"我应该是头像地址2","img":"我是评价的图片地址2","content":"我是评价的内容2"},{"nickname":"我是昵称3","avatar":"我应该是头像地址3","img":"我是评价的图片地址3","content":"我是评价的内容3"}]
      */
+
+    private String imgUrl;
+    private String favourable;
+    private String isMember;
     private String id;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     private String img;
     private String postage;
     private String name;
@@ -51,9 +50,24 @@ public class PShopDetailsBean {
     private String customAvatar;
     private String commentNum;
     private String commentRate;
-    private String isMember;
     private List<String> imgs;
     private List<CommentBean> comment;
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public String getFavourable() {
+        return favourable;
+    }
+
+    public void setFavourable(String favourable) {
+        this.favourable = favourable;
+    }
 
     public String getIsMember() {
         return isMember;
@@ -61,6 +75,14 @@ public class PShopDetailsBean {
 
     public void setIsMember(String isMember) {
         this.isMember = isMember;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getImg() {

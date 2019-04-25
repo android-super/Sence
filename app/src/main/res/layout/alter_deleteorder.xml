@@ -3,6 +3,7 @@
               android:orientation="vertical"
               android:layout_width="270dp"
               android:gravity="center_horizontal"
+              android:layout_gravity="center"
               android:background="@drawable/shape_deleteorder_bg"
               android:layout_height="wrap_content">
         <TextView

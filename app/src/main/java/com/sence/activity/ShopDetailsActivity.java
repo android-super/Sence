@@ -33,12 +33,14 @@ import com.orhanobut.logger.Logger;
 import com.sence.LoginActivity;
 import com.sence.MainActivity;
 import com.sence.R;
+import com.sence.activity.chat.ui.ChatMsgActivity;
 import com.sence.activity.web.WebConstans;
 import com.sence.adapter.ShopDetailsCommendAdapter;
 import com.sence.adapter.ShopDetailsImgAdapter;
 import com.sence.base.BaseActivity;
 import com.sence.bean.request.RBusAddBean;
 import com.sence.bean.request.RShopDetailsBean;
+import com.sence.bean.request.RUidBean;
 import com.sence.bean.response.PShopDetailsBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
@@ -387,6 +389,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
             public void onDismiss() {
                 //popupwindow消失时使背景不透明
                 bgAlpha(1f);
+                isAddShop=false;
             }
         });
         tvPrice = contentView.findViewById(R.id.tv_buyshop_price);
@@ -435,10 +438,9 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                     startActivity(new Intent(ShopDetailsActivity.this, LoginActivity.class));
                     return;
                 }
-
-                isAddShop = true;
                 bgAlpha(0.5f);
                 popupWindow.showAtLocation(contentView, Gravity.BOTTOM, 0, 0);
+                isAddShop = true;
                 break;
             case R.id.tv_buy_shopdetails:
                 if (!LoginStatus.isLogin() || LoginStatus.getUid().isEmpty()) {
@@ -454,7 +456,12 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                     startActivity(new Intent(ShopDetailsActivity.this, LoginActivity.class));
                     return;
                 }
-
+                Intent intentService = new Intent(ShopDetailsActivity.this, ChatMsgActivity.class);
+                intentService.putExtra("u_to", bean.getCustomId());
+                intentService.putExtra("chat_id", "");
+                intentService.putExtra("name", bean.getCustomName());
+                intentService.putExtra("u_avatar", bean.getCustomAvatar());
+                startActivity(intentService);
                 break;
             case R.id.ll_shop_shopdetails:
                 if (!LoginStatus.isLogin() || LoginStatus.getUid().isEmpty()) {
@@ -496,7 +503,28 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
             public void onSuccess(Object o, String msg) {
                 ToastUtils.showShort("成功加入购物车");
                 num = num+Integer.parseInt(s);
+                tvShopnumShopdetails.setVisibility(View.VISIBLE);
                 tvShopnumShopdetails.setText(num + "");
+                popupWindow.dismiss();
+            }
+        });
+    }
+    private static void addWater() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.SHARE_ADD_WATER, new RUidBean( LoginStatus.getUid())).request(new ApiCallBack<String>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(String o, String msg) {
+                Logger.e("msg====="+msg);
+                ToastUtils.showShort(msg);
             }
         });
     }
@@ -515,11 +543,12 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                 mNum.setText(numShop + "");
                 break;
             case R.id.bt_buyshop_confirm:
-                popupWindow.dismiss();
+
                 if(isAddShop){
                     addShop(mNum.getText().toString());
                     return;
                 }
+                popupWindow.dismiss();
                 Intent intentBuy = new Intent(ShopDetailsActivity.this, ShopConfirmOrderActivity.class);
                 intentBuy.putExtra("id", bean.getId());
                 intentBuy.putExtra("num", mNum.getText().toString());
@@ -533,15 +562,16 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                 intentBuy.putExtra("img", bean.getImg());
                 intentBuy.putExtra("username", bean.getUsername());
                 startActivity(intentBuy);
+
                 break;
             case R.id.ll_wei_share:
 
-                shareWeb(ShopDetailsActivity.this, WebConstans.SPXQ + "?id=" + LoginStatus.getUid() + "&token=" + bean.getId(), bean.getName(), "女神周边，精品生活", SHARE_MEDIA.WEIXIN, bean.getImg());
+                shareWeb(ShopDetailsActivity.this, WebConstans.SPXQ + "?id=" + LoginStatus.getUid() + "&token=" + bean.getId(), bean.getName(), "女神周边，精品生活", SHARE_MEDIA.WEIXIN, bean.getImgUrl());
                 mBottomSheetDialog.dismiss();
                 break;
             case R.id.ll_friend_share:
 
-                shareWeb(ShopDetailsActivity.this, WebConstans.SPXQ + "?id=" + LoginStatus.getUid() + "&token=" + bean.getId(), bean.getName(), "女神周边，精品生活", SHARE_MEDIA.WEIXIN_CIRCLE, bean.getImg());
+                shareWeb(ShopDetailsActivity.this, WebConstans.SPXQ + "?id=" + LoginStatus.getUid() + "&token=" + bean.getId(), bean.getName(), "女神周边，精品生活", SHARE_MEDIA.WEIXIN_CIRCLE, bean.getImgUrl());
                 mBottomSheetDialog.dismiss();
                 break;
             case R.id.tv_cancel_share:
@@ -600,6 +630,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                         activity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                addWater();
                                 Toast.makeText(activity, " 分享成功 ", Toast.LENGTH_SHORT).show();
                                 Log.e(TAG, "onStart分享成功的平台: " + share_media);
                             }

@@ -370,7 +370,15 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
     @Override
     public void initData() {
         isCheckAddress = LoginStatus.getIsCheckShopAddress();
+        boolean isNullAddress = LoginStatus.getIsNullShopAddress();
+        if(isNullAddress){
+            SharedPreferencesUtil.getInstance().putBoolean("isnull_shopaddress", true);
+            rlAddaddressConfirmorder.setVisibility(View.VISIBLE);
+            rlAddressConfirmorder.setVisibility(View.GONE);
+        }
         if(isCheckAddress){
+            rlAddaddressConfirmorder.setVisibility(View.GONE);
+            rlAddressConfirmorder.setVisibility(View.VISIBLE);
             address = LoginStatus.getAddress();
             nameAddress = LoginStatus.getNameAddress();
             phoneAddress = LoginStatus.getPhoneAddress();

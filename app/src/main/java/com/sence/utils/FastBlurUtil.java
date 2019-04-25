@@ -60,7 +60,7 @@ public class FastBlurUtil {
             out.flush();
             byte[] data = dataStream.toByteArray();
             originBitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-            if(originBitmap.getWidth()==0){
+            if(originBitmap==null){
                 return null;
             }else {
 

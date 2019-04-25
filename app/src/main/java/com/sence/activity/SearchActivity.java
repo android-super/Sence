@@ -126,8 +126,10 @@ public class SearchActivity extends BaseActivity {
     public void initData() {
         String histroy = LoginStatus.getHistroy();
         if(TextUtils.isEmpty(histroy)){
+            tvClearSearch.setVisibility(View.GONE);
             flFlowSearch.clear();
         }else{
+            tvClearSearch.setVisibility(View.VISIBLE);
             String[] split = histroy.split(",");
             flFlowSearch.addList(split);
         }

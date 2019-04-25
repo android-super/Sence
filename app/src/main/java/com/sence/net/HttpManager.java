@@ -166,6 +166,9 @@ public class HttpManager<P> {
             case GET_INTRODUCER:
                 observable = httpService.GetIntreoducer(requestBean.getMap());
                 break;
+            case SHARE_ADD_WATER:
+                observable = httpService.ShareAddWater(requestBean.getMap());
+                break;
             case RACHEL:
                 observable = httpService.Rachel(requestBean.getMap());
                 break;

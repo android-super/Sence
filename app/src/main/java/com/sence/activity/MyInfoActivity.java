@@ -39,6 +39,7 @@ import com.sence.fragment.UserNoteFragment;
 import com.sence.fragment.UserRecommendFragment;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
+import com.sence.net.Urls;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.FastBlurUtil;
 import com.sence.utils.GlideUtils;
@@ -251,6 +252,9 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 scaleRatio = 10;
                 //  下面的这个方法必须在子线程中执行
                 Bitmap blurBitmap = FastBlurUtil.GetUrlBitmap(url, scaleRatio);
+                if(blurBitmap==null){
+                    return;
+                }
                 Message message = new Message();
                 message.what = 1;
                 message.obj = blurBitmap;
@@ -331,7 +335,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 mSigner.setText(o.getAutograph());
                 GlideUtils.getInstance().loadHead(o.getAvatar(), mImageView);
 
-//                dim(Urls.base_url + o.getAvatar());
+                dim(Urls.base_url + o.getAvatar());
                 if ("0".equals(o.getIs_have_service())) {
                     final Fragment[] fragments = {recommendFragment, noteFragment};
                     String[] listTitle = {"推荐", "笔记"};
@@ -349,11 +353,12 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 finish();
                 break;
             case R.id.ll_wei_share:
-                shareWeb(MyInfoActivity.this, WebConstans.GRZL+"?token=" + LoginStatus.getUid() + "&to_uid=" + uid, bean.getUser_name() + bean.getNick_name() + "的精彩生活", "女神的日常", SHARE_MEDIA.WEIXIN, bean.getAvatar());
+                shareWeb(MyInfoActivity.this, WebConstans.GRZL+"?token=" + LoginStatus.getUid() + "&to_uid=" + uid, bean.getUser_name() + bean.getNick_name() + "的精彩生活", "女神的日常", SHARE_MEDIA.WEIXIN, bean.getAvatarUrl());
+                Log.i("aaaaa", bean.getAvatarUrl()+"");
                 mBottomSheetDialog.dismiss();
                 break;
             case R.id.ll_friend_share:
-                shareWeb(MyInfoActivity.this, WebConstans.GRZL+"?token="  + LoginStatus.getUid() + "&to_uid=" + uid, bean.getUser_name() + bean.getNick_name() + "的精彩生活", "女神的日常", SHARE_MEDIA.WEIXIN_CIRCLE, bean.getAvatar());
+                shareWeb(MyInfoActivity.this, WebConstans.GRZL+"?token="  + LoginStatus.getUid() + "&to_uid=" + uid, bean.getUser_name() + bean.getNick_name() + "的精彩生活", "女神的日常", SHARE_MEDIA.WEIXIN_CIRCLE, bean.getAvatarUrl());
                 mBottomSheetDialog.dismiss();
                 break;
             case R.id.tv_cancel_share:
@@ -511,8 +516,8 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
      * 上下文activity、分享的链接、标题、内容、类型
      * 若是要分享视频、音乐可看官方文档
      */
-    public static void shareWeb(final Activity activity, String WebUrl, String title, String description, SHARE_MEDIA
-            platform, String url) {
+    public static void shareWeb(final Activity activity, String WebUrl, String title, String description, SHARE_MEDIA platform, String url) {
+        Log.i("aaaaa", url+"");
         UMImage thumb = new UMImage(activity, url);
         UMWeb web = new UMWeb(WebUrl);//连接地址(注意链接开头必须包含http)
         web.setTitle(title);//标题

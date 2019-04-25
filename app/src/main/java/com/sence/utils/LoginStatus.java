@@ -105,11 +105,12 @@ public class LoginStatus {
         boolean iscleck = SharedPreferencesUtil.getInstance().getBoolean("ischeck_shopaddress");
         return iscleck;
     }
-
-    public static boolean getIsCheckOrderAddress() {
-        boolean iscleck = SharedPreferencesUtil.getInstance().getBoolean("ischeck_orderaddress");
+    public static boolean getIsNullShopAddress() {
+        boolean iscleck = SharedPreferencesUtil.getInstance().getBoolean("isnull_shopaddress");
         return iscleck;
     }
+
+
 
     public static String getToken() {
         String token = SharedPreferencesUtil.getInstance().getString("token");

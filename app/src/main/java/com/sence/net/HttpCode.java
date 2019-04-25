@@ -30,6 +30,7 @@ public enum HttpCode {
     BLACK_LIST,//拉黑列表
     RACHEL,//拉黑
     REPORT,//举报
+    SHARE_ADD_WATER,//拉分享商品后增加用户浇水次数
     KIND_GOODS_LIST,//分类下商品列表
     MESSAGE_LIST,//消息中心 - 评论、点赞列表
     BUS_GOODS,//购物车

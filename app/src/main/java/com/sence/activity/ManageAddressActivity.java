@@ -20,6 +20,7 @@ import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.LoginStatus;
+import com.sence.utils.SharedPreferencesUtil;
 import com.sence.utils.StatusBarUtil;
 
 import java.util.ArrayList;
@@ -97,6 +98,13 @@ public class ManageAddressActivity extends BaseActivity {
             public void delete(int i) {
                 list.remove(i);
                 mManageAddressAdapter.setList(list, type);
+                if(list.size()==0){
+                    if ("shop".equals(type)) {
+                        SharedPreferencesUtil.getInstance().putBoolean("isnull_shopaddress", true);
+                    } else if ("shopd".equals(type)) {
+                        SharedPreferencesUtil.getInstance().putBoolean("isnull_shopaddress", true);
+                    }
+                }
             }
         });
     }
@@ -126,6 +134,12 @@ public class ManageAddressActivity extends BaseActivity {
                 if (o.size() > 0) {
                     list = o;
                     mManageAddressAdapter.setList(o, type);
+                }else{
+                    if ("shop".equals(type)) {
+                        SharedPreferencesUtil.getInstance().putBoolean("isnull_shopaddress", true);
+                    } else if ("shopd".equals(type)) {
+                        SharedPreferencesUtil.getInstance().putBoolean("isnull_shopaddress", true);
+                    }
                 }
             }
         });

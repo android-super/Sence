@@ -40,7 +40,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="279dp"
                             android:scaleType="fitXY"
-                            android:src="@drawable/hint_img"
+                            android:src="@drawable/shape_loading_error"
                             />
 
                         <RelativeLayout

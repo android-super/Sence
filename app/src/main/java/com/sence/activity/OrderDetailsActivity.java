@@ -45,7 +45,6 @@ import com.sence.view.PubTitle;
 import com.sence.wxapi.WeiXinPayUtils;
 import com.sence.zhifubao.PayResult;
 
-import java.text.DecimalFormat;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -176,9 +175,11 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onClick(View v) {
                 View view = View.inflate(OrderDetailsActivity.this, R.layout.alter_deleteorder, null);
-                final AlertDialog alertDialog = new AlertDialog.Builder(OrderDetailsActivity.this).create();
+                final AlertDialog alertDialog = new AlertDialog.Builder(OrderDetailsActivity.this,R.style.AlertDialogStyle).create();
                 alertDialog.setView(view);
+                alertDialog.setCancelable(false);
                 alertDialog.show();
+                alertDialog.getWindow().setLayout(new DensityUtil().dip2px(270), LinearLayout.LayoutParams.WRAP_CONTENT);
                 view.findViewById(R.id.tv_cancel_deleteorder).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -262,19 +263,19 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
                     tvTaxpriceOrderdetails.setText("+￥" + o.getFee()+".00");
                 }
                 if(o.getGmoney().contains(".")){
-                    tvMoneyOrderdetails.setText("￥" + o.getNeedpay());
+                    tvMoneyOrderdetails.setText("￥" + o.getGmoney());
                 }else{
-                    tvMoneyOrderdetails.setText("￥" + o.getNeedpay()+".00");
+                    tvMoneyOrderdetails.setText("￥" + o.getGmoney()+".00");
                 }
                 if(o.getGmoney().contains(".")){
-                    tvSpriceOrderdetails.setText("￥" + o.getNeedpay());
+                    tvSpriceOrderdetails.setText("￥" + o.getGmoney());
                 }else{
-                    tvSpriceOrderdetails.setText("￥" + o.getNeedpay()+".00");
+                    tvSpriceOrderdetails.setText("￥" + o.getGmoney()+".00");
                 }
                 if(o.getGmoney().contains(".")){
-                    tvPricePay.setText("￥" + o.getNeedpay());
+                    tvPricePay.setText("￥" + o.getGmoney());
                 }else{
-                    tvPricePay.setText("￥" + o.getNeedpay()+".00");
+                    tvPricePay.setText("￥" + o.getGmoney()+".00");
                 }
             }
         });
@@ -289,7 +290,6 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
             alterDone();
         }else if("payfail".equals(LoginStatus.getPayType())){
             SharedPreferencesUtil.getInstance().putString("paytype", "");
-//            alterDone();
         }
     }
     private void alterDone() {
@@ -347,6 +347,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
             public void onSuccess(final String o, String msg) {
                 Logger.e("msg==========" + msg + o);
                 ToastUtils.showShort(msg);
+
                 finish();
             }
         });
@@ -373,30 +374,6 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
         });
     }
 
-    private void CancelOreder() {
-
-        HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_DELETE, new ROrderDetailsBean(id, LoginStatus.getUid())).request(new ApiCallBack<String>() {
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void Message(int code, String message) {
-
-            }
-
-            @Override
-            public void onSuccess(String o, String msg) {
-                Logger.e("msg==========" + msg);
-                ToastUtils.showShort("订单取消成功");
-//                    mTv.setText("取消成功");
-//                    mTv.setClickable(false);
-                tvStateOrderdetails.setText("订单已取消");
-            }
-        });
-
-    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -612,13 +589,6 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
         });
     }
 
-    public static double stringToDouble(String a) {
-        double b = Double.valueOf(a);
-        DecimalFormat df = new DecimalFormat("#.00");//此为保留1位小数，若想保留2位小数，则填写#.00  ，以此类推
-        String temp = df.format(b);
-        b = Double.valueOf(temp);
-        return b;
-    }
 
     public void doLastTime() {
         mDisposable = Observable.interval(0, 1, TimeUnit.SECONDS)
@@ -643,9 +613,4 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
                 });
     }
 
-    @OnClick(R.id.iv_map_orderdetails)
-    public void onViewClicked() {
-        Intent intent = new Intent(OrderDetailsActivity.this, MapActivity.class);
-        startActivity(intent);
-    }
 }

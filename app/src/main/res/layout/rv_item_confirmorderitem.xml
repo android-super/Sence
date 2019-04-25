@@ -22,7 +22,7 @@
         android:layout_below="@id/ll_layout_confirmorder"
         android:layout_toRightOf="@+id/iv_img_confirmorder"
         android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginRight="15dp"
+        android:paddingRight="14dp"
         android:id="@+id/tv_shopname_confirmorder"
         android:maxLines="2"
         android:layout_marginTop="16dp"

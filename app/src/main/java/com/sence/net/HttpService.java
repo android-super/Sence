@@ -145,6 +145,10 @@ public interface HttpService {
     Observable<BaseResponseBean<List<PBlackListBean>>> BlackList(@FieldMap Map<String, Object> map);//拉黑列表
 
     @FormUrlEncoded
+    @POST(Urls.SHARE_ADD_WATER)
+    Observable<BaseResponseBean<String>> ShareAddWater(@FieldMap Map<String, Object> map);//拉分享商品后增加用户浇水次数
+
+    @FormUrlEncoded
     @POST(Urls.RACHEL)
     Observable<BaseResponseBean<String>> Rachel(@FieldMap Map<String, Object> map);//拉黑
 

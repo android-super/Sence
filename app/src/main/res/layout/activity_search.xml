@@ -90,7 +90,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="10sp"
-                        android:text="清楚全部"
+                        android:text="清除全部"
                         android:layout_marginRight="15dp"
                         android:textColor="#999999"
                         android:id="@+id/tv_clear_search"

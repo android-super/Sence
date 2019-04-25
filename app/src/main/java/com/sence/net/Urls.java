@@ -8,7 +8,7 @@ package com.sence.net;
 public class Urls {
     public static boolean isTest = false;
 
-    public static final String true_ip = "";
+    public static final String true_ip = "http://sence.forhour.com";
     public static final String test_ip = "http://192.168.1.10:8085";
     public static final String IP_ = "192.168.1.10";//长连接测试
     public static final int POST_ = 6681;//端口号
@@ -25,6 +25,7 @@ public class Urls {
     public static final String PAY_WX = "/index.php/Api/Wxpay/wx_prepay";//微信支付
     public static final String START_PICTURE = "/index.php/Api/Public/getStartImg";//启动图片
     //用户
+    public static final String SHARE_ADD_WATER = "/index.php/Api/garden/addUserWateringNum";//分享商品后增加用户浇水次数
     public static final String BLACK_LIST = "/index.php/api/user/shieldList";//拉黑列表
     public static final String RACHEL = "/index.php/api/user/shield";//拉黑
     public static final String REPORT = "/index.php/api/user/report";//举报

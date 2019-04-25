@@ -171,7 +171,15 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void initData() {
         isCheckAddress = LoginStatus.getIsCheckShopAddress();
+        boolean isNullAddress = LoginStatus.getIsNullShopAddress();
+        if(isNullAddress){
+            SharedPreferencesUtil.getInstance().putBoolean("isnull_shopaddress", false);
+            rlAddaddressConfirmorder.setVisibility(View.VISIBLE);
+            rlAddressConfirmorder.setVisibility(View.GONE);
+        }
         if(isCheckAddress){
+            rlAddaddressConfirmorder.setVisibility(View.GONE);
+            rlAddressConfirmorder.setVisibility(View.VISIBLE);
             address = LoginStatus.getAddress();
             nameAddress = LoginStatus.getNameAddress();
             phoneAddress = LoginStatus.getPhoneAddress();
@@ -235,7 +243,6 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 if (isCheckAddress) {
                     mBottomSheetDialog.show();
                     createOrder();
-
                 } else {
                     ToastUtils.showShort("请先选择地址");
                 }
