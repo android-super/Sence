@@ -8,7 +8,7 @@
 
 
     <TextView
-            android:text="您还没有关注任何人"
+            android:text="你还没有关注任何人"
             android:textSize="16sp"
             android:drawableTop="@drawable/main_meiguanzhur"
             android:drawablePadding="20dp"
@@ -21,7 +21,7 @@
 
     <ImageView
             android:layout_marginTop="24dp"
-            android:layout_marginLeft="14dp"
+            android:layout_marginLeft="10dp"
             android:src="@drawable/main_nvshentuijian"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

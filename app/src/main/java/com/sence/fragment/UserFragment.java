@@ -23,6 +23,7 @@ import com.sence.activity.OpenVipPageActivity;
 import com.sence.activity.SettingActivity;
 import com.sence.activity.WebActivity;
 import com.sence.activity.web.WebConstans;
+import com.sence.activity.web.WebNotitleActivity;
 import com.sence.base.BaseMainFragment;
 import com.sence.bean.request.RUidBean;
 import com.sence.bean.response.PUserInfoBean;
@@ -290,7 +291,7 @@ public class UserFragment extends BaseMainFragment implements View.OnClickListen
                 toLogin(intent);
                 break;
             case R.id.user_flower:
-                intent = new Intent(getContext(), WebActivity.class);
+                intent = new Intent(getContext(), WebNotitleActivity.class);
                 intent.putExtra("code", WebConstans.WebCode.HY);
                 toLogin(intent);
                 break;

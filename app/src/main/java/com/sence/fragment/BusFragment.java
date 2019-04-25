@@ -151,6 +151,7 @@ public class BusFragment extends BaseMainFragment {
             public void deleteChange(int position) {
                 if (topAdapter.getData().get(position - 1).getGoods().size() == 0) {
                     topAdapter.remove(position - 1);
+                    getValue();
                 }
             }
         });
@@ -439,7 +440,7 @@ public class BusFragment extends BaseMainFragment {
 
     @Override
     public void onRefresh() {
-        initBusData();
+//        initBusData();
         initRecommendData();
     }
 }

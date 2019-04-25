@@ -160,6 +160,12 @@ public class NoteVideoDetailActivity extends BaseActivity implements View.OnClic
                 support(adapter.getData().get(position).getNid(), true, position);
             }
         });
+        noteComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCommentDialog(false);
+            }
+        });
         noteCommentRelease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

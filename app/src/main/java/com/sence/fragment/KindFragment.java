@@ -218,6 +218,6 @@ public class KindFragment extends BaseMainFragment {
 
     @Override
     public void onRefresh() {
-        initKindList();
+
     }
 }

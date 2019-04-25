@@ -30,7 +30,7 @@ public class LoginStatus {
 
     public static String getAvatar() {
         String avatar = SharedPreferencesUtil.getInstance().getString("avatar");
-        return avatar;
+        return avatar == null ? "" : avatar;
     }
 
     public static String getUpuid() {
@@ -52,7 +52,7 @@ public class LoginStatus {
 
     public static String getName() {
         String name = SharedPreferencesUtil.getInstance().getString("nick_name");
-        return name;
+        return name == null ? "" : name;
     }
 
     public static String getPayType() {
@@ -119,5 +119,10 @@ public class LoginStatus {
     public static String getToken() {
         String token = SharedPreferencesUtil.getInstance().getString("token");
         return token;
+    }
+
+    public static String getSex() {
+        String sex = SharedPreferencesUtil.getInstance().getString("sex");
+        return sex == null ? "男" : "女";
     }
 }

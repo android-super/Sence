@@ -116,7 +116,7 @@ public class SplashActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        if (disposable != null && disposable.isDisposed()) {
+        if (disposable != null && !disposable.isDisposed()) {
             disposable.dispose();
         }
         super.onDestroy();

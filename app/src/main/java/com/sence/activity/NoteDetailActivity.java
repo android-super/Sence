@@ -158,6 +158,12 @@ public class NoteDetailActivity extends BaseActivity implements View.OnClickList
             }
         });
 
+        noteComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCommentDialog(false);
+            }
+        });
         noteCommentRelease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

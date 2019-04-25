@@ -12,9 +12,10 @@
             android:layout_height="1000dp">
 
         <RelativeLayout
-                android:padding="15dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="47dp">
 
             <com.sence.view.NiceImageView
                     app:is_circle="true"
@@ -76,8 +77,8 @@
                 android:text="@string/hint_content"
                 android:textSize="13sp"
                 android:textColor="#333333"
-                android:lineSpacingExtra="10dp"
-                android:paddingBottom="25dp"
+                android:lineSpacingExtra="4dp"
+                android:paddingBottom="18dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 

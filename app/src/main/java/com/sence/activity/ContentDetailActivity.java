@@ -430,6 +430,8 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
         commentAdapter = new CommentAdapter(R.layout.rv_item_comment);
         recycle_view.setAdapter(commentAdapter);
         commentSheet.setContentView(view);
+        commentSheet.getDelegate().findViewById(com.google.android.material.R.id.design_bottom_sheet)
+                .setBackgroundColor(getResources().getColor(android.R.color.transparent));
         BottomSheetBehavior mBehavior = BottomSheetBehavior.from((View) view.getParent());
         mBehavior.setState(STATE_EXPANDED);
         commentAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -489,6 +491,8 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
         adapter.setNewData(goodsInfoBeans);
         bottom_good_num.setText(goodsInfoBeans.size() + "个商品");
         goodSheet.setContentView(view);
+        goodSheet.getDelegate().findViewById(com.google.android.material.R.id.design_bottom_sheet)
+                .setBackgroundColor(getResources().getColor(android.R.color.transparent));
         BottomSheetBehavior mBehavior = BottomSheetBehavior.from((View) view.getParent());
         mBehavior.setState(STATE_EXPANDED);
         adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {

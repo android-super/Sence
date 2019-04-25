@@ -168,9 +168,9 @@ public class CashActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         if (mDisposable != null && mDisposable.isDisposed()) {
             mDisposable.dispose();
         }
+        super.onDestroy();
     }
 }

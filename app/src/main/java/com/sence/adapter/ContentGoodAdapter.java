@@ -24,7 +24,7 @@ public class ContentGoodAdapter extends BaseQuickAdapter<PContentDetailBean.Note
 
     @Override
     protected void convert(BaseViewHolder helper, PContentDetailBean.NoteInfoBean.GoodsInfoBean item) {
-        GlideUtils.getInstance().loadHead(item.getImg(), (ImageView) helper.getView(R.id.item_img));
+        GlideUtils.getInstance().loadNormal(item.getImg(), (ImageView) helper.getView(R.id.item_img));
         helper.setText(R.id.item_content, item.getName());
         helper.setText(R.id.item_price, item.getVprice());
         helper.setText(R.id.item_pre_price, item.getPrice());

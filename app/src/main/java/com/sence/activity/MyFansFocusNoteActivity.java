@@ -3,6 +3,7 @@ package com.sence.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,6 +32,8 @@ public class MyFansFocusNoteActivity extends BaseActivity {
     LinearLayout searchLayout;
     @BindView(R.id.view_pager)
     ViewPager viewPager;
+    @BindView(R.id.back)
+    ImageView back;
     private String titles[] = {"粉丝", "关注", "笔记"};
 
     private MyFNAdapter fnAdapter;
@@ -89,5 +92,12 @@ public class MyFansFocusNoteActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
+
 }

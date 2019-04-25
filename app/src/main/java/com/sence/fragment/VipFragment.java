@@ -110,7 +110,7 @@ public class VipFragment extends BaseMainFragment implements View.OnClickListene
         }
     }
 
-    private void initFirstView(){
+    private void initFirstView() {
         GlideUtils.getInstance().loadHead(LoginStatus.getAvatar(), vip_head);
         vip_name.setText("请登录");
     }
@@ -202,9 +202,11 @@ public class VipFragment extends BaseMainFragment implements View.OnClickListene
                 if (o.getIsMember().equals("0")) {
                     vip_no_layout.setVisibility(View.VISIBLE);
                     vip_yes_layout.setVisibility(View.GONE);
+                    vip_pass.setBackgroundResource(R.drawable.vip_kaitong);
                 } else {
                     vip_no_layout.setVisibility(View.GONE);
                     vip_yes_layout.setVisibility(View.VISIBLE);
+                    vip_pass.setBackgroundResource(R.drawable.vip_huiy);
                 }
                 save_money = o.getMoney();
 //                vip_no_content.setText(o.getCarousel());

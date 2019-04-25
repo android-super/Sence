@@ -143,10 +143,13 @@ public class FocusFragment extends Fragment {
         empty_view = LayoutInflater.from(getActivity()).inflate(R.layout.empty_main_focus, null);
         adapter.setEmptyView(empty_view);
         empty_recycle = empty_view.findViewById(R.id.recycle_view);
-        empty_recycle.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        recommendFocusAdapter = new MainRecommendFocusAdapter(R.layout.rv_item_main_focus);
+        empty_recycle.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        recommendFocusAdapter = new MainRecommendFocusAdapter(R.layout.rv_item_note);
+        GridStagSpacingItemDecoration gridSpacingItemDecoration = new GridStagSpacingItemDecoration(2,
+                ConvertUtils.dp2px(10)
+        );
+        empty_recycle.addItemDecoration(gridSpacingItemDecoration);
         empty_recycle.setAdapter(recommendFocusAdapter);
-        empty_recycle.addItemDecoration(new GridSpacingItemDecoration(2, ConvertUtils.dp2px(10), true));
         empty_recycle.setNestedScrollingEnabled(false);
     }
 

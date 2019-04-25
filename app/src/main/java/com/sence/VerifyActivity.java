@@ -3,6 +3,7 @@ package com.sence;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -117,7 +118,6 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
         });
 
         sendVerifyCode();
-        doLastTime();
     }
 
 
@@ -200,6 +200,7 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
 
             @Override
             public void onSuccess(PUserBean o, String msg) {
+                mDisposable.dispose();
                 SharedPreferencesUtil.getInstance().putBoolean("is_login", true);
                 SharedPreferencesUtil.getInstance().putString("uid", o.getId());
 //                SharedPreferencesUtil.getInstance().putString("user_name", o.getUser_name());
@@ -210,7 +211,7 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
                 SharedPreferencesUtil.getInstance().putString("id_card", o.getNick_name());
                 SharedPreferencesUtil.getInstance().putString("id_status", o.getId_status());
                 SharedPreferencesUtil.getInstance().putString("img_status", o.getImg_status());
-                SharedPreferencesUtil.getInstance().putString("token",o.getToken());
+                SharedPreferencesUtil.getInstance().putString("token", o.getToken());
                 Intent intent = new Intent(VerifyActivity.this, MainActivity.class);
                 startActivity(intent);
             }
@@ -243,9 +244,9 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
-        if (mDisposable != null && mDisposable.isDisposed()) {
+        if (mDisposable != null && !mDisposable.isDisposed()) {
             mDisposable.dispose();
         }
+        super.onDestroy();
     }
 }

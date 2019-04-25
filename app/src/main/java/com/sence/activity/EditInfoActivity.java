@@ -70,6 +70,15 @@ public class EditInfoActivity extends BaseActivity implements View.OnClickListen
         editGirl.setOnClickListener(this);
         editBoy.setOnClickListener(this);
 
+        GlideUtils.getInstance().loadHead(LoginStatus.getAvatar(),editHead);
+        editName.setText(LoginStatus.getName());
+        if (LoginStatus.getSex().equals("男")){
+            editBoy.setSelected(true);
+            editGirl.setSelected(false);
+        }else{
+            editBoy.setSelected(false);
+            editGirl.setSelected(true);
+        }
         editTitle.setRightOnClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
