@@ -160,7 +160,7 @@ public class UserFragment extends BaseMainFragment implements View.OnClickListen
         if (o.getOrder_info().getWait_pay().equals("0")) {
             user_pay_point.setVisibility(View.GONE);
         } else {
-            user_send_point.setVisibility(View.VISIBLE);
+            user_pay_point.setVisibility(View.VISIBLE);
             user_pay_point.setText(o.getOrder_info().getWait_pay());
         }
 
@@ -174,14 +174,14 @@ public class UserFragment extends BaseMainFragment implements View.OnClickListen
         if (o.getOrder_info().getWait_confirm().equals("0")) {
             user_get_point.setVisibility(View.GONE);
         } else {
-            user_send_point.setVisibility(View.VISIBLE);
+            user_get_point.setVisibility(View.VISIBLE);
             user_get_point.setText(o.getOrder_info().getWait_confirm());
         }
 
         if (o.getOrder_info().getWait_evaluate().equals("0")) {
             user_comment_point.setVisibility(View.GONE);
         } else {
-            user_send_point.setVisibility(View.VISIBLE);
+            user_comment_point.setVisibility(View.VISIBLE);
             user_comment_point.setText(o.getOrder_info().getWait_evaluate());
         }
         if (o.getGardenRed().equals("0")) {

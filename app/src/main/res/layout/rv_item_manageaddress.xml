@@ -41,7 +41,7 @@
                 android:id="@+id/tv_phone_manageaddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="29dp"
+                android:layout_marginLeft="10dp"
                 android:text="18735468084"
                 android:textColor="#333333"
                 android:textSize="@dimen/sp_16"/>

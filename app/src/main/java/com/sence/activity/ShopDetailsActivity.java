@@ -435,9 +435,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                     startActivity(new Intent(ShopDetailsActivity.this, LoginActivity.class));
                     return;
                 }
-                if (num == 0) {
-                    tvShopnumShopdetails.setVisibility(View.VISIBLE);
-                }
+
                 isAddShop = true;
                 bgAlpha(0.5f);
                 popupWindow.showAtLocation(contentView, Gravity.BOTTOM, 0, 0);

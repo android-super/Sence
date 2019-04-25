@@ -35,6 +35,9 @@ import com.sence.view.PubTitle;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+/***
+ *绑定联系人
+ */
 
 public class BindingLinkManActivity extends BaseActivity implements View.OnClickListener {
 
@@ -190,7 +193,7 @@ public class BindingLinkManActivity extends BaseActivity implements View.OnClick
             @Override
             public void onSuccess(String o, String msg) {
                 Logger.e("msg==========" + msg);
-                ToastUtils.showShort(msg);
+                ToastUtils.showShort("绑定成功");
                 SharedPreferencesUtil.getInstance().putString("upuid", msg);
                 SharedPreferencesUtil.getInstance().putString("inviteUsername",bean.getUsername());
                 tvNameBindlinkman.setText(bean.getUsername());

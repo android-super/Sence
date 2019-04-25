@@ -20,7 +20,7 @@
         android:textSize="16sp"/>
     <androidx.viewpager.widget.ViewPager
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="400dp"
         android:layout_centerVertical="true"
         android:id="@+id/vp_img_imgflex"
         ></androidx.viewpager.widget.ViewPager>

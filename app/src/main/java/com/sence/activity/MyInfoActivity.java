@@ -39,7 +39,6 @@ import com.sence.fragment.UserNoteFragment;
 import com.sence.fragment.UserRecommendFragment;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
-import com.sence.net.Urls;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.FastBlurUtil;
 import com.sence.utils.GlideUtils;
@@ -331,7 +330,8 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 mFansNum.setText(o.getFans_num());
                 mSigner.setText(o.getAutograph());
                 GlideUtils.getInstance().loadHead(o.getAvatar(), mImageView);
-                dim(Urls.base_url + o.getAvatar());
+
+//                dim(Urls.base_url + o.getAvatar());
                 if ("0".equals(o.getIs_have_service())) {
                     final Fragment[] fragments = {recommendFragment, noteFragment};
                     String[] listTitle = {"推荐", "笔记"};
@@ -513,7 +513,6 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
      */
     public static void shareWeb(final Activity activity, String WebUrl, String title, String description, SHARE_MEDIA
             platform, String url) {
-
         UMImage thumb = new UMImage(activity, url);
         UMWeb web = new UMWeb(WebUrl);//连接地址(注意链接开头必须包含http)
         web.setTitle(title);//标题

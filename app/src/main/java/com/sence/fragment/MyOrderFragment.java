@@ -101,11 +101,13 @@ public class MyOrderFragment extends Fragment {
             @Override
             public void delete(int i) {
                 ((MyOrderActivity)getActivity()).setNum(listBeans.get(i).getStatus());
+                ((MyOrderActivity)getActivity()).refresh(listBeans.get(i).getStatus());
                 listBeans.remove(i);
                 if(listBeans.size()==0){
                     mNot.setVisibility(View.VISIBLE);
                 }
                 mMyOrderAdapter.setList(listBeans);
+
             }
         });
 
@@ -136,16 +138,15 @@ public class MyOrderFragment extends Fragment {
                 ((MyOrderActivity)getActivity()).setTitleNum(o.getAllNum(),o.getWaitPay(),o.getWaitSend(),o.getWaitConfirm(),o.getWaitEvlua());
                 listBeans = o.getList();
                 if(listBeans.size()>0) {
-                    mMyOrderAdapter.setList(listBeans);
                     mNot.setVisibility(View.GONE);
                 }
-
-
+                mMyOrderAdapter.setList(listBeans);
             }
         });
 
     }
 
-
-
+    public void reresh() {
+        loadData();
+    }
 }

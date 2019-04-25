@@ -4,7 +4,11 @@ import java.util.List;
 
 public class PServiceeDetails {
 
+
     /**
+     * lng : 0
+     * lat : 0
+     * address :
      * isEvaluate : 1
      * id : 1
      * tag : 专业洗车券
@@ -16,6 +20,9 @@ public class PServiceeDetails {
      * avatar : /Public/Home/img/default_avatar.png
      */
 
+    private String lng;
+    private String lat;
+    private String address;
     private String isEvaluate;
     private String id;
     private String tag;
@@ -25,6 +32,30 @@ public class PServiceeDetails {
     private String username;
     private String avatar;
     private List<String> imgs;
+
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public String getIsEvaluate() {
         return isEvaluate;

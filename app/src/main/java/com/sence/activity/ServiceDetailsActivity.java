@@ -156,7 +156,7 @@ public class ServiceDetailsActivity extends BaseActivity {
                     ptPubTitle.setRightImg(0);
                 }
                 tvNameServicedetails.setText(o.getTag());
-                tvAddressServicedetails.setText(o.getPosition());
+                tvAddressServicedetails.setText(o.getAddress());
                 tvUsernameServicedetails.setText(o.getUsername());
                 GlideUtils.getInstance().loadHead(o.getAvatar(), ivUserimgServicedetails);
             }
@@ -194,7 +194,8 @@ public class ServiceDetailsActivity extends BaseActivity {
     @OnClick(R.id.tv_map_servicedetails)
     public void onViewClicked() {
         Intent intent = new Intent(ServiceDetailsActivity.this, MapActivity.class);
-        intent.putExtra("map", bean.getPosition());
+        intent.putExtra("longitude", bean.getLng());
+        intent.putExtra("latitude", bean.getLat());
         startActivity(intent);
     }
 }

@@ -60,14 +60,17 @@ public class FastBlurUtil {
             out.flush();
             byte[] data = dataStream.toByteArray();
             originBitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+            if(originBitmap.getWidth()==0){
+                return null;
+            }else {
 
-
-            Bitmap scaledBitmap = Bitmap.createScaledBitmap(originBitmap,
-                    originBitmap.getWidth() / scaleRatio,
-                    originBitmap.getHeight() / scaleRatio,
-                    false);
-            Bitmap blurBitmap = doBlur(scaledBitmap, blurRadius, true);
-            return blurBitmap;
+                Bitmap scaledBitmap = Bitmap.createScaledBitmap(originBitmap,
+                        originBitmap.getWidth() / scaleRatio,
+                        originBitmap.getHeight() / scaleRatio,
+                        false);
+                Bitmap blurBitmap = doBlur(scaledBitmap, blurRadius, true);
+                return blurBitmap;
+            }
         } catch (IOException e) {
             e.printStackTrace();
             return null;

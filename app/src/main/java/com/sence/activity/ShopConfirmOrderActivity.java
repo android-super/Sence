@@ -563,9 +563,4 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
         ButterKnife.bind(this);
     }
 
-    @OnClick(R.id.iv_map_confirmorder)
-    public void onViewClicked() {
-        Intent intent = new Intent(ShopConfirmOrderActivity.this, MapActivity.class);
-        startActivity(intent);
-    }
 }

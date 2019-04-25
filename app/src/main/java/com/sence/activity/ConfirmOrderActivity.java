@@ -260,7 +260,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         for (int i = 0; i < listData.size(); i++) {
             List<PBusBean.CartBean.GoodsBean> goods = listData.get(i).getGoods();
             for (int j = 0; j < goods.size(); j++) {
-                RConfirmOrderGoodBean.Good good = new RConfirmOrderGoodBean.Good(goods.get(j).getUid(), goods.get(j).getNum() + "");
+                RConfirmOrderGoodBean.Good good = new RConfirmOrderGoodBean.Good(goods.get(j).getId(), goods.get(j).getNum() + "");
                 listGood.add(good);
             }
         }
@@ -275,6 +275,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 e.printStackTrace();
             }
         }
+        Log.i("aaaaa",json.toString()+"="+LoginStatus.getUid()+"="+idAddress);
         HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_COMMIT, new RConfirmOrderBean(json, LoginStatus.getUid(), idAddress,"1")).request(new ApiCallBack<PConfirmOrderBean>() {
 
 
@@ -555,11 +556,5 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
-    }
-
-    @OnClick(R.id.iv_map_confirmorder)
-    public void onViewClicked() {
-        Intent intent = new Intent(ConfirmOrderActivity.this, MapActivity.class);
-        startActivity(intent);
     }
 }

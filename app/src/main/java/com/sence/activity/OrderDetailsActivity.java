@@ -435,6 +435,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
                     }
                 } else if ("5".equals(type) || "6".equals(type) || "8".equals(type)) {
                     Intent intent = new Intent(OrderDetailsActivity.this, MyInfoActivity.class);
+                    intent.putExtra("uid",bean.getSellerUid());
                     startActivity(intent);
                 } else if ("7".equals(type)) {
                     DeleteOreder();
@@ -488,7 +489,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
                 mBottomSheetDialog.dismiss();
                 break;
             case R.id.iv_back_pay:
-
+                mBottomSheetDialog.dismiss();
                 break;
         }
     }
@@ -598,6 +599,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
         ivWeiPay = mView.findViewById(R.id.iv_wei_pay);
         ivBackPay = mView.findViewById(R.id.iv_back_pay);
         btPayPay = mView.findViewById(R.id.bt_pay_pay);
+        mView.findViewById(R.id.iv_back_pay).setOnClickListener(this);
         mView.findViewById(R.id.ll_zhi_pay).setOnClickListener(this);
         mView.findViewById(R.id.ll_wei_pay).setOnClickListener(this);
         ivBackPay.setOnClickListener(this);

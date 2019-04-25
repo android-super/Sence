@@ -79,8 +79,6 @@ public class SearchActivity extends BaseActivity {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     String content = etContentSearch.getText().toString().trim();
                     if (!TextUtils.isEmpty(content)) {
-                        llFlowSearch.setVisibility(View.GONE);
-                        llResultSearch.setVisibility(View.VISIBLE);
                         String histroy = LoginStatus.getHistroy();
                         if(TextUtils.isEmpty(histroy)){
                             SharedPreferencesUtil.getInstance().putString("histroy", content);
@@ -119,32 +117,13 @@ public class SearchActivity extends BaseActivity {
         flFlowSearch.result(new FlowLayout.SearchListener() {
             @Override
             public void search(String data) {
+                etContentSearch.setText(data);
                 doHttp(data);
             }
         });
     }
 
     public void initData() {
-//        HttpManager.getInstance().PlayNetCode(HttpCode.SEARCH_RECOMMEND).request(new ApiCallBack<List<PSearchRecommendBean>>() {
-//            @Override
-//            public void onFinish() {
-//
-//            }
-//
-//            @Override
-//            public void Message(int code, String message) {
-//
-//            }
-//
-//            @Override
-//            public void onSuccess(List<PSearchRecommendBean> o, String msg) {
-//                Logger.e("msg==========" + msg);
-//                if(o.size()>0){
-//                    list = o;
-//                    flFlowSearch.addList(o);
-//                }
-//            }
-//        });
         String histroy = LoginStatus.getHistroy();
         if(TextUtils.isEmpty(histroy)){
             flFlowSearch.clear();
@@ -177,6 +156,7 @@ public class SearchActivity extends BaseActivity {
                 if (o.getGoodsList().size() > 0) {
                     llResultSearch.setVisibility(View.VISIBLE);
                     llShopSearch.setVisibility(View.VISIBLE);
+                    llFlowSearch.setVisibility(View.GONE);
                     mSearchShopAdapter.setList(o.getGoodsList());
                 } else {
                     llShopSearch.setVisibility(View.GONE);
@@ -184,6 +164,7 @@ public class SearchActivity extends BaseActivity {
                 if (o.getUserList().size() > 0) {
                     llResultSearch.setVisibility(View.VISIBLE);
                     llFriendSearch.setVisibility(View.VISIBLE);
+                    llFlowSearch.setVisibility(View.GONE);
                     mSearchFriendAdapter.setList(o.getUserList());
                 } else {
                     llFriendSearch.setVisibility(View.GONE);
