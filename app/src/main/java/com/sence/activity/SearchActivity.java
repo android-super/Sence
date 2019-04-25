@@ -81,11 +81,12 @@ public class SearchActivity extends BaseActivity {
                     if (!TextUtils.isEmpty(content)) {
                         String histroy = LoginStatus.getHistroy();
                         if(TextUtils.isEmpty(histroy)){
+
                             SharedPreferencesUtil.getInstance().putString("histroy", content);
                         }else{
                             SharedPreferencesUtil.getInstance().putString("histroy", histroy+","+content);
                         }
-
+                        tvClearSearch.setVisibility(View.VISIBLE);
                         doHttp(content);
                     } else {
                         llResultSearch.setVisibility(View.GONE);
@@ -127,7 +128,6 @@ public class SearchActivity extends BaseActivity {
         String histroy = LoginStatus.getHistroy();
         if(TextUtils.isEmpty(histroy)){
             tvClearSearch.setVisibility(View.GONE);
-            flFlowSearch.clear();
         }else{
             tvClearSearch.setVisibility(View.VISIBLE);
             String[] split = histroy.split(",");
@@ -187,5 +187,6 @@ public class SearchActivity extends BaseActivity {
     public void onViewClicked() {
         SharedPreferencesUtil.getInstance().putString("histroy", "");
         flFlowSearch.clear();
+        tvClearSearch.setVisibility(View.GONE);
     }
 }

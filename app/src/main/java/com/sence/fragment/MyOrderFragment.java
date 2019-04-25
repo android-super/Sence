@@ -144,6 +144,9 @@ public class MyOrderFragment extends Fragment implements View.OnClickListener {
         mMyOrderAdapter.result(new MyOrderAdapter.DeleteOrderListener() {
             @Override
             public void delete(int i) {
+                if("3".equals(listBeans.get(i).getStatus())){
+                    ((MyOrderActivity)getActivity()).setComment();
+                }
                 ((MyOrderActivity)getActivity()).setNum(listBeans.get(i).getStatus());
                 ((MyOrderActivity)getActivity()).refresh(listBeans.get(i).getStatus());
                 listBeans.remove(i);
@@ -323,6 +326,9 @@ public class MyOrderFragment extends Fragment implements View.OnClickListener {
         if(mBottomSheetDialog != null) {
             mBottomSheetDialog.dismiss();
         }
+        if (mDisposable != null && !mDisposable.isDisposed()) {
+            mDisposable.dispose();
+        }
     }
 
     private void alterDone() {
@@ -443,6 +449,9 @@ public class MyOrderFragment extends Fragment implements View.OnClickListener {
                 listBeans = o.getList();
                 if(listBeans.size()>0) {
                     mNot.setVisibility(View.GONE);
+                }else{
+                    mNot.setVisibility(View.VISIBLE);
+                    ((MyOrderActivity)getActivity()).setNumNull(status);
                 }
                 mMyOrderAdapter.setList(listBeans);
             }

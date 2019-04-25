@@ -23,8 +23,10 @@ public class RImageListBean extends BaseFileRequestBean {
     @Override
     public Map getImgMap() {
         Map<String,File> map = new HashMap<>();
-        for (int i = 0 ;i <getFiles().length; i++){
-            map.put("imgs["+i +"]",files[i]);
+        if(map.size()>0){
+            for (int i = 0 ;i <getFiles().length; i++){
+                map.put("imgs["+i +"]",files[i]);
+            }
         }
         return map;
     }

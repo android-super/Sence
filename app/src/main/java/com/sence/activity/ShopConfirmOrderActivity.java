@@ -186,6 +186,9 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
         if(mBottomSheetDialog != null) {
             mBottomSheetDialog.dismiss();
         }
+        if (mDisposable != null && !mDisposable.isDisposed()) {
+            mDisposable.dispose();
+        }
     }
     private void alter() {
         if(mBottomSheetDialog.isShowing()){

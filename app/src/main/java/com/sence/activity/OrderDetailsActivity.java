@@ -347,7 +347,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
             public void onSuccess(final String o, String msg) {
                 Logger.e("msg==========" + msg + o);
                 ToastUtils.showShort(msg);
-
+                SharedPreferencesUtil.getInstance().putString("confirm_take_delivery", "4");
                 finish();
             }
         });
@@ -382,6 +382,9 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
         }
         if(mBottomSheetDialog != null) {
             mBottomSheetDialog.dismiss();
+        }
+        if (mDisposable != null && !mDisposable.isDisposed()) {
+            mDisposable.dispose();
         }
     }
 
@@ -491,7 +494,6 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
                 SharedPreferencesUtil.getInstance().putString("paytype", "shop");
                 WeiXinPayUtils wxpay = new WeiXinPayUtils(OrderDetailsActivity.this, o);
                 wxpay.pay();
-                finish();
             }
         });
     }
@@ -527,7 +529,6 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
 
                 Thread payThread = new Thread(payRunnable);
                 payThread.start();
-                finish();
             }
         });
 

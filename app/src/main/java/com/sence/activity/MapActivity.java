@@ -41,7 +41,9 @@ public class MapActivity extends AppCompatActivity {
             aMap = mvMap.getMap();
         }
         if(!TextUtils.isEmpty(longitude)){
-            LatLng latLng = new LatLng(Double.parseDouble(longitude),Double.parseDouble(latitude));
+            double lng = Double.parseDouble(longitude);
+            double lat = Double.parseDouble(latitude);
+            LatLng latLng = new LatLng(lat,lng);
             final Marker marker = aMap.addMarker(new MarkerOptions().position(latLng).snippet(""));
         }
 

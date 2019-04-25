@@ -117,13 +117,6 @@ public class OrderCommentActivity extends BaseActivity implements View.OnClickLi
         });
     }
 
-    public void initData() {
-//        String content = mContent.getText().toString().trim();
-//        if (content.length() < 5) {
-//            ToastUtils.showShort("请您至少输入5个字");
-//            return;
-//        }
-    }
 
     private void doHttp() {
         if (selectList.size() == 0) {

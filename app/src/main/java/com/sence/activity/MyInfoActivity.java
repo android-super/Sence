@@ -409,7 +409,9 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 startActivity(intentchat);
                 break;
             case R.id.iv_edit_myinfo:
-                startActivity(new Intent(MyInfoActivity.this, EditInfoActivity.class));
+                Intent intentEdit = new Intent(MyInfoActivity.this, EditInfoActivity.class);
+
+                startActivity(intentEdit);
                 break;
             case R.id.iv_groupchat_myinfo:
                 Intent intent = new Intent(MyInfoActivity.this, ChatMsgGroupActivity.class);

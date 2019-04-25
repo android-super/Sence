@@ -225,10 +225,13 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                 float alpha = (float) Math.abs(i) / appBarLayout.getTotalScrollRange();
                 shopView.setAlpha(alpha);
 //                StatusBarUtil.setTranslucentForCoordinatorLayout(ShopDetailsActivity.this, (int)alpha);
-
                 if (alpha > 0.8) {
+                    ivShareShopdetails.setImageResource(R.drawable.shop_fenxiang);
+                    ivBackShopdetails.setImageResource(R.drawable.fanhui);
                     llHeadShopdetails.setVisibility(View.VISIBLE);
                 } else {
+                    ivShareShopdetails.setImageResource(R.drawable.shophead_fenxiang);
+                    ivBackShopdetails.setImageResource(R.drawable.shophead_fanhui);
                     llHeadShopdetails.setVisibility(View.GONE);
                 }
             }
@@ -298,7 +301,6 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                     layoutParams.width = width * round;
                     viewOpriceShopdetails.setLayoutParams(layoutParams);
                 }
-
                 tvOpriceShopdetails.setText("￥" + o.getPrice());
                 if ("0".equals(o.getVprice())) {
                     tvCpriceShopdetails.setText("￥" + o.getPrice());
@@ -306,7 +308,6 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                 } else {
                     tvCpriceShopdetails.setText("￥" + o.getVprice());
                 }
-
                 tvNameShopdetails.setText(o.getName());
                 doData(o.getDescribe());
                 tvShopnameShopdetails.setText(o.getUsername());

@@ -7,6 +7,8 @@ import com.sence.R;
 import com.sence.adapter.MyOrderViewPagerAdatpter;
 import com.sence.base.BaseActivity;
 import com.sence.fragment.MyOrderFragment;
+import com.sence.utils.LoginStatus;
+import com.sence.utils.SharedPreferencesUtil;
 import com.sence.utils.StatusBarUtil;
 import com.tlz.fucktablayout.FuckTabLayout;
 
@@ -47,9 +49,6 @@ public class MyOrderActivity extends BaseActivity {
         StatusBarUtil.setLightMode(this);
         Intent intent = getIntent();
         type = intent.getIntExtra("type", 0);
-    }
-
-    public void initData() {
         allOrder = new MyOrderFragment();
         waitPay = new MyOrderFragment();
         waitDeliver = new MyOrderFragment();
@@ -61,6 +60,17 @@ public class MyOrderActivity extends BaseActivity {
         vpContentMyorder.setAdapter(mMyOrderViewPagerAdatpter);
         tlTitleMyorder.setupWithViewPager(vpContentMyorder);
         vpContentMyorder.setCurrentItem(type);
+    }
+
+    public void initData() {
+        String confirm = LoginStatus.getConfirm();
+        if("4".equals(confirm)){
+            SharedPreferencesUtil.getInstance().putString("confirm_take_delivery", "");
+            vpContentMyorder.setCurrentItem(4);
+            waitTake.reresh();
+            waitEvaluate.reresh();
+        }
+        allOrder.reresh();
     }
 
 
@@ -100,7 +110,6 @@ public class MyOrderActivity extends BaseActivity {
             }
         } else if ("2".equals(status)) {
             if (send > 1) {
-
                 tlTitleMyorder.addNumberBadge(1, --send, Color.parseColor("#16a5af"), Color.parseColor("#FFFFFF"), 30);
             } else {
                 tlTitleMyorder.removeBadge(2);
@@ -113,7 +122,6 @@ public class MyOrderActivity extends BaseActivity {
             }
         } else if ("4".equals(status)) {
             if (evlua > 1) {
-
                 tlTitleMyorder.addNumberBadge(1, --evlua, Color.parseColor("#16a5af"), Color.parseColor("#FFFFFF"), 30);
             } else {
                 tlTitleMyorder.removeBadge(4);
@@ -141,5 +149,15 @@ public class MyOrderActivity extends BaseActivity {
                 break;
         }
 
+    }
+
+    public void setComment() {
+        allOrder.reresh();
+        waitEvaluate.reresh();
+        vpContentMyorder.setCurrentItem(4);
+    }
+
+    public void setNumNull(int status) {
+        tlTitleMyorder.removeBadge(status);
     }
 }

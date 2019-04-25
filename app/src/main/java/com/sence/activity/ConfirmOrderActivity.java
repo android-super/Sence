@@ -167,6 +167,9 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         if(mBottomSheetDialog != null) {
             mBottomSheetDialog.dismiss();
         }
+        if (mDisposable != null && !mDisposable.isDisposed()) {
+            mDisposable.dispose();
+        }
     }
     @Override
     public void initData() {
