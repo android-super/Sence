@@ -13,6 +13,15 @@ public class PSystemInformBean {
     private String title;
     private String content;
     private String add_time;
+    private String web_view;
+
+    public String getWeb_view() {
+        return web_view;
+    }
+
+    public void setWeb_view(String web_view) {
+        this.web_view = web_view;
+    }
 
     public String getId() {
         return id;

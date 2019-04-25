@@ -17,7 +17,6 @@ import com.sence.adapter.SearchShopAdapter;
 import com.sence.base.BaseActivity;
 import com.sence.bean.request.RSearchBean;
 import com.sence.bean.response.PSearchBean;
-import com.sence.bean.response.PSearchRecommendBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
@@ -25,9 +24,6 @@ import com.sence.utils.LoginStatus;
 import com.sence.utils.SharedPreferencesUtil;
 import com.sence.utils.StatusBarUtil;
 import com.sence.view.FlowLayout;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -61,7 +57,8 @@ public class SearchActivity extends BaseActivity {
     LinearLayout llFriendSearch;
     @BindView(R.id.tv_clear_search)
     TextView tvClearSearch;
-    private List<PSearchRecommendBean> list = new ArrayList<>();
+    @BindView(R.id.ll_notlayout_search)
+    LinearLayout llNotlayoutSearch;
     private SearchFriendAdapter mSearchFriendAdapter;
     private SearchShopAdapter mSearchShopAdapter;
 
@@ -80,15 +77,23 @@ public class SearchActivity extends BaseActivity {
                     String content = etContentSearch.getText().toString().trim();
                     if (!TextUtils.isEmpty(content)) {
                         String histroy = LoginStatus.getHistroy();
-                        if(TextUtils.isEmpty(histroy)){
-
+                        if (TextUtils.isEmpty(histroy)) {
                             SharedPreferencesUtil.getInstance().putString("histroy", content);
-                        }else{
-                            SharedPreferencesUtil.getInstance().putString("histroy", histroy+","+content);
+                            String[] split = {content};
+                            flFlowSearch.addList(split);
+                        } else {
+                            SharedPreferencesUtil.getInstance().putString("histroy", histroy + "," + content);
+                            String histroytext = LoginStatus.getHistroy();
+                            tvClearSearch.setVisibility(View.VISIBLE);
+                            String[] split = histroytext.split(",");
+                            flFlowSearch.addList(split);
                         }
+                        llResultSearch.setVisibility(View.VISIBLE);
+                        llFlowSearch.setVisibility(View.GONE);
                         tvClearSearch.setVisibility(View.VISIBLE);
                         doHttp(content);
                     } else {
+                        llNotlayoutSearch.setVisibility(View.GONE);
                         llResultSearch.setVisibility(View.GONE);
                         llFlowSearch.setVisibility(View.VISIBLE);
                     }
@@ -105,7 +110,29 @@ public class SearchActivity extends BaseActivity {
         ivSearchSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String content = etContentSearch.getText().toString().trim();
+                if (!TextUtils.isEmpty(content)) {
+                    String histroy = LoginStatus.getHistroy();
+                    if (TextUtils.isEmpty(histroy)) {
+                        SharedPreferencesUtil.getInstance().putString("histroy", content);
+                        String[] split = {content};
+                        flFlowSearch.addList(split);
+                    } else {
+                        SharedPreferencesUtil.getInstance().putString("histroy", histroy + "," + content);
+                        String histroytext = LoginStatus.getHistroy();
+                        tvClearSearch.setVisibility(View.VISIBLE);
+                        String[] split = histroytext.split(",");
+                        flFlowSearch.addList(split);
+                    }
+                    llResultSearch.setVisibility(View.VISIBLE);
+                    llFlowSearch.setVisibility(View.GONE);
+                    tvClearSearch.setVisibility(View.VISIBLE);
+                    doHttp(content);
+                } else {
+                    llNotlayoutSearch.setVisibility(View.GONE);
+                    llResultSearch.setVisibility(View.GONE);
+                    llFlowSearch.setVisibility(View.VISIBLE);
+                }
             }
         });
         mSearchFriendAdapter = new SearchFriendAdapter(SearchActivity.this);
@@ -119,6 +146,9 @@ public class SearchActivity extends BaseActivity {
             @Override
             public void search(String data) {
                 etContentSearch.setText(data);
+                llResultSearch.setVisibility(View.VISIBLE);
+                llFlowSearch.setVisibility(View.GONE);
+                tvClearSearch.setVisibility(View.VISIBLE);
                 doHttp(data);
             }
         });
@@ -126,9 +156,9 @@ public class SearchActivity extends BaseActivity {
 
     public void initData() {
         String histroy = LoginStatus.getHistroy();
-        if(TextUtils.isEmpty(histroy)){
+        if (TextUtils.isEmpty(histroy)) {
             tvClearSearch.setVisibility(View.GONE);
-        }else{
+        } else {
             tvClearSearch.setVisibility(View.VISIBLE);
             String[] split = histroy.split(",");
             flFlowSearch.addList(split);
@@ -156,21 +186,23 @@ public class SearchActivity extends BaseActivity {
             public void onSuccess(PSearchBean o, String msg) {
                 Logger.e("msg==========" + msg);
                 if (o.getGoodsList().size() > 0) {
-                    llResultSearch.setVisibility(View.VISIBLE);
                     llShopSearch.setVisibility(View.VISIBLE);
-                    llFlowSearch.setVisibility(View.GONE);
                     mSearchShopAdapter.setList(o.getGoodsList());
                 } else {
                     llShopSearch.setVisibility(View.GONE);
                 }
                 if (o.getUserList().size() > 0) {
-                    llResultSearch.setVisibility(View.VISIBLE);
                     llFriendSearch.setVisibility(View.VISIBLE);
-                    llFlowSearch.setVisibility(View.GONE);
                     mSearchFriendAdapter.setList(o.getUserList());
                 } else {
                     llFriendSearch.setVisibility(View.GONE);
                 }
+                if(o.getGoodsList().size()==0&&o.getUserList().size()==0){
+                    llNotlayoutSearch.setVisibility(View.VISIBLE);
+                }else{
+                    llNotlayoutSearch.setVisibility(View.GONE);
+                }
+
             }
         });
     }

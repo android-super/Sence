@@ -56,10 +56,12 @@ public class MyOrderActivity extends BaseActivity {
         waitEvaluate = new MyOrderFragment();
         fragmentList = new Fragment[]{allOrder, waitPay, waitDeliver, waitTake, waitEvaluate};
         mMyOrderViewPagerAdatpter = new MyOrderViewPagerAdatpter(getSupportFragmentManager(), this, fragmentList,
-                list, type);
+                list);
         vpContentMyorder.setAdapter(mMyOrderViewPagerAdatpter);
         tlTitleMyorder.setupWithViewPager(vpContentMyorder);
         vpContentMyorder.setCurrentItem(type);
+        vpContentMyorder.setOffscreenPageLimit(5);
+        setTitleNum(intent);
     }
 
     public void initData() {
@@ -74,11 +76,11 @@ public class MyOrderActivity extends BaseActivity {
     }
 
 
-    public void setTitleNum(String allNum, String waitPay, String waitSend, String waitConfirm, String waitEvlua) {
-        pay = Integer.parseInt(waitPay);
-        send = Integer.parseInt(waitSend);
-        confirm = Integer.parseInt(waitConfirm);
-        evlua = Integer.parseInt(waitEvlua);
+    public void setTitleNum(Intent intent) {
+        pay = intent.getIntExtra("pay", 0);
+        send = intent.getIntExtra("send", 0);
+        confirm = intent.getIntExtra("confirm", 0);
+        evlua = intent.getIntExtra("evlua", 0);
         if (pay > 0) {
             tlTitleMyorder.addNumberBadge(1, pay, Color.parseColor("#16a5af"), Color.parseColor("#FFFFFF"), 30);
         }
@@ -90,14 +92,6 @@ public class MyOrderActivity extends BaseActivity {
         }
         if (evlua > 0) {
             tlTitleMyorder.addNumberBadge(4, evlua, Color.parseColor("#16a5af"), Color.parseColor("#FFFFFF"), 30);
-        }
-    }
-
-    public void setTitlen(int i, int size) {
-        if (pay > 0) {
-            tlTitleMyorder.addNumberBadge(i, size, Color.parseColor("#16a5af"), Color.parseColor("#FFFFFF"), 30);
-        } else {
-            tlTitleMyorder.removeBadge(i);
         }
     }
 

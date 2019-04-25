@@ -87,6 +87,8 @@ public class MyOrderFragment extends Fragment implements View.OnClickListener {
     private AlertDialog dialog;
     private int postion;
     private boolean issetnum = true;
+    private int type;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -443,9 +445,6 @@ public class MyOrderFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onSuccess(PMyOrderBean o, String msg) {
                 Logger.e("msg==========" + msg);
-                if(issetnum){
-                    ((MyOrderActivity)getActivity()).setTitleNum(o.getAllNum(),o.getWaitPay(),o.getWaitSend(),o.getWaitConfirm(),o.getWaitEvlua());
-                }
                 listBeans = o.getList();
                 if(listBeans.size()>0) {
                     mNot.setVisibility(View.GONE);

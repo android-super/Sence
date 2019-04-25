@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -172,20 +174,26 @@ public class FlowLayout extends ViewGroup {
 
 
     public void addList(final String[] list) {
+
         listData = list;
         //往容器内添加TextView数据
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParams.setMargins(15, 8, 15, 8);
         removeAllViews();
-        for (int i = 0; i < list.length; i++) {
+        if(list.length==0){
+            return;
+        }
+        for (int i = list.length-1;i>=0; i--) {
             TextView tv = new TextView(getContext());
-            tv.setPadding(25, 8, 25, 8);
+            tv.setPadding(40, 2, 40, 2);
             tv.setText(list[i]);
             tv.setMaxLines(1);
             tv.setMaxEms(8);
-            tv.setEllipsize(TextUtils.TruncateAt.END);
+            tv.setGravity(Gravity.CENTER);
+            tv.setTextSize(TypedValue.COMPLEX_UNIT_SP,11);
             tv.setTextColor(Color.parseColor("#333333"));
+            tv.setEllipsize(TextUtils.TruncateAt.END);
             tv.setSingleLine();
             tv.setBackgroundResource(R.drawable.shape_search_textbg);
             tv.setLayoutParams(layoutParams);

@@ -337,6 +337,10 @@
                 android:background="@color/white"
                 android:orientation="vertical"
                 >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tl_tabhid_myinfo"
                     android:layout_width="wrap_content"
@@ -347,7 +351,15 @@
                     app:tabSelectedTextColor="@color/theme_green"
                     app:tabTextColor="#050505"
                     />
-
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/myinfo_qunliao"
+                        android:layout_centerVertical="true"
+                        android:id="@+id/iv_groupchat_myinfo"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="16dp"/>
+                </RelativeLayout>
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/vp_content_myinfo"
                     android:layout_width="match_parent"
@@ -375,13 +387,4 @@
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-    <ImageView
-        android:id="@+id/iv_groupchat_myinfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="200dp"
-        android:src="@drawable/jinruqulnliao"/>
 </RelativeLayout>

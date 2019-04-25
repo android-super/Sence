@@ -1,9 +1,12 @@
 package com.sence.activity;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
@@ -44,12 +47,14 @@ public class EnjoyVipActivity extends BaseActivity {
     RecyclerView recycleEnjoyvip;
     @BindView(R.id.srl_layout_enjoyvip)
     SmartRefreshLayout srlLayoutEnjoyvip;
-    @BindView(R.id.tv_prices_enjoyvip)
-    TextView tvPricesEnjoyvip;
-    @BindView(R.id.ll_notdata_enjoyvip)
-    LinearLayout llNotdataEnjoyvip;
     @BindView(R.id.nsl_layout_enjoyvip)
     NestedScrollView nslLayoutEnjoyvip;
+    @BindView(R.id.iv_notimg_enjoyvip)
+    ImageView ivNotimgEnjoyvip;
+    @BindView(R.id.rl_layout_enjoyvip)
+    RelativeLayout rlLayoutEnjoyvip;
+    @BindView(R.id.tv_layout_enjoyvip)
+    TextView tvLayoutEnjoyvip;
 
 
     private EnjoyVipAdapter mEnjoyVipAdapter;
@@ -97,6 +102,24 @@ public class EnjoyVipActivity extends BaseActivity {
                 initData();
             }
         });
+
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            int[] location = new int[2];
+            tvLayoutEnjoyvip.getLocationOnScreen(location);
+            int y = location[1];
+            Resources resources = getResources();
+            DisplayMetrics dm = resources.getDisplayMetrics();
+            int screenHeight = dm.heightPixels;
+            int height = screenHeight - y-30;
+            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) ivNotimgEnjoyvip.getLayoutParams();
+            layoutParams.height = height;
+            ivNotimgEnjoyvip.setLayoutParams(layoutParams);
+        }
     }
 
     public void initData() {
@@ -115,13 +138,16 @@ public class EnjoyVipActivity extends BaseActivity {
             @Override
             public void onSuccess(PEnjoyVipBean o, String msg) {
                 Logger.e("msg==========" + msg);
-                tvPricesEnjoyvip.setText("￥" + o.getMoney());
                 list = o.getService();
                 if (list.size() > 0) {
                     tvPriceEnjoyvip.setText("￥" + o.getMoney());
-                    llNotdataEnjoyvip.setVisibility(View.GONE);
-                    nslLayoutEnjoyvip.setVisibility(View.VISIBLE);
-                    mEnjoyVipAdapter.setList(o.getService());
+                    mEnjoyVipAdapter.setList(list);
+                    ivNotimgEnjoyvip.setVisibility(View.GONE);
+                }
+                if(list.size()>=10){
+                    srlLayoutEnjoyvip.setEnableLoadMore(true);
+                }else{
+                    srlLayoutEnjoyvip.setEnableLoadMore(false);
                 }
             }
         });

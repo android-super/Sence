@@ -1,6 +1,7 @@
 package com.sence.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sence.R;
+import com.sence.activity.WebActivity;
 import com.sence.bean.response.PSystemInformBean;
 
 import java.util.ArrayList;
@@ -44,7 +46,10 @@ public class SystemInformAdapter extends RecyclerView.Adapter<SystemInformAdapte
         holder.mLook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(context, WebActivity.class);
+                intent.putExtra("url", list.get(position).getWeb_view());
+                intent.putExtra("title", "系统通知");
+                context.startActivity(intent);
             }
         });
     }

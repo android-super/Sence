@@ -62,6 +62,7 @@ public class UserFragment extends BaseMainFragment implements View.OnClickListen
     private TextView user_account, user_address, user_set;
 
     private String save_money;//预计一年省
+    private PUserInfoBean bean;
 
     public UserFragment() {
         // Required empty public constructor
@@ -140,6 +141,7 @@ public class UserFragment extends BaseMainFragment implements View.OnClickListen
         if (o == null) {
             return;
         }
+        bean = o;
         SharedPreferencesUtil.getInstance().putString("upuid", o.getUpuid());
         SharedPreferencesUtil.getInstance().putString("inviteUsername", o.getInviteUsername());
         SharedPreferencesUtil.getInstance().putString("is_vip", o.getIs_kol());
@@ -266,29 +268,20 @@ public class UserFragment extends BaseMainFragment implements View.OnClickListen
                 toLogin(intent);
                 break;
             case R.id.user_all_order:
-                intent = new Intent(getContext(), MyOrderActivity.class);
-                intent.putExtra("type", 0);
-                toLogin(intent);
+                startMyOrder(0);
+
                 break;
             case R.id.user_pay:
-                intent = new Intent(getContext(), MyOrderActivity.class);
-                intent.putExtra("type", 1);
-                toLogin(intent);
+                startMyOrder(1);
                 break;
             case R.id.user_send:
-                intent = new Intent(getContext(), MyOrderActivity.class);
-                intent.putExtra("type", 2);
-                toLogin(intent);
+                startMyOrder(2);
                 break;
             case R.id.user_get:
-                intent = new Intent(getContext(), MyOrderActivity.class);
-                intent.putExtra("type", 3);
-                toLogin(intent);
+                startMyOrder(3);
                 break;
             case R.id.user_comment:
-                intent = new Intent(getContext(), MyOrderActivity.class);
-                intent.putExtra("type", 4);
-                toLogin(intent);
+                startMyOrder(4);
                 break;
             case R.id.user_flower:
                 intent = new Intent(getContext(), WebNotitleActivity.class);
@@ -313,6 +306,16 @@ public class UserFragment extends BaseMainFragment implements View.OnClickListen
                 toLogin(intent);
                 break;
         }
+    }
+
+    private void startMyOrder(int i) {
+        Intent intent = new Intent(getContext(), MyOrderActivity.class);
+        intent.putExtra("type", i);
+        intent.putExtra("pay", Integer.parseInt(bean.getOrder_info().getWait_pay()));
+        intent.putExtra("send", Integer.parseInt(bean.getOrder_info().getWait_send()));
+        intent.putExtra("confirm", Integer.parseInt(bean.getOrder_info().getWait_confirm()));
+        intent.putExtra("evlua", Integer.parseInt(bean.getOrder_info().getWait_evaluate()));
+        toLogin(intent);
     }
 
     public void toLogin(Intent intent) {

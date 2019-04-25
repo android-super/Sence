@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.net.http.SslError;
+import android.text.TextUtils;
 import android.view.View;
 import android.webkit.*;
 import android.widget.RelativeLayout;
@@ -41,31 +42,37 @@ public class WebActivity extends BaseActivity {
     public void initView() {
         StatusBarUtil.setLightMode(this);
         initSetting();
+        String urlSys = getIntent().getStringExtra("url");
+        String titlelSys = getIntent().getStringExtra("title");
+        if(!TextUtils.isEmpty(urlSys)){
+            ptWeb.setTitleText(titlelSys);
+            webView.loadUrl(this.url);
+            return;
+        }
         code = (WebConstans.WebCode) this.getIntent().getSerializableExtra("code");
         switch (code) {
             case HY:
                 ptWeb.setTitleText("花园");
-                url = WebConstans.buildWebUrl(WebConstans.HY, LoginStatus.getUid());
-                webView.loadUrl(url);
+                this.url = WebConstans.buildWebUrl(WebConstans.HY, LoginStatus.getUid());
+                webView.loadUrl(this.url);
                 break;
             case GRZL:
-                webView.loadUrl(url);
+                webView.loadUrl(this.url);
                 break;
             case SPXQ:
-                webView.loadUrl(url);
+                webView.loadUrl(this.url);
                 break;
             case WZXQ:
-                webView.loadUrl(url);
+                webView.loadUrl(this.url);
                 break;
             case XKXY:
-                webView.loadUrl(url);
+                webView.loadUrl(this.url);
                 break;
             case YSZC:
                 ptWeb.setTitleText("隐私政策");
-                url = WebConstans.YSZC;
-                webView.loadUrl(url);
+                this.url = WebConstans.YSZC;
+                webView.loadUrl(this.url);
                 break;
-
         }
     }
 

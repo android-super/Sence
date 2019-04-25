@@ -11,14 +11,12 @@ public class MyOrderViewPagerAdatpter extends FragmentPagerAdapter {
     private Context context;
     private Fragment[] fragmentList;
     private String[] list_Title;
-    private int postion;
 
-    public MyOrderViewPagerAdatpter(FragmentManager fm, Context context, Fragment[] fragmentList, String[] list_Title, int postion) {
+    public MyOrderViewPagerAdatpter(FragmentManager fm, Context context, Fragment[] fragmentList, String[] list_Title) {
         super(fm);
         this.context = context;
         this.fragmentList = fragmentList;
         this.list_Title = list_Title;
-        this.postion = postion;
     }
 
     @Override
