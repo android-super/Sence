@@ -1,6 +1,7 @@
 package com.sence.activity;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -78,6 +80,8 @@ public class NoteDetailActivity extends BaseActivity implements View.OnClickList
     RecyclerView noteRecycle;
     @BindView(R.id.note_comment_release)
     TextView noteCommentRelease;
+    @BindView(R.id.tool_back_press)
+    ImageView toolBackPress;
 
     private String nid;
     private float width;
@@ -231,6 +235,8 @@ public class NoteDetailActivity extends BaseActivity implements View.OnClickList
                 float alpha = (float) Math.abs(i) / appBarLayout.getTotalScrollRange();
                 toolView.setAlpha(alpha);
                 toolTitle.setAlpha(alpha);
+                toolBack.setAlpha(alpha);
+                toolBackPress.setAlpha(1-alpha);
             }
         });
         toolBack.setOnClickListener(new View.OnClickListener() {
@@ -477,5 +483,12 @@ public class NoteDetailActivity extends BaseActivity implements View.OnClickList
                 commentAdapter.notifyDataSetChanged();
             }
         });
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

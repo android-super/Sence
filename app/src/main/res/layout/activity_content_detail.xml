@@ -52,6 +52,15 @@
                             android:scaleType="center"
                             android:layout_marginTop="@dimen/status_height"
                             android:layout_width="50dp"
+                            android:alpha="0"
+                            android:layout_height="50dp"/>
+
+                    <ImageView
+                            android:id="@+id/tool_back_press"
+                            android:src="@drawable/fanhui_gray"
+                            android:scaleType="center"
+                            android:layout_marginTop="@dimen/status_height"
+                            android:layout_width="50dp"
                             android:layout_height="50dp"/>
 
                     <LinearLayout
@@ -108,6 +117,17 @@
                             android:id="@+id/tool_share"
                             android:visibility="visible"
                             android:src="@drawable/content_fenxiang"
+                            android:scaleType="center"
+                            android:alpha="0"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="@dimen/status_height"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"/>
+
+                    <ImageView
+                            android:id="@+id/tool_share_press"
+                            android:visibility="visible"
+                            android:src="@drawable/fenxiang_gray"
                             android:scaleType="center"
                             android:layout_alignParentRight="true"
                             android:layout_marginTop="@dimen/status_height"
@@ -191,11 +211,12 @@
                 android:id="@+id/content_buy_num"
                 android:layout_marginRight="6dp"
                 android:gravity="center"
+                android:layout_marginTop="3dp"
                 android:background="@drawable/shape_buy_num_point"
-                android:layout_width="15dp"
+                android:layout_width="18dp"
                 android:textSize="10sp"
                 android:textColor="@color/white"
-                android:layout_height="15dp"/>
+                android:layout_height="18dp"/>
     </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

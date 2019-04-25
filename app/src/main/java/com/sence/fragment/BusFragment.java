@@ -184,6 +184,9 @@ public class BusFragment extends BaseMainFragment {
         bus_commit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (getAllSelectBean().size() == 0) {
+                    return;
+                }
                 Intent intent = new Intent(getActivity(), ConfirmOrderActivity.class);
                 intent.putExtra("data", (Serializable) getAllSelectBean());
                 intent.putExtra("type", "shop");

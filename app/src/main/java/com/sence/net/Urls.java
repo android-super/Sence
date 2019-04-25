@@ -6,7 +6,7 @@ package com.sence.net;
  * 描述:SenceGit
  */
 public class Urls {
-    public static boolean isTest = true;
+    public static boolean isTest = false;
 
     public static final String true_ip = "http://sence.forhour.com";
     public static final String test_ip = "http://192.168.1.10:8085";

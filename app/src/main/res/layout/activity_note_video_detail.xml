@@ -48,6 +48,15 @@
                             android:src="@drawable/fanhui"
                             android:layout_width="50dp"
                             android:scaleType="center"
+                            android:alpha="0"
+                            android:layout_height="50dp"/>
+
+                    <ImageView
+                            android:id="@+id/tool_back_press"
+                            android:layout_marginTop="@dimen/status_height"
+                            android:src="@drawable/fanhui_gray"
+                            android:layout_width="50dp"
+                            android:scaleType="center"
                             android:layout_height="50dp"/>
 
                     <TextView

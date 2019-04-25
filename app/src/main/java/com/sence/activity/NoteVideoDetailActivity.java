@@ -1,27 +1,26 @@
 package com.sence.activity;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.*;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import androidx.core.app.ActivityCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
-import cn.jzvd.Jzvd;
+import butterknife.ButterKnife;
 import cn.jzvd.JzvdStd;
-import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -30,12 +29,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.sence.R;
 import com.sence.adapter.CommentAdapter;
 import com.sence.adapter.NoteRecommendAdapter;
-import com.sence.adapter.pager.ViewShowTagPagerAdapter;
 import com.sence.base.BaseActivity;
 import com.sence.bean.request.*;
 import com.sence.bean.response.PCommentBean;
 import com.sence.bean.response.PNoteDetailBean;
-import com.sence.fragment.tag.ShowTagFragment;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.Urls;
@@ -45,7 +42,6 @@ import com.sence.utils.GlideUtils;
 import com.sence.utils.LoginStatus;
 import com.sence.utils.NavigationBarUtil;
 import com.sence.utils.StatusBarUtil;
-import com.sence.view.GridSpacingItemDecoration;
 import com.sence.view.GridStagSpacingItemDecoration;
 import com.sence.view.NiceImageView;
 
@@ -83,6 +79,8 @@ public class NoteVideoDetailActivity extends BaseActivity implements View.OnClic
     RecyclerView noteRecycle;
     @BindView(R.id.note_comment_release)
     TextView noteCommentRelease;
+    @BindView(R.id.tool_back_press)
+    ImageView toolBackPress;
 
     private String nid;
     private float width;
@@ -213,6 +211,8 @@ public class NoteVideoDetailActivity extends BaseActivity implements View.OnClic
                 float alpha = (float) Math.abs(i) / appBarLayout.getTotalScrollRange();
                 toolView.setAlpha(alpha);
                 toolTitle.setAlpha(alpha);
+                toolBack.setAlpha(alpha);
+                toolBackPress.setAlpha(1-alpha);
             }
         });
         toolBack.setOnClickListener(new View.OnClickListener() {
@@ -459,5 +459,12 @@ public class NoteVideoDetailActivity extends BaseActivity implements View.OnClic
                 commentAdapter.notifyDataSetChanged();
             }
         });
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

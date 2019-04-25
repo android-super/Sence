@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -14,17 +15,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.SslErrorHandler;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import android.webkit.*;
+import android.widget.*;
+import androidx.core.app.ActivityCompat;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -66,12 +64,6 @@ import com.umeng.socialize.media.UMWeb;
 
 import java.util.List;
 
-import androidx.core.app.ActivityCompat;
-import androidx.core.widget.NestedScrollView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-
 import static com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED;
 
 /**
@@ -108,6 +100,8 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
     TextView contentTitle;
     @BindView(R.id.content_web)
     WebView contentWeb;
+    @BindView(R.id.content_loading)
+    ImageView content_loading;
     @BindView(R.id.content_recycle)
     RecyclerView contentRecycle;
     @BindView(R.id.content_nested)
@@ -128,6 +122,10 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
     ImageView contentImg;
 
     public EditText comment_release;
+    @BindView(R.id.tool_back_press)
+    ImageView toolBackPress;
+    @BindView(R.id.tool_share_press)
+    ImageView toolSharePress;
     private TextView comment_title;
     private TextView comment_num;
     private String content;
@@ -281,11 +279,15 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
         contentWeb.setFocusable(true);
         contentWeb.requestFocus();
         contentWeb.setWebChromeClient(new WebChromeClient());  //解决android与H5协议交互,弹不出对话框问题
+        content_loading.setVisibility(View.VISIBLE);
+        contentWeb.setVisibility(View.GONE);
         contentWeb.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 //页面加载完成之后
+                contentWeb.setVisibility(View.VISIBLE);
+                content_loading.setVisibility(View.GONE);
             }
 
             public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
@@ -398,6 +400,10 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
             public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
                 float alpha = (float) Math.abs(i) / appBarLayout.getTotalScrollRange();
                 toolView.setAlpha(alpha);
+                toolShare.setAlpha(alpha);
+                toolSharePress.setAlpha(1 - alpha);
+                toolBack.setAlpha(alpha);
+                toolBackPress.setAlpha(1 - alpha);
             }
         });
         contentNested.setOnScrollChangeListener(new View.OnScrollChangeListener() {
@@ -753,5 +759,12 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
                 ToastUtils.showShort("成功加入购物车");
             }
         });
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }
