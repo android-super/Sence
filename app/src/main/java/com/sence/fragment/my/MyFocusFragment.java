@@ -1,6 +1,7 @@
 package com.sence.fragment.my;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,6 +12,9 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.blankj.utilcode.util.ToastUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.orhanobut.logger.Logger;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
@@ -18,6 +22,9 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sence.R;
 import com.sence.adapter.FansAdapter;
+import com.sence.adapter.SearchFriendAdapter;
+import com.sence.bean.request.RCancelFocusBean;
+import com.sence.bean.request.RFocusBean;
 import com.sence.bean.request.RMyFocusBean;
 import com.sence.bean.response.PFansBean;
 import com.sence.net.HttpCode;
@@ -72,6 +79,14 @@ public class MyFocusFragment extends Fragment {
                 initFocusData();
             }
         });
+        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
+                if (adapter.getData().get(position).getIs_focus().equals("1")) {
+                    cancelFocus(adapter.getData().get(position).getUid(),position);
+                }
+            }
+        });
         initFocusData();
     }
 
@@ -99,6 +114,29 @@ public class MyFocusFragment extends Fragment {
                 } else {
                     adapter.addData(o);
                 }
+            }
+        });
+    }
+    /**
+     * 取消关注
+     */
+    private void cancelFocus(String to_uid,int position) {
+        HttpManager.getInstance().PlayNetCode(HttpCode.USER_FOCUS_CANCEL, new RFocusBean(LoginStatus.getUid(),to_uid)).request(new ApiCallBack<String>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(String o, String msg) {
+                ToastUtils.showShort(msg);
+                adapter.remove(position);
+
             }
         });
     }

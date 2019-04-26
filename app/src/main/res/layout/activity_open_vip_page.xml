@@ -14,7 +14,7 @@
             android:src="@drawable/fanhui"
             android:layout_width="50dp"
             android:scaleType="center"
-            android:layout_height="50dp"/>
+            android:layout_height="45dp"/>
 
     <LinearLayout
             android:src="@drawable/vip_heidi"

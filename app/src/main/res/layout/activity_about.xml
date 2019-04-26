@@ -16,7 +16,7 @@
         android:id="@+id/pb_title_setting"
         app:tool_cover_background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="50dp"/>
+        android:layout_height="45dp"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="173dp"

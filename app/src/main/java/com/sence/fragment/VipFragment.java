@@ -38,6 +38,7 @@ import com.sence.utils.LoginStatus;
 import com.sence.view.DividerSpacingItemDecoration;
 import com.sence.view.GridSpacingItemDecoration;
 import com.sence.view.NiceImageView;
+import com.sence.view.TextBannerView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,7 +48,7 @@ public class VipFragment extends BaseMainFragment implements View.OnClickListene
     private LinearLayout vip_info_layout;
     private NiceImageView vip_head;
     private TextView vip_name;
-    private TextView vip_no_content;
+    private TextBannerView vip_no_content;
 
     private RelativeLayout vip_yes_layout;
     private TextView vip_price;
@@ -63,6 +64,7 @@ public class VipFragment extends BaseMainFragment implements View.OnClickListene
     private VipBottomAdapter bottomAdapter;
 
     private String save_money = "0";//预计一年省
+    private String isMember;
 
 
     public VipFragment() {
@@ -112,18 +114,24 @@ public class VipFragment extends BaseMainFragment implements View.OnClickListene
 
     private void initFirstView() {
         GlideUtils.getInstance().loadHead(LoginStatus.getAvatar(), vip_head);
-        vip_name.setText("请登录");
+        vip_name.setText(LoginStatus.getName());
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.vip_pass:
-                Intent intent = new Intent(getActivity(), EnjoyVipActivity.class);
-                toLogin(intent);
+                if (isMember.equals("1")) {
+                    Intent intent = new Intent(getActivity(), EnjoyVipActivity.class);
+                    toLogin(intent);
+                } else {
+                    Intent intent = new Intent(getActivity(), OpenVipPageActivity.class);
+                    intent.putExtra("money", save_money);
+                    toLogin(intent);
+                }
                 break;
             case R.id.vip_info_layout:
-                intent = new Intent(getActivity(), OpenVipPageActivity.class);
+                Intent intent = new Intent(getActivity(), OpenVipPageActivity.class);
                 intent.putExtra("money", save_money);
                 toLogin(intent);
                 break;
@@ -198,7 +206,7 @@ public class VipFragment extends BaseMainFragment implements View.OnClickListene
             public void onSuccess(PUserVipBean o, String msg) {
                 topAdapter.setNewData(o.getGoods());
                 bottomAdapter.setNewData(o.getService());
-
+                isMember = o.getIsMember();
                 if (o.getIsMember().equals("0")) {
                     vip_no_layout.setVisibility(View.VISIBLE);
                     vip_yes_layout.setVisibility(View.GONE);

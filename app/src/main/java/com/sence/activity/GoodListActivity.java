@@ -65,6 +65,7 @@ public class GoodListActivity extends BaseActivity {
                 initData();
             }
         });
+        adapter.setEmptyView(R.layout.empty_v,recycleView);
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {

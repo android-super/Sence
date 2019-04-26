@@ -14,7 +14,7 @@
             app:tool_cover_background="@color/white"
             app:tool_cover_title="银行卡"
             android:layout_width="match_parent"
-            android:layout_height="50dp"/>
+            android:layout_height="45dp"/>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:layout_width="match_parent"

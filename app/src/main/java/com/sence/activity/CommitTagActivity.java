@@ -6,6 +6,7 @@ import android.media.MediaMetadataRetriever;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -193,6 +194,10 @@ public class CommitTagActivity extends BaseActivity implements View.OnClickListe
     public void addTag(boolean is_video) {
         uid = LoginStatus.getUid();
         content = tagContent.getText().toString();
+        if (TextUtils.isEmpty(content)){
+            ToastUtils.showShort("分享内容不能为空");
+            return;
+        }
         HttpManager httpManager;
         if (is_video) {
             type = "2";

@@ -15,7 +15,7 @@
             app:is_back="true"
             app:tool_cover_elevation="0"
             android:layout_width="match_parent"
-            android:layout_height="50dp"/>
+            android:layout_height="45dp"/>
 
     <LinearLayout
             android:background="@color/white"

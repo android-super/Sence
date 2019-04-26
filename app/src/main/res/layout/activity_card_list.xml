@@ -13,7 +13,7 @@
             app:tool_cover_title="选择银行"
             app:tool_cover_background="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="50dp"/>
+            android:layout_height="45dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycle_view"

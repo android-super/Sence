@@ -390,6 +390,7 @@ public class BusFragment extends BaseMainFragment {
             @Override
             public void onFinish() {
                 smart_refresh.finishLoadMore();
+                smart_refresh.finishRefresh();
             }
 
             @Override

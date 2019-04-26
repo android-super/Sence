@@ -16,6 +16,7 @@ public class WebConstans {
         SPXQ,//商品详情
         GRZL,//个人资料
         YHXX,//用户协议
+        XTTZ,//系统通知
     }
 
     public static String buildWebUrl(String url, String uid) {

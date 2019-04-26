@@ -41,7 +41,11 @@ public class NoteRecommendAdapter extends BaseQuickAdapter<PNoteDetailBean.Recom
         final NiceImageView item_head = helper.getView(R.id.item_head);
         GlideUtils.getInstance().loadHead(item.getAvatar(), item_head);
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) item_img.getLayoutParams();
-        layoutParams.height = ConvertUtils.dp2px(item.getHeight()) / 2;
+        if (item.getHeight() > (1030 / 2)) {
+            layoutParams.height = ConvertUtils.dp2px(1030 / 4);
+        } else {
+            layoutParams.height = ConvertUtils.dp2px(item.getHeight()) / 2;
+        }
         GlideUtils.getInstance().loadNormal(item.getAlbum_url(), item_img);
         helper.setText(R.id.item_describe, item.getContent());
         helper.setText(R.id.item_name, item.getNick_name());

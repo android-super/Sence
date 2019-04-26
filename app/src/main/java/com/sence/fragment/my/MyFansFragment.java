@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.blankj.utilcode.util.ToastUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
@@ -19,6 +21,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sence.R;
 import com.sence.adapter.FansAdapter;
 import com.sence.bean.request.RFansBean;
+import com.sence.bean.request.RFocusBean;
 import com.sence.bean.response.PFansBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
@@ -74,7 +77,16 @@ public class MyFansFragment extends Fragment {
                 initFansData();
             }
         });
-
+        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
+                if (adapter.getData().get(position).getIs_focus().equals("1")) {
+                    cancelFocus(adapter.getData().get(position).getUid(),position);
+                }else{
+                    toFocus(adapter.getData().get(position).getUid(),position);
+                }
+            }
+        });
         initFansData();
     }
 
@@ -102,6 +114,55 @@ public class MyFansFragment extends Fragment {
                 } else {
                     adapter.addData(o);
                 }
+            }
+        });
+    }
+
+    /**
+     * 关注
+     * @param to_uid
+     */
+    public void toFocus(String to_uid,int position) {
+        HttpManager.getInstance().PlayNetCode(HttpCode.USER_FOCUS, new RFocusBean(LoginStatus.getUid(), to_uid)).request(new ApiCallBack<String>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(String o, String msg) {
+                ToastUtils.showShort(msg);
+                adapter.getData().get(position).setIs_focus("1");
+                adapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    /**
+     * 取消关注
+     */
+    private void cancelFocus(String to_uid,int position) {
+        HttpManager.getInstance().PlayNetCode(HttpCode.USER_FOCUS_CANCEL, new RFocusBean(LoginStatus.getUid(),to_uid)).request(new ApiCallBack<String>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(String o, String msg) {
+                ToastUtils.showShort(msg);
+                adapter.getData().get(position).setIs_focus("0");
+                adapter.notifyDataSetChanged();
             }
         });
     }

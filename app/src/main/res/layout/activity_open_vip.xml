@@ -17,7 +17,7 @@
             style="@style/NoLeftToolbar"
             android:elevation="0.5dp"
             android:layout_width="match_parent"
-            android:layout_height="50dp"/>
+            android:layout_height="45dp"/>
 
     <LinearLayout
             android:layout_marginTop="15dp"

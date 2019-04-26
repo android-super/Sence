@@ -57,13 +57,6 @@ public class AutonymActivity extends BaseActivity {
     @Override
     public void initView() {
         StatusBarUtil.setLightMode(this);
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
         btSubmintAutonym.setClickable(false);
         if("2".equals(LoginStatus.getIdStatus())){
             llHeadAutonym.setVisibility(View.GONE);

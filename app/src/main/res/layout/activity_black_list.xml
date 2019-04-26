@@ -12,7 +12,7 @@
         android:id="@+id/rl_head_blacklist"
         style="@style/NoLeftToolbar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="45dp"
         app:is_back="true"
         app:tool_cover_background="@color/white"
         app:tool_cover_title="黑名单"/>

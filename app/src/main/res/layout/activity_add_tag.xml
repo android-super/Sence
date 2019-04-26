@@ -12,14 +12,14 @@
     <RelativeLayout
             android:background="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="45dp">
 
         <ImageView
                 android:id="@+id/tag_back"
                 android:src="@drawable/fanhui"
                 android:layout_width="50dp"
                 android:scaleType="center"
-                android:layout_height="50dp"/>
+                android:layout_height="45dp"/>
 
         <TextView
                 android:id="@+id/tag_title"
