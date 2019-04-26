@@ -35,7 +35,6 @@ import com.sence.MainActivity;
 import com.sence.R;
 import com.sence.activity.chat.ui.ChatMsgActivity;
 import com.sence.activity.web.WebConstans;
-import com.sence.adapter.ShopDetailsCommendAdapter;
 import com.sence.adapter.ShopDetailsImgAdapter;
 import com.sence.base.BaseActivity;
 import com.sence.bean.request.RBusAddBean;
@@ -138,22 +137,13 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
     TextView tvNameshopShopdetails;
     @BindView(R.id.tv_contentshop_shopdetails)
     TextView tvContentshopShopdetails;
+
     @BindView(R.id.recycle_commendimgshop_shopdetails)
     RecyclerView recycleCommendimgshopShopdetails;
-    @BindView(R.id.tv_timeshop_shopdetails)
-    TextView tvTimeshopShopdetails;
-    @BindView(R.id.iv_likeshop_shopdetails)
-    ImageView ivLikeshopShopdetails;
-    @BindView(R.id.tv_likenumshop_shopdetails)
-    TextView tvLikenumshopShopdetails;
-    @BindView(R.id.ll_likeshop_shopdetails)
-    LinearLayout llLikeshopShopdetails;
     @BindView(R.id.ll_layout_shopdetails)
     LinearLayout llLayoutShopdetails;
 
     private ShopDetailsImgAdapter shopDetailsImgAdapter;
-    private ShopDetailsCommendAdapter mShopDetailsCommendAdapter;
-
     private WebSettings settings;
     private List<String> imgs = new ArrayList<>();
     private String id;
@@ -270,7 +260,11 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                 bean = o;
                 if (o.getComment().size() > 0) {
                     tvNotdataShopdetails.setVisibility(View.GONE);
-                    mShopDetailsCommendAdapter.setList(o.getComment());
+                    GlideUtils.getInstance().loadHead(o.getComment().get(0).getAvatar(),ivImgshopShopdetails);
+                    tvNameshopShopdetails.setText(o.getComment().get(0).getNickname());
+                    tvContentshopShopdetails.setText(o.getComment().get(0).getContent());
+                }else{
+                    llLayoutShopdetails.setVisibility(View.GONE);
                 }
                 num = Integer.parseInt(o.getCartNum());
                 if (num > 0) {
