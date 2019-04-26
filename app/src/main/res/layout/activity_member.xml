@@ -19,7 +19,7 @@
             app:tool_cover_right_text="加入"
             app:tool_cover_right_color="@color/theme_green"
             android:layout_width="match_parent"
-            android:layout_height="50dp"/>
+            android:layout_height="45dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycle_view"
@@ -27,17 +27,4 @@
             android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-    <TextView
-            android:id="@+id/member_join"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
-            android:background="@drawable/shape_circle_theme_green"
-            android:layout_width="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="40dp"
-            android:textSize="16sp"
-            android:gravity="center"
-            android:text="成为V群会员"
-            android:textColor="@color/white"
-            android:layout_height="45dp"/>
 </RelativeLayout>

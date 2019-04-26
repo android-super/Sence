@@ -15,7 +15,7 @@
             app:tool_cover_title="大V分享"
             app:tool_cover_background="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="50dp"/>
+            android:layout_height="45dp"/>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:layout_width="match_parent"

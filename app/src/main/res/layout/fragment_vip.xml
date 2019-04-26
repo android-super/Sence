@@ -74,7 +74,7 @@
                                 android:layout_height="wrap_content"/>
                     </LinearLayout>
 
-                    <TextView
+                    <com.sence.view.TextBannerView
                             android:id="@+id/vip_no_content"
                             android:layout_marginTop="79dp"
                             android:text="@string/hint_describe"

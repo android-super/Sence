@@ -8,7 +8,7 @@
               android:layout_height="match_parent">
     <com.sence.view.PubTitle
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="45dp"
             app:is_back="true"
             app:tool_cover_title="添加地址"
             style="@style/NoLeftToolbar"

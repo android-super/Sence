@@ -31,7 +31,7 @@ public class WebActivity extends BaseActivity {
     private WebSettings settings;
 
     private WebConstans.WebCode code;
-    private String url;
+    private String url = "";
 
     @Override
     public int onActLayout() {
@@ -42,36 +42,30 @@ public class WebActivity extends BaseActivity {
     public void initView() {
         StatusBarUtil.setLightMode(this);
         initSetting();
-        String urlSys = getIntent().getStringExtra("url");
-        String titlelSys = getIntent().getStringExtra("title");
-        if(!TextUtils.isEmpty(urlSys)){
-            ptWeb.setTitleText(titlelSys);
-            webView.loadUrl(this.url);
-            return;
-        }
         code = (WebConstans.WebCode) this.getIntent().getSerializableExtra("code");
         switch (code) {
-            case HY:
-                ptWeb.setTitleText("花园");
-                this.url = WebConstans.buildWebUrl(WebConstans.HY, LoginStatus.getUid());
-                webView.loadUrl(this.url);
-                break;
             case GRZL:
-                webView.loadUrl(this.url);
+                webView.loadUrl(url);
                 break;
             case SPXQ:
-                webView.loadUrl(this.url);
+                webView.loadUrl(url);
                 break;
             case WZXQ:
-                webView.loadUrl(this.url);
+                webView.loadUrl(url);
                 break;
             case XKXY:
-                webView.loadUrl(this.url);
+                webView.loadUrl(url);
                 break;
             case YSZC:
                 ptWeb.setTitleText("隐私政策");
-                this.url = WebConstans.YSZC;
-                webView.loadUrl(this.url);
+                url = WebConstans.YSZC;
+                webView.loadUrl(url);
+                break;
+            case XTTZ:
+                String urlSys = getIntent().getStringExtra("url");
+                String titlelSys = getIntent().getStringExtra("title");
+                ptWeb.setTitleText(titlelSys);
+                webView.loadUrl(urlSys);
                 break;
         }
     }
@@ -138,8 +132,8 @@ public class WebActivity extends BaseActivity {
         }
 
         @JavascriptInterface
-        public void accountClick(){
-            Intent intent = new Intent(WebActivity.this,MyAccountActivity.class);
+        public void accountClick() {
+            Intent intent = new Intent(WebActivity.this, MyAccountActivity.class);
             startActivity(intent);
         }
 

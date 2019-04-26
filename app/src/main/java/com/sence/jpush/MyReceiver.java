@@ -8,7 +8,16 @@ import android.text.TextUtils;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.orhanobut.logger.Logger;
+import com.sence.LoginActivity;
 import com.sence.MainActivity;
+import com.sence.activity.MyOrderActivity;
+import com.sence.activity.ServiceDetailsActivity;
+import com.sence.activity.SystemInformActivity;
+import com.sence.activity.WebActivity;
+import com.sence.activity.web.WebConstans;
+import com.sence.activity.web.WebNotitleActivity;
+import com.sence.utils.JsonParseUtil;
+import com.sence.utils.LoginStatus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,46 +39,83 @@ public class MyReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         try {
             Bundle bundle = intent.getExtras();
-            Logger.d("[MyReceiver] onReceive - " + intent.getAction() + ", extras: " + printBundle(bundle));
+            Logger.e("[MyReceiver] onReceive - " + intent.getAction() + ", extras: " + printBundle(bundle));
 
             if (JPushInterface.ACTION_REGISTRATION_ID.equals(intent.getAction())) {
                 String regId = bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID);
-                Logger.d("[MyReceiver] 接收Registration Id : " + regId);
+                Logger.e("[MyReceiver] 接收Registration Id : " + regId);
                 //send the Registration Id to your server...
 
             } else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
-                Logger.d("[MyReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_MESSAGE));
+                Logger.e("[MyReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_MESSAGE));
 //				processCustomMessage(context, bundle);
 
             } else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
-                Logger.d("[MyReceiver] 接收到推送下来的通知");
+                Logger.e("[MyReceiver] 接收到推送下来的通知");
                 int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
-                Logger.d("[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
+                Logger.e("[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
 
             } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
-                Logger.d("[MyReceiver] 用户点击打开了通知");
-
+                Logger.e("[MyReceiver] 用户点击打开了通知");
+                String result = bundle.getString(JPushInterface.EXTRA_EXTRA);
+                JPushBean bean = JsonParseUtil.parseString(result, JPushBean.class);
+                switch (bean.getTo()) {
+                    case "orderInfo"://订单
+                        Intent new_intent = new Intent(context, MyOrderActivity.class);
+                        new_intent.putExtra("type", "2");
+                        new_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        toLogin(context, new_intent);
+                        break;
+                    case "notice_detail"://系统通知
+                        new_intent = new Intent(context, WebActivity.class);
+                        new_intent.putExtra("url", bean.getLink());
+                        new_intent.putExtra("title", bean.getTitle());
+                        new_intent.putExtra("code", WebConstans.WebCode.XTTZ);
+                        new_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        toLogin(context,new_intent);
+                        break;
+                    case "serviceInfo"://服務詳情
+                        new_intent = new Intent(context, ServiceDetailsActivity.class);
+                        new_intent.putExtra("id", bean.getId());
+                        new_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        context.startActivity(new_intent);
+                        break;
+                    case "garden"://花园
+                        new_intent = new Intent(context, WebNotitleActivity.class);
+                        new_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        new_intent.putExtra("code", WebConstans.WebCode.HY);
+                        toLogin(context,new_intent);
+                        break;
+                }
                 //打开自定义的Activity
                 Intent i = new Intent(context, MainActivity.class);
                 i.putExtras(bundle);
-                //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 context.startActivity(i);
 
             } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
-                Logger.d("[MyReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));
+                Logger.e("[MyReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));
                 //在这里根据 JPushInterface.EXTRA_EXTRA 的内容处理代码，比如打开新的Activity， 打开一个网页等..
 
             } else if (JPushInterface.ACTION_CONNECTION_CHANGE.equals(intent.getAction())) {
                 boolean connected = intent.getBooleanExtra(JPushInterface.EXTRA_CONNECTION_CHANGE, false);
                 Logger.w("[MyReceiver]" + intent.getAction() + " connected state change to " + connected);
             } else {
-                Logger.d("[MyReceiver] Unhandled intent - " + intent.getAction());
+                Logger.e("[MyReceiver] Unhandled intent - " + intent.getAction());
             }
         } catch (Exception e) {
 
         }
 
+    }
+
+    public void toLogin(Context context, Intent intent) {
+        if (!LoginStatus.isLogin() || LoginStatus.getUid().isEmpty()) {
+            context.startActivity(new Intent(context, LoginActivity.class));
+            return;
+        } else {
+            context.startActivity(intent);
+        }
     }
 
     // 打印所有的 intent extra 数据

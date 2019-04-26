@@ -20,7 +20,7 @@
             app:tool_cover_right_color="#050505"
             app:tool_cover_background="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="50dp"/>
+            android:layout_height="45dp"/>
 
     <RelativeLayout
             android:layout_marginTop="30dp"

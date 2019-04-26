@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.sence.R;
 import com.sence.activity.WebActivity;
+import com.sence.activity.web.WebConstans;
 import com.sence.bean.response.PSystemInformBean;
 
 import java.util.ArrayList;
@@ -41,14 +42,15 @@ public class SystemInformAdapter extends RecyclerView.Adapter<SystemInformAdapte
     @Override
     public void onBindViewHolder(@NonNull SystemInformAdapter.ViewHolder holder, final int position) {
         holder.mTime.setText(list.get(position).getAdd_time());
-        holder.mType.setText( list.get(position).getTitle());
-        holder.mContent.setText( list.get(position).getContent());
+        holder.mType.setText(list.get(position).getTitle());
+        holder.mContent.setText(list.get(position).getContent());
         holder.mLook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, WebActivity.class);
                 intent.putExtra("url", list.get(position).getWeb_view());
                 intent.putExtra("title", "系统通知");
+                intent.putExtra("code", WebConstans.WebCode.XTTZ);
                 context.startActivity(intent);
             }
         });

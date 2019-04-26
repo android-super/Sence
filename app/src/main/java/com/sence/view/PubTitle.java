@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.text.TextUtils;
@@ -96,7 +97,7 @@ public class PubTitle extends Toolbar {
         right_text = new TextView(context);
         RelativeLayout.LayoutParams layoutParams;
         layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                ConvertUtils.dp2px(50));
+                ConvertUtils.dp2px(45));
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         layoutParams.rightMargin = ConvertUtils.dp2px(15);
         right_text.setGravity(Gravity.CENTER);
@@ -119,8 +120,8 @@ public class PubTitle extends Toolbar {
             return;
         }
         right_img = new ImageView(context);
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ConvertUtils.dp2px(50),
-                ConvertUtils.dp2px(50));
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ConvertUtils.dp2px(45),
+                ConvertUtils.dp2px(45));
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         right_img.setLayoutParams(layoutParams);
         right_img.setImageDrawable(tool_cover_right_img);
@@ -139,7 +140,7 @@ public class PubTitle extends Toolbar {
 
     private void addBack(RelativeLayout parent) {
         back_img = new ImageView(context);
-        back_img.setLayoutParams(new RelativeLayout.LayoutParams(ConvertUtils.dp2px(50), ConvertUtils.dp2px(50)));
+        back_img.setLayoutParams(new RelativeLayout.LayoutParams(ConvertUtils.dp2px(45), ConvertUtils.dp2px(45)));
         back_img.setImageResource(R.drawable.fanhui);
         back_img.setScaleType(ImageView.ScaleType.CENTER);
         parent.addView(back_img);
@@ -176,6 +177,7 @@ public class PubTitle extends Toolbar {
         title.setEllipsize(TextUtils.TruncateAt.END);
         title.setLayoutParams(layoutParams);
         title.setTextSize(16);
+        title.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         title.setTextColor(Color.parseColor("#000000"));
         title.setText(tool_cover_title);
         parent.addView(title);

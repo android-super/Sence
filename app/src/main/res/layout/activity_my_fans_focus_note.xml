@@ -13,14 +13,14 @@
     <RelativeLayout
             android:background="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="45dp">
 
         <ImageView
                 android:id="@+id/back"
                 android:src="@drawable/fanhui"
                 android:scaleType="center"
-                android:layout_width="50dp"
-                android:layout_height="50dp"/>
+                android:layout_width="45dp"
+                android:layout_height="45dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycle_title"

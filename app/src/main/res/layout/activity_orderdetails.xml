@@ -15,7 +15,7 @@
             app:tool_cover_right_size="14sp"
             app:tool_cover_right_color="#999999"
             android:layout_width="match_parent"
-            android:layout_height="50dp"/>
+            android:layout_height="45dp"/>
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

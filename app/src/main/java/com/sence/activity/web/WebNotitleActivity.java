@@ -12,6 +12,7 @@ import com.sence.R;
 import com.sence.activity.MyAccountActivity;
 import com.sence.base.BaseActivity;
 import com.sence.utils.LoginStatus;
+import com.sence.utils.NavigationBarUtil;
 import com.sence.utils.StatusBarUtil;
 import com.sence.view.PubTitle;
 
@@ -35,7 +36,10 @@ public class WebNotitleActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        StatusBarUtil.setTranslucentForCoordinatorLayout(this,0);
+        if (NavigationBarUtil.hasNavigationBar(this)) {
+            NavigationBarUtil.initActivity(findViewById(android.R.id.content));
+        }
+        StatusBarUtil.setTranslucentForCoordinatorLayout(this, 0);
         StatusBarUtil.setLightMode(this);
         initSetting();
         code = (WebConstans.WebCode) this.getIntent().getSerializableExtra("code");

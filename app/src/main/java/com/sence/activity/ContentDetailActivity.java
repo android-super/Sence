@@ -630,8 +630,9 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
                 })
                 .share();
     }
+
     private static void addWater() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.SHARE_ADD_WATER, new RUidBean( LoginStatus.getUid())).request(new ApiCallBack<String>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.SHARE_ADD_WATER, new RUidBean(LoginStatus.getUid())).request(new ApiCallBack<String>() {
             @Override
             public void onFinish() {
 
@@ -644,11 +645,12 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
 
             @Override
             public void onSuccess(String o, String msg) {
-                Logger.e("msg====="+msg);
+                Logger.e("msg=====" + msg);
                 ToastUtils.showShort(msg);
             }
         });
     }
+
     public void toFocus() {
         HttpManager.getInstance().PlayNetCode(HttpCode.USER_FOCUS, new RFocusBean(LoginStatus.getUid(), to_uid)).request(new ApiCallBack<String>() {
             @Override
@@ -663,8 +665,10 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
 
             @Override
             public void onSuccess(String o, String msg) {
-                contentFocus.setVisibility(View.GONE);
+                contentFocus.setVisibility(View.VISIBLE);
                 contentFocusTv.setVisibility(View.GONE);
+                toolContentFocus.setVisibility(View.GONE);
+                toolFocus.setVisibility(View.VISIBLE);
                 ToastUtils.showShort(msg);
             }
         });
@@ -766,6 +770,7 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
                 }
                 comment_title.setText(count + "条评论");
                 comment_num.setText("(" + count + ")");
+                contentComment.setText("评论·" + count);
             }
 
             @Override
@@ -805,12 +810,5 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
                 ToastUtils.showShort("成功加入购物车");
             }
         });
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
     }
 }

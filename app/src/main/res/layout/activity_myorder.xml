@@ -12,7 +12,7 @@
             style="@style/NoLeftToolbar"
             app:tool_cover_title="我的订单"
             android:layout_width="match_parent"
-            android:layout_height="50dp"/>
+            android:layout_height="45dp"/>
     <com.tlz.fucktablayout.FuckTabLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"

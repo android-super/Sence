@@ -268,7 +268,6 @@ public class UserFragment extends BaseMainFragment implements View.OnClickListen
                 break;
             case R.id.user_all_order:
                 startMyOrder(0);
-
                 break;
             case R.id.user_pay:
                 startMyOrder(1);
@@ -324,7 +323,9 @@ public class UserFragment extends BaseMainFragment implements View.OnClickListen
 
     @Override
     public void onRefresh() {
-        initFirstView();
+        if (!LoginStatus.isLogin()) {
+            initFirstView();
+        }
         initMyInfo();
     }
 }

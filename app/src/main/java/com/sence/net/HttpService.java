@@ -318,7 +318,8 @@ public interface HttpService {
 
     @Multipart
     @POST(Urls.ORDER_COMMENT)
-    Observable<BaseResponseBean<String>> CommentOrder(@PartMap Map<String, RequestBody> map,@Part List<MultipartBody.Part> partList);//订单评论
+    Observable<BaseResponseBean<String>> CommentOrder(@PartMap Map<String, RequestBody> map,
+                                                      @Part List<MultipartBody.Part> partList);//订单评论
 
     @Multipart
     @POST(Urls.USER_EDIT)
@@ -364,7 +365,7 @@ public interface HttpService {
 
     @FormUrlEncoded
     @POST(Urls.CHAT_MEMBER_LIST)
-    Observable<BaseResponseBean<List<RMemberBean>>> ChatMemberList(@FieldMap Map<String, Object> map);//V群成员列表
+    Observable<BaseResponseBean<RMemberBean>> ChatMemberList(@FieldMap Map<String, Object> map);//V群成员列表
 
     @FormUrlEncoded
     @POST(Urls.CHAT_ENTER)

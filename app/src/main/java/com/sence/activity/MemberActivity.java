@@ -36,8 +36,6 @@ public class MemberActivity extends BaseActivity implements View.OnClickListener
     RecyclerView recycleView;
     @BindView(R.id.pub_title)
     PubTitle pubTitle;
-    @BindView(R.id.member_join)
-    TextView memberJoin;
 
     private MemberAdapter adapter;
     private String v_id;
@@ -66,7 +64,6 @@ public class MemberActivity extends BaseActivity implements View.OnClickListener
                 Join();
             }
         });
-        memberJoin.setOnClickListener(this);
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
@@ -132,9 +129,6 @@ public class MemberActivity extends BaseActivity implements View.OnClickListener
                 break;
             case R.id.into_ban:
                 ban();
-                break;
-            case R.id.member_join:
-                Join();
                 break;
         }
 

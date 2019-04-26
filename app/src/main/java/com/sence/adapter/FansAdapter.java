@@ -41,5 +41,6 @@ public class FansAdapter extends BaseQuickAdapter<PFansBean, BaseViewHolder> {
         } else {
             helper.setGone(R.id.item_vip, false);
         }
+        helper.addOnClickListener(R.id.item_focus);
     }
 }
