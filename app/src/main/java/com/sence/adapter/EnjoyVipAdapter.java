@@ -33,7 +33,7 @@ public class EnjoyVipAdapter extends RecyclerView.Adapter<EnjoyVipAdapter.ViewHo
     @NonNull
     @Override
     public EnjoyVipAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.rv_item_enjoyvip,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.rv_item_enjoyvipservice,parent,false);
         return new ViewHolder(view);
 
     }

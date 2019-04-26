@@ -99,6 +99,12 @@ public class UserDetailActivity extends BaseActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        listBean.clear();
+    }
+
+    @Override
     public int onActLayout() {
         return R.layout.activity_userdetail;
     }

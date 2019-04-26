@@ -128,6 +128,17 @@ public class MyInfoRecommendFragment extends Fragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if("3".equals(type)){
+            list.clear();
+        }else if("2".equals(type)){
+            listOther.clear();
+        }else if("1".equals(type)){
+            listNote.clear();
+        }
+    }
 
     private void doHttp() {
         if("3".equals(type)){

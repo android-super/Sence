@@ -135,6 +135,12 @@ public class ShopCommendActivity extends BaseActivity implements View.OnClickLis
         bottomwindow();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        beanList.clear();
+    }
+
     public void initData() {
         HttpManager.getInstance().PlayNetCode(HttpCode.COMMENT_SHOP_LIST, new RShopCommentBean(id, page + "", "10",
                 LoginStatus.getUid())).request(new ApiCallBack<List<PShopCommendBean>>() {

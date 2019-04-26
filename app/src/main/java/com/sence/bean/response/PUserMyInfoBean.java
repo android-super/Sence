@@ -20,6 +20,15 @@ public class PUserMyInfoBean {
      */
     private String inviteCode;
     private String avatarUrl;
+    private String usertoken;
+
+    public String getUsertoken() {
+        return usertoken;
+    }
+
+    public void setUsertoken(String usertoken) {
+        this.usertoken = usertoken;
+    }
 
     public String getAvatarUrl() {
         return avatarUrl;

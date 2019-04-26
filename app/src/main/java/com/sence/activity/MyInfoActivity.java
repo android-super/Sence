@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -54,6 +55,12 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
@@ -90,7 +97,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     private LinearLayout mShop;
     private ImageView mHead;
     private NiceImageView mIsV;
-    private boolean recommendShow,noteShow;
+    private boolean recommendShow, noteShow;
     private MyInfoRecommendViewPagerAdatpter mMyInfoRecommendViewPagerAdatpter;
     private String[] list = {"推荐", "笔记", "共享"};
     private int scaleRatio;
@@ -107,6 +114,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     private TextView mType;
     private RelativeLayout mHeadBg;
     private boolean isshow = true;
+
     @Override
     public int onActLayout() {
         return R.layout.activity_myinfo;
@@ -154,7 +162,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         noteFragment = new UserNoteFragment();
         MyInfoRecommendFragment myInfoRecommendFragment = new MyInfoRecommendFragment();
         fragmentList = new Fragment[]{recommendFragment, noteFragment, myInfoRecommendFragment};
-        mMyInfoRecommendViewPagerAdatpter = new MyInfoRecommendViewPagerAdatpter(getSupportFragmentManager(), this, fragmentList, list,uid);
+        mMyInfoRecommendViewPagerAdatpter = new MyInfoRecommendViewPagerAdatpter(getSupportFragmentManager(), this, fragmentList, list, uid);
         mViewPager.setAdapter(mMyInfoRecommendViewPagerAdatpter);
         mTabLayoutButtom.setupWithViewPager(mViewPager);
 
@@ -204,19 +212,19 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
 
             @Override
             public void onPageSelected(int position) {
-                if(position==0){
-                    if(recommendShow){
+                if (position == 0) {
+                    if (recommendShow) {
                         ivNotimgMyinfo.setVisibility(View.VISIBLE);
-                    }else{
+                    } else {
                         ivNotimgMyinfo.setVisibility(View.GONE);
                     }
-                }else if(position==1){
-                    if(noteShow){
+                } else if (position == 1) {
+                    if (noteShow) {
                         ivNotimgMyinfo.setVisibility(View.VISIBLE);
-                    }else{
+                    } else {
                         ivNotimgMyinfo.setVisibility(View.GONE);
                     }
-                }else if(position==2){
+                } else if (position == 2) {
                     ivNotimgMyinfo.setVisibility(View.GONE);
                 }
             }
@@ -236,50 +244,71 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 DisplayMetrics dm = resources.getDisplayMetrics();
                 int height3 = dm.heightPixels;
                 int height = height3 - y;
-                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams)ivNotimgMyinfo.getLayoutParams();
-                layoutParams.height =  height;
+                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) ivNotimgMyinfo.getLayoutParams();
+                layoutParams.height = height;
                 ivNotimgMyinfo.setLayoutParams(layoutParams);
             }
         });
     }
 
 
-    private void dim(final String url) {
+
+        private Handler handler = new Handler() {
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what) {
+                    case 1:
+                        Bitmap blurBitmap = (Bitmap) msg.obj;
+                        mHead.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        mHead.setImageBitmap(blurBitmap);
+                        handler.removeCallbacksAndMessages(null);
+                        break;
+
+                }
+
+            }
+        };
+    public void returnBitMap(final String url) {
 
         new Thread(new Runnable() {
+
+            private Bitmap bitmapDim;
+
             @Override
             public void run() {
-                scaleRatio = 10;
-                //  下面的这个方法必须在子线程中执行
-                Bitmap blurBitmap = FastBlurUtil.GetUrlBitmap(url, scaleRatio);
-                if(blurBitmap==null){
-                    return;
-                }
-                Message message = new Message();
-                message.what = 1;
-                message.obj = blurBitmap;
-                handler.sendMessage(message);
+                URL imageurl = null;
 
+                try {
+                    imageurl = new URL(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    HttpURLConnection conn = (HttpURLConnection) imageurl.openConnection();
+                    conn.setDoInput(true);
+                    conn.connect();
+                    InputStream is = conn.getInputStream();
+                    Bitmap bitmap = BitmapFactory.decodeStream(is);
+                    is.close();
+                    if(bitmap==null){
+                        return;
+                    }
+                    bitmapDim = new FastBlurUtil().fastBlur(bitmap, 8, 20);
+                    if(bitmapDim==null){
+                        return;
+                    }
+                    Message message = new Message();
+                    message.what = 1;
+                    message.obj = bitmapDim;
+                    handler.sendMessage(message);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }).start();
+
     }
 
-
-    private Handler handler = new Handler() {
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case 1:
-                    Bitmap blurBitmap = (Bitmap) msg.obj;
-                    mHead.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                    mHead.setImageBitmap(blurBitmap);
-                    handler.removeCallbacksAndMessages(null);
-                    break;
-
-            }
-
-        }
-    };
 
     public void initData() {
         HttpManager.getInstance().PlayNetCode(HttpCode.USER_MYINFO, new RUserinfoBean(LoginStatus.getUid(), uid)).request(new ApiCallBack<PUserMyInfoBean>() {
@@ -307,15 +336,15 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 }
                 if ("0".equals(o.getIs_kol())) {
                     mShop.setVisibility(View.GONE);
-                    if(isshow){
-                        isshow=false;
+                    if (isshow) {
+                        isshow = false;
                         int height = layout.getHeight();
                         int headHeight = mHead.getHeight();
-                        RelativeLayout.LayoutParams linearParams =(RelativeLayout.LayoutParams) mHead.getLayoutParams();
-                        linearParams.height=headHeight-height;
+                        RelativeLayout.LayoutParams linearParams = (RelativeLayout.LayoutParams) mHead.getLayoutParams();
+                        linearParams.height = headHeight - height;
                         mHead.setLayoutParams(linearParams);
-                        RelativeLayout.LayoutParams linearParamsBg =(RelativeLayout.LayoutParams) mHeadBg.getLayoutParams();
-                        linearParamsBg.height=headHeight-height;
+                        RelativeLayout.LayoutParams linearParamsBg = (RelativeLayout.LayoutParams) mHeadBg.getLayoutParams();
+                        linearParamsBg.height = headHeight - height;
                         mHeadBg.setLayoutParams(linearParamsBg);
                     }
 
@@ -327,15 +356,14 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                     mShopPrice.setText("￥ " + o.getGoods_info().getPrice());
                     GlideUtils.getInstance().loadHead(o.getGoods_info().getImg(), mImg);
                 }
-                type= o.getIs_shield();
+                type = o.getIs_shield();
                 mName.setText(o.getNick_name());
                 mAddress.setText(o.getDetails());
                 mFocusNum.setText(o.getFocus_num());
                 mFansNum.setText(o.getFans_num());
                 mSigner.setText(o.getAutograph());
                 GlideUtils.getInstance().loadHead(o.getAvatar(), mImageView);
-
-                dim(Urls.base_url + o.getAvatar());
+                returnBitMap(Urls.base_url + o.getAvatar());
                 if ("0".equals(o.getIs_have_service())) {
                     final Fragment[] fragments = {recommendFragment, noteFragment};
                     String[] listTitle = {"推荐", "笔记"};
@@ -353,12 +381,12 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 finish();
                 break;
             case R.id.ll_wei_share:
-                shareWeb(MyInfoActivity.this, WebConstans.GRZL+"?token=" + LoginStatus.getUid() + "&to_uid=" + uid, bean.getUser_name() + bean.getNick_name() + "的精彩生活", "女神的日常", SHARE_MEDIA.WEIXIN, bean.getAvatarUrl());
-                Log.i("aaaaa", bean.getAvatarUrl()+"");
+                shareWeb(MyInfoActivity.this, WebConstans.GRZL + "?token=" + LoginStatus.getToken() + "&to_uid=" + bean.getUsertoken(), bean.getUser_name() + bean.getNick_name() + "的精彩生活", "女神的日常", SHARE_MEDIA.WEIXIN, bean.getAvatarUrl());
+                Log.i("aaaaa", bean.getAvatarUrl() + "");
                 mBottomSheetDialog.dismiss();
                 break;
             case R.id.ll_friend_share:
-                shareWeb(MyInfoActivity.this, WebConstans.GRZL+"?token="  + LoginStatus.getUid() + "&to_uid=" + uid, bean.getUser_name() + bean.getNick_name() + "的精彩生活", "女神的日常", SHARE_MEDIA.WEIXIN_CIRCLE, bean.getAvatarUrl());
+                shareWeb(MyInfoActivity.this, WebConstans.GRZL + "?token=" + LoginStatus.getToken() + "&to_uid=" + bean.getUsertoken(), bean.getUser_name() + bean.getNick_name() + "的精彩生活", "女神的日常", SHARE_MEDIA.WEIXIN_CIRCLE, bean.getAvatarUrl());
                 mBottomSheetDialog.dismiss();
                 break;
             case R.id.tv_cancel_share:
@@ -366,9 +394,9 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 break;
             case R.id.ll_report_share:
                 Intent intent = new Intent(MyInfoActivity.this, ReportCauseActivity.class);
-                intent.putExtra("type","1");
-                intent.putExtra("gid",bean.getUid());
-                intent.putExtra("uid",bean.getUid());
+                intent.putExtra("type", "1");
+                intent.putExtra("gid", bean.getUid());
+                intent.putExtra("uid", bean.getUid());
                 startActivity(intent);
                 mBottomSheetDialog.dismiss();
                 break;
@@ -443,14 +471,15 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
             }
         });
     }
+
     private void rachel() {
-        String typeRachel ;
-        if("0".equals(type)){
+        String typeRachel;
+        if ("0".equals(type)) {
             typeRachel = "1";
-        }else{
+        } else {
             typeRachel = "2";
         }
-        HttpManager.getInstance().PlayNetCode(HttpCode.RACHEL, new RRachelBean(LoginStatus.getUid(), uid,typeRachel)).request(new ApiCallBack<String>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.RACHEL, new RRachelBean(LoginStatus.getUid(), uid, typeRachel)).request(new ApiCallBack<String>() {
             @Override
             public void onFinish() {
 
@@ -464,15 +493,16 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
             @Override
             public void onSuccess(String o, String msg) {
                 Logger.e("msg==========" + msg);
-                if("0".equals(type)){
+                if ("0".equals(type)) {
                     type = "1";
-                }else{
+                } else {
                     type = "0";
                 }
                 ToastUtils.showShort(msg);
             }
         });
     }
+
     private void cancelFocus() {
         HttpManager.getInstance().PlayNetCode(HttpCode.USER_FOCUS_CANCEL, new RCancelFocusBean(LoginStatus.getUid(), uid)).request(new ApiCallBack<String>() {
             @Override
@@ -519,7 +549,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
      * 若是要分享视频、音乐可看官方文档
      */
     public static void shareWeb(final Activity activity, String WebUrl, String title, String description, SHARE_MEDIA platform, String url) {
-        Log.i("aaaaa", url+"");
+        Log.i("aaaaa", url + "");
         UMImage thumb = new UMImage(activity, url);
         UMWeb web = new UMWeb(WebUrl);//连接地址(注意链接开头必须包含http)
         web.setTitle(title);//标题
@@ -606,9 +636,9 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
 
     @OnClick(R.id.iv_share_myinfo)
     public void onViewClicked() {
-        if("0".equals(type)){
+        if ("0".equals(type)) {
             mType.setText("拉黑");
-        }else{
+        } else {
             mType.setText("解除拉黑");
         }
         mBottomSheetDialog.show();
@@ -616,18 +646,18 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
 
     public void setIsShow(boolean isShow) {
         noteShow = isShow;
-        if(noteShow){
+        if (noteShow) {
             ivNotimgMyinfo.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             ivNotimgMyinfo.setVisibility(View.GONE);
         }
     }
 
     public void setRecommendShowImg(boolean isShow) {
         recommendShow = isShow;
-        if(recommendShow){
+        if (recommendShow) {
             ivNotimgMyinfo.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             ivNotimgMyinfo.setVisibility(View.GONE);
         }
     }

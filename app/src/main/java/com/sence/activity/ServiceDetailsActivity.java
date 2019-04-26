@@ -73,7 +73,7 @@ public class ServiceDetailsActivity extends BaseActivity {
         StatusBarUtil.setLightMode(this);
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
-        boolean isSelf = intent.getBooleanExtra("isSelf", true);
+        boolean isSelf = intent.getBooleanExtra("isSelf", false);
         if(!isSelf){
             ptPubTitle.setRightImg(0);
         }

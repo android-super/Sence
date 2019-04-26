@@ -114,7 +114,14 @@ public class ManageAddressActivity extends BaseActivity {
     @Override
     public void initData() {
         super.initData();
+
         dohttp();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        list.clear();
     }
 
     private void dohttp() {

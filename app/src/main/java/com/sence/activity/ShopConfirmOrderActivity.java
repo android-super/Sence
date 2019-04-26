@@ -236,6 +236,26 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
             SharedPreferencesUtil.getInstance().putString("paytype", "");
             alter();
         }
+        isCheckAddress = LoginStatus.getIsCheckShopAddress();
+        boolean isNullAddress = LoginStatus.getIsNullShopAddress();
+        if(isNullAddress){
+            SharedPreferencesUtil.getInstance().putBoolean("isnull_shopaddress", true);
+            rlAddaddressConfirmorder.setVisibility(View.VISIBLE);
+            rlAddressConfirmorder.setVisibility(View.GONE);
+        }
+        if(isCheckAddress){
+            rlAddaddressConfirmorder.setVisibility(View.GONE);
+            rlAddressConfirmorder.setVisibility(View.VISIBLE);
+            address = LoginStatus.getAddress();
+            nameAddress = LoginStatus.getNameAddress();
+            phoneAddress = LoginStatus.getPhoneAddress();
+            idAddress = LoginStatus.getIdAddress();
+            tvAddressConfirmorder.setText(address);
+            tvPhoneConfirmorder.setText(phoneAddress);
+            tvNameConfirmorder.setText(nameAddress);
+            SharedPreferencesUtil.getInstance().putBoolean("ischeck_shopaddress", false);
+        }
+
     }
 
     private void alterDone() {
@@ -372,25 +392,6 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
 
     @Override
     public void initData() {
-        isCheckAddress = LoginStatus.getIsCheckShopAddress();
-        boolean isNullAddress = LoginStatus.getIsNullShopAddress();
-        if(isNullAddress){
-            SharedPreferencesUtil.getInstance().putBoolean("isnull_shopaddress", true);
-            rlAddaddressConfirmorder.setVisibility(View.VISIBLE);
-            rlAddressConfirmorder.setVisibility(View.GONE);
-        }
-        if(isCheckAddress){
-            rlAddaddressConfirmorder.setVisibility(View.GONE);
-            rlAddressConfirmorder.setVisibility(View.VISIBLE);
-            address = LoginStatus.getAddress();
-            nameAddress = LoginStatus.getNameAddress();
-            phoneAddress = LoginStatus.getPhoneAddress();
-            idAddress = LoginStatus.getIdAddress();
-            tvAddressConfirmorder.setText(address);
-            tvPhoneConfirmorder.setText(phoneAddress);
-            tvNameConfirmorder.setText(nameAddress);
-            SharedPreferencesUtil.getInstance().putBoolean("ischeck_shopaddress", false);
-        }
 
 
 

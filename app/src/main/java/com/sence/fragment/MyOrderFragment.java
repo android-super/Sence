@@ -147,9 +147,6 @@ public class MyOrderFragment extends Fragment implements View.OnClickListener {
         mMyOrderAdapter.result(new MyOrderAdapter.DeleteOrderListener() {
             @Override
             public void delete(int i) {
-                if("3".equals(listBeans.get(i).getStatus())){
-                    ((MyOrderActivity)getActivity()).setComment();
-                }
                 ((MyOrderActivity)getActivity()).setNum(listBeans.get(i).getStatus());
                 ((MyOrderActivity)getActivity()).refresh(listBeans.get(i).getStatus());
                 listBeans.remove(i);
@@ -427,8 +424,11 @@ public class MyOrderFragment extends Fragment implements View.OnClickListener {
         }else if("payfail".equals(LoginStatus.getPayType())){
             SharedPreferencesUtil.getInstance().putString("paytype", "");
         }
+        listBeans.clear();
         loadData();
     }
+
+
 
     private void loadData() {
         HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_LIST, new RMyOrderBean(LoginStatus.getUid(),page+"","10",status+"")).request(new ApiCallBack<PMyOrderBean>() {

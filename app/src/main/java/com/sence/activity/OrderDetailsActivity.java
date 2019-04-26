@@ -341,6 +341,10 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
                 Logger.e("msg==========" + msg + o);
                 ToastUtils.showShort(msg);
                 SharedPreferencesUtil.getInstance().putString("confirm_take_delivery", "4");
+                Intent intent = new Intent(OrderDetailsActivity.this, OrderCommentActivity.class);
+                intent.putExtra("url", bean.getGoods().get(0).getImg());
+                intent.putExtra("id", bean.getId());
+                startActivity(intent);
                 finish();
             }
         });

@@ -1,6 +1,5 @@
 package com.sence;
 
-import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,17 +8,16 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.*;
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import butterknife.BindView;
-import cn.jpush.android.api.JPushInterface;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.blankj.utilcode.util.AppUtils;
-import com.blankj.utilcode.util.SPUtils;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -30,15 +28,27 @@ import com.sence.base.BaseActivity;
 import com.sence.base.BaseMainFragment;
 import com.sence.bean.request.RUpdateAppBean;
 import com.sence.bean.response.PUpDataAppInfo;
-import com.sence.fragment.*;
+import com.sence.fragment.BusFragment;
+import com.sence.fragment.KindFragment;
+import com.sence.fragment.MainFragment;
+import com.sence.fragment.UserFragment;
+import com.sence.fragment.VipFragment;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
-import com.sence.utils.*;
+import com.sence.utils.HProgressDialogUtils;
+import com.sence.utils.LoginStatus;
+import com.sence.utils.SocketUtils;
+import com.sence.utils.StatusBarUtil;
+import com.sence.utils.UpdateService;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.appcompat.app.AlertDialog;
+import butterknife.BindView;
+import cn.jpush.android.api.JPushInterface;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
     private static final String APP_NAME = "Sence";

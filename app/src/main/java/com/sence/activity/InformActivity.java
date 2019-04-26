@@ -86,6 +86,12 @@ public class InformActivity extends BaseActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        list.clear();
+    }
+
+    @Override
     public void initData() {
         HttpManager.getInstance().PlayNetCode(HttpCode.MESSAGE_INFORM, new RInformBean(LoginStatus.getUid(), page + "", "10")).request(new ApiCallBack<List<PInformBean>>() {
             @Override

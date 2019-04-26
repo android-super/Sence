@@ -123,6 +123,12 @@ public class EnjoyVipActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        list.clear();
+    }
+
     public void initData() {
         HttpManager.getInstance().PlayNetCode(HttpCode.USER_ENJOY_VIP, new RShopCommendBean(LoginStatus.getUid(),
                 page + "", "10")).request(new ApiCallBack<PEnjoyVipBean>() {

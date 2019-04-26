@@ -567,12 +567,12 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.ll_wei_share:
 
-                shareWeb(ShopDetailsActivity.this, WebConstans.SPXQ + "?id=" + LoginStatus.getUid() + "&token=" + bean.getId(), bean.getName(), "女神周边，精品生活", SHARE_MEDIA.WEIXIN, bean.getImgUrl());
+                shareWeb(ShopDetailsActivity.this, WebConstans.SPXQ + "?id=" + bean.getId() + "&token=" + LoginStatus.getToken(), bean.getName(), "女神周边，精品生活", SHARE_MEDIA.WEIXIN, bean.getImgUrl());
                 mBottomSheetDialog.dismiss();
                 break;
             case R.id.ll_friend_share:
 
-                shareWeb(ShopDetailsActivity.this, WebConstans.SPXQ + "?id=" + LoginStatus.getUid() + "&token=" + bean.getId(), bean.getName(), "女神周边，精品生活", SHARE_MEDIA.WEIXIN_CIRCLE, bean.getImgUrl());
+                shareWeb(ShopDetailsActivity.this, WebConstans.SPXQ + "?id=" + bean.getId() + "&token=" + LoginStatus.getToken(), bean.getName(), "女神周边，精品生活", SHARE_MEDIA.WEIXIN_CIRCLE, bean.getImgUrl());
                 mBottomSheetDialog.dismiss();
                 break;
             case R.id.tv_cancel_share:
