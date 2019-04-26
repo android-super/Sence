@@ -15,14 +15,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.*;
-import android.widget.*;
-import androidx.core.app.ActivityCompat;
-import androidx.core.widget.NestedScrollView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import android.webkit.SslErrorHandler;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -33,13 +36,21 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.orhanobut.logger.Logger;
 import com.sence.R;
 import com.sence.activity.web.WebConstans;
 import com.sence.adapter.CommentAdapter;
 import com.sence.adapter.ContentGoodAdapter;
 import com.sence.adapter.GoodsAdapter;
 import com.sence.base.BaseActivity;
-import com.sence.bean.request.*;
+import com.sence.bean.request.RBusAddBean;
+import com.sence.bean.request.RCommentDetailBean;
+import com.sence.bean.request.RCommentDetailPidBean;
+import com.sence.bean.request.RCommentListBean;
+import com.sence.bean.request.RContentDetailBean;
+import com.sence.bean.request.RFocusBean;
+import com.sence.bean.request.RNidBean;
+import com.sence.bean.request.RUidBean;
 import com.sence.bean.response.PCommentBean;
 import com.sence.bean.response.PContentDetailBean;
 import com.sence.fragment.CommentFragment;
@@ -63,6 +74,13 @@ import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 
 import java.util.List;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 import static com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED;
 
@@ -573,6 +591,7 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
                         activity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                addWater();
                                 Toast.makeText(activity, " 分享成功 ", Toast.LENGTH_SHORT).show();
                             }
                         });
@@ -612,7 +631,25 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
                 })
                 .share();
     }
+    private static void addWater() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.SHARE_ADD_WATER, new RUidBean( LoginStatus.getUid())).request(new ApiCallBack<String>() {
+            @Override
+            public void onFinish() {
 
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(String o, String msg) {
+                Logger.e("msg====="+msg);
+                ToastUtils.showShort(msg);
+            }
+        });
+    }
     public void toFocus() {
         HttpManager.getInstance().PlayNetCode(HttpCode.USER_FOCUS, new RFocusBean(LoginStatus.getUid(), to_uid)).request(new ApiCallBack<String>() {
             @Override

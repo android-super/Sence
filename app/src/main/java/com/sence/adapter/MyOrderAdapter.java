@@ -245,7 +245,10 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
             public void onSuccess(final String o, String msg) {
                 Logger.e("msg==========" + msg + o);
                 ToastUtils.showShort(msg);
-                listener.delete(position);
+                Intent intent = new Intent(context, OrderCommentActivity.class);
+                intent.putExtra("url", list.get(position).getGoods().get(0).getImg());
+                intent.putExtra("id",  list.get(position).getId());
+                context.startActivity(intent);
             }
         });
     }

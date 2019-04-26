@@ -292,6 +292,9 @@ public class HttpManager<P> {
             case START_PICTURE:
                 observable = httpService.StartPicture(requestBean.getMap());
                 break;
+            case UPDATE_APP:
+                observable = httpService.UpdateApp(requestBean.getMap());
+                break;
             case CHAT_PRIVATE_LIST:
                 observable = httpService.ChatPrivateList(requestBean.getMap());
                 break;
@@ -427,6 +430,7 @@ public class HttpManager<P> {
                     Toast.makeText(BaseApp.INSTANCE,
                             "上传失败", Toast.LENGTH_SHORT).show();
                 } else {
+                    Logger.e("error_content====" + ErrorConstants.error_content);
                     Toast.makeText(BaseApp.INSTANCE,
                             "请求失败", Toast.LENGTH_SHORT).show();
                 }

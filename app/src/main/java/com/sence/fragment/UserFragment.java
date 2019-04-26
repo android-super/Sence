@@ -21,7 +21,6 @@ import com.sence.activity.MyInfoActivity;
 import com.sence.activity.MyOrderActivity;
 import com.sence.activity.OpenVipPageActivity;
 import com.sence.activity.SettingActivity;
-import com.sence.activity.WebActivity;
 import com.sence.activity.web.WebConstans;
 import com.sence.activity.web.WebNotitleActivity;
 import com.sence.base.BaseMainFragment;
@@ -311,10 +310,6 @@ public class UserFragment extends BaseMainFragment implements View.OnClickListen
     private void startMyOrder(int i) {
         Intent intent = new Intent(getContext(), MyOrderActivity.class);
         intent.putExtra("type", i);
-        intent.putExtra("pay", Integer.parseInt(bean.getOrder_info().getWait_pay()));
-        intent.putExtra("send", Integer.parseInt(bean.getOrder_info().getWait_send()));
-        intent.putExtra("confirm", Integer.parseInt(bean.getOrder_info().getWait_confirm()));
-        intent.putExtra("evlua", Integer.parseInt(bean.getOrder_info().getWait_evaluate()));
         toLogin(intent);
     }
 

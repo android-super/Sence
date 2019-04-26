@@ -3,10 +3,16 @@ package com.sence.activity;
 import android.content.Intent;
 import android.graphics.Color;
 
+import com.orhanobut.logger.Logger;
 import com.sence.R;
 import com.sence.adapter.MyOrderViewPagerAdatpter;
 import com.sence.base.BaseActivity;
+import com.sence.bean.request.RMyOrderBean;
+import com.sence.bean.response.PMyOrderBean;
 import com.sence.fragment.MyOrderFragment;
+import com.sence.net.HttpCode;
+import com.sence.net.HttpManager;
+import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.LoginStatus;
 import com.sence.utils.SharedPreferencesUtil;
 import com.sence.utils.StatusBarUtil;
@@ -61,18 +67,12 @@ public class MyOrderActivity extends BaseActivity {
         tlTitleMyorder.setupWithViewPager(vpContentMyorder);
         vpContentMyorder.setCurrentItem(type);
         vpContentMyorder.setOffscreenPageLimit(5);
-        setTitleNum(intent);
+
     }
 
     public void initData() {
-        String confirm = LoginStatus.getConfirm();
+        loadData();
         String evaluate = LoginStatus.getEvaluate();
-        if("4".equals(confirm)){
-            SharedPreferencesUtil.getInstance().putString("confirm_take_delivery", "");
-            vpContentMyorder.setCurrentItem(4);
-            waitTake.reresh();
-            waitEvaluate.reresh();
-        }
         if("4".equals(evaluate)){
             SharedPreferencesUtil.getInstance().putString("order_evaluate", "");
             vpContentMyorder.setCurrentItem(4);
@@ -82,11 +82,11 @@ public class MyOrderActivity extends BaseActivity {
     }
 
 
-    public void setTitleNum(Intent intent) {
-        pay = intent.getIntExtra("pay", 0);
-        send = intent.getIntExtra("send", 0);
-        confirm = intent.getIntExtra("confirm", 0);
-        evlua = intent.getIntExtra("evlua", 0);
+    public void setTitleNum(String waitPay,String waitSend,String waitConfirm,String waitEvlua) {
+        pay = Integer.parseInt(waitPay);
+        send = Integer.parseInt(waitSend);
+        confirm = Integer.parseInt(waitConfirm);
+        evlua = Integer.parseInt(waitEvlua);
         if (pay > 0) {
             tlTitleMyorder.addNumberBadge(1, pay, Color.parseColor("#16a5af"), Color.parseColor("#FFFFFF"), 30);
         }
@@ -128,7 +128,25 @@ public class MyOrderActivity extends BaseActivity {
             }
         }
     }
+    private void loadData() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_LIST, new RMyOrderBean(LoginStatus.getUid(),"1","10","0")).request(new ApiCallBack<PMyOrderBean>() {
+            @Override
+            public void onFinish() {
+            }
 
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(PMyOrderBean o, String msg) {
+                Logger.e("msg==========" + msg);
+                setTitleNum(o.getWaitPay(),o.getWaitSend(),o.getWaitConfirm(),o.getWaitEvlua());
+            }
+        });
+
+    }
     public void refresh(String status) {
         switch (status){
             case "1":

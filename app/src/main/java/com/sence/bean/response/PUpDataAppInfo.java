@@ -2,7 +2,7 @@ package com.sence.bean.response;
 
 public class PUpDataAppInfo {
     private String version;
-    private int upgrade_type;
+    private String upgrade_type;
     private String contents;
     private String add_time;
     private String link;
@@ -15,11 +15,11 @@ public class PUpDataAppInfo {
         this.version = version;
     }
 
-    public int getUpgrade_type() {
+    public String getUpgrade_type() {
         return upgrade_type;
     }
 
-    public void setUpgrade_type(int upgrade_type) {
+    public void setUpgrade_type(String upgrade_type) {
         this.upgrade_type = upgrade_type;
     }
 

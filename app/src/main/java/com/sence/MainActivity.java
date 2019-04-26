@@ -22,6 +22,7 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.orhanobut.logger.Logger;
 import com.sence.activity.AddTagActivity;
 import com.sence.activity.CommitTagActivity;
 import com.sence.base.BaseActivity;
@@ -121,7 +122,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         setSelect(0);
 //        showUpdateDialog();
-//        initUpdataApp();
+        initUpdataApp();
     }
 
     private void initUpdataApp() {
@@ -139,6 +140,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
             @Override
             public void onSuccess(PUpDataAppInfo o, String msg) {
+                Logger.e("msg==========" + msg);
                 UpdateApp(o);
             }
         });
@@ -283,7 +285,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 dialog.dismiss();
             }
         });
-        if (versionBean.getUpgrade_type() == 1) {
+        if (("1".equals(versionBean.getUpgrade_type()))) {
             builder.setNegativeButton("取消", null);
         }
         builder.setCancelable(false);

@@ -387,6 +387,10 @@ public interface HttpService {
     Observable<BaseResponseBean<String>> PayAli(@FieldMap Map<String, Object> map);//支付宝支付
 
     @FormUrlEncoded
+    @POST(Urls.UPDATE_APP)
+    Observable<BaseResponseBean<PUpDataAppInfo>> UpdateApp(@FieldMap Map<String, Object> map);//检查版本更新
+
+    @FormUrlEncoded
     @POST(Urls.PAY_WX)
     Observable<BaseResponseBean<PWxPayBean>> PayWx(@FieldMap Map<String, Object> map);//微信支付
 
