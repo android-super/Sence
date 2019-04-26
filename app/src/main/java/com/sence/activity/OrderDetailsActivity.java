@@ -396,10 +396,10 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
 
                 } else if ("2".equals(type)) {
                     Intent intent = new Intent(OrderDetailsActivity.this, ChatMsgActivity.class);
-                    intent.putExtra("u_to", bean.getCustomId());
+                    intent.putExtra("u_to", bean.getCustom().getId());
                     intent.putExtra("chat_id", "");
-                    intent.putExtra("name", bean.getCustomName());
-                    intent.putExtra("u_avatar", bean.getCustomAvatar());
+                    intent.putExtra("name", bean.getCustom().getName());
+                    intent.putExtra("u_avatar", bean.getCustom().getAvatar());
                     startActivity(intent);
                 } else if ("1".equals(type)) {
                     mBottomSheetDialog.show();

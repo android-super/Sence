@@ -6,78 +6,39 @@ public class POrderDetailsBean {
 
 
     /**
-     * id : 1
-     * aid : 1
-     * oid : 1
-     * addtime : 0000-00-00 00:00:00
-     * status : 等待买家付款
-     * cmoney : 0.00
-     * pmoney : 0.00
-     * needpay : 33.00
-     * gmoney : 0.00
-     * address : {"username":"","phone":"","address":"11111","area":""}
-     * shopname : 风散
-     * goods : [{"price":"12","id":"2","img":"Public/Uploads/Order/2019-03-26//5c99eb1fc12a5.jpg","name":"2号商品","num":"3"}]
+     * id : 305
+     * aid : 46
+     * oid : 1915562484902989
+     * addtime : 2019-04-26 11:14
+     * status : 等待卖家发货
+     * pmoney : 0
+     * needpay : 599
+     * gmoney : 599
+     * cmoney : 0
+     * address : {"username":"张三","phone":"18735610174","address":"东方福唐","area":"北京市北京市朝阳区","tel":"187****0174"}
+     * orderStatus : 2
+     * shopname : o～糖菓菓o_O
+     * sellerUid : 19
+     * goods : [{"price":"599","num":"1","id":"27","img":"/Public/Uploads/Goods/2019-04-23/5cbe8d9f8ec6c.png","name":"臭臭的香水打发士大夫的绯闻多多沟通的地方地方的"}]
      * fee : 0
+     * custom : {"nick_name":"千山暮雪","avatar":"/Public/Uploads/header/2019-04-24/oH3Cg1Ac5YgO51cC-wPwPs6vd24Y.jpg","id":"28","name":"千山暮雪"}
      */
-    private String customId;
-    private String customName;
-    private String customAvatar;
 
-    public String getCustomId() {
-        return customId;
-    }
-
-    public void setCustomId(String customId) {
-        this.customId = customId;
-    }
-
-    public String getCustomName() {
-        return customName;
-    }
-
-    public void setCustomName(String customName) {
-        this.customName = customName;
-    }
-
-    public String getCustomAvatar() {
-        return customAvatar;
-    }
-
-    public void setCustomAvatar(String customAvatar) {
-        this.customAvatar = customAvatar;
-    }
-
-    public String getSellerUid() {
-        return sellerUid;
-    }
-
-    public void setSellerUid(String sellerUid) {
-        this.sellerUid = sellerUid;
-    }
-
-    public String getOrderStatus() {
-        return orderStatus;
-    }
-
-    public void setOrderStatus(String orderStatus) {
-        this.orderStatus = orderStatus;
-    }
-
-    private String sellerUid;
-    private String orderStatus;
     private String id;
     private String aid;
     private String oid;
     private String addtime;
     private String status;
-    private String cmoney;
     private String pmoney;
     private String needpay;
     private String gmoney;
+    private String cmoney;
     private AddressBean address;
+    private String orderStatus;
     private String shopname;
+    private String sellerUid;
     private String fee;
+    private CustomBean custom;
     private List<GoodsBean> goods;
 
     public String getId() {
@@ -120,14 +81,6 @@ public class POrderDetailsBean {
         this.status = status;
     }
 
-    public String getCmoney() {
-        return cmoney;
-    }
-
-    public void setCmoney(String cmoney) {
-        this.cmoney = cmoney;
-    }
-
     public String getPmoney() {
         return pmoney;
     }
@@ -152,12 +105,28 @@ public class POrderDetailsBean {
         this.gmoney = gmoney;
     }
 
+    public String getCmoney() {
+        return cmoney;
+    }
+
+    public void setCmoney(String cmoney) {
+        this.cmoney = cmoney;
+    }
+
     public AddressBean getAddress() {
         return address;
     }
 
     public void setAddress(AddressBean address) {
         this.address = address;
+    }
+
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
     public String getShopname() {
@@ -168,12 +137,28 @@ public class POrderDetailsBean {
         this.shopname = shopname;
     }
 
+    public String getSellerUid() {
+        return sellerUid;
+    }
+
+    public void setSellerUid(String sellerUid) {
+        this.sellerUid = sellerUid;
+    }
+
     public String getFee() {
         return fee;
     }
 
     public void setFee(String fee) {
         this.fee = fee;
+    }
+
+    public CustomBean getCustom() {
+        return custom;
+    }
+
+    public void setCustom(CustomBean custom) {
+        this.custom = custom;
     }
 
     public List<GoodsBean> getGoods() {
@@ -186,16 +171,18 @@ public class POrderDetailsBean {
 
     public static class AddressBean {
         /**
-         * username :
-         * phone :
-         * address : 11111
-         * area :
+         * username : 张三
+         * phone : 18735610174
+         * address : 东方福唐
+         * area : 北京市北京市朝阳区
+         * tel : 187****0174
          */
 
         private String username;
         private String phone;
         private String address;
         private String area;
+        private String tel;
 
         public String getUsername() {
             return username;
@@ -228,22 +215,76 @@ public class POrderDetailsBean {
         public void setArea(String area) {
             this.area = area;
         }
+
+        public String getTel() {
+            return tel;
+        }
+
+        public void setTel(String tel) {
+            this.tel = tel;
+        }
+    }
+
+    public static class CustomBean {
+        /**
+         * nick_name : 千山暮雪
+         * avatar : /Public/Uploads/header/2019-04-24/oH3Cg1Ac5YgO51cC-wPwPs6vd24Y.jpg
+         * id : 28
+         * name : 千山暮雪
+         */
+
+        private String nick_name;
+        private String avatar;
+        private String id;
+        private String name;
+
+        public String getNick_name() {
+            return nick_name;
+        }
+
+        public void setNick_name(String nick_name) {
+            this.nick_name = nick_name;
+        }
+
+        public String getAvatar() {
+            return avatar;
+        }
+
+        public void setAvatar(String avatar) {
+            this.avatar = avatar;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
     }
 
     public static class GoodsBean {
         /**
-         * price : 12
-         * id : 2
-         * img : Public/Uploads/Order/2019-03-26//5c99eb1fc12a5.jpg
-         * name : 2号商品
-         * num : 3
+         * price : 599
+         * num : 1
+         * id : 27
+         * img : /Public/Uploads/Goods/2019-04-23/5cbe8d9f8ec6c.png
+         * name : 臭臭的香水打发士大夫的绯闻多多沟通的地方地方的
          */
 
         private String price;
+        private String num;
         private String id;
         private String img;
         private String name;
-        private String num;
 
         public String getPrice() {
             return price;
@@ -251,6 +292,14 @@ public class POrderDetailsBean {
 
         public void setPrice(String price) {
             this.price = price;
+        }
+
+        public String getNum() {
+            return num;
+        }
+
+        public void setNum(String num) {
+            this.num = num;
         }
 
         public String getId() {
@@ -275,14 +324,6 @@ public class POrderDetailsBean {
 
         public void setName(String name) {
             this.name = name;
-        }
-
-        public String getNum() {
-            return num;
-        }
-
-        public void setNum(String num) {
-            this.num = num;
         }
     }
 }
