@@ -85,7 +85,6 @@ public class UserRecommendFragment extends Fragment {
                 }
                 ((MyInfoActivity)getActivity()).setRecommendShowImg(isShow);
                 if (page == 1) {
-
                     adapter.setNewData(o.getList());
                 } else {
                     adapter.addData(o.getList());
@@ -127,6 +126,7 @@ public class UserRecommendFragment extends Fragment {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 page = 1;
+
                 initData();
             }
         });

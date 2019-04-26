@@ -9,9 +9,12 @@
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/srl_more_myorder"
         android:layout_width="match_parent"
-        app:srlEnableLoadMoreWhenContentNotFull="false"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:srlEnableLoadMoreWhenContentNotFull="false">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycle_myorder"
@@ -22,19 +25,22 @@
             <TextView
                 android:id="@+id/tv_more_myorder"
                 android:layout_width="wrap_content"
-                android:layout_below="@+id/recycle_myorder"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/recycle_myorder"
+                android:layout_centerHorizontal="true"
                 android:padding="15dp"
-                android:layout_gravity="center_horizontal"
                 android:text="点击或上啦加载更多"
                 android:textColor="#cbcbcb"
                 android:textSize="@dimen/sp_14"
                 android:visibility="gone"/>
+        </RelativeLayout>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
     <ImageView
+        android:id="@+id/iv_not_myorder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:id="@+id/iv_not_myorder"
         android:src="@drawable/zanwu"/>
 </RelativeLayout>

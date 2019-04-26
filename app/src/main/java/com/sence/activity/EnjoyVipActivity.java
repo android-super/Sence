@@ -99,6 +99,7 @@ public class EnjoyVipActivity extends BaseActivity {
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 srlLayoutEnjoyvip.finishRefresh();
                 page = 1;
+                list.clear();
                 initData();
             }
         });
@@ -138,7 +139,7 @@ public class EnjoyVipActivity extends BaseActivity {
             @Override
             public void onSuccess(PEnjoyVipBean o, String msg) {
                 Logger.e("msg==========" + msg);
-                list = o.getService();
+                list.addAll(o.getService());
                 if (list.size() > 0) {
                     tvPriceEnjoyvip.setText("￥" + o.getMoney());
                     mEnjoyVipAdapter.setList(list);

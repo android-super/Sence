@@ -79,6 +79,7 @@ public class InformActivity extends BaseActivity {
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 srlLayoutInform.finishRefresh();
                 page = 1;
+                list.clear();
                 initData();
             }
         });
@@ -101,7 +102,7 @@ public class InformActivity extends BaseActivity {
             @Override
             public void onSuccess(List<PInformBean> o, String msg) {
                 Logger.e("msg==========" + msg);
-                list = o;
+                list .addAll(o);
                 if (o.size() > 0) {
                     ivImgInform.setVisibility(View.GONE);
                     mInformAdapter.setList(list);

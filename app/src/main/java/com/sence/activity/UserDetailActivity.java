@@ -67,6 +67,7 @@ public class UserDetailActivity extends BaseActivity {
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 srlUserdetail.finishRefresh();
                 page=1;
+                listBean.clear();
                 initData();
             }
         });
@@ -88,7 +89,7 @@ public class UserDetailActivity extends BaseActivity {
             @Override
             public void onSuccess(List<PUserDetailBean> o, String msg) {
                 Logger.e("msg==========" + msg );
-                listBean = o;
+                listBean.addAll(o) ;
                 if(listBean.size()>0){
                     mUserDetailAdapter.setList(listBean);
                 }

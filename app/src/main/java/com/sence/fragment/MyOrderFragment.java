@@ -132,6 +132,7 @@ public class MyOrderFragment extends Fragment implements View.OnClickListener {
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 mSmartRefreshLayout.finishRefresh();
                 page=1;
+                listBeans.clear();
                 loadData();
             }
         });
@@ -445,7 +446,7 @@ public class MyOrderFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onSuccess(PMyOrderBean o, String msg) {
                 Logger.e("msg==========" + msg);
-                listBeans = o.getList();
+                listBeans.addAll(o.getList());
                 if(listBeans.size()>0) {
                     mNot.setVisibility(View.GONE);
                 }else{

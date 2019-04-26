@@ -90,6 +90,7 @@ public class ManageAddressActivity extends BaseActivity {
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 srlLayoutManageaddress.finishRefresh();
                 page=1;
+                list.clear();
                 dohttp();
             }
         });
@@ -131,9 +132,9 @@ public class ManageAddressActivity extends BaseActivity {
 
             @Override
             public void onSuccess(final List<PManageAddressBean> o, String msg) {
-                if (o.size() > 0) {
-                    list = o;
-                    mManageAddressAdapter.setList(o, type);
+                list .addAll(o);
+                if (list.size() > 0) {
+                    mManageAddressAdapter.setList(list, type);
                 }else{
                     if ("shop".equals(type)) {
                         SharedPreferencesUtil.getInstance().putBoolean("isnull_shopaddress", true);

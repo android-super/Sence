@@ -89,8 +89,6 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
     TextView tvCouponOrderdetails;
     @BindView(R.id.tv_postprice_orderdetails)
     TextView tvPostpriceOrderdetails;
-    @BindView(R.id.tv_taxprice_orderdetails)
-    TextView tvTaxpriceOrderdetails;
     @BindView(R.id.tv_money_orderdetails)
     TextView tvMoneyOrderdetails;
     @BindView(R.id.tv_sprice_orderdetails)
@@ -256,11 +254,6 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
                     tvPostpriceOrderdetails.setText("+￥" + o.getPmoney());
                 }else{
                     tvPostpriceOrderdetails.setText("+￥" + o.getPmoney()+".00");
-                }
-                if(o.getGmoney().contains(".")){
-                    tvTaxpriceOrderdetails.setText("+￥" + o.getFee());
-                }else{
-                    tvTaxpriceOrderdetails.setText("+￥" + o.getFee()+".00");
                 }
                 if(o.getGmoney().contains(".")){
                     tvMoneyOrderdetails.setText("￥" + o.getGmoney());

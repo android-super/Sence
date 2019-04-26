@@ -78,6 +78,24 @@
         android:layout_height="1dp"
         android:layout_marginLeft="20dp"
         android:background="#efefef"></View>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="59dp"
+        android:paddingLeft="21dp"
+        android:textSize="@dimen/sp_16"
+        android:textColor="#333333"
+        android:lines="1"
+        android:inputType="phone"
+        android:textCursorDrawable="@drawable/shape_cursor"
+        android:gravity="center_vertical"
+        android:background="@color/white"
+        android:id="@+id/et_postcode_addaddress"
+        android:hint="邮政编码"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="20dp"
+        android:background="#efefef"></View>
 
     <EditText
         android:layout_width="match_parent"

@@ -45,6 +45,7 @@ public class MyInfoRecommendFragment extends Fragment {
     private SmartRefreshLayout mSmartRefreshLayout;
     private List<PMyInfoServiceBean.ListBean> list = new ArrayList<>();
     private List<PMyInfoBean.ListBean> listOther = new ArrayList<>();
+    private List<PMyInfoBean.ListBean> listNote = new ArrayList<>();
     private String uid = "";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -97,7 +98,7 @@ public class MyInfoRecommendFragment extends Fragment {
                         doHttp();
                     }
                 }else{
-                    if(listOther.size()<10){
+                    if(listOther.size()<10||listNote.size()<10){
                         ToastUtils.showShort("没有更多了！");
                     }else{
                         page++;
@@ -112,6 +113,14 @@ public class MyInfoRecommendFragment extends Fragment {
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 mSmartRefreshLayout.finishRefresh();
                 page = 1;
+                if("3".equals(type)){
+                    list.clear();
+                }else if("2".equals(type)){
+                    listOther.clear();
+                }else if("1".equals(type)){
+                    listNote.clear();
+                }
+
                 doHttp();
             }
         });
@@ -136,8 +145,8 @@ public class MyInfoRecommendFragment extends Fragment {
                 @Override
                 public void onSuccess(PMyInfoServiceBean o, String msg) {
                     Logger.e("msg==========" + msg);
-                    list = o.getList();
-                    if(o.getList().size()>0){
+                    list.addAll(o.getList());
+                    if(list.size()>0){
                         if(!TextUtils.isEmpty(uid)){
                             myInfoServiceAdapter.setIsSelf(false);
                         }
@@ -162,10 +171,11 @@ public class MyInfoRecommendFragment extends Fragment {
             @Override
             public void onSuccess(PMyInfoBean o, String msg) {
                 Logger.e("msg==========" + msg);
-                listOther = o.getList();
                 if("1".equals(type)){
+                    listOther.addAll( o.getList());
                     myInfoRecommendAdapter.setList(o.getList());
                 }else if("2".equals(type)){
+                    listNote.addAll( o.getList());
                     myInfoNoteAdapter.setList(o.getList());
                 }
 

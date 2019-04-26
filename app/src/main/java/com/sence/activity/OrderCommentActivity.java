@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -28,6 +27,7 @@ import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.GlideUtils;
 import com.sence.utils.LoginStatus;
+import com.sence.utils.SharedPreferencesUtil;
 import com.sence.utils.StatusBarUtil;
 import com.sence.view.PubTitle;
 
@@ -112,6 +112,7 @@ public class OrderCommentActivity extends BaseActivity implements View.OnClickLi
         ptTablayout.setRightOnClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 doHttp();
             }
         });
@@ -124,8 +125,7 @@ public class OrderCommentActivity extends BaseActivity implements View.OnClickLi
         } else {
             files = new File[selectList.size()];
             for (int i = 0; i < selectList.size(); i++) {
-                Log.i("aaa", selectList.get(i).getCompressPath());
-                files[i] = new File(selectList.get(i).getCompressPath());
+                files[i] = new File(selectList.get(i).getPath());
             }
         }
         final String content = etContentShopcomment.getText().toString();
@@ -160,6 +160,7 @@ public class OrderCommentActivity extends BaseActivity implements View.OnClickLi
             public void onSuccess(String o, String msg) {
                 Logger.e("msg==========" + msg);
                 ToastUtils.showShort(msg);
+                SharedPreferencesUtil.getInstance().putString("order_evaluate", "4");
                 finish();
             }
         });
@@ -275,7 +276,7 @@ public class OrderCommentActivity extends BaseActivity implements View.OnClickLi
                 .sizeMultiplier(0.5f)// glide 加载图片大小 0~1之间 如设置 .glideOverride()无效
                 .setOutputCameraPath("/CustomPath")// 自定义拍照保存路径,可不填
                 .enableCrop(false)// 是否裁剪 true or false
-                .compress(true)// 是否压缩 true or false
+                .compress(false)// 是否压缩 true or false
 //                                        .glideOverride()// int glide 加载宽高，越小图片列表越流畅，但会影响列表图片浏览的清晰度
                 .withAspectRatio(1, 1)// int 裁剪比例 如16:9 3:2 3:4 1:1 可自定义
                 .hideBottomControls(true)// 是否显示uCrop工具栏，默认不显示 true or false

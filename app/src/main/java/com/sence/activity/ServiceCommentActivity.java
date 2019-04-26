@@ -255,7 +255,7 @@ public class ServiceCommentActivity extends BaseActivity implements View.OnClick
                 .sizeMultiplier(0.5f)// glide 加载图片大小 0~1之间 如设置 .glideOverride()无效
                 .setOutputCameraPath("/CustomPath")// 自定义拍照保存路径,可不填
                 .enableCrop(false)// 是否裁剪 true or false
-                .compress(true)// 是否压缩 true or false
+                .compress(false)// 是否压缩 true or false
 //                                        .glideOverride()// int glide 加载宽高，越小图片列表越流畅，但会影响列表图片浏览的清晰度
                 .withAspectRatio(1, 1)// int 裁剪比例 如16:9 3:2 3:4 1:1 可自定义
                 .hideBottomControls(true)// 是否显示uCrop工具栏，默认不显示 true or false

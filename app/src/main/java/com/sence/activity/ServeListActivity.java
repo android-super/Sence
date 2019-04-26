@@ -1,14 +1,8 @@
 package com.sence.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import com.blankj.utilcode.util.ConvertUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -28,6 +22,11 @@ import com.sence.utils.StatusBarUtil;
 import com.sence.view.GridSpacingItemDecoration;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
 
 /**
  * 服务列表-大V分享

@@ -128,6 +128,7 @@ public class ShopCommendActivity extends BaseActivity implements View.OnClickLis
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 srlLayoutShopcommend.finishRefresh();
                 page = 1;
+                beanList.clear();
                 initData();
             }
         });
@@ -150,7 +151,7 @@ public class ShopCommendActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onSuccess(List<PShopCommendBean> o, String msg) {
                 Logger.e("msg==========" + msg);
-                beanList = o;
+                beanList.addAll(o);
                 if (o.size() > 0) {
                     tvNotdataShopcommend.setVisibility(View.GONE);
                     mShopCommendAdapter.setList(o);

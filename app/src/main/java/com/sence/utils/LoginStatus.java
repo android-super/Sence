@@ -37,6 +37,10 @@ public class LoginStatus {
         String name = SharedPreferencesUtil.getInstance().getString("upuid");
         return name;
     }
+    public static String getEvaluate() {
+        String name = SharedPreferencesUtil.getInstance().getString("order_evaluate");
+        return name;
+    }
     public static String getConfirm() {
         String confim = SharedPreferencesUtil.getInstance().getString("confirm_take_delivery");
         return confim;

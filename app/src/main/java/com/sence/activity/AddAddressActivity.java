@@ -3,6 +3,7 @@ package com.sence.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -27,6 +28,7 @@ import com.sence.utils.LoginStatus;
 import com.sence.utils.StatusBarUtil;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * 添加收货地址
@@ -44,15 +46,18 @@ public class AddAddressActivity extends BaseActivity {
     EditText etDetailsaddressAddaddress;
     @BindView(R.id.bt_save_addaddress)
     Button btSaveAddaddress;
+    @BindView(R.id.et_postcode_addaddress)
+    EditText etPostcodeAddaddress;
 
     private CityPicker cityPicker;
 
     private String name;
     private String phone;
     private String detailsAddress;
-    private String  address;
+    private String address;
 
     private PManageAddressBean bean = null;
+    private String postcode;
 
 
     @Override
@@ -141,6 +146,7 @@ public class AddAddressActivity extends BaseActivity {
         phone = etPhoneAddaddress.getText().toString().trim();
         detailsAddress = etDetailsaddressAddaddress.getText().toString().trim();
         address = tvAddressAddaddress.getText().toString().trim();
+        postcode = etPostcodeAddaddress.getText().toString().trim();
         if (TextUtils.isEmpty(name)) {
             ToastUtils.showShort("请输入您的姓名");
             return;
@@ -157,6 +163,10 @@ public class AddAddressActivity extends BaseActivity {
             ToastUtils.showShort("请输入详细地址");
             return;
         }
+        if (TextUtils.isEmpty(postcode)) {
+            ToastUtils.showShort("请输入邮政编码");
+            return;
+        }
         if (bean == null) {
             addAddress();
         } else {
@@ -166,7 +176,7 @@ public class AddAddressActivity extends BaseActivity {
 
     private void editorAddress() {
         HttpManager.getInstance().PlayNetCode(HttpCode.ADDRESS_EDIT, new REditroAddressBean(LoginStatus.getUid(),
-                bean.getId(), detailsAddress, address, phone, name)).request(new ApiCallBack<String>() {
+                bean.getId(), detailsAddress, address, phone, postcode,name)).request(new ApiCallBack<String>() {
             @Override
             public void onFinish() {
 
@@ -188,7 +198,7 @@ public class AddAddressActivity extends BaseActivity {
 
     private void addAddress() {
         HttpManager.getInstance().PlayNetCode(HttpCode.ADDRESS_ADD, new RAddAddressBean(LoginStatus.getUid(),
-                detailsAddress, address, phone, name)).request(new ApiCallBack<String>() {
+                detailsAddress, address, phone,postcode, name)).request(new ApiCallBack<String>() {
             @Override
             public void onFinish() {
 
@@ -217,4 +227,10 @@ public class AddAddressActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }

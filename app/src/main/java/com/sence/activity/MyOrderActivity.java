@@ -66,10 +66,16 @@ public class MyOrderActivity extends BaseActivity {
 
     public void initData() {
         String confirm = LoginStatus.getConfirm();
+        String evaluate = LoginStatus.getEvaluate();
         if("4".equals(confirm)){
             SharedPreferencesUtil.getInstance().putString("confirm_take_delivery", "");
             vpContentMyorder.setCurrentItem(4);
             waitTake.reresh();
+            waitEvaluate.reresh();
+        }
+        if("4".equals(evaluate)){
+            SharedPreferencesUtil.getInstance().putString("order_evaluate", "");
+            vpContentMyorder.setCurrentItem(4);
             waitEvaluate.reresh();
         }
         allOrder.reresh();
