@@ -23,7 +23,7 @@ public class Urls {
     public static final String COMMENT_LIST = "/index.php/Api/Public/getMsgList";//评论列表
     public static final String PAY_ALI = "/index.php/Api/Alipay/alipay_sign";//支付寶支付
     public static final String PAY_WX = "/index.php/Api/Wxpay/wx_prepay";//微信支付
-    public static final String UPDATE_APP = "/index.php/Api/Upgrade/checkVersionn";//检查版本更新
+    public static final String UPDATE_APP = "/index.php/Api/Upgrade/checkVersion";//检查版本更新
     public static final String START_PICTURE = "/index.php/Api/Public/getStartImg";//启动图片
     //用户
     public static final String SHARE_ADD_WATER = "/index.php/Api/garden/addUserWateringNum";//分享商品后增加用户浇水次数

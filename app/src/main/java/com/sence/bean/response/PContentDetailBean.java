@@ -223,6 +223,15 @@ public class PContentDetailBean {
             private String id;
             private String album_url;
             private String tags;
+            private String full_img_link;
+
+            public String getFull_img_link() {
+                return full_img_link;
+            }
+
+            public void setFull_img_link(String full_img_link) {
+                this.full_img_link = full_img_link;
+            }
 
             public String getId() {
                 return id;

@@ -23,7 +23,7 @@ public class WebConstans {
     }
 
     public static String buildToken(String url, String key, String value) {
-        return url + "?token=" + LoginStatus.getToken() + "&" + key + "=" + value;
+        return url + "?token=" + LoginStatus.getUserToken() + "&" + key + "=" + value;
     }
 
     public static final String YSZC = "http://sence.forhour.com/Public/web/deal/privacy.html";

@@ -124,6 +124,10 @@ public class LoginStatus {
         String token = SharedPreferencesUtil.getInstance().getString("token");
         return token;
     }
+    public static String getUserToken() {
+        String token = SharedPreferencesUtil.getInstance().getString("usertoken");
+        return token;
+    }
 
     public static String getSex() {
         String sex = SharedPreferencesUtil.getInstance().getString("sex");

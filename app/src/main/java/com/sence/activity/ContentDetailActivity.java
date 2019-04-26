@@ -56,7 +56,6 @@ import com.sence.bean.response.PContentDetailBean;
 import com.sence.fragment.CommentFragment;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
-import com.sence.net.Urls;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.net.manager.MessageApiCallBack;
 import com.sence.utils.GlideUtils;
@@ -180,7 +179,7 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
         GlideUtils.getInstance().loadHead(noteInfoBean.getAvatar(), contentHead);
         GlideUtils.getInstance().loadNormal(noteInfoBean.getAlbums().get(0).getAlbum_url(), contentImg);
 
-        content_img = Urls.base_url + noteInfoBean.getAlbums().get(0).getAlbum_url();
+        content_img = noteInfoBean.getAlbums().get(0).getFull_img_link();
         contentName.setText(noteInfoBean.getNick_name());
         contentDescribe.setText(noteInfoBean.getAutograph());
         contentTitle.setText(noteInfoBean.getTitle());

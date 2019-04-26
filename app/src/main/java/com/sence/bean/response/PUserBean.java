@@ -29,6 +29,7 @@ public class PUserBean {
     private String user_name;
     private String add_time;
     private String token;
+    private String usertoken;
     private String avatar;
     private String nick_name;
     private String birthday;
@@ -40,6 +41,14 @@ public class PUserBean {
     private String id_card;
     private String id_status;
     private String img_status;
+
+    public String getUsertoken() {
+        return usertoken;
+    }
+
+    public void setUsertoken(String usertoken) {
+        this.usertoken = usertoken;
+    }
 
     public String getId() {
         return id;

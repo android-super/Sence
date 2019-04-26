@@ -436,13 +436,12 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
                 startActivity(intentsele);
                 break;
             case R.id.bt_submint_confirmorder:
-                if ("".equals(tvAddressConfirmorder.getText().toString().trim())||null==tvAddressConfirmorder.getText().toString().trim()) {
-                    ToastUtils.showShort("请先选择地址");
-                } else {
+                if (rlAddressConfirmorder.getVisibility()==View.VISIBLE) {
                     mBottomSheetDialog.show();
                     createOrder();
+                } else {
+                    ToastUtils.showShort("请先选择地址");
                 }
-
                 break;
             case R.id.rl_addaddress_confirmorder:
                 Intent intent = new Intent(ShopConfirmOrderActivity.this, ManageAddressActivity.class);

@@ -114,7 +114,7 @@ public class UserRecommendFragment extends Fragment {
             }
         });
 
-        adapter = new UserRecommendAdapter(R.layout.rv_item_recommend);
+        adapter = new UserRecommendAdapter(R.layout.rv_item_userrecommend);
         recyclerView.setAdapter(adapter);
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override

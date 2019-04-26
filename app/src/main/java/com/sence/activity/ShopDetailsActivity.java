@@ -62,7 +62,6 @@ import java.util.List;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
@@ -107,8 +106,6 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
     TextView tvGoodcommendShopdetails;
     @BindView(R.id.ll_shopcommend_shopdetails)
     LinearLayout llShopcommendShopdetails;
-    @BindView(R.id.recycle_shopdetails)
-    RecyclerView recycleShopdetails;
     @BindView(R.id.rl_vp_shiodetails)
     RelativeLayout rlVpShiodetails;
     @BindView(R.id.ll_service_shopdetails)
@@ -133,6 +130,26 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
     View viewOpriceShopdetails;
     @BindView(R.id.tv_notdata_shopdetails)
     TextView tvNotdataShopdetails;
+    @BindView(R.id.ll_infolayout_shopdetails)
+    LinearLayout llInfolayoutShopdetails;
+    @BindView(R.id.iv_imgshop_shopdetails)
+    NiceImageView ivImgshopShopdetails;
+    @BindView(R.id.tv_nameshop_shopdetails)
+    TextView tvNameshopShopdetails;
+    @BindView(R.id.tv_contentshop_shopdetails)
+    TextView tvContentshopShopdetails;
+    @BindView(R.id.recycle_commendimgshop_shopdetails)
+    RecyclerView recycleCommendimgshopShopdetails;
+    @BindView(R.id.tv_timeshop_shopdetails)
+    TextView tvTimeshopShopdetails;
+    @BindView(R.id.iv_likeshop_shopdetails)
+    ImageView ivLikeshopShopdetails;
+    @BindView(R.id.tv_likenumshop_shopdetails)
+    TextView tvLikenumshopShopdetails;
+    @BindView(R.id.ll_likeshop_shopdetails)
+    LinearLayout llLikeshopShopdetails;
+    @BindView(R.id.ll_layout_shopdetails)
+    LinearLayout llLayoutShopdetails;
 
     private ShopDetailsImgAdapter shopDetailsImgAdapter;
     private ShopDetailsCommendAdapter mShopDetailsCommendAdapter;
@@ -209,11 +226,6 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
 
             }
         });
-        mShopDetailsCommendAdapter = new ShopDetailsCommendAdapter(ShopDetailsActivity.this);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ShopDetailsActivity.this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        recycleShopdetails.setLayoutManager(linearLayoutManager);
-        recycleShopdetails.setAdapter(mShopDetailsCommendAdapter);
         installListener();
     }
 
@@ -266,7 +278,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                     tvShopnumShopdetails.setText(num + "");
                 }
                 if (o.getImgs().size() > 0) {
-                    if(page){
+                    if (page) {
                         page = false;
                         tvImgnumShopdetails.setText("1/" + imgs.size());
                     }
@@ -390,7 +402,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
             public void onDismiss() {
                 //popupwindow消失时使背景不透明
                 bgAlpha(1f);
-                isAddShop=false;
+                isAddShop = false;
             }
         });
         tvPrice = contentView.findViewById(R.id.tv_buyshop_price);
@@ -431,7 +443,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
     }
 
 
-    @OnClick({R.id.tv_addshop_shopdetails, R.id.tv_buy_shopdetails, R.id.ll_service_shopdetails, R.id.ll_shop_shopdetails})
+    @OnClick({R.id.tv_addshop_shopdetails, R.id.ll_infolayout_shopdetails, R.id.tv_buy_shopdetails, R.id.ll_service_shopdetails, R.id.ll_shop_shopdetails})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_addshop_shopdetails:
@@ -473,23 +485,27 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                 intent.putExtra("type", 3);
                 startActivity(intent);
                 break;
-
+            case R.id.ll_infolayout_shopdetails:
+                Intent intentInfo = new Intent(ShopDetailsActivity.this, MyInfoActivity.class);
+                intentInfo.putExtra("uid", bean.getUid());
+                startActivity(intentInfo);
+                break;
         }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(popupWindow != null) {
+        if (popupWindow != null) {
             popupWindow.dismiss();
         }
-        if(mBottomSheetDialog != null) {
+        if (mBottomSheetDialog != null) {
             mBottomSheetDialog.dismiss();
         }
     }
 
     private void addShop(final String s) {
-        HttpManager.getInstance().PlayNetCode(HttpCode.BUS_ADD, new RBusAddBean(bean.getId(), LoginStatus.getUid(),s,"1")).request(new ApiCallBack() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.BUS_ADD, new RBusAddBean(bean.getId(), LoginStatus.getUid(), s, "1")).request(new ApiCallBack() {
             @Override
             public void onFinish() {
 
@@ -503,15 +519,16 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onSuccess(Object o, String msg) {
                 ToastUtils.showShort("成功加入购物车");
-                num = num+Integer.parseInt(s);
+                num = num + Integer.parseInt(s);
                 tvShopnumShopdetails.setVisibility(View.VISIBLE);
                 tvShopnumShopdetails.setText(num + "");
                 popupWindow.dismiss();
             }
         });
     }
+
     private static void addWater() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.SHARE_ADD_WATER, new RUidBean( LoginStatus.getUid())).request(new ApiCallBack<String>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.SHARE_ADD_WATER, new RUidBean(LoginStatus.getUid())).request(new ApiCallBack<String>() {
             @Override
             public void onFinish() {
 
@@ -524,7 +541,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
 
             @Override
             public void onSuccess(String o, String msg) {
-                Logger.e("msg====="+msg);
+                Logger.e("msg=====" + msg);
                 ToastUtils.showShort(msg);
             }
         });
@@ -540,12 +557,16 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                 }
                 break;
             case R.id.rl_buyshop_add:
-                numShop++;
-                mNum.setText(numShop + "");
+                if (numShop < 10) {
+                    numShop++;
+                    mNum.setText(numShop + "");
+                } else {
+                    ToastUtils.showShort("单件商品最多添加十件");
+                }
                 break;
             case R.id.bt_buyshop_confirm:
 
-                if(isAddShop){
+                if (isAddShop) {
                     addShop(mNum.getText().toString());
                     return;
                 }
@@ -567,12 +588,12 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.ll_wei_share:
 
-                shareWeb(ShopDetailsActivity.this, WebConstans.SPXQ + "?id=" + bean.getId() + "&token=" + LoginStatus.getToken(), bean.getName(), "女神周边，精品生活", SHARE_MEDIA.WEIXIN, bean.getImgUrl());
+                shareWeb(ShopDetailsActivity.this, WebConstans.SPXQ + "?id=" + bean.getId() + "&token=" + LoginStatus.getUserToken(), bean.getName(), "女神周边，精品生活", SHARE_MEDIA.WEIXIN, bean.getImgUrl());
                 mBottomSheetDialog.dismiss();
                 break;
             case R.id.ll_friend_share:
 
-                shareWeb(ShopDetailsActivity.this, WebConstans.SPXQ + "?id=" + bean.getId() + "&token=" + LoginStatus.getToken(), bean.getName(), "女神周边，精品生活", SHARE_MEDIA.WEIXIN_CIRCLE, bean.getImgUrl());
+                shareWeb(ShopDetailsActivity.this, WebConstans.SPXQ + "?id=" + bean.getId() + "&token=" + LoginStatus.getUserToken(), bean.getName(), "女神周边，精品生活", SHARE_MEDIA.WEIXIN_CIRCLE, bean.getImgUrl());
                 mBottomSheetDialog.dismiss();
                 break;
             case R.id.tv_cancel_share:
@@ -681,9 +702,10 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
         Log.e(TAG, "onActivityResult: " + requestCode + "\n" + resultCode + "\n" + data);
     }
 
-    @OnClick(R.id.iv_share_shopdetails)
+    @OnClick({R.id.iv_share_shopdetails})
     public void onViewClicked() {
         mBottomSheetDialog.show();
     }
+
 }
 

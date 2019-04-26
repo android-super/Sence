@@ -101,6 +101,7 @@
                 android:paddingLeft="14dp"
                 android:gravity="center_vertical"
                 android:layout_marginBottom="16dp"
+                android:id="@+id/ll_infolayout_shopdetails"
                 android:layout_marginTop="22dp"
                 android:orientation="horizontal">
 
@@ -159,14 +160,110 @@
                     android:src="@drawable/pingjia_jiantou"/>
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycle_shopdetails"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ll_layout_shopdetails"
+            android:orientation="vertical"
+            >
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp_10"
-                android:layout_marginLeft="@dimen/dp_10">
+                android:layout_marginTop="16dp"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp"
+                android:orientation="horizontal">
 
-            </androidx.recyclerview.widget.RecyclerView>
+                <com.sence.view.NiceImageView
+                    android:layout_width="37dp"
+                    android:layout_height="37dp"
+                    app:is_circle="true"
+                    android:scaleType="center"
+                    android:src="@drawable/hint_img"
+                    android:id="@+id/iv_imgshop_shopdetails"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:text="竹林"
+                    android:id="@+id/tv_nameshop_shopdetails"
+                    android:textColor="#333333"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp"
+                android:lineSpacingExtra="9dp"
+                android:id="@+id/tv_contentshop_shopdetails"
+                android:text="绿竹是禾本科，绿竹属竿较高大，近直立，单丛生；节间圆筒形，竿壁厚。箨鞘质地坚韧，顶端截形或两肩部广圆；绿竹是禾本科，绿竹属竿较高大，近直立，单丛生；节间圆筒形，竿壁厚。箨鞘质地坚韧，顶端截形或两肩部广圆；"
+                android:textColor="#333333"
+                android:textSize="@dimen/sp_14"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:id="@+id/recycle_commendimgshop_shopdetails"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:paddingBottom="20dp"
+                    android:paddingTop="18dp"
+                    android:text="2019-03-26"
+                    android:id="@+id/tv_timeshop_shopdetails"
+                    android:textColor="#999999"
+                    android:textSize="@dimen/sp_12"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:id="@+id/ll_likeshop_shopdetails"
+                    android:background="@drawable/shape_shopcommed_dianzanbg">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:id="@+id/iv_likeshop_shopdetails"
+                        android:src="@drawable/shopcommend_dianzan_y"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:paddingLeft="9dp"
+                        android:id="@+id/tv_likenumshop_shopdetails"
+                        android:paddingRight="9dp"
+                        android:text="99"
+                        android:layout_marginRight="7dp"
+                        android:textColor="#333333"
+                        android:textSize="10sp"
+                        />
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="400dp"

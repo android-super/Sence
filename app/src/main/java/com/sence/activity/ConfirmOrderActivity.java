@@ -243,7 +243,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 startActivity(intentsele);
                 break;
             case R.id.bt_submint_confirmorder:
-                if (isCheckAddress) {
+                if (rlAddressConfirmorder.getVisibility()==View.VISIBLE) {
                     mBottomSheetDialog.show();
                     createOrder();
                 } else {

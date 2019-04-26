@@ -168,16 +168,6 @@
                                     android:textColor="@color/white"
                                     android:textSize="14sp"/>
 
-                                <View
-                                    android:id="@+id/iv_long_myinfo"
-                                    android:layout_width="1dp"
-                                    android:layout_height="13dp"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginLeft="8dp"
-                                    android:layout_toRightOf="@+id/tv_focus_myinfo"
-                                    android:background="#7A797E"
-                                    android:text="0"
-                                    android:textColor="@color/white"/>
 
                                 <TextView
                                     android:id="@+id/tv_fans_myinfo"

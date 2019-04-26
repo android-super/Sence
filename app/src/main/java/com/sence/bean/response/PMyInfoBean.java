@@ -29,6 +29,8 @@ public class PMyInfoBean {
          * user_name : 17600183078
          * nick_name : 176****3078
          * album_url : /Public/Uploads/albums/2019-03-14/5c8a18e55b13d.jpg
+         * width : 111
+         * height : 222
          * details :
          * is_kol : 1
          * is_focus : 0
@@ -50,14 +52,25 @@ public class PMyInfoBean {
         private String user_name;
         private String nick_name;
         private String album_url;
+        private float width;
+        private float height;
         private String details;
         private String is_kol;
         private String is_focus;
         private String vid;
         private String message_count;
+
+        public String getNote_type() {
+            return note_type;
+        }
+
+        public void setNote_type(String note_type) {
+            this.note_type = note_type;
+        }
+
         private String praise_count;
         private String is_like;
-
+        private String note_type;
         public String getNid() {
             return nid;
         }
@@ -152,6 +165,22 @@ public class PMyInfoBean {
 
         public void setAlbum_url(String album_url) {
             this.album_url = album_url;
+        }
+
+        public float getWidth() {
+            return width;
+        }
+
+        public void setWidth(float width) {
+            this.width = width;
+        }
+
+        public float getHeight() {
+            return height;
+        }
+
+        public void setHeight(float height) {
+            this.height = height;
         }
 
         public String getDetails() {

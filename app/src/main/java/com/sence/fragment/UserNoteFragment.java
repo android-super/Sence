@@ -24,13 +24,13 @@ import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.LoginStatus;
-import com.sence.view.GridSpacingItemDecoration;
+import com.sence.view.GridStagSpacingItemDecoration;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 /**
  * 笔记Fragment
@@ -38,22 +38,18 @@ import androidx.recyclerview.widget.RecyclerView;
 public class UserNoteFragment extends Fragment {
     private SmartRefreshLayout smartRefreshLayout;
     private RecyclerView recyclerView;
-    private boolean isShow = true;
+
     private UserNoteAdapter adapter;
     private int page = 1;
     private String type;
+    private String uid;
     private ImageView mImg;
-    private String uid = "";
-    public UserNoteFragment() {
-        // Required empty public constructor
-    }
-
+    private boolean isShow = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_note, container, false);
+        return inflater.inflate(R.layout.fragment_note, container, false);
     }
 
     @Override
@@ -66,34 +62,6 @@ public class UserNoteFragment extends Fragment {
         initData();
     }
 
-    private void initData() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.USER_INFO_DATA, new RMyInfoBean(LoginStatus.getUid(),type,uid,page+"","10")).request(new ApiCallBack<PMyInfoBean>() {
-            @Override
-            public void onFinish() {
-                smartRefreshLayout.finishRefresh();
-                smartRefreshLayout.finishLoadMore();
-            }
-
-            @Override
-            public void Message(int code, String message) {
-
-            }
-
-            @Override
-            public void onSuccess(PMyInfoBean o, String msg) {
-                if(o.getList().size()>0){
-                    isShow=false;
-                }
-                ((MyInfoActivity)getActivity()).setIsShow(isShow);
-                if (page == 1) {
-                    adapter.setNewData(o.getList());
-                } else {
-                    adapter.addData(o.getList());
-                }
-            }
-        });
-    }
-
 
     public void initRefresh() {
         smartRefreshLayout = getView().findViewById(R.id.smart_refresh);
@@ -101,10 +69,11 @@ public class UserNoteFragment extends Fragment {
         mImg = getView().findViewById(R.id.iv_img_usernote);
         smartRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
         smartRefreshLayout.setRefreshFooter(new ClassicsFooter(getActivity()));
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+        StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(2,
+                StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(gridLayoutManager);
-        GridSpacingItemDecoration gridSpacingItemDecoration = new GridSpacingItemDecoration(2, ConvertUtils.dp2px(10),
-                true);
+        GridStagSpacingItemDecoration gridSpacingItemDecoration = new GridStagSpacingItemDecoration(2,
+                ConvertUtils.dp2px(4));
         recyclerView.addItemDecoration(gridSpacingItemDecoration);
         adapter = new UserNoteAdapter(R.layout.rv_item_note);
         recyclerView.setAdapter(adapter);
@@ -166,4 +135,36 @@ public class UserNoteFragment extends Fragment {
         });
 
     }
+
+    private void initData() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.USER_INFO_DATA, new RMyInfoBean(LoginStatus.getUid(),type,uid,page+"","10")).request(new ApiCallBack<PMyInfoBean>() {
+            @Override
+            public void onFinish() {
+                smartRefreshLayout.finishRefresh();
+                smartRefreshLayout.finishLoadMore();
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(PMyInfoBean o, String msg) {
+                if(o.getList().size()>0){
+                    isShow =false;
+                }
+                ((MyInfoActivity)getActivity()).setIsShow(isShow);
+                if (page == 1) {
+                    adapter.setNewData(o.getList());
+                } else {
+                    adapter.addData(o.getList());
+                }
+            }
+        });
+    }
+
+
+
+
 }

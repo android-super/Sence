@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:paddingTop="10dp"
+              android:layout_height="wrap_content">
+
+
+    <com.sence.view.NiceImageView
+        android:id="@+id/item_img"
+        android:scaleType="centerCrop"
+        app:corner_radius="4dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:transitionName="@string/translation_recommend_name"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"/>
+
+    <TextView
+        android:text="@string/hint_describe"
+        android:id="@+id/item_title"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:layout_marginBottom="2dp"
+        android:maxLines="1"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:id="@+id/item_content"
+        android:text="@string/hint_content"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:textColor="#333333"
+        android:lineSpacingExtra="4dp"
+        android:textSize="14sp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textStyle=""
+        android:maxLines="2"
+        android:layout_height="match_parent"/>
+
+    <RelativeLayout
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:layout_marginTop="13dp"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content">
+
+            <com.sence.view.NiceImageView
+                android:id="@+id/item_head"
+                android:src="@drawable/hint_img"
+                app:is_circle="true"
+                android:scaleType="centerCrop"
+                android:layout_width="15dp"
+                android:layout_height="15dp"/>
+
+            <TextView
+                android:id="@+id/item_name"
+                android:text="@string/hint_name"
+                android:layout_marginLeft="6dp"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="#666666"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:id="@+id/item_tag"
+                android:src="@drawable/main_recommend_v"
+                android:layout_marginLeft="3dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentRight="true"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/item_support"
+                android:text="@string/hint_num"
+                android:layout_marginLeft="8dp"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="#666666"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:id="@+id/item_support_img"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/selecte_main_support"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="75dp"
+            android:layout_alignParentRight="true"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/item_comment"
+                android:text="@string/hint_num"
+                android:layout_marginLeft="8dp"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="#666666"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/main_recommend_pinglun"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#f9f9f9"/>
+</LinearLayout>
