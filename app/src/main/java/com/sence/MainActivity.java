@@ -1,5 +1,6 @@
 package com.sence;
 
+import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Parcelable;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AlertDialog;
@@ -108,6 +110,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mains = new LinearLayout[]{mainHome, mainVip, mainKind, mainBus, mainUser};
 
         setSelect(0);
+//        showUpdateDialog();
 //        initUpdataApp();
     }
 
@@ -322,6 +325,30 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
             }
         });
+    }
+
+    public void showUpdateDialog(){
+        View update_dialog = LayoutInflater.from(this).inflate(R.layout.update_dialog,null);
+        TextView update_content = update_dialog.findViewById(R.id.update_content);
+        Button update_download = update_dialog.findViewById(R.id.update_download);
+        ImageView update_close = update_dialog.findViewById(R.id.update_close);
+        AlertDialog dialog  = new AlertDialog.Builder(this,R.style.update_alert_dialog).create();
+        dialog.setView(update_dialog);
+        update_content.setText("1、我爱中国"+"\n" + "2、更新内容提示，我爱你大爷，你大爷爱我，我是你大爷，你大爷是我，我是你最爱的人你最爱的认识我"+"\n" + "3、测试时最好的");
+        update_download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        update_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        dialog.show();
+        dialog.setCancelable(false);
     }
 
 }

@@ -153,6 +153,9 @@ public class BusFragment extends BaseMainFragment {
                     topAdapter.remove(position - 1);
                     getValue();
                 }
+                if (topAdapter.getData().size() == 0) {
+                    bus_all_select.setVisibility(View.GONE);
+                }
             }
         });
         topAdapter.setListener(new BusTopAdapter.SelectChangeListener() {
@@ -437,9 +440,11 @@ public class BusFragment extends BaseMainFragment {
                 if (o.getCart().size() > 0) {
                     setSelect(true);
                     bus_all_select.setSelected(true);
+                    bus_all_select.setVisibility(View.VISIBLE);
                     getValue();
                 } else {
                     bus_all_select.setSelected(false);
+                    bus_all_select.setVisibility(View.GONE);
                 }
 
             }

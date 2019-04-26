@@ -400,10 +400,20 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
             public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
                 float alpha = (float) Math.abs(i) / appBarLayout.getTotalScrollRange();
                 toolView.setAlpha(alpha);
-                toolShare.setAlpha(alpha);
-                toolSharePress.setAlpha(1 - alpha);
-                toolBack.setAlpha(alpha);
-                toolBackPress.setAlpha(1 - alpha);
+                if (Math.abs(i) > (appBarLayout.getTotalScrollRange() / 2)) {
+                    float alpha_content = ((float) Math.abs(i) * 2 / appBarLayout.getTotalScrollRange()) - 1;
+                    toolShare.setAlpha(alpha_content);
+                    toolBack.setAlpha(alpha_content);
+                    toolSharePress.setAlpha(0f);
+                    toolBackPress.setAlpha(0f);
+                } else {
+                    toolShare.setAlpha(0f);
+                    toolBack.setAlpha(0f);
+                    float alpha_content = (float) Math.abs(i) * 2 / appBarLayout.getTotalScrollRange();
+                    toolSharePress.setAlpha(Math.abs(1 - alpha_content));
+                    toolBackPress.setAlpha(Math.abs(1 - alpha_content));
+                }
+
             }
         });
         contentNested.setOnScrollChangeListener(new View.OnScrollChangeListener() {

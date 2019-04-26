@@ -1,6 +1,7 @@
 package com.sence.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -161,7 +162,14 @@ public class NoteDetailActivity extends BaseActivity implements View.OnClickList
                 support(adapter.getData().get(position).getNid(), true, position);
             }
         });
-
+        noteHead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(NoteDetailActivity.this, MyInfoActivity.class);
+                intent.putExtra("uid", noteInfoBean.getUid());
+                startActivity(intent);
+            }
+        });
         noteComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -235,8 +243,15 @@ public class NoteDetailActivity extends BaseActivity implements View.OnClickList
                 float alpha = (float) Math.abs(i) / appBarLayout.getTotalScrollRange();
                 toolView.setAlpha(alpha);
                 toolTitle.setAlpha(alpha);
-                toolBack.setAlpha(alpha);
-                toolBackPress.setAlpha(1-alpha);
+                if (Math.abs(i) > (appBarLayout.getTotalScrollRange() / 2)) {
+                    float alpha_content = ((float) Math.abs(i) * 2 / appBarLayout.getTotalScrollRange()) - 1;
+                    toolBack.setAlpha(alpha_content);
+                    toolBackPress.setAlpha(0f);
+                } else {
+                    toolBack.setAlpha(0f);
+                    float alpha_content = (float) Math.abs(i) * 2 / appBarLayout.getTotalScrollRange();
+                    toolBackPress.setAlpha(Math.abs(1 - alpha_content));
+                }
             }
         });
         toolBack.setOnClickListener(new View.OnClickListener() {
