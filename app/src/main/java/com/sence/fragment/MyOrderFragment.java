@@ -439,6 +439,7 @@ public class MyOrderFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onSuccess(PMyOrderBean o, String msg) {
                 Logger.e("msg==========" + msg);
+                listBeans.addAll(o.getList());
                 if(isclear) {
                     if(o.getList().size()>0) {
                         mNot.setVisibility(View.GONE);
@@ -448,7 +449,6 @@ public class MyOrderFragment extends Fragment implements View.OnClickListener {
                     }
                     mMyOrderAdapter.setList(o.getList());
                 }else{
-                    listBeans.addAll(o.getList());
                     if(listBeans.size()>0) {
                         mNot.setVisibility(View.GONE);
                     }else{
