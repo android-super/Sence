@@ -380,12 +380,12 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 finish();
                 break;
             case R.id.ll_wei_share:
-                shareWeb(MyInfoActivity.this, WebConstans.GRZL + "?token=" + LoginStatus.getUserToken() + "&to_uid=" + bean.getUsertoken(), bean.getUser_name() + bean.getNick_name() + "的精彩生活", "女神的日常", SHARE_MEDIA.WEIXIN, bean.getAvatarUrl());
+                shareWeb(MyInfoActivity.this, WebConstans.GRZL + "?token=" + LoginStatus.getUserToken() + "&to_uid=" + bean.getUsertoken(), bean.getNick_name() + "的精彩生活", "女神的日常", SHARE_MEDIA.WEIXIN, bean.getAvatarUrl());
                 Log.i("aaaaa", bean.getAvatarUrl() + "");
                 mBottomSheetDialog.dismiss();
                 break;
             case R.id.ll_friend_share:
-                shareWeb(MyInfoActivity.this, WebConstans.GRZL + "?token=" + LoginStatus.getUserToken() + "&to_uid=" + bean.getUsertoken(), bean.getUser_name() + bean.getNick_name() + "的精彩生活", "女神的日常", SHARE_MEDIA.WEIXIN_CIRCLE, bean.getAvatarUrl());
+                shareWeb(MyInfoActivity.this, WebConstans.GRZL + "?token=" + LoginStatus.getUserToken() + "&to_uid=" + bean.getUsertoken(), bean.getNick_name() + "的精彩生活", "女神的日常", SHARE_MEDIA.WEIXIN_CIRCLE, bean.getAvatarUrl());
                 mBottomSheetDialog.dismiss();
                 break;
             case R.id.tv_cancel_share:
