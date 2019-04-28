@@ -215,7 +215,7 @@ public class UpdateService extends Service {
     }
 
     public long downloadUpdateFile(String down_url, String file) throws Exception {
-        int down_step = 5;
+        int down_step = 1;
         int totalSize;
         int downloadCount = 0;
         int updateCount = 0;
