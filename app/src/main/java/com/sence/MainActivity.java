@@ -121,7 +121,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mains = new LinearLayout[]{mainHome, mainVip, mainKind, mainBus, mainUser};
 
         setSelect(0);
-        initUpdataApp();
+//        initUpdataApp();
     }
 
     private void initUpdataApp() {

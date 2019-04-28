@@ -171,7 +171,11 @@ public class PictureTagLayout extends RelativeLayout implements View.OnTouchList
                 params.leftMargin = (int) (width_scale * width);
                 view = new PictureTagView(getContext(), PictureTagView.Direction.Right);
             }
-            ((PictureTagView) view).setContent(tagInfoItems.get(i).getContent());
+            if (TextUtils.isEmpty(tagInfoItems.get(i).getContent())) {
+                ((PictureTagView) view).setContent("点击编辑");
+            } else {
+                ((PictureTagView) view).setContent(tagInfoItems.get(i).getContent());
+            }
             params.topMargin = (int) (height * height_scale);
             //上下位置在视图内
             if (params.topMargin < 0) {

@@ -157,7 +157,7 @@ public class BusFragment extends BaseMainFragment {
                     getValue();
                 }
                 if (topAdapter.getData().size() == 0) {
-                    bus_all_select.setVisibility(View.GONE);
+                    bus_all_layout.setVisibility(View.GONE);
                 }
             }
         });
