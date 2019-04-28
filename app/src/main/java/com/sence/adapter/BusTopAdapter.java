@@ -69,6 +69,7 @@ public class BusTopAdapter extends BaseQuickAdapter<PBusBean.CartBean, BaseViewH
     @Override
     protected void convert(final BaseViewHolder helper, final PBusBean.CartBean item) {
         helper.addOnClickListener(R.id.item_name_select);
+        helper.addOnClickListener(R.id.item_look);
         helper.setText(R.id.item_name_select, item.getShopname());
         if ("0".equals(item.getActive())) {
             helper.setGone(R.id.item_discount_layout, false);

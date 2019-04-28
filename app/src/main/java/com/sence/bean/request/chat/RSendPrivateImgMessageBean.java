@@ -9,19 +9,12 @@ import com.sence.bean.base.BaseImageRequestBean;
  * 描述:SenceGit
  */
 public class RSendPrivateImgMessageBean extends BaseImageRequestBean {
-    public String getU_to() {
-        return u_to;
-    }
 
-    public void setU_to(String u_to) {
-        this.u_to = u_to;
-    }
-
-    private String u_to;
+    private String to_uid;
     private String uid;
 
-    public RSendPrivateImgMessageBean(String u_to, String uid) {
-        this.u_to = u_to;
+    public RSendPrivateImgMessageBean(String to_uid, String uid) {
+        this.to_uid = to_uid;
         this.uid = uid;
     }
 
@@ -32,5 +25,13 @@ public class RSendPrivateImgMessageBean extends BaseImageRequestBean {
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    public String getTo_uid() {
+        return to_uid;
+    }
+
+    public void setTo_uid(String to_uid) {
+        this.to_uid = to_uid;
     }
 }

@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
+import com.blankj.utilcode.util.ConvertUtils;
 import com.google.gson.Gson;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.sence.R;
@@ -105,8 +106,8 @@ public class AddTagActivity extends BaseActivity implements View.OnClickListener
             int item_width = adapter.getmFragments().get(i).getItem_width();
             int item_height = adapter.getmFragments().get(i).getItem_height();
             rTagInfo.setTagInfoItems(tagInfoItems);
-            rTagInfo.setHeight(item_height);
-            rTagInfo.setWidth(item_width);
+            rTagInfo.setHeight(ConvertUtils.px2dp(item_height));
+            rTagInfo.setWidth(ConvertUtils.px2dp(item_width));
             rTagInfos.add(rTagInfo);
         }
         TagUtils.tagInfos.addAll(rTagInfos);

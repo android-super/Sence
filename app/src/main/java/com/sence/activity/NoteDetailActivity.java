@@ -228,8 +228,9 @@ public class NoteDetailActivity extends BaseActivity implements View.OnClickList
     private void initViewPager(List<PNoteDetailBean.NoteInfoBean.AlbumsBean> albums) {
         tagAdapter = new ViewShowTagPagerAdapter(getSupportFragmentManager());
         for (int i = 0; i < albums.size(); i++) {
-            tagAdapter.addFragment(ShowTagFragment.newInstance(albums.get(i).getAlbum_url(), i,
-                    albums.get(i).getTags()),
+            PNoteDetailBean.NoteInfoBean.AlbumsBean bean = albums.get(i);
+            tagAdapter.addFragment(ShowTagFragment.newInstance(bean.getAlbum_url(), i,
+                    bean.getTags(), bean.getWidth(), bean.getHeight()),
                     i + "");
         }
         noteBanner.setAdapter(tagAdapter);

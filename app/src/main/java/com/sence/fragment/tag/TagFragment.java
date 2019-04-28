@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.blankj.utilcode.util.ConvertUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -115,6 +116,7 @@ public class TagFragment extends Fragment {
                         height = resource.getHeight();
                         item_height = resource.getHeight();
                         item_width = resource.getWidth();
+                        Log.e("TAG", width + "===============" + height);
                         handler.sendEmptyMessage(0);
                         return false;
                     }
@@ -158,8 +160,8 @@ public class TagFragment extends Fragment {
             layoutParams.height = height;
             tag_layout.setLayoutParams(layoutParams);
             if (!is_add) {
-                int width = TagUtils.tagInfos.get(position).getWidth();
-                int height = TagUtils.tagInfos.get(position).getHeight();
+                int width = ConvertUtils.dp2px(TagUtils.tagInfos.get(position).getWidth());
+                int height = ConvertUtils.dp2px(TagUtils.tagInfos.get(position).getHeight());
                 tag_layout.setTagInfoItems(TagUtils.tagInfos.get(position).getTagInfoItems(), width, height);
             } else {
                 tag_layout.setTagInfoItems(null);

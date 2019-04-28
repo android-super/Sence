@@ -8,12 +8,12 @@ import com.sence.bean.base.BaseRequestBean;
  * 描述:SenceGit
  */
 public class RSendPrivateMessageBean extends BaseRequestBean {
-    private String u_to;
+    private String to_uid;
     private String uid;
     private String content;
 
-    public RSendPrivateMessageBean(String u_to, String uid, String content) {
-        this.u_to = u_to;
+    public RSendPrivateMessageBean(String to_uid, String uid, String content) {
+        this.to_uid = to_uid;
         this.uid = uid;
         this.content = content;
     }
@@ -34,11 +34,11 @@ public class RSendPrivateMessageBean extends BaseRequestBean {
         this.content = content;
     }
 
-    public String getU_to() {
-        return u_to;
+    public String getTo_uid() {
+        return to_uid;
     }
 
-    public void setU_to(String u_to) {
-        this.u_to = u_to;
+    public void setTo_uid(String to_uid) {
+        this.to_uid = to_uid;
     }
 }

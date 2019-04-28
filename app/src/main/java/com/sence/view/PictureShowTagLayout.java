@@ -42,18 +42,18 @@ public class PictureShowTagLayout extends RelativeLayout {
                             LayoutParams.WRAP_CONTENT);
             if (direction == 0) {
                 params.leftMargin = (int) (width_scale * width);
-                view = new PictureTagView(getContext(), PictureTagView.Direction.Left);
+                view = new PictureTagShowView(getContext(), PictureTagShowView.Direction.Left);
             } else {
                 params.leftMargin = (int) (width_scale * width);
-                view = new PictureTagView(getContext(), PictureTagView.Direction.Right);
+                view = new PictureTagShowView(getContext(), PictureTagShowView.Direction.Right);
             }
-            ((PictureTagView) view).setContent(tagInfoItems.get(i).getContent());
+            ((PictureTagShowView) view).setContent(tagInfoItems.get(i).getContent());
             params.topMargin = (int) (height * height_scale);
             //上下位置在视图内
             if (params.topMargin < 0) {
                 params.topMargin = 0;
-            } else if ((params.topMargin + PictureTagView.getViewHeight()) > height) {
-                params.topMargin = height - PictureTagView.getViewHeight();
+            } else if ((params.topMargin + PictureTagShowView.getViewHeight()) > height) {
+                params.topMargin = height - PictureTagShowView.getViewHeight();
             }
             view.setTag(i);
             this.addView(view, params);

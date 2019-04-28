@@ -345,8 +345,13 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
             case R.id.content_buy:
                 showGoodDialog();
                 break;
+            case R.id.tool_content_focus:
             case R.id.content_focus_tv:
                 toFocus();
+                break;
+            case R.id.tool_focus:
+            case R.id.content_focus:
+                cancelFocus();
                 break;
             case R.id.comment_close:
                 dismissDialog(commentSheet);
@@ -812,6 +817,32 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onSuccess(Object o, String msg) {
                 ToastUtils.showShort("成功加入购物车");
+            }
+        });
+    }
+    /**
+     * 取消关注
+     */
+    private void cancelFocus() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.USER_FOCUS_CANCEL, new RFocusBean(LoginStatus.getUid(),
+                to_uid)).request(new ApiCallBack<String>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(String o, String msg) {
+                contentFocus.setVisibility(View.GONE);
+                contentFocusTv.setVisibility(View.VISIBLE);
+                toolContentFocus.setVisibility(View.VISIBLE);
+                toolFocus.setVisibility(View.GONE);
+                ToastUtils.showShort(msg);
             }
         });
     }
