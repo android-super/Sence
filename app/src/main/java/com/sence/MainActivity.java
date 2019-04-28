@@ -69,7 +69,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private TextView sheet_img, sheet_video;
     private ImageView sheet_close;
     private List<LocalMedia> localMedia;
-    private boolean isconstraint = false;
+
     private LinearLayout[] mains;
     private MainFragment mainFragment;
     private VipFragment vipFragment;
@@ -79,7 +79,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private BaseMainFragment[] fragments;
 
     private int tag = 0;//底部点击Tag防止多次点击
-    private PUpDataAppInfo bean;
 
     @Override
     public int onActLayout() {
@@ -122,7 +121,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mains = new LinearLayout[]{mainHome, mainVip, mainKind, mainBus, mainUser};
 
         setSelect(0);
-//        showUpdateDialog();
         initUpdataApp();
     }
 
@@ -142,16 +140,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void onSuccess(PUpDataAppInfo o, String msg) {
                 Logger.e("msg==========" + msg);
-                bean = o;
-                if("0".equals(o.getUpgrade_type())){
-                    showUpdateDialog();
-                }else if("1".equals(o.getUpgrade_type())){
-                    showUpdateDialog();
-                }else if("2".equals(o.getUpgrade_type())){
-                    isconstraint=true;
-                    showUpdateDialog();
-                }
-
+                showUpdateDialog(o);
             }
         });
     }
@@ -166,8 +155,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         if (tag == (int) view.getTag()) {
             return;
         }
-        tag = (int) view.getTag();
-        setSelect(tag);
+
+        setSelect((Integer) view.getTag());
     }
 
     /**
@@ -205,6 +194,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 
     public void setSelect(int position) {
+        tag = position;
         for (int i = 0; i < mains.length; i++) {
             if (i == position) {
                 mains[i].setSelected(true);
@@ -349,33 +339,38 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         });
     }
 
-    public void showUpdateDialog() {
+    public void showUpdateDialog(PUpDataAppInfo o) {
+        if (o.getUpgrade_type().equals("0")) {
+            return;
+        }
         View update_dialog = LayoutInflater.from(this).inflate(R.layout.update_dialog, null);
         TextView update_content = update_dialog.findViewById(R.id.update_content);
         Button update_download = update_dialog.findViewById(R.id.update_download);
         ImageView update_close = update_dialog.findViewById(R.id.update_close);
         AlertDialog dialog = new AlertDialog.Builder(this, R.style.update_alert_dialog).create();
         dialog.setView(update_dialog);
-        update_content.setText(bean.getContents());
+        update_content.setText(o.getContents());
         update_download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateApp(APP_NAME,bean.getLink());
+                dialog.dismiss();
+                updateApp(APP_NAME, o.getLink());
             }
         });
-        if(isconstraint){
-            update_close.setVisibility(View.GONE);
-        }else{
-            update_close.setVisibility(View.VISIBLE);
-        }
         update_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
             }
         });
+        if (o.getUpgrade_type().equals("1")) {
+            dialog.setCancelable(true);
+        }
+        if (o.getUpgrade_type().equals("2")) {
+            dialog.setCancelable(false);
+            update_close.setVisibility(View.GONE);
+        }
         dialog.show();
-        dialog.setCancelable(false);
     }
 
 }

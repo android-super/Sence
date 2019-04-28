@@ -229,4 +229,16 @@ public class VipFragment extends BaseMainFragment implements View.OnClickListene
         initFirstView();
         initData();
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        vip_no_content.startViewAnimator();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        vip_no_content.stopViewAnimator();
+    }
 }

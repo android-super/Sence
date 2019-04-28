@@ -388,7 +388,7 @@ public class HttpManager<P> {
 
             @Override
             public void onNext(BaseResponseBean<P> result) {
-                Logger.e("status is " + result.getStatus() + "\nmsg is " + result.getMsg() + "\ndata is " + result.getData().toString());
+                Logger.e("status===>" + result.getStatus() + "\nmsg===>" + result.getMsg() + "\ndata===>" + result.getData().toString());
                 if (!disposable.isDisposed()) {
                     if (result.getStatus() == 1) {
                         if (apiCallBack instanceof MessageApiCallBack) {

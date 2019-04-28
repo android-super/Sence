@@ -83,7 +83,9 @@
                             app:setInterval="3000"
                             app:setTextSize="12sp"
                             app:setTextColor="#2f3130"
+                            android:layout_centerHorizontal="true"
                             app:setSingleLine="true"
+                            app:setGravity="center"
                             app:setDirection="bottom_to_top"
                             app:setAnimDuration="1500"
                             android:layout_height="20dp"/>

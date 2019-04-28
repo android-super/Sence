@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.*;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 import androidx.core.content.FileProvider;
@@ -19,6 +20,7 @@ import com.sence.R;
 import com.umeng.socialize.utils.DeviceConfig;
 
 import java.io.*;
+import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -237,17 +239,20 @@ public class UpdateService extends Service {
         while ((readsize = inputStream.read(buffer)) != -1) {
             outputStream.write(buffer, 0, readsize);
             downloadCount += readsize;
-
-            if (updateCount == 0 || (downloadCount * 100 / totalSize - down_step) >= updateCount) {
+            BigDecimal bigDecimal = new BigDecimal(100);
+            BigDecimal bigDecimal2 = new BigDecimal(downloadCount);
+            BigDecimal multiply = bigDecimal.multiply(bigDecimal2);
+            long longValue = multiply.longValue();
+            if (updateCount == 0 || (longValue / totalSize - down_step) >= updateCount) {
                 updateCount += down_step;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    callback.onProgress(updateCount, 100);
                     builder.setContentText("正在下载..." + updateCount + "%" + "");
                     builder.setProgress(100, updateCount, false);
                     notification = builder.build();
                 } else {
                     notification = builder.getNotification();
                 }
+                callback.onProgress(updateCount, 100);
                 notificationManager.notify(notification_id, notification);
             }
         }
@@ -269,13 +274,14 @@ public class UpdateService extends Service {
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Uri imageUri;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            imageUri = FileProvider.getUriForFile(DeviceConfig.context, BuildConfig.APPLICATION_ID + ".fileProvider",
+            imageUri = FileProvider.getUriForFile(DeviceConfig.context, BuildConfig.APPLICATION_ID + ".provider",
                     apkFile);
             i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         } else {
             imageUri = Uri.fromFile(apkFile);
         }
+        i.setAction(Intent.ACTION_VIEW);
         i.setDataAndType(imageUri, "application/vnd.android.package-archive");
-        this.startActivity(i);
+        startActivity(i);
     }
 }
