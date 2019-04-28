@@ -19,5 +19,10 @@ public class MessagePrivateAdapter extends BaseQuickAdapter<PPrivateChatBean, Ba
         helper.setText(R.id.item_name, item.getNick_name());
         helper.setText(R.id.item_describe, item.getContent());
         helper.setText(R.id.item_time, item.getTime());
+        if (item.getRead().equals("1")) {
+            helper.setGone(R.id.item_point, true);
+        } else {
+            helper.setGone(R.id.item_point, false);
+        }
     }
 }

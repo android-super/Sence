@@ -13,14 +13,7 @@ import android.widget.TextView;
 
 import com.sence.LoginActivity;
 import com.sence.R;
-import com.sence.activity.ManageAddressActivity;
-import com.sence.activity.MessageActivity;
-import com.sence.activity.MyAccountActivity;
-import com.sence.activity.MyFansFocusNoteActivity;
-import com.sence.activity.MyInfoActivity;
-import com.sence.activity.MyOrderActivity;
-import com.sence.activity.OpenVipPageActivity;
-import com.sence.activity.SettingActivity;
+import com.sence.activity.*;
 import com.sence.activity.web.WebConstans;
 import com.sence.activity.web.WebNotitleActivity;
 import com.sence.base.BaseMainFragment;

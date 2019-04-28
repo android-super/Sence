@@ -25,6 +25,7 @@
         <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tab_layout"
                 app:tabGravity="fill"
+                app:tabUnboundedRipple="true"
                 app:tabBackground="@color/white"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"

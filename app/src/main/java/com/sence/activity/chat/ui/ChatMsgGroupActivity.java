@@ -105,11 +105,11 @@ public class ChatMsgGroupActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void putSocketResult(String str) {
                 ChatSocketBean socketBean = JsonParseUtil.parseString(str, ChatSocketBean.class);
-                if (socketBean.getType().equals("to_uid")) {
+                if (socketBean.getType().equals("vgroup")) {
                     PChatMessageBean.MessageBean bean = new PChatMessageBean.MessageBean();
-                    bean.setContent(socketBean.getContent());
-                    bean.setType(socketBean.getMessage_type());
-                    bean.setAdd_time(socketBean.getAdd_time());
+                    bean.setContent(socketBean.getData().getContent());
+                    bean.setType(socketBean.getData().getType());
+                    bean.setAdd_time(socketBean.getData().getAdd_time());
                     int currentTime = (int) (System.currentTimeMillis() / 1000);
                     if ((currentTime - lastVisibleTime) / 60 > 10) {
                         lastVisibleTime = currentTime;
@@ -311,7 +311,7 @@ public class ChatMsgGroupActivity extends BaseActivity implements View.OnClickLi
 
             @Override
             public void onSuccess(PChatMessageBean o, String msg) {
-                if (o.getMessage()==null||o.getMessage().size()==0){
+                if (o.getMessage() == null || o.getMessage().size() == 0) {
                     return;
                 }
                 dataList = o.getMessage();

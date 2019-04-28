@@ -42,7 +42,7 @@
         <attr name="mid_bold" format="boolean"/>
     </declare-styleable>
     
-    <declare-styleable name="TextBannerViewStyle">
+    <declare-styleable name="TextBannerView">
         <attr name="setInterval" format="integer|reference"/>
         <attr name="setAnimDuration" format="integer|reference"/>
         <attr name="setTextSize" format="dimension|reference"/>

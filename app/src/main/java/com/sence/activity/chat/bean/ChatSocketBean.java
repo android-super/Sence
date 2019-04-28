@@ -2,55 +2,30 @@ package com.sence.activity.chat.bean;
 
 public class ChatSocketBean {
 
+    /**
+     * type : vgroup
+     * data : {"code":"100000","uid":"11","avatar":"/Public/Home/img/default_avatar.png","nick_name":"哈家",
+     * "content":"图片","type":"2","img":"/Public/Uploads/VGroupChat/2019-04-26/5cc2e9f164015.jpg"}
+     */
+
     private String type;
-    private String content;
-    private String u_from;
     private String client_id;
-    private String group;
-    private String msg;
-    private String img;
-    private long add_time;
-    private int message_type;
-    private String tid;
+    private DataBean data;
 
-    public String getTid() {
-        return tid;
+    public String getType() {
+        return type;
     }
 
-    public void setTid(String tid) {
-        this.tid = tid;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public long getAdd_time() {
-        return add_time;
+    public DataBean getData() {
+        return data;
     }
 
-    public void setAdd_time(long add_time) {
-        this.add_time = add_time;
-    }
-
-    public String getImg() {
-        return img;
-    }
-
-    public void setImg(String img) {
-        this.img = img;
-    }
-
-    public int getMessage_type() {
-        return message_type;
-    }
-
-    public void setMessage_type(int message_type) {
-        this.message_type = message_type;
-    }
-
-    public String getGroup() {
-        return group;
-    }
-
-    public void setGroup(String group) {
-        this.group = group;
+    public void setData(DataBean data) {
+        this.data = data;
     }
 
     public String getClient_id() {
@@ -61,35 +36,88 @@ public class ChatSocketBean {
         this.client_id = client_id;
     }
 
-    public String getType() {
-        return type;
-    }
+    public static class DataBean {
+        /**
+         * code : 100000
+         * uid : 11
+         * avatar : /Public/Home/img/default_avatar.png
+         * nick_name : 哈家
+         * content : 图片
+         * type : 2
+         * img : /Public/Uploads/VGroupChat/2019-04-26/5cc2e9f164015.jpg
+         */
 
-    public void setType(String type) {
-        this.type = type;
-    }
+        private String code;
+        private String uid;
+        private String avatar;
+        private String nick_name;
+        private String content;
+        private int type;
+        private String img;
+        private long add_time;
 
-    public String getContent() {
-        return content;
-    }
+        public String getCode() {
+            return code;
+        }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+        public void setCode(String code) {
+            this.code = code;
+        }
 
-    public String getU_from() {
-        return u_from;
-    }
+        public String getUid() {
+            return uid;
+        }
 
-    public void setU_from(String u_from) {
-        this.u_from = u_from;
-    }
+        public void setUid(String uid) {
+            this.uid = uid;
+        }
 
-    public String getMsg() {
-        return msg;
-    }
+        public String getAvatar() {
+            return avatar;
+        }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+        public void setAvatar(String avatar) {
+            this.avatar = avatar;
+        }
+
+        public String getNick_name() {
+            return nick_name;
+        }
+
+        public void setNick_name(String nick_name) {
+            this.nick_name = nick_name;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
+        }
+
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
+        }
+
+        public String getImg() {
+            return img;
+        }
+
+        public void setImg(String img) {
+            this.img = img;
+        }
+
+        public long getAdd_time() {
+            return add_time;
+        }
+
+        public void setAdd_time(long add_time) {
+            this.add_time = add_time;
+        }
     }
 }

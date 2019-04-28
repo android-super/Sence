@@ -22,6 +22,7 @@ import com.sence.LoginActivity;
 import com.sence.MainActivity;
 import com.sence.R;
 import com.sence.activity.ConfirmOrderActivity;
+import com.sence.activity.MyInfoActivity;
 import com.sence.activity.OpenVipPageActivity;
 import com.sence.activity.ShopDetailsActivity;
 import com.sence.adapter.BusBottomAdapter;
@@ -59,6 +60,7 @@ public class BusFragment extends BaseMainFragment {
     private RecyclerView recycle_view_bottom;
 
     private TextView bus_all_select;
+    private RelativeLayout bus_all_layout;
     private TextView bus_commit;
     private TextView bus_all_price;
 
@@ -94,6 +96,7 @@ public class BusFragment extends BaseMainFragment {
         recycle_view = getView().findViewById(R.id.recycle_view);
         recycle_view_bottom = getView().findViewById(R.id.recycle_view_bottom);
 
+        bus_all_layout = getView().findViewById(R.id.bus_all_layout);
         bus_all_select = getView().findViewById(R.id.bus_all_select);
         bus_commit = getView().findViewById(R.id.bus_commit);
         bus_all_price = getView().findViewById(R.id.bus_all_price);
@@ -181,6 +184,11 @@ public class BusFragment extends BaseMainFragment {
                     topAdapter.notifyDataSetChanged();
                     getAllSelect();
                     getValue();
+                }
+                if (view.getId() == R.id.item_look) {
+                    Intent intent = new Intent(getActivity(), MyInfoActivity.class);
+                    intent.putExtra("uid", topAdapter.getData().get(position).getGoods().get(0).getUid());
+                    startActivity(intent);
                 }
             }
         });
@@ -441,11 +449,11 @@ public class BusFragment extends BaseMainFragment {
                 if (o.getCart().size() > 0) {
                     setSelect(true);
                     bus_all_select.setSelected(true);
-                    bus_all_select.setVisibility(View.VISIBLE);
+                    bus_all_layout.setVisibility(View.VISIBLE);
                     getValue();
                 } else {
                     bus_all_select.setSelected(false);
-                    bus_all_select.setVisibility(View.GONE);
+                    bus_all_layout.setVisibility(View.GONE);
                 }
 
             }

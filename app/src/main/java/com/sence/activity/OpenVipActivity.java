@@ -13,6 +13,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import com.alipay.sdk.app.PayTask;
 import com.sence.R;
+import com.sence.activity.web.WebConstans;
 import com.sence.base.BaseActivity;
 import com.sence.bean.request.RAliPayBean;
 import com.sence.bean.request.RWxPayBean;
@@ -120,6 +121,7 @@ public class OpenVipActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.pay_protocol:
                 Intent intent = new Intent(OpenVipActivity.this, WebActivity.class);
+                intent.putExtra("code", WebConstans.WebCode.HYXY);
                 startActivity(intent);
                 break;
         }

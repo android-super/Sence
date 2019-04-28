@@ -3,10 +3,12 @@ package com.sence.adapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.view.View;
 import android.widget.ImageView;
 
+import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sence.R;
@@ -43,10 +45,13 @@ public class RecommendAdapter extends BaseQuickAdapter<PMainBean.NoteListBean, B
             helper.setGone(R.id.item_tag, false);
         }
         ImageView item_support_img = helper.getView(R.id.item_support_img);
-        if ("1".equals(item.getIs_like())) {
+        TextView item_support = helper.getView(R.id.item_support);
+        if (item.getIs_like().equals("1")) {
             item_support_img.setSelected(true);
+            item_support.setTextColor(Color.parseColor("#16a5af"));
         } else {
             item_support_img.setSelected(false);
+            item_support.setTextColor(Color.parseColor("#666666"));
         }
         helper.setText(R.id.item_support, item.getPraise_count());
         helper.setText(R.id.item_comment, item.getMessage_count());

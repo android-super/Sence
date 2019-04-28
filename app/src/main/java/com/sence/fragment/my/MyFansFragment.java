@@ -1,7 +1,12 @@
 package com.sence.fragment.my;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -19,6 +24,8 @@ import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sence.R;
+import com.sence.activity.MyFansFocusNoteActivity;
+import com.sence.activity.SearchActivity;
 import com.sence.adapter.FansAdapter;
 import com.sence.bean.request.RFansBean;
 import com.sence.bean.request.RFocusBean;
@@ -27,6 +34,7 @@ import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.LoginStatus;
+import com.umeng.commonsdk.debug.E;
 
 import java.util.List;
 
@@ -37,6 +45,7 @@ public class MyFansFragment extends Fragment {
     private String keyword = "";
     private SmartRefreshLayout smartRefreshLayout;
     private RecyclerView recyclerView;
+    private EditText search_content;
 
     private FansAdapter adapter;
     private int page = 1;
@@ -60,6 +69,7 @@ public class MyFansFragment extends Fragment {
         smartRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
         smartRefreshLayout.setRefreshFooter(new ClassicsFooter(getActivity()));
         recyclerView = getView().findViewById(R.id.recycle_view);
+        search_content = getView().findViewById(R.id.search_content);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new FansAdapter(R.layout.rv_item_fans);
         adapter.setEmptyView(R.layout.empty_focus_my, recyclerView);
@@ -77,13 +87,32 @@ public class MyFansFragment extends Fragment {
                 initFansData();
             }
         });
+        search_content.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                keyword = s.toString();
+                if (!TextUtils.isEmpty(keyword)) {
+                    initFansData();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
                 if (adapter.getData().get(position).getIs_focus().equals("1")) {
-                    cancelFocus(adapter.getData().get(position).getUid(),position);
-                }else{
-                    toFocus(adapter.getData().get(position).getUid(),position);
+                    cancelFocus(adapter.getData().get(position).getUid(), position);
+                } else {
+                    toFocus(adapter.getData().get(position).getUid(), position);
                 }
             }
         });
@@ -120,9 +149,10 @@ public class MyFansFragment extends Fragment {
 
     /**
      * 关注
+     *
      * @param to_uid
      */
-    public void toFocus(String to_uid,int position) {
+    public void toFocus(String to_uid, int position) {
         HttpManager.getInstance().PlayNetCode(HttpCode.USER_FOCUS, new RFocusBean(LoginStatus.getUid(), to_uid)).request(new ApiCallBack<String>() {
             @Override
             public void onFinish() {
@@ -146,8 +176,9 @@ public class MyFansFragment extends Fragment {
     /**
      * 取消关注
      */
-    private void cancelFocus(String to_uid,int position) {
-        HttpManager.getInstance().PlayNetCode(HttpCode.USER_FOCUS_CANCEL, new RFocusBean(LoginStatus.getUid(),to_uid)).request(new ApiCallBack<String>() {
+    private void cancelFocus(String to_uid, int position) {
+        HttpManager.getInstance().PlayNetCode(HttpCode.USER_FOCUS_CANCEL, new RFocusBean(LoginStatus.getUid(),
+                to_uid)).request(new ApiCallBack<String>() {
             @Override
             public void onFinish() {
 

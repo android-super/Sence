@@ -310,6 +310,9 @@ public class HttpManager<P> {
             case CHAT_BAN:
                 observable = httpService.ChatBan(requestBean.getMap());
                 break;
+            case NOTE_DELETE:
+                observable = httpService.NoteDelete(requestBean.getMap());
+                break;
 
         }
         observable = observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
@@ -388,16 +391,11 @@ public class HttpManager<P> {
                 Logger.e("status is " + result.getStatus() + "\nmsg is " + result.getMsg() + "\ndata is " + result.getData().toString());
                 if (!disposable.isDisposed()) {
                     if (result.getStatus() == 1) {
-
                         if (apiCallBack instanceof MessageApiCallBack) {
                             ((MessageApiCallBack) apiCallBack).onSuccessCount(result.getData(), result.getMsg(),
                                     result.getCount());
                         } else {
-                            try {
-                                apiCallBack.onSuccess(result.getData(), result.getMsg());
-                            } catch (IllegalAccessException e) {
-                                e.printStackTrace();
-                            }
+                            apiCallBack.onSuccess(result.getData(), result.getMsg());
                         }
                     } else {
                         ToastUtils.showShort(result.getMsg());

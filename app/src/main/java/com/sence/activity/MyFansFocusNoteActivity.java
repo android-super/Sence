@@ -28,8 +28,6 @@ import java.util.Arrays;
 public class MyFansFocusNoteActivity extends BaseActivity {
     @BindView(R.id.recycle_title)
     RecyclerView recycleTitle;
-    @BindView(R.id.search_layout)
-    LinearLayout searchLayout;
     @BindView(R.id.view_pager)
     ViewPager viewPager;
     @BindView(R.id.back)
@@ -85,13 +83,7 @@ public class MyFansFocusNoteActivity extends BaseActivity {
             }
         });
         viewPager.setCurrentItem(position);
-        searchLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MyFansFocusNoteActivity.this, SearchActivity.class);
-                startActivity(intent);
-            }
-        });
+
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

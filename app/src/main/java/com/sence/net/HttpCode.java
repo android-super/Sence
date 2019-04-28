@@ -61,6 +61,7 @@ public enum HttpCode {
     USER_NOTE_LIST,//我的笔记列表
     USER_ACCOUNT,//我的账户
     NOTE_DETAIL,//笔记详情
+    NOTE_DELETE,//删除笔记
     CONTENT_DETAIL,//內容詳情
     COMMENT_LIST,//评价列表
     SUPPORT_NOTE_RECOMMEND,//推荐 笔记点赞

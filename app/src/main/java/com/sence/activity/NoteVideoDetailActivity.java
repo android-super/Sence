@@ -29,6 +29,7 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.sence.R;
+import com.sence.activity.web.WebConstans;
 import com.sence.adapter.CommentAdapter;
 import com.sence.adapter.NoteRecommendAdapter;
 import com.sence.base.BaseActivity;
@@ -46,6 +47,7 @@ import com.sence.utils.NavigationBarUtil;
 import com.sence.utils.StatusBarUtil;
 import com.sence.view.GridStagSpacingItemDecoration;
 import com.sence.view.NiceImageView;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.util.List;
 
@@ -83,7 +85,12 @@ public class NoteVideoDetailActivity extends BaseActivity implements View.OnClic
     TextView noteCommentRelease;
     @BindView(R.id.tool_back_press)
     ImageView toolBackPress;
+    @BindView(R.id.tool_more)
+    ImageView toolMore;
+    @BindView(R.id.tool_more_press)
+    ImageView toolMorePress;
 
+    private boolean isMy = false;
     private String nid;
     private float width;
     private float height;
@@ -94,6 +101,7 @@ public class NoteVideoDetailActivity extends BaseActivity implements View.OnClic
     private CommentAdapter commentAdapter;
 
     private BottomSheetDialog commentSheet;
+    private BottomSheetDialog mBottomSheetDialog;
     private EditText comment_release;
     private TextView comment_title;
     private TextView comment_num;
@@ -134,6 +142,14 @@ public class NoteVideoDetailActivity extends BaseActivity implements View.OnClic
         nid = this.getIntent().getStringExtra("nid");
         width = this.getIntent().getFloatExtra("width", 0);
         height = this.getIntent().getFloatExtra("height", 0);
+        isMy = this.getIntent().getBooleanExtra("isMy", false);
+        if (isMy) {
+            toolMore.setVisibility(View.VISIBLE);
+            toolMorePress.setVisibility(View.VISIBLE);
+        } else {
+            toolMore.setVisibility(View.GONE);
+            toolMorePress.setVisibility(View.GONE);
+        }
         initAppBarLayout();
         CollapsingToolbarLayout.LayoutParams layoutParams =
                 (CollapsingToolbarLayout.LayoutParams) noteVideo.getLayoutParams();
@@ -180,6 +196,7 @@ public class NoteVideoDetailActivity extends BaseActivity implements View.OnClic
                 showCommentDialog(false);
             }
         });
+        bottomSheetDialog();
     }
 
 
@@ -225,10 +242,14 @@ public class NoteVideoDetailActivity extends BaseActivity implements View.OnClic
                     float alpha_content = ((float) Math.abs(i) * 2 / appBarLayout.getTotalScrollRange()) - 1;
                     toolBack.setAlpha(alpha_content);
                     toolBackPress.setAlpha(0f);
+                    toolMore.setAlpha(alpha_content);
+                    toolMorePress.setAlpha(0f);
                 } else {
                     toolBack.setAlpha(0f);
+                    toolMore.setAlpha(0f);
                     float alpha_content = (float) Math.abs(i) * 2 / appBarLayout.getTotalScrollRange();
                     toolBackPress.setAlpha(Math.abs(1 - alpha_content));
+                    toolMorePress.setAlpha(Math.abs(1 - alpha_content));
                 }
             }
         });
@@ -253,8 +274,11 @@ public class NoteVideoDetailActivity extends BaseActivity implements View.OnClic
         comment_num = view.findViewById(R.id.comment_num);
         ImageView comment_close = view.findViewById(R.id.comment_close);
         commentAdapter = new CommentAdapter(R.layout.rv_item_comment);
+        commentAdapter.setEmptyView(R.layout.empty_comment, recycle_view);
         recycle_view.setAdapter(commentAdapter);
         commentSheet.setContentView(view);
+        commentSheet.getDelegate().findViewById(com.google.android.material.R.id.design_bottom_sheet)
+                .setBackgroundColor(getResources().getColor(android.R.color.transparent));
         BottomSheetBehavior mBehavior = BottomSheetBehavior.from((View) view.getParent());
         mBehavior.setState(STATE_EXPANDED);
         commentAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -307,13 +331,58 @@ public class NoteVideoDetailActivity extends BaseActivity implements View.OnClic
             case R.id.comment_close:
                 dismissDialog(commentSheet);
                 break;
+            case R.id.ll_report_share:
+                Intent intent = new Intent(NoteVideoDetailActivity.this, ReportCauseActivity.class);
+                intent.putExtra("type", "2");
+                intent.putExtra("gid", nid);
+                intent.putExtra("uid", p_uid);
+                startActivity(intent);
+                mBottomSheetDialog.dismiss();
+                break;
+            case R.id.ll_delete_share:
+                noteDelete();
+                mBottomSheetDialog.dismiss();
+                break;
+            case R.id.tv_cancel_share:
+                mBottomSheetDialog.dismiss();
+                break;
         }
+    }
+
+    private void bottomSheetDialog() {
+        View mView = View.inflate(this, R.layout.layout_note_delete, null);
+        mBottomSheetDialog = new BottomSheetDialog(this);
+        mBottomSheetDialog.setContentView(mView);
+        mBottomSheetDialog.getDelegate().findViewById(com.google.android.material.R.id.design_bottom_sheet)
+                .setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        mView.findViewById(R.id.ll_report_share).setOnClickListener(this);
+        mView.findViewById(R.id.ll_delete_share).setOnClickListener(this);
+        mView.findViewById(R.id.tv_cancel_share).setOnClickListener(this);
     }
 
     public void dismissDialog(BottomSheetDialog bottomSheetDialog) {
         if (bottomSheetDialog != null && bottomSheetDialog.isShowing()) {
             bottomSheetDialog.dismiss();
         }
+    }
+
+    private void noteDelete(){
+        HttpManager.getInstance().PlayNetCode(HttpCode.NOTE_DELETE,new RNidBean(LoginStatus.getUid(),nid)).request(new ApiCallBack() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(Object o, String msg){
+                finish();
+            }
+        });
     }
 
     /**

@@ -69,6 +69,25 @@
                             android:textSize="16sp"
                             android:textColor="@color/black"
                             android:layout_height="50dp"/>
+
+                    <ImageView
+                            android:layout_alignParentRight="true"
+                            android:id="@+id/tool_more"
+                            android:layout_marginTop="@dimen/status_height"
+                            android:src="@drawable/gengduo"
+                            android:layout_width="50dp"
+                            android:scaleType="center"
+                            android:alpha="0"
+                            android:layout_height="50dp"/>
+
+                    <ImageView
+                            android:layout_alignParentRight="true"
+                            android:id="@+id/tool_more_press"
+                            android:layout_marginTop="@dimen/status_height"
+                            android:src="@drawable/gengduo2"
+                            android:layout_width="50dp"
+                            android:scaleType="center"
+                            android:layout_height="50dp"/>
                 </RelativeLayout>
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.CollapsingToolbarLayout>

@@ -25,60 +25,18 @@
                 android:layout_height="match_parent"/>
     </androidx.appcompat.widget.Toolbar>
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-            android:layout_width="match_parent"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="55dp"
-            android:id="@+id/smart_refresh"
-            app:srlEnableLoadMoreWhenContentNotFull="false"
-            android:layout_height="match_parent">
-
-        <androidx.core.widget.NestedScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recycle_view"
-                        android:layout_width="match_parent"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_height="wrap_content"/>
-
-                <TextView
-                        android:textColor="#222222"
-                        android:textSize="17sp"
-                        android:padding="10dp"
-                        android:gravity="center_vertical"
-                        android:drawableLeft="@drawable/bus_weinituijian"
-                        android:layout_width="match_parent"
-                        android:text="为你推荐"
-                        android:drawablePadding="10dp"
-                        android:layout_height="50dp"/>
-
-                <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recycle_view_bottom"
-                        android:layout_width="match_parent"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_height="match_parent"/>
-            </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
     <RelativeLayout
+            android:id="@+id/bus_all_layout"
             android:background="@color/white"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
+            android:elevation="1dp"
+            android:visibility="gone"
             android:layout_height="55dp">
 
         <View
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
+                android:layout_height="1dp"
                 android:background="@drawable/shape_bottom_shader"
                 />
 
@@ -141,4 +99,51 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
     </RelativeLayout>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="50dp"
+            android:layout_above="@id/bus_all_layout"
+            android:id="@+id/smart_refresh"
+            app:srlEnableLoadMoreWhenContentNotFull="false"
+            android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycle_view"
+                        android:layout_width="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:textColor="#222222"
+                        android:textSize="17sp"
+                        android:padding="10dp"
+                        android:gravity="center_vertical"
+                        android:drawableLeft="@drawable/bus_weinituijian"
+                        android:layout_width="match_parent"
+                        android:text="为你推荐"
+                        android:drawablePadding="10dp"
+                        android:layout_height="50dp"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycle_view_bottom"
+                        android:layout_width="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_height="match_parent"/>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
 </RelativeLayout>

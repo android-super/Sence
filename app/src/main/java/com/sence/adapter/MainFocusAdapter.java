@@ -3,6 +3,7 @@ package com.sence.adapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.view.View;
 import android.widget.ImageView;
@@ -50,8 +51,10 @@ public class MainFocusAdapter extends BaseQuickAdapter<PMainBean.NoteListBean, B
         item_support.setText(item.getPraise_count());
         if (item.getIs_like().equals("1")) {
             item_support.setSelected(true);
+            item_support.setTextColor(Color.parseColor("#16a5af"));
         } else {
             item_support.setSelected(false);
+            item_support.setTextColor(Color.parseColor("#5f5f5f"));
         }
         helper.itemView.setOnClickListener(new View.OnClickListener() {
             @TargetApi(Build.VERSION_CODES.JELLY_BEAN)

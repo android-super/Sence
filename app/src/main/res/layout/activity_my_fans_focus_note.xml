@@ -31,24 +31,6 @@
                 android:layout_height="40dp"/>
     </RelativeLayout>
 
-    <LinearLayout
-            android:id="@+id/search_layout"
-            android:background="@drawable/shape_fans_search"
-            android:layout_width="match_parent"
-            android:gravity="center_vertical"
-            android:layout_height="50dp">
-
-        <TextView
-                android:layout_width="wrap_content"
-                android:text="搜索"
-                android:drawablePadding="5dp"
-                android:textSize="13sp"
-                android:layout_marginLeft="35dp"
-                android:textColor="#c2c2c2"
-                android:drawableLeft="@drawable/search_light"
-                android:layout_height="wrap_content"/>
-    </LinearLayout>
-
     <androidx.viewpager.widget.ViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"

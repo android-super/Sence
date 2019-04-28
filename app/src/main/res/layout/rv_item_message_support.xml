@@ -9,6 +9,7 @@
             android:layout_marginTop="15dp"
             android:layout_width="45dp"
             app:is_circle="true"
+            android:scaleType="centerCrop"
             android:id="@+id/item_head"
             android:layout_marginLeft="15dp"
             android:layout_height="45dp"/>

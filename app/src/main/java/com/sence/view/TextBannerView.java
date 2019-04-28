@@ -97,15 +97,15 @@ public class TextBannerView extends RelativeLayout {
      * 初始化控件
      */
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TextBannerViewStyle, defStyleAttr, 0);
-        mInterval = typedArray.getInteger(R.styleable.TextBannerViewStyle_setInterval, mInterval);//文字切换时间间隔
-        isSingleLine = typedArray.getBoolean(R.styleable.TextBannerViewStyle_setSingleLine, false);//文字是否为单行
-        mTextColor = typedArray.getColor(R.styleable.TextBannerViewStyle_setTextColor, mTextColor);//设置文字颜色
-        if (typedArray.hasValue(R.styleable.TextBannerViewStyle_setTextSize)) {//设置文字尺寸
-            mTextSize = (int) typedArray.getDimension(R.styleable.TextBannerViewStyle_setTextSize, mTextSize);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TextBannerView, defStyleAttr, 0);
+        mInterval = typedArray.getInteger(R.styleable.TextBannerView_setInterval, mInterval);//文字切换时间间隔
+        isSingleLine = typedArray.getBoolean(R.styleable.TextBannerView_setSingleLine, false);//文字是否为单行
+        mTextColor = typedArray.getColor(R.styleable.TextBannerView_setTextColor, mTextColor);//设置文字颜色
+        if (typedArray.hasValue(R.styleable.TextBannerView_setTextSize)) {//设置文字尺寸
+            mTextSize = (int) typedArray.getDimension(R.styleable.TextBannerView_setTextSize, mTextSize);
             mTextSize = DisplayUtils.px2sp(context, mTextSize);
         }
-        int gravityType = typedArray.getInt(R.styleable.TextBannerViewStyle_setGravity, GRAVITY_LEFT);//显示位置
+        int gravityType = typedArray.getInt(R.styleable.TextBannerView_setGravity, GRAVITY_LEFT);//显示位置
         switch (gravityType) {
             case GRAVITY_LEFT:
                 mGravity = Gravity.LEFT | Gravity.CENTER_VERTICAL;
@@ -117,10 +117,10 @@ public class TextBannerView extends RelativeLayout {
                 mGravity = Gravity.RIGHT | Gravity.CENTER_VERTICAL;
                 break;
         }
-        hasSetAnimDuration = typedArray.hasValue(R.styleable.TextBannerViewStyle_setAnimDuration);
-        animDuration = typedArray.getInt(R.styleable.TextBannerViewStyle_setAnimDuration, animDuration);//动画时间
-        hasSetDirection = typedArray.hasValue(R.styleable.TextBannerViewStyle_setDirection);
-        direction = typedArray.getInt(R.styleable.TextBannerViewStyle_setDirection, direction);//方向
+        hasSetAnimDuration = typedArray.hasValue(R.styleable.TextBannerView_setAnimDuration);
+        animDuration = typedArray.getInt(R.styleable.TextBannerView_setAnimDuration, animDuration);//动画时间
+        hasSetDirection = typedArray.hasValue(R.styleable.TextBannerView_setDirection);
+        direction = typedArray.getInt(R.styleable.TextBannerView_setDirection, direction);//方向
         if (hasSetDirection) {
             switch (direction) {
                 case DIRECTION_BOTTOM_TO_TOP:
@@ -144,7 +144,7 @@ public class TextBannerView extends RelativeLayout {
             inAnimResId = R.anim.anim_right_in;
             outAnimResId = R.anim.anim_left_out;
         }
-        mFlags = typedArray.getInt(R.styleable.TextBannerViewStyle_setFlags, mFlags);//字体划线
+        mFlags = typedArray.getInt(R.styleable.TextBannerView_setFlags, mFlags);//字体划线
         switch (mFlags) {
             case STRIKE:
                 mFlags = Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG;
@@ -156,7 +156,7 @@ public class TextBannerView extends RelativeLayout {
                 mFlags = 0 | Paint.ANTI_ALIAS_FLAG;
                 break;
         }
-        mTypeface = typedArray.getInt(R.styleable.TextBannerViewStyle_setTypeface, mTypeface);//字体样式
+        mTypeface = typedArray.getInt(R.styleable.TextBannerView_setTypeface, mTypeface);//字体样式
         switch (mTypeface) {
             case TYPE_BOLD:
                 mTypeface = Typeface.BOLD;
