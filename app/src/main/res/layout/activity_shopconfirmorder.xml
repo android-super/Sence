@@ -154,7 +154,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="9dp"
                         android:textColor="#16a5af"
-                        android:text="(满0元包邮)"
+                        android:text="(免邮)"
                         android:textSize="11sp"
                         android:visibility="gone"
                         android:id="@+id/tv_exemption_confirmorder"/>

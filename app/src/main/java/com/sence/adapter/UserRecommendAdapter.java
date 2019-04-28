@@ -3,6 +3,7 @@ package com.sence.adapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.view.View;
 import android.widget.ImageView;
@@ -43,8 +44,10 @@ public class UserRecommendAdapter extends BaseQuickAdapter<PMyInfoBean.ListBean,
         }
         ImageView item_support_img = helper.getView(R.id.item_support_img);
         if (item.getIs_like().equals("1")) {
+            helper.setTextColor(R.id.item_support, Color.parseColor("#16a5af"));
             item_support_img.setSelected(true);
         } else {
+            helper.setTextColor(R.id.item_support, Color.parseColor("#666666"));
             item_support_img.setSelected(false);
         }
         helper.setText(R.id.item_support, item.getPraise_count());

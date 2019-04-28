@@ -40,7 +40,7 @@
             android:layout_marginLeft="63dp"
             android:layout_marginRight="63dp"
             android:textColor="#fefefe"
-            android:text="添加新地址"
+            android:text="新增收货地址"
             android:id="@+id/tv_addaddress_manageaddress"
             />
 </LinearLayout>

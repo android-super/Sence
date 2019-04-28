@@ -149,12 +149,6 @@ public class MyOrderFragment extends Fragment implements View.OnClickListener {
             public void delete(int i) {
                 ((MyOrderActivity)getActivity()).setNum(listBeans.get(i).getStatus());
                 ((MyOrderActivity)getActivity()).refresh(listBeans.get(i).getStatus());
-                listBeans.remove(i);
-                if(listBeans.size()==0){
-                    mNot.setVisibility(View.VISIBLE);
-                }
-                mMyOrderAdapter.setList(listBeans);
-
             }
 
             @Override
@@ -460,6 +454,7 @@ public class MyOrderFragment extends Fragment implements View.OnClickListener {
     }
 
     public void reresh() {
+        listBeans.clear();
         loadData();
     }
 }

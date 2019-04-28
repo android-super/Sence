@@ -75,7 +75,7 @@
     <LinearLayout
         android:id="@+id/hide_view"
         android:layout_width="148dp"
-        android:layout_height="90dp"
+        android:layout_height="match_parent"
         android:background="#f6f6f6"
         android:orientation="horizontal">
 

@@ -161,10 +161,7 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
                                 public void onSuccess(String o, String msg) {
                                     Logger.e("msg==========" + msg);
                                     ToastUtils.showShort(msg);
-                                    Intent intent = new Intent(context, OrderCommentActivity.class);
-                                    intent.putExtra("url", list.get(position).getGoods().get(0).getImg());
-                                    intent.putExtra("id", list.get(position).getId());
-                                    context.startActivity(intent);
+                                   listener.delete(position);
                                 }
                             });
                         }
@@ -211,6 +208,7 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
                 Intent intent = new Intent(context, ChatMsgActivity.class);
                 intent.putExtra("u_to", list.get(position).getCustom().getId());
                 intent.putExtra("chat_id", "");
+                intent.putExtra("title", "客服");
                 intent.putExtra("name", list.get(position).getCustom().getName());
                 intent.putExtra("u_avatar", list.get(position).getCustom().getAvatar());
                 context.startActivity(intent);

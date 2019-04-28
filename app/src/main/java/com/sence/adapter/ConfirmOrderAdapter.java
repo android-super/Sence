@@ -41,6 +41,9 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<ConfirmOrderAdapte
         ConfirmOrderItemAdapter confirmOrderItemAdapter = new ConfirmOrderItemAdapter(context);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+        if("1".equals(list.get(position).getExpress())){
+            holder.mExmption.setVisibility(View.VISIBLE);
+        }
         holder.mRecyclerView.setLayoutManager(linearLayoutManager);
         holder.mRecyclerView.setAdapter(confirmOrderItemAdapter);
         List<PBusBean.CartBean.GoodsBean> listGoods = new ArrayList<>();
@@ -68,7 +71,7 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<ConfirmOrderAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private RecyclerView mRecyclerView;
-        private TextView mName, mNum, mPrice,mPostPrice,mMaxPrice;
+        private TextView mName, mNum, mPrice,mPostPrice,mMaxPrice,mExmption;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -76,6 +79,7 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<ConfirmOrderAdapte
             mName = itemView.findViewById(R.id.tv_stroename_confirmorder);
             mPrice = itemView.findViewById(R.id.tv_shopprice_confirmorder);
             mNum = itemView.findViewById(R.id.tv_shopnum_confirmorder);
+            mExmption = itemView.findViewById(R.id.tv_exemption_confirmorder);
             mPostPrice = itemView.findViewById(R.id.tv_postprice_confirmorder);
             mMaxPrice = itemView.findViewById(R.id.tv_maxprice_confirmorder);
         }

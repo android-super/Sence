@@ -20,7 +20,10 @@
         app:tool_cover_background="@color/white"
         app:tool_cover_right_img="@drawable/servicedetails_pingjia"
         app:tool_cover_title="服务详情"/>
-
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/srl_layout_servicedetails">
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -141,7 +144,7 @@
             </LinearLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:id="@+id/rl_layout_servicedetail">
 
 
@@ -164,5 +167,5 @@
             </RelativeLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

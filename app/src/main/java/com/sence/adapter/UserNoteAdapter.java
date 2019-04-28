@@ -3,6 +3,7 @@ package com.sence.adapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -44,8 +45,10 @@ public class UserNoteAdapter extends BaseQuickAdapter<PMyInfoBean.ListBean, Base
         TextView item_support = helper.getView(R.id.item_support);
         item_support.setText(item.getPraise_count());
         if ("1".equals(item.getIs_like())) {
+            item_support.setTextColor(Color.parseColor("#16a5af"));
             item_support.setSelected(true);
         } else {
+            item_support.setTextColor(Color.parseColor("#666666"));
             item_support.setSelected(false);
         }
         if (item.getNote_type().equals("1")) {

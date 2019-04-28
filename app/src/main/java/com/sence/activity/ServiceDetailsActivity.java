@@ -10,7 +10,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.orhanobut.logger.Logger;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sence.R;
 import com.sence.adapter.ServiceDetailsAdapter;
 import com.sence.adapter.ShopDetailsImgAdapter;
@@ -31,6 +37,7 @@ import com.sence.view.PubTitle;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -66,13 +73,15 @@ public class ServiceDetailsActivity extends BaseActivity {
     LinearLayout llLayoutServicedetail;
     @BindView(R.id.rl_layout_servicedetail)
     RelativeLayout rlLayoutServicedetail;
+    @BindView(R.id.srl_layout_servicedetails)
+    SmartRefreshLayout srlLayoutServicedetails;
 
     private ServiceDetailsAdapter mServiceDetailsAdapter;
     private int page = 1;
     private String id = "";
     private PServiceeDetails bean = null;
     private ShopDetailsImgAdapter shopDetailsImgAdapter;
-
+    List<PServiceCommendBean> list = new ArrayList<>();
     @Override
     public int onActLayout() {
         return R.layout.activity_servicedetails;
@@ -121,6 +130,35 @@ public class ServiceDetailsActivity extends BaseActivity {
 
             }
         });
+        srlLayoutServicedetails.setRefreshHeader(new ClassicsHeader(ServiceDetailsActivity.this));
+        srlLayoutServicedetails.setRefreshFooter(new ClassicsFooter(ServiceDetailsActivity.this));
+        srlLayoutServicedetails.setEnableLoadMoreWhenContentNotFull(false);
+        srlLayoutServicedetails.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                if (list.size() < 10) {
+                    ToastUtils.showShort("没有更多了！");
+                } else {
+                    page++;
+                    doHttp();
+                }
+                srlLayoutServicedetails.finishLoadMore();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                srlLayoutServicedetails.finishRefresh();
+                page = 1;
+                list.clear();
+                doHttp();
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        list.clear();
     }
 
     @Override
@@ -135,9 +173,9 @@ public class ServiceDetailsActivity extends BaseActivity {
             int screenHeight = dm.heightPixels;
             int heightlayout = llLayoutServicedetail.getHeight();
             int height = screenHeight - y - heightlayout;
-            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) rlLayoutServicedetail.getLayoutParams();
+            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) tvNotdataServicedetails.getLayoutParams();
             layoutParams.height = height;
-            rlLayoutServicedetail.setLayoutParams(layoutParams);
+            tvNotdataServicedetails.setLayoutParams(layoutParams);
         }
     }
 
@@ -189,11 +227,16 @@ public class ServiceDetailsActivity extends BaseActivity {
                 GlideUtils.getInstance().loadHead(o.getAvatar(), ivUserimgServicedetails);
             }
         });
+        doHttp();
+    }
+
+    private void doHttp() {
         HttpManager.getInstance().PlayNetCode(HttpCode.SERVE_COMMENT_LIST,
                 new RShopCommendBean(id, page + "", "10")).request(new ApiCallBack<List<PServiceCommendBean>>() {
             @Override
             public void onFinish() {
-
+                srlLayoutServicedetails.finishRefresh();
+                srlLayoutServicedetails.finishLoadMore();
             }
 
             @Override
@@ -204,9 +247,10 @@ public class ServiceDetailsActivity extends BaseActivity {
             @Override
             public void onSuccess(List<PServiceCommendBean> o, String msg) {
                 Logger.e("msg==========" + msg);
-                if (o.size() > 0) {
+                list.addAll(o);
+                if (list.size() > 0) {
                     tvNotdataServicedetails.setVisibility(View.GONE);
-                    mServiceDetailsAdapter.setList(o);
+                    mServiceDetailsAdapter.setList(list);
                 }
 
             }

@@ -173,13 +173,6 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
             uid = LoginStatus.getUid();
         }
 
-        myInfoRecommendFragment.result(new MyInfoRecommendFragment.DeleteServiceListener() {
-            @Override
-            public void delete() {
-
-            }
-        });
-
         mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
@@ -326,7 +319,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                     ivFocusMyinfo.setImageResource(R.drawable.guanzhu);
                     ivChatMyinfo.setImageResource(R.drawable.sixin);
                 }
-                if ("0".equals(o.getIs_kol())||o.getGoods_info().size() == 0) {
+                if ("0".equals(o.getIs_kol())) {
                     mShop.setVisibility(View.GONE);
                     if (isshow) {
                         isshow = false;
@@ -347,6 +340,17 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                     if (o.getGoods_info().size() == 0) {
                         layout.setVisibility(View.GONE);
                         mShop.setVisibility(View.GONE);
+                        if (isshow) {
+                            isshow = false;
+                            int height = layout.getHeight();
+                            int headHeight = mHead.getHeight();
+                            RelativeLayout.LayoutParams linearParams = (RelativeLayout.LayoutParams) mHead.getLayoutParams();
+                            linearParams.height = headHeight - height;
+                            mHead.setLayoutParams(linearParams);
+                            RelativeLayout.LayoutParams linearParamsBg = (RelativeLayout.LayoutParams) mHeadBg.getLayoutParams();
+                            linearParamsBg.height = headHeight - height;
+                            mHeadBg.setLayoutParams(linearParamsBg);
+                        }
                     } else {
                         vpViewMyinfo.setAdapter(new MyPagerAdapter(MyInfoActivity.this,o.getGoods_info()));
                     }

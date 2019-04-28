@@ -87,7 +87,14 @@
                 android:textColor="#000000"
                 android:textSize="16sp"
                 />
-
+        <ImageView
+            android:id="@+id/content_loading_shopdetails"
+            android:src="@drawable/web_loading"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:scaleType="fitXY"
+            android:layout_height="755dp"/>
             <WebView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

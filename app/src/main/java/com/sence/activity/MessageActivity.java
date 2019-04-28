@@ -9,8 +9,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.core.app.NotificationManagerCompat;
-import com.orhanobut.logger.Logger;
 import com.sence.R;
 import com.sence.activity.chat.ui.ChatMsgActivity;
 import com.sence.base.BaseActivity;
@@ -22,6 +20,7 @@ import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.LoginStatus;
 import com.sence.utils.StatusBarUtil;
 
+import androidx.core.app.NotificationManagerCompat;
 import butterknife.BindView;
 
 /**
@@ -131,6 +130,7 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
                 intent.putExtra("u_to", service_uid);
                 intent.putExtra("chat_id", "");
                 intent.putExtra("name", service_name);
+                intent.putExtra("title", "客服");
                 intent.putExtra("u_avatar", service_avatar);
                 startActivity(intent);
                 break;

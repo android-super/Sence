@@ -158,20 +158,22 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
     ImageView ivImgshopimgShopdetails;
     @BindView(R.id.rl_layout_shopdetails)
     RelativeLayout rlLayoutShopdetails;
+    @BindView(R.id.content_loading_shopdetails)
+    ImageView contentLoadingShopdetails;
 
     private ShopDetailsImgAdapter shopDetailsImgAdapter;
     private WebSettings settings;
     private List<String> imgs = new ArrayList<>();
     private String id;
     private PShopDetailsBean bean = null;
-    private int num = 0;
-    private int numPraise ;
+    private int numAddShop;
+    private int numPraise;
     private BottomSheetDialog mBottomSheetDialog;
     private TextView tvPrice, mNum;
     private ImageView mImg;
     private RelativeLayout mJian, mAdd;
     private Button mConfirm;
-    private int numShop;
+    private int numShop = 0;
     private PopupWindow popupWindow;
     private View contentView;
     private static String TAG = "";
@@ -252,13 +254,13 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                     numPraise--;
                     bean.getComment().setIsPraise("0");
                     ivLikeshopShopdetails.setImageResource(R.drawable.myinfo_dianzan);
-                    tvLikenumshopShopdetails.setText(num + "");
+                    tvLikenumshopShopdetails.setText(numPraise + "");
                     tvLikenumshopShopdetails.setTextColor(Color.parseColor("#333333"));
                 } else if (bean.getComment().getIsPraise().equals("0")) {
                     Like();
                     numPraise++;
                     bean.getComment().setIsPraise("1");
-                    tvLikenumshopShopdetails.setText(num + "");
+                    tvLikenumshopShopdetails.setText(numPraise + "");
                     tvLikenumshopShopdetails.setTextColor(Color.parseColor("#16a45f"));
                     ivLikeshopShopdetails.setImageResource(R.drawable.shopcommend_dianzan_y);
                 }
@@ -336,7 +338,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                             ivImgshopimgShopdetails.setVisibility(View.GONE);
                             shopCommendImgAdapter.setList(o.getComment().getImgs());
                         }
-                    }else {
+                    } else {
                         rlLayoutShopdetails.setVisibility(View.GONE);
                     }
                     if ("1".equals(bean.getComment().getIsPraise())) {
@@ -354,10 +356,10 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                 } else {
                     llLayoutShopdetails.setVisibility(View.GONE);
                 }
-                num = Integer.parseInt(o.getCartNum());
-                if (num > 0) {
+                numShop = Integer.parseInt(o.getCartNum());
+                if (numShop > 0) {
                     tvShopnumShopdetails.setVisibility(View.VISIBLE);
-                    tvShopnumShopdetails.setText(num + "");
+                    tvShopnumShopdetails.setText(numShop + "");
                 }
                 if (o.getImgs().size() > 0) {
                     if (page) {
@@ -437,10 +439,14 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
         wvContentShopdetails.setFocusable(true);
         wvContentShopdetails.requestFocus();
         wvContentShopdetails.setWebChromeClient(new WebChromeClient());  //解决android与H5协议交互,弹不出对话框问题
+        contentLoadingShopdetails.setVisibility(View.VISIBLE);
+        wvContentShopdetails.setVisibility(View.GONE);
         wvContentShopdetails.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+                wvContentShopdetails.setVisibility(View.VISIBLE);
+                contentLoadingShopdetails.setVisibility(View.GONE);
                 //页面加载完成之后
             }
 
@@ -506,7 +512,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
         mJian.setOnClickListener(this);
         mAdd.setOnClickListener(this);
         mConfirm.setOnClickListener(this);
-        numShop = Integer.parseInt(mNum.getText().toString());
+        numAddShop = Integer.parseInt(mNum.getText().toString());
         // 按下android回退物理键 PopipWindow消失解决
     }
 
@@ -554,6 +560,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                 Intent intentService = new Intent(ShopDetailsActivity.this, ChatMsgActivity.class);
                 intentService.putExtra("u_to", bean.getCustomId());
                 intentService.putExtra("chat_id", "");
+                intentService.putExtra("title", "客服");
                 intentService.putExtra("name", bean.getCustomName());
                 intentService.putExtra("u_avatar", bean.getCustomAvatar());
                 startActivity(intentService);
@@ -601,9 +608,9 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onSuccess(Object o, String msg) {
                 ToastUtils.showShort("成功加入购物车");
-                num = num + Integer.parseInt(s);
+                numShop = numShop + Integer.parseInt(s);
                 tvShopnumShopdetails.setVisibility(View.VISIBLE);
-                tvShopnumShopdetails.setText(num + "");
+                tvShopnumShopdetails.setText(numShop + "");
                 popupWindow.dismiss();
             }
         });
@@ -633,15 +640,15 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_buyshop_jian:
-                if (numShop > 1) {
-                    numShop--;
-                    mNum.setText(numShop + "");
+                if (numAddShop > 1) {
+                    numAddShop--;
+                    mNum.setText(numAddShop + "");
                 }
                 break;
             case R.id.rl_buyshop_add:
-                if (numShop < 10) {
-                    numShop++;
-                    mNum.setText(numShop + "");
+                if (numAddShop < 10) {
+                    numAddShop++;
+                    mNum.setText(numAddShop + "");
                 } else {
                     ToastUtils.showShort("单件商品最多添加十件");
                 }

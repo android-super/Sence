@@ -188,7 +188,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
                     @Override
                     public void onClick(View v) {
                         alertDialog.dismiss();
-                        HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_DELETE, new ROrderDetailsBean(bean.getOid(), LoginStatus.getUid())).request(new ApiCallBack<String>() {
+                        HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_DELETE, new ROrderDetailsBean(bean.getId(), LoginStatus.getUid())).request(new ApiCallBack<String>() {
                             @Override
                             public void onFinish() {
 
@@ -402,6 +402,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
                     Intent intent = new Intent(OrderDetailsActivity.this, ChatMsgActivity.class);
                     intent.putExtra("u_to", bean.getCustom().getId());
                     intent.putExtra("chat_id", "");
+                    intent.putExtra("title", "客服");
                     intent.putExtra("name", bean.getCustom().getName());
                     intent.putExtra("u_avatar", bean.getCustom().getAvatar());
                     startActivity(intent);

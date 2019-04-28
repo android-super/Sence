@@ -139,6 +139,7 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
     private String oid;
     private int PAYMENTTYPE = 2;
     private AlertDialog dialog;
+    private String postage;
 
     @Override
     public int onActLayout() {
@@ -151,7 +152,7 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
         num = intent.getStringExtra("num");
-        String postage = intent.getStringExtra("postage");
+        postage = intent.getStringExtra("postage");
         String price = intent.getStringExtra("price");
         String name = intent.getStringExtra("name");
         String username = intent.getStringExtra("username");
@@ -168,6 +169,9 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
         tvSpriceConfrimorder.setText("￥" + shopMaxPrice);
         tvPostpriceConfirmorder.setText("￥" + ShopPostPrice);
         GlideUtils.getInstance().loadNormal(img, ivImgConfirmorder);
+        if("0".equals(postage)){
+            tvExemptionConfirmorder.setVisibility(View.VISIBLE);
+        }
         tvShopnameConfirmorder.setText(name);
         tvStroenameConfirmorder.setText(username);
         tvShopnumConfirmorder.setText("共" + num + "件商品");
