@@ -102,6 +102,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                android:id="@+id/ll_layout_servicedetail"
                 android:background="@drawable/vip_bg"
                 android:orientation="horizontal"
                 android:paddingTop="18dp">
@@ -138,13 +139,29 @@
                 </LinearLayout>
 
             </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/rl_layout_servicedetail">
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycle_servicedetails"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:nestedScrollingEnabled="false"
-                android:paddingBottom="15dp"></androidx.recyclerview.widget.RecyclerView>
+                android:paddingBottom="15dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#F9F9F9"
+                    android:id="@+id/tv_notdata_servicedetails"
+                    android:text="目前还没有评价"
+                    android:gravity="center"
+                    android:layout_centerInParent="true"
+                    android:textColor="#B3B3B3"
+                    android:textSize="14sp"/>
+            </RelativeLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

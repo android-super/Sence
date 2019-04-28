@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
@@ -7,6 +7,7 @@
               android:fitsSystemWindows="true">
     <com.sence.view.PubTitle
             app:is_back="true"
+            android:id="@+id/pt_title"
             app:tool_cover_title="明细"
             app:tool_cover_background="@color/white"
             style="@style/NoLeftToolbar"
@@ -15,6 +16,7 @@
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/pt_title"
         app:srlEnableLoadMoreWhenContentNotFull="false"
         android:id="@+id/srl_userdetail">
         <androidx.recyclerview.widget.RecyclerView
@@ -25,5 +27,10 @@
 
         </androidx.recyclerview.widget.RecyclerView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
-</LinearLayout>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/userdetails_zanwumingxi"
+        android:layout_centerInParent="true"
+        android:id="@+id/iv_notimg_userdetail"/>
+</RelativeLayout>

@@ -34,7 +34,7 @@ public class UserRecommendAdapter extends BaseQuickAdapter<PMyInfoBean.ListBean,
         GlideUtils.getInstance().loadHead(item.getAvatar(), (ImageView) helper.getView(R.id.item_head));
         GlideUtils.getInstance().loadNormal(item.getAlbum_url(), item_img);
         helper.setText(R.id.item_title, item.getTitle());
-        helper.setText(R.id.item_content, item.getContent());
+        helper.setText(R.id.item_content, item.getDescribe());
         helper.setText(R.id.item_name, item.getNick_name());
         if (item.getIs_kol().equals("1")) {
             helper.setGone(R.id.item_tag, true);

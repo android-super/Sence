@@ -2,7 +2,8 @@
 <com.mcxtzhang.swipemenulib.SwipeMenuLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="90dp"
+    android:layout_height="wrap_content"
+    android:minHeight="90dp"
     android:clickable="true"
     android:id="@+id/sml_layout"
     android:orientation="horizontal"
@@ -11,7 +12,8 @@
     <LinearLayout
         android:id="@+id/show_content_view"
         android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_height="wrap_content"
+        android:minHeight="90dp"
         android:background="#ffffff"
         android:orientation="vertical">
 
@@ -51,6 +53,7 @@
             android:id="@+id/tv_address_manageaddress"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:paddingRight="10dp"
             android:layout_marginLeft="30dp"
             android:layout_weight="1"
             android:ellipsize="end"

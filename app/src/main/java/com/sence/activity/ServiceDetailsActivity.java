@@ -1,9 +1,13 @@
 package com.sence.activity;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.orhanobut.logger.Logger;
@@ -56,6 +60,12 @@ public class ServiceDetailsActivity extends BaseActivity {
     TextView tvMapServicedetails;
     @BindView(R.id.tv_imgnum_servicedetails)
     TextView tvImgnumServicedetails;
+    @BindView(R.id.tv_notdata_servicedetails)
+    TextView tvNotdataServicedetails;
+    @BindView(R.id.ll_layout_servicedetail)
+    LinearLayout llLayoutServicedetail;
+    @BindView(R.id.rl_layout_servicedetail)
+    RelativeLayout rlLayoutServicedetail;
 
     private ServiceDetailsAdapter mServiceDetailsAdapter;
     private int page = 1;
@@ -74,7 +84,7 @@ public class ServiceDetailsActivity extends BaseActivity {
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
         boolean isSelf = intent.getBooleanExtra("isSelf", false);
-        if(!isSelf){
+        if (!isSelf) {
             ptPubTitle.setRightImg(0);
         }
         mServiceDetailsAdapter = new ServiceDetailsAdapter(ServiceDetailsActivity.this);
@@ -103,7 +113,7 @@ public class ServiceDetailsActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                tvImgnumServicedetails.setText(++position+"/"+bean.getImgs().size());
+                tvImgnumServicedetails.setText(++position + "/" + bean.getImgs().size());
             }
 
             @Override
@@ -111,6 +121,24 @@ public class ServiceDetailsActivity extends BaseActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            int[] location = new int[2];
+            llLayoutServicedetail.getLocationOnScreen(location);
+            int y = location[1];
+            Resources resources = getResources();
+            DisplayMetrics dm = resources.getDisplayMetrics();
+            int screenHeight = dm.heightPixels;
+            int heightlayout = llLayoutServicedetail.getHeight();
+            int height = screenHeight - y - heightlayout;
+            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) rlLayoutServicedetail.getLayoutParams();
+            layoutParams.height = height;
+            rlLayoutServicedetail.setLayoutParams(layoutParams);
+        }
     }
 
     @Override
@@ -130,8 +158,8 @@ public class ServiceDetailsActivity extends BaseActivity {
             public void onSuccess(final PServiceeDetails o, String msg) {
                 Logger.e("msg==========" + msg + "==" + o.getImgs().size());
                 bean = o;
-                if(o.getImgs().size()>0){
-                    tvImgnumServicedetails.setText("1/"+o.getImgs().size());
+                if (o.getImgs().size() > 0) {
+                    tvImgnumServicedetails.setText("1/" + o.getImgs().size());
                 }
                 List<ImageView> list = new ArrayList<>();
                 for (int i = 0; i < o.getImgs().size(); i++) {
@@ -177,6 +205,7 @@ public class ServiceDetailsActivity extends BaseActivity {
             public void onSuccess(List<PServiceCommendBean> o, String msg) {
                 Logger.e("msg==========" + msg);
                 if (o.size() > 0) {
+                    tvNotdataServicedetails.setVisibility(View.GONE);
                     mServiceDetailsAdapter.setList(o);
                 }
 

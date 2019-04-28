@@ -3,10 +3,12 @@ package com.sence.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -35,6 +37,7 @@ import com.sence.MainActivity;
 import com.sence.R;
 import com.sence.activity.chat.ui.ChatMsgActivity;
 import com.sence.activity.web.WebConstans;
+import com.sence.adapter.ShopCommendImgAdapter;
 import com.sence.adapter.ShopDetailsImgAdapter;
 import com.sence.base.BaseActivity;
 import com.sence.bean.request.RBusAddBean;
@@ -61,6 +64,7 @@ import java.util.List;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
@@ -140,8 +144,20 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
 
     @BindView(R.id.recycle_commendimgshop_shopdetails)
     RecyclerView recycleCommendimgshopShopdetails;
+    @BindView(R.id.tv_timeshop_shopdetails)
+    TextView tvTimeshopShopdetails;
+    @BindView(R.id.iv_likeshop_shopdetails)
+    ImageView ivLikeshopShopdetails;
+    @BindView(R.id.tv_likenumshop_shopdetails)
+    TextView tvLikenumshopShopdetails;
+    @BindView(R.id.ll_likeshop_shopdetails)
+    LinearLayout llLikeshopShopdetails;
     @BindView(R.id.ll_layout_shopdetails)
     LinearLayout llLayoutShopdetails;
+    @BindView(R.id.iv_imgshopimg_shopdetails)
+    ImageView ivImgshopimgShopdetails;
+    @BindView(R.id.rl_layout_shopdetails)
+    RelativeLayout rlLayoutShopdetails;
 
     private ShopDetailsImgAdapter shopDetailsImgAdapter;
     private WebSettings settings;
@@ -149,6 +165,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
     private String id;
     private PShopDetailsBean bean = null;
     private int num = 0;
+    private int numPraise ;
     private BottomSheetDialog mBottomSheetDialog;
     private TextView tvPrice, mNum;
     private ImageView mImg;
@@ -161,6 +178,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
     private boolean textsize = true;
     private boolean page = true;
     private boolean isAddShop = false;
+    private ShopCommendImgAdapter shopCommendImgAdapter;
 
     @Override
     public int onActLayout() {
@@ -216,9 +234,58 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
 
             }
         });
+        shopCommendImgAdapter = new ShopCommendImgAdapter(this);
+        GridLayoutManager linearLayoutManager = new GridLayoutManager(this, 3);
+        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+        recycleCommendimgshopShopdetails.setLayoutManager(linearLayoutManager);
+        recycleCommendimgshopShopdetails.setAdapter(shopCommendImgAdapter);
         installListener();
+        llLikeshopShopdetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TextUtils.isEmpty(LoginStatus.getUid())) {
+                    startActivity(new Intent(ShopDetailsActivity.this, LoginActivity.class));
+                    return;
+                }
+                if (bean.getComment().getIsPraise().equals("1")) {
+                    Like();
+                    numPraise--;
+                    bean.getComment().setIsPraise("0");
+                    ivLikeshopShopdetails.setImageResource(R.drawable.myinfo_dianzan);
+                    tvLikenumshopShopdetails.setText(num + "");
+                    tvLikenumshopShopdetails.setTextColor(Color.parseColor("#333333"));
+                } else if (bean.getComment().getIsPraise().equals("0")) {
+                    Like();
+                    numPraise++;
+                    bean.getComment().setIsPraise("1");
+                    tvLikenumshopShopdetails.setText(num + "");
+                    tvLikenumshopShopdetails.setTextColor(Color.parseColor("#16a45f"));
+                    ivLikeshopShopdetails.setImageResource(R.drawable.shopcommend_dianzan_y);
+                }
+            }
+        });
+
     }
 
+    private void Like() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_COMMENT_SUPPORT, new RShopDetailsBean(bean.getComment().getId(), LoginStatus.getUid())).request(new ApiCallBack<String>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(String o, String msg) {
+                Logger.e("msg==========" + msg);
+                ToastUtils.showShort(msg);
+            }
+        });
+    }
 
     private void installListener() {
         appBarlayoutShiodetails.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
@@ -258,12 +325,33 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                 Logger.e("msg==========" + msg);
                 imgs = o.getImgs();
                 bean = o;
-                if (o.getComment().size() > 0) {
+                if (o.getComment().getContent() != null) {
+                    numPraise = Integer.parseInt(o.getComment().getPraise());
                     tvNotdataShopdetails.setVisibility(View.GONE);
-                    GlideUtils.getInstance().loadHead(o.getComment().get(0).getAvatar(),ivImgshopShopdetails);
-                    tvNameshopShopdetails.setText(o.getComment().get(0).getNickname());
-                    tvContentshopShopdetails.setText(o.getComment().get(0).getContent());
-                }else{
+                    if (o.getComment().getImgs().size() > 0) {
+                        if (o.getComment().getImgs().size() == 1) {
+                            ivImgshopimgShopdetails.setVisibility(View.VISIBLE);
+                            GlideUtils.getInstance().loadHead(o.getComment().getImgs().get(0), ivImgshopimgShopdetails);
+                        } else {
+                            ivImgshopimgShopdetails.setVisibility(View.GONE);
+                            shopCommendImgAdapter.setList(o.getComment().getImgs());
+                        }
+                    }else {
+                        rlLayoutShopdetails.setVisibility(View.GONE);
+                    }
+                    if ("1".equals(bean.getComment().getIsPraise())) {
+                        tvLikenumshopShopdetails.setTextColor(Color.parseColor("#16a45f"));
+                        ivLikeshopShopdetails.setImageResource(R.drawable.shopcommend_dianzan_y);
+                    } else {
+                        tvLikenumshopShopdetails.setTextColor(Color.parseColor("#333333"));
+                        ivLikeshopShopdetails.setImageResource(R.drawable.myinfo_dianzan);
+                    }
+                    GlideUtils.getInstance().loadHead(o.getComment().getAvatar(), ivImgshopShopdetails);
+                    tvNameshopShopdetails.setText(o.getComment().getNickname());
+                    tvContentshopShopdetails.setText(o.getComment().getContent());
+                    tvTimeshopShopdetails.setText(o.getComment().getAddtime());
+                    tvLikenumshopShopdetails.setText(o.getComment().getPraise());
+                } else {
                     llLayoutShopdetails.setVisibility(View.GONE);
                 }
                 num = Integer.parseInt(o.getCartNum());
@@ -601,6 +689,8 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
         View mView = View.inflate(this, R.layout.layout_share, null);
         mBottomSheetDialog = new BottomSheetDialog(this);
         mBottomSheetDialog.setContentView(mView);
+        mBottomSheetDialog.getDelegate().findViewById(com.google.android.material.R.id.design_bottom_sheet)
+                .setBackgroundColor(getResources().getColor(android.R.color.transparent));
         mView.findViewById(R.id.ll_report_share).setOnClickListener(this);
         LinearLayout linearLayout = mView.findViewById(R.id.ll_layout_share);
         linearLayout.setVisibility(View.GONE);

@@ -30,6 +30,7 @@ import com.sence.activity.chat.ui.ChatMsgActivity;
 import com.sence.activity.chat.ui.ChatMsgGroupActivity;
 import com.sence.activity.web.WebConstans;
 import com.sence.adapter.MyInfoRecommendViewPagerAdatpter;
+import com.sence.adapter.MyPagerAdapter;
 import com.sence.base.BaseActivity;
 import com.sence.bean.request.RCancelFocusBean;
 import com.sence.bean.request.RRachelBean;
@@ -87,14 +88,16 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     CoordinatorLayout clLayoutMyinfo;
     @BindView(R.id.iv_notimg_myinfo)
     ImageView ivNotimgMyinfo;
+    @BindView(R.id.vp_view_myinfo)
+    ViewPager vpViewMyinfo;
     private ViewPager mViewPager;
     private AppBarLayout mAppBarLayout;
     private TabLayout mTabLayoutButtom;
     private ImageView mBack, mShare;
     private View mView;
-    private TextView mName, mAddress, mFocusNum, mFansNum, mSigner, mShopName, mShopPrice;
-    private NiceImageView mImg, mImageView;
-    private LinearLayout mShop;
+    private TextView mName, mAddress, mFocusNum, mFansNum, mSigner;
+    private NiceImageView  mImageView;
+    private RelativeLayout mShop;
     private ImageView mHead;
     private NiceImageView mIsV;
     private boolean recommendShow, noteShow;
@@ -149,9 +152,6 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 startActivity(new Intent(MyInfoActivity.this, MyFansFocusNoteActivity.class));
             }
         });
-        mImg = findViewById(R.id.iv_img_myinfo);
-        mShopName = findViewById(R.id.tv_shopname_myinfo);
-        mShopPrice = findViewById(R.id.tv_price_myinfo);
         mImageView = findViewById(R.id.iv_imgico_myinfo);
         mViewPager = findViewById(R.id.vp_content_myinfo);
         layout = findViewById(R.id.v_layout_myinfo);
@@ -165,7 +165,6 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         mMyInfoRecommendViewPagerAdatpter = new MyInfoRecommendViewPagerAdatpter(getSupportFragmentManager(), this, fragmentList, list, uid);
         mViewPager.setAdapter(mMyInfoRecommendViewPagerAdatpter);
         mTabLayoutButtom.setupWithViewPager(mViewPager);
-
 
         if (TextUtils.isEmpty(uid) || LoginStatus.getUid().equals(uid)) {
             ivEditMyinfo.setVisibility(View.VISIBLE);
@@ -196,14 +195,6 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
             }
         });
         bottomSheetDialog();
-        findViewById(R.id.rl_shop_myinfo).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MyInfoActivity.this, ShopDetailsActivity.class);
-                intent.putExtra("id", bean.getGoods_info().getId());
-                startActivity(intent);
-            }
-        });
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -252,22 +243,22 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     }
 
 
-
-        private Handler handler = new Handler() {
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                switch (msg.what) {
-                    case 1:
-                        Bitmap blurBitmap = (Bitmap) msg.obj;
-                        mHead.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                        mHead.setImageBitmap(blurBitmap);
-                        handler.removeCallbacksAndMessages(null);
-                        break;
-
-                }
+    private Handler handler = new Handler() {
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:
+                    Bitmap blurBitmap = (Bitmap) msg.obj;
+                    mHead.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    mHead.setImageBitmap(blurBitmap);
+                    handler.removeCallbacksAndMessages(null);
+                    break;
 
             }
-        };
+
+        }
+    };
+
     public void returnBitMap(final String url) {
 
         new Thread(new Runnable() {
@@ -290,16 +281,17 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                     InputStream is = conn.getInputStream();
                     Bitmap bitmap = BitmapFactory.decodeStream(is);
                     is.close();
-                    if(bitmap==null){
+                    if (bitmap == null) {
                         return;
                     }
-                    bitmapDim = new FastBlurUtil().fastBlur(bitmap, 8, 20);
-                    if(bitmapDim==null){
+                    bitmapDim = new FastBlurUtil().rsBlur(MyInfoActivity.this, bitmap, 10);
+//                    bitmapDim = new FastBlurUtil().fastBlur(bitmap, 8, 20);
+                    if (bitmapDim == null) {
                         return;
                     }
                     Message message = new Message();
                     message.what = 1;
-                    message.obj = bitmapDim;
+                    message.obj = this.bitmapDim;
                     handler.sendMessage(message);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -334,7 +326,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                     ivFocusMyinfo.setImageResource(R.drawable.guanzhu);
                     ivChatMyinfo.setImageResource(R.drawable.sixin);
                 }
-                if ("0".equals(o.getIs_kol())) {
+                if ("0".equals(o.getIs_kol())||o.getGoods_info().size() == 0) {
                     mShop.setVisibility(View.GONE);
                     if (isshow) {
                         isshow = false;
@@ -352,9 +344,12 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                     layout.setVisibility(View.GONE);
                     ivGroupchatMyinfo.setVisibility(View.GONE);
                 } else {
-                    mShopName.setText(o.getGoods_info().getName());
-                    mShopPrice.setText("￥ " + o.getGoods_info().getPrice());
-                    GlideUtils.getInstance().loadHead(o.getGoods_info().getImg(), mImg);
+                    if (o.getGoods_info().size() == 0) {
+                        layout.setVisibility(View.GONE);
+                        mShop.setVisibility(View.GONE);
+                    } else {
+                        vpViewMyinfo.setAdapter(new MyPagerAdapter(MyInfoActivity.this,o.getGoods_info()));
+                    }
                 }
                 type = o.getIs_shield();
                 mName.setText(o.getNick_name());
@@ -530,6 +525,8 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         View mView = View.inflate(this, R.layout.layout_share, null);
         mBottomSheetDialog = new BottomSheetDialog(this);
         mBottomSheetDialog.setContentView(mView);
+        mBottomSheetDialog.getDelegate().findViewById(com.google.android.material.R.id.design_bottom_sheet)
+                .setBackgroundColor(getResources().getColor(android.R.color.transparent));
         mType = mView.findViewById(R.id.tv_type_share);
         if (TextUtils.isEmpty(uid) || LoginStatus.getUid().equals(uid)) {
             mView.findViewById(R.id.ll_report_share).setVisibility(View.GONE);

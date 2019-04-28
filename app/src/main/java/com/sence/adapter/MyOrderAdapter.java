@@ -14,6 +14,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.orhanobut.logger.Logger;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
 import com.sence.R;
+import com.sence.activity.MyInfoActivity;
 import com.sence.activity.OrderCommentActivity;
 import com.sence.activity.OrderDetailsActivity;
 import com.sence.activity.chat.ui.ChatMsgActivity;
@@ -88,7 +89,7 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
         } else if ("8".equals(list.get(position).getStatus())) {
             holder.mSevice.setVisibility(View.GONE);
             holder.mAlipay.setVisibility(View.GONE);
-            holder.mState.setText("系统取消");
+            holder.mState.setText("交易关闭");
             holder.mCancel.setText("再次购买");
         }
         MyOrderItemAdapter myOrderItemAdapter = new MyOrderItemAdapter(context);
@@ -121,23 +122,12 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
                     intent.putExtra("id", list.get(position).getId());
                     intent.putExtra("type", list.get(position).getStatus());
                     context.startActivity(intent);
-                } else if ("5".equals(list.get(position).getStatus())) {
-                    Intent intent = new Intent(context, OrderDetailsActivity.class);
-                    intent.putExtra("id", list.get(position).getId());
-                    intent.putExtra("type", list.get(position).getStatus());
+                } else if ("5".equals(list.get(position).getStatus())||"6".equals(list.get(position).getStatus())||"8".equals(list.get(position).getStatus())) {
+                    Intent intent = new Intent(context, MyInfoActivity.class);
+                    intent.putExtra("uid", list.get(position).getSellerUid());
                     context.startActivity(intent);
-                } else if ("6".equals(list.get(position).getStatus())) {
-                    Intent intent = new Intent(context, OrderDetailsActivity.class);
-                    intent.putExtra("id", list.get(position).getId());
-                    intent.putExtra("type", list.get(position).getStatus());
-                    context.startActivity(intent);
-                } else if ("7".equals(list.get(position).getStatus())) {
+                }  else if ("7".equals(list.get(position).getStatus())) {
                     DeleteOreder(position);
-                } else if ("8".equals(list.get(position).getStatus())) {
-                    Intent intent = new Intent(context, OrderDetailsActivity.class);
-                    intent.putExtra("id", list.get(position).getId());
-                    intent.putExtra("type", list.get(position).getStatus());
-                    context.startActivity(intent);
                 } else if ("1".equals(list.get(position).getStatus())) {
                     View view = View.inflate(context, R.layout.alter_deleteorder, null);
                     AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AlertDialogStyle);

@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:srlEnableLoadMoreWhenContentNotFull="false"
-        android:background="@color/white"
+        android:background="#fcfcfc"
         tools:context=".fragment.main.NoteFragment">
 
     <androidx.recyclerview.widget.RecyclerView

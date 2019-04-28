@@ -398,7 +398,11 @@ public class HttpManager<P> {
                             apiCallBack.onSuccess(result.getData(), result.getMsg());
                         }
                     } else {
-                        ToastUtils.showShort(result.getMsg());
+                        if ("不需要升级".equals(result.getMsg()) || "请求成功".equals(result.getMsg())) {
+
+                        } else {
+                            ToastUtils.showShort(result.getMsg());
+                        }
                         apiCallBack.Message(result.getStatus(), result.getMsg());
                     }
                     disposable.dispose();

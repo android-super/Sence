@@ -1,18 +1,64 @@
 package com.sence.utils;
 
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
+
+import java.io.ByteArrayOutputStream;
+
+import androidx.renderscript.Allocation;
+import androidx.renderscript.Element;
+import androidx.renderscript.RenderScript;
+import androidx.renderscript.ScriptIntrinsicBlur;
 
 
 public class FastBlurUtil {
+    public static Bitmap rsBlur(Context context, Bitmap source, int radius){
+
+        Bitmap inputBmp = source;
+        //(1)
+        RenderScript renderScript =  RenderScript.create(context);
+
+        Log.i("FastBlurUtil","scale size:"+inputBmp.getWidth()+"*"+inputBmp.getHeight());
+
+        // Allocate memory for Renderscript to work with
+        //(2)
+        final Allocation input = Allocation.createFromBitmap(renderScript,inputBmp);
+        final Allocation output = Allocation.createTyped(renderScript,input.getType());
+        //(3)
+        // Load up an instance of the specific script that we want to use.
+        ScriptIntrinsicBlur scriptIntrinsicBlur = ScriptIntrinsicBlur.create(renderScript, Element.U8_4(renderScript));
+        //(4)
+        scriptIntrinsicBlur.setInput(input);
+        //(5)
+        // Set the blur radius
+        scriptIntrinsicBlur.setRadius(radius);
+        //(6)
+        // Start the ScriptIntrinisicBlur
+        scriptIntrinsicBlur.forEach(output);
+        //(7)
+        // Copy the output to the blurred bitmap
+        output.copyTo(inputBmp);
+        //(8)
+        renderScript.destroy();
+
+        return inputBmp;
+    }
+
     public Bitmap fastBlur(Bitmap sentBitmap, float scale, int radius) {
+        String mSrcSize = sentBitmap.getByteCount() + "byte";
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        sentBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+        byte[] bytes = bos.toByteArray();
+        Bitmap mSrcBitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 
-        int width = Math.round(sentBitmap.getWidth() * scale);
-        int height = Math.round(sentBitmap.getHeight() * scale);
-        sentBitmap = Bitmap.createScaledBitmap(sentBitmap, width, height, false);
+        int width = Math.round(mSrcBitmap.getWidth() * scale);
+        int height = Math.round(mSrcBitmap.getHeight() * scale);
+        mSrcBitmap = Bitmap.createScaledBitmap(mSrcBitmap, width, height, false);
 
-        Bitmap bitmap = sentBitmap.copy(sentBitmap.getConfig(), true);
+        Bitmap bitmap = mSrcBitmap.copy(mSrcBitmap.getConfig(), true);
 
         if (radius < 1) {
             return (null);
@@ -186,7 +232,6 @@ public class FastBlurUtil {
         bitmap.setPixels(pix, 0, w, 0, 0, w, h);
         return (bitmap);
     }
-
 }
 
 

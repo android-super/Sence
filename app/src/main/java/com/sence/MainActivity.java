@@ -69,7 +69,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private TextView sheet_img, sheet_video;
     private ImageView sheet_close;
     private List<LocalMedia> localMedia;
-
+    private boolean isconstraint = false;
     private LinearLayout[] mains;
     private MainFragment mainFragment;
     private VipFragment vipFragment;
@@ -79,6 +79,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private BaseMainFragment[] fragments;
 
     private int tag = 0;//底部点击Tag防止多次点击
+    private PUpDataAppInfo bean;
 
     @Override
     public int onActLayout() {
@@ -122,7 +123,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         setSelect(0);
 //        showUpdateDialog();
-//        initUpdataApp();
+        initUpdataApp();
     }
 
     private void initUpdataApp() {
@@ -141,7 +142,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void onSuccess(PUpDataAppInfo o, String msg) {
                 Logger.e("msg==========" + msg);
-                UpdateApp(o);
+                bean = o;
+                if("0".equals(o.getUpgrade_type())){
+                    showUpdateDialog();
+                }else if("1".equals(o.getUpgrade_type())){
+                    showUpdateDialog();
+                }else if("2".equals(o.getUpgrade_type())){
+                    isconstraint=true;
+                    showUpdateDialog();
+                }
+
             }
         });
     }
@@ -346,17 +356,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         ImageView update_close = update_dialog.findViewById(R.id.update_close);
         AlertDialog dialog = new AlertDialog.Builder(this, R.style.update_alert_dialog).create();
         dialog.setView(update_dialog);
-        update_content.setText("1、我爱中国" + "\n" + "2、更新内容提示，我爱你大爷，你大爷爱我，我是你大爷，你大爷是我，我是你最爱的人你最爱的认识我" + "\n" + "3、测试时最好的");
+        update_content.setText(bean.getContents());
         update_download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                updateApp(APP_NAME,bean.getLink());
             }
         });
+        if(isconstraint){
+            update_close.setVisibility(View.GONE);
+        }else{
+            update_close.setVisibility(View.VISIBLE);
+        }
         update_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                dialog.dismiss();
             }
         });
         dialog.show();

@@ -4,15 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.net.http.SslError;
-import android.text.TextUtils;
-import android.view.View;
-import android.webkit.*;
-import android.widget.RelativeLayout;
+import android.webkit.JavascriptInterface;
+import android.webkit.SslErrorHandler;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.sence.R;
 import com.sence.activity.web.WebConstans;
 import com.sence.base.BaseActivity;
-import com.sence.utils.LoginStatus;
 import com.sence.utils.StatusBarUtil;
 import com.sence.view.PubTitle;
 
@@ -24,8 +25,6 @@ import butterknife.BindView;
 public class WebActivity extends BaseActivity {
     @BindView(R.id.webView)
     WebView webView;
-    @BindView(R.id.layout_progress)
-    RelativeLayout layoutProgress;
     @BindView(R.id.pt_web)
     PubTitle ptWeb;
     private WebSettings settings;
@@ -69,10 +68,10 @@ public class WebActivity extends BaseActivity {
                 webView.loadUrl(url);
                 break;
             case XTTZ:
-                String urlSys = getIntent().getStringExtra("url");
+                url = getIntent().getStringExtra("url");
                 String titlelSys = getIntent().getStringExtra("title");
                 ptWeb.setTitleText(titlelSys);
-                webView.loadUrl(urlSys);
+                webView.loadUrl(url);
                 break;
         }
     }
@@ -103,7 +102,6 @@ public class WebActivity extends BaseActivity {
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 //页面加载完成之后
-                layoutProgress.setVisibility(View.GONE);
             }
 
             public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {

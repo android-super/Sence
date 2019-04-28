@@ -2,6 +2,7 @@ package com.sence.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,18 +55,30 @@ public class ShopCommendAdapter extends RecyclerView.Adapter<ShopCommendAdapter.
     @Override
     public void onBindViewHolder(@NonNull final ShopCommendAdapter.ViewHolder holder, final int position) {
         ShopCommendImgAdapter shopCommendImgAdapter = new ShopCommendImgAdapter(context);
-        GridLayoutManager linearLayoutManager = new GridLayoutManager(context,2);
+        GridLayoutManager linearLayoutManager = new GridLayoutManager(context,3);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         holder.mCommendImg.setLayoutManager(linearLayoutManager);
         holder.mCommendImg.setAdapter(shopCommendImgAdapter);
-        shopCommendImgAdapter.setList(list.get(position).getImgs());
+
         holder.mContent.setText(list.get(position).getContent());
         holder.mName.setText(list.get(position).getNickname());
+        holder.mTime.setText(list.get(position).getAddtime());
         holder.mLikeNum.setText(list.get(position).getPraise());
+        if(list.get(position).getImgs().size()>0){
+            if(list.get(position).getImgs().size()==1){
+                holder.mImg.setVisibility(View.VISIBLE);
+                GlideUtils.getInstance().loadHead( list.get(position).getImgs().get(0),holder.mImg);
+            }else{
+                holder.mImg.setVisibility(View.GONE);
+                shopCommendImgAdapter.setList(list.get(position).getImgs());
+            }
+        }
         GlideUtils.getInstance().loadHead( list.get(position).getAvatar(),holder.mImageView);
         if("1".equals(list.get(position).getIsPraise())){
+            holder.mLikeNum.setTextColor(Color.parseColor("#16a45f"));
             holder.mLike.setImageResource(R.drawable.shopcommend_dianzan_y);
         }else{
+            holder.mLikeNum.setTextColor(Color.parseColor("#333333"));
             holder.mLike.setImageResource(R.drawable.myinfo_dianzan);
         }
         num = Integer.parseInt(list.get(position).getPraise());
@@ -79,6 +92,7 @@ public class ShopCommendAdapter extends RecyclerView.Adapter<ShopCommendAdapter.
                 if(list.get(position).getIsPraise().equals("1")){
                     Like(position);
                     list.get(position).setIsPraise("0");
+                    holder.mLikeNum.setTextColor(Color.parseColor("#333333"));
                     holder.mLike.setImageResource(R.drawable.myinfo_dianzan);
                     num--;
                     holder.mLikeNum.setText(num+"");
@@ -87,6 +101,7 @@ public class ShopCommendAdapter extends RecyclerView.Adapter<ShopCommendAdapter.
                     num++;
                     list.get(position).setIsPraise("1");
                     holder.mLikeNum.setText(num+"");
+                    holder.mLikeNum.setTextColor(Color.parseColor("#16a45f"));
                     holder.mLike.setImageResource(R.drawable.shopcommend_dianzan_y);
                 }
             }
@@ -127,8 +142,9 @@ public class ShopCommendAdapter extends RecyclerView.Adapter<ShopCommendAdapter.
         private NiceImageView mImageView;
         private ImageView mLike;
         private RecyclerView mCommendImg;
-        private TextView mName,mContent,mLikeNum;
+        private TextView mName,mContent,mLikeNum,mTime;
         private LinearLayout mLinearLayout;
+        private ImageView mImg;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -136,6 +152,8 @@ public class ShopCommendAdapter extends RecyclerView.Adapter<ShopCommendAdapter.
             mCommendImg = itemView.findViewById(R.id.recycle_commendimg_shopcommend);
             mName = itemView.findViewById(R.id.tv_name_shopcommend);
             mLike = itemView.findViewById(R.id.iv_like_shopcommend);
+            mTime = itemView.findViewById(R.id.tv_time_shopcommend);
+            mImg = itemView.findViewById(R.id.iv_shopimg_shopcommend);
             mLinearLayout = itemView.findViewById(R.id.ll_like_shopcommend);
             mLikeNum = itemView.findViewById(R.id.tv_likenum_shopcommend);
             mContent = itemView.findViewById(R.id.tv_content_shopcommend);

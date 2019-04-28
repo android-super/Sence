@@ -5,8 +5,8 @@
               android:layout_gravity="center_horizontal"
               android:layout_height="wrap_content">
     <ImageView
-        android:layout_width="155dp"
-        android:layout_height="155dp"
+        android:layout_width="113dp"
+        android:layout_height="113dp"
         android:scaleType="fitXY"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"

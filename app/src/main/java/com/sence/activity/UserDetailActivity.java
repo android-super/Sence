@@ -1,5 +1,9 @@
 package com.sence.activity;
 
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.orhanobut.logger.Logger;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -25,6 +29,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * 用户明细
@@ -35,6 +40,8 @@ public class UserDetailActivity extends BaseActivity {
     RecyclerView recycleUserdetail;
     @BindView(R.id.srl_userdetail)
     SmartRefreshLayout srlUserdetail;
+    @BindView(R.id.iv_notimg_userdetail)
+    ImageView ivNotimgUserdetail;
 
     private UserDetailAdapter mUserDetailAdapter;
     private int page = 1;
@@ -54,9 +61,9 @@ public class UserDetailActivity extends BaseActivity {
         srlUserdetail.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                if(listBean.size()<10){
+                if (listBean.size() < 10) {
                     ToastUtils.showShort("没有更多了！");
-                }else{
+                } else {
                     page++;
                     initData();
                 }
@@ -66,7 +73,7 @@ public class UserDetailActivity extends BaseActivity {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 srlUserdetail.finishRefresh();
-                page=1;
+                page = 1;
                 listBean.clear();
                 initData();
             }
@@ -88,9 +95,10 @@ public class UserDetailActivity extends BaseActivity {
 
             @Override
             public void onSuccess(List<PUserDetailBean> o, String msg) {
-                Logger.e("msg==========" + msg );
-                listBean.addAll(o) ;
-                if(listBean.size()>0){
+                Logger.e("msg==========" + msg);
+                listBean.addAll(o);
+                if (listBean.size() > 0) {
+                    ivNotimgUserdetail.setVisibility(View.GONE);
                     mUserDetailAdapter.setList(listBean);
                 }
 
@@ -107,5 +115,12 @@ public class UserDetailActivity extends BaseActivity {
     @Override
     public int onActLayout() {
         return R.layout.activity_userdetail;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

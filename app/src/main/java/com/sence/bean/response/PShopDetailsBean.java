@@ -4,43 +4,42 @@ import java.util.List;
 
 public class PShopDetailsBean {
 
-
     /**
-     * imgUrl : http://192.168.1.10:8085//Public/Uploads/Goods/2019-03-27/5c9afaf63f8b8.jpg
-     * favourable : 1
-     * isMember :
-     * id : 1
-     * img : /Public/Uploads/Goods/2019-03-27/5c9afaf63f8b8.jpg
-     * postage : 6
-     * imgs : ["/Public/Uploads/see_shop/4/5bfe2d5ed0b1f.jpg","/Public/Uploads/see_shop/4/5bfe2d5ed0f34.jpg","/Public/Uploads/see_shop/4/5bfe2d5ed12aa.jpg","/Public/Uploads/see_shop/4/5bfe2d5ed1548.jpg"]
-     * name : 一号商品
-     * describe : http://192.168.1.10:8081/index.php/Shares/Public/show_notice_info/6
-     * price : 10
-     * vprice : 5
-     * uid : 1
-     * discount : 5
-     * username : hhhh
-     * avatar :
-     * cartNum : 0
-     * customId : 1
-     * customName : hhhh
-     * customAvatar :
-     * commentNum : 2903
-     * commentRate : 97.7
-     * comment : [{"nickname":"我是昵称","avatar":"我应该是头像地址","img":"我是评价的图片地址","content":"我是评价的内容"},{"nickname":"我是昵称2","avatar":"我应该是头像地址2","img":"我是评价的图片地址2","content":"我是评价的内容2"},{"nickname":"我是昵称3","avatar":"我应该是头像地址3","img":"我是评价的图片地址3","content":"我是评价的内容3"}]
+     * imgs : ["/Public/Uploads/Goods/2019-04-23/5cbe8b5ddc05c.jpg","/Public/Uploads/Goods/2019-04-23/5cbe8b5ddc65f.jpg"]
+     * name : 2019最新款耳机机构行家有同居体育等法规和小伙伴幸福感
+     * describe : http://sence.forhour.com//index.php/Api/Goods/getGoodsHtml/23
+     * price : 650
+     * vprice : 630
+     * uid : 19
+     * img : /Public/Uploads/Goods/2019-04-23/5cbe8b5ddb8db.png
+     * postage : 0
+     * id : 23
+     * subhead :
+     * favourable : 0.00
+     * discount : 9.7
+     * username : o～糖菓菓o_O
+     * avatar : /Public/Uploads/header/2019-04-22/oH3Cg1N6vRkmU8vZ8RSI0CPgUc6U.jpg
+     * cartNum : 7
+     * customId : 28
+     * customName : 千山暮雪
+     * customAvatar : /Public/Uploads/avatar/2019-04-26/5cc27f58b6575.jpg
+     * commentNum : 1
+     * commentRate : 100
+     * comment : {"content":"来咯呕吐都来了","imgs":[],"id":"37","praise":"1","addtime":"2019-04-25","nickname":"相濡以沫ふ","avatar":"/Public/Uploads/header/2019-04-23/oH3Cg1Pzkv_GmcFkRUkKVQHVmgl4.jpg","isPraise":"0"}
+     * isMember : 1
+     * imgUrl : http://sence.forhour.com//Public/Uploads/Goods/2019-04-23/5cbe8b5ddb8db.png
      */
 
-    private String imgUrl;
-    private String favourable;
-    private String isMember;
-    private String id;
-    private String img;
-    private String postage;
     private String name;
     private String describe;
     private String price;
     private String vprice;
     private String uid;
+    private String img;
+    private String postage;
+    private String id;
+    private String subhead;
+    private String favourable;
     private String discount;
     private String username;
     private String avatar;
@@ -50,56 +49,10 @@ public class PShopDetailsBean {
     private String customAvatar;
     private String commentNum;
     private String commentRate;
+    private CommentBean comment;
+    private String isMember;
+    private String imgUrl;
     private List<String> imgs;
-    private List<CommentBean> comment;
-
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
-    }
-
-    public String getFavourable() {
-        return favourable;
-    }
-
-    public void setFavourable(String favourable) {
-        this.favourable = favourable;
-    }
-
-    public String getIsMember() {
-        return isMember;
-    }
-
-    public void setIsMember(String isMember) {
-        this.isMember = isMember;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getImg() {
-        return img;
-    }
-
-    public void setImg(String img) {
-        this.img = img;
-    }
-
-    public String getPostage() {
-        return postage;
-    }
-
-    public void setPostage(String postage) {
-        this.postage = postage;
-    }
 
     public String getName() {
         return name;
@@ -139,6 +92,46 @@ public class PShopDetailsBean {
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public String getPostage() {
+        return postage;
+    }
+
+    public void setPostage(String postage) {
+        this.postage = postage;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getSubhead() {
+        return subhead;
+    }
+
+    public void setSubhead(String subhead) {
+        this.subhead = subhead;
+    }
+
+    public String getFavourable() {
+        return favourable;
+    }
+
+    public void setFavourable(String favourable) {
+        this.favourable = favourable;
     }
 
     public String getDiscount() {
@@ -213,6 +206,30 @@ public class PShopDetailsBean {
         this.commentRate = commentRate;
     }
 
+    public CommentBean getComment() {
+        return comment;
+    }
+
+    public void setComment(CommentBean comment) {
+        this.comment = comment;
+    }
+
+    public String getIsMember() {
+        return isMember;
+    }
+
+    public void setIsMember(String isMember) {
+        this.isMember = isMember;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
     public List<String> getImgs() {
         return imgs;
     }
@@ -221,26 +238,58 @@ public class PShopDetailsBean {
         this.imgs = imgs;
     }
 
-    public List<CommentBean> getComment() {
-        return comment;
-    }
-
-    public void setComment(List<CommentBean> comment) {
-        this.comment = comment;
-    }
-
     public static class CommentBean {
         /**
-         * nickname : 我是昵称
-         * avatar : 我应该是头像地址
-         * img : 我是评价的图片地址
-         * content : 我是评价的内容
+         * content : 来咯呕吐都来了
+         * imgs : []
+         * id : 37
+         * praise : 1
+         * addtime : 2019-04-25
+         * nickname : 相濡以沫ふ
+         * avatar : /Public/Uploads/header/2019-04-23/oH3Cg1Pzkv_GmcFkRUkKVQHVmgl4.jpg
+         * isPraise : 0
          */
 
+        private String content;
+        private String id;
+        private String praise;
+        private String addtime;
         private String nickname;
         private String avatar;
-        private String img;
-        private String content;
+        private String isPraise;
+        private List<String> imgs;
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getPraise() {
+            return praise;
+        }
+
+        public void setPraise(String praise) {
+            this.praise = praise;
+        }
+
+        public String getAddtime() {
+            return addtime;
+        }
+
+        public void setAddtime(String addtime) {
+            this.addtime = addtime;
+        }
 
         public String getNickname() {
             return nickname;
@@ -258,20 +307,20 @@ public class PShopDetailsBean {
             this.avatar = avatar;
         }
 
-        public String getImg() {
-            return img;
+        public String getIsPraise() {
+            return isPraise;
         }
 
-        public void setImg(String img) {
-            this.img = img;
+        public void setIsPraise(String isPraise) {
+            this.isPraise = isPraise;
         }
 
-        public String getContent() {
-            return content;
+        public List<String> getImgs() {
+            return imgs;
         }
 
-        public void setContent(String content) {
-            this.content = content;
+        public void setImgs(List<String> imgs) {
+            this.imgs = imgs;
         }
     }
 }

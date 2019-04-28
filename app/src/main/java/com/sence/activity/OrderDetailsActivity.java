@@ -234,11 +234,11 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
                     orderDetailsAdapter.setList(o.getGoods());
                 }
                 tvStateOrderdetails.setText(o.getStatus());
-                tvNumberOrderdetails.setText("下单编号："+o.getOid());
+                tvNumberOrderdetails.setText("订单编号："+o.getOid());
                 tvTimeOrderdetails.setText("下单时间："+o.getAddtime());
                 tvStroenameOrderdetails.setText(o.getShopname());
                 tvNameOrderdetails.setText(o.getAddress().getUsername());
-                tvPhoneOrderdetails.setText(o.getAddress().getPhone());
+                tvPhoneOrderdetails.setText(o.getAddress().getTel());
                 tvAddressOrderdetails.setText(o.getAddress().getArea()+o.getAddress().getAddress());
                 if(o.getGmoney().contains(".")){
                     tvShoppriceOrderdetails.setText("￥" + o.getGmoney());

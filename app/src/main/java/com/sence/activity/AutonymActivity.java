@@ -1,6 +1,5 @@
 package com.sence.activity;
 
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -10,7 +9,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.ToastUtils;
 import com.orhanobut.logger.Logger;
 import com.sence.R;
 import com.sence.base.BaseActivity;
@@ -24,7 +22,6 @@ import com.sence.utils.StatusBarUtil;
 import com.sence.view.PubTitle;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 /**
  * 实名认证
@@ -89,7 +86,6 @@ public class AutonymActivity extends BaseActivity {
 
     @OnClick(R.id.bt_submint_autonym)
     public void onViewClicked() {
-        ToastUtils.showShort(etIdentityAutonym.getText().toString().trim());
         HttpManager.getInstance().PlayNetCode(HttpCode.USER_AUTH, new RAutonymBean("1",etNameAutonym.getText().toString().trim(),etIdentityAutonym.getText().toString().trim(),LoginStatus.getUid())).request(new ApiCallBack<String>() {
             @Override
             public void onFinish() {
