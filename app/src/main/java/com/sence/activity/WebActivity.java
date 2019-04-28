@@ -53,12 +53,19 @@ public class WebActivity extends BaseActivity {
             case WZXQ:
                 webView.loadUrl(url);
                 break;
-            case XKXY:
+            case YHXX:
+                ptWeb.setTitleText("用户协议");
+                url = WebConstans.YHXX;
                 webView.loadUrl(url);
                 break;
             case YSZC:
                 ptWeb.setTitleText("隐私政策");
                 url = WebConstans.YSZC;
+                webView.loadUrl(url);
+                break;
+            case HYXY:
+                ptWeb.setTitleText("会员协议");
+                url = WebConstans.HYXY;
                 webView.loadUrl(url);
                 break;
             case XTTZ:

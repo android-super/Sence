@@ -1,18 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                                    xmlns:tools="http://schemas.android.com/tools"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
                                                    android:layout_width="match_parent"
                                                    android:layout_height="match_parent"
-                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
                                                    app:srlEnableLoadMoreWhenContentNotFull="false"
                                                    android:id="@+id/smart_refresh"
                                                    tools:context=".fragment.my.MyFocusFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycle_view"
+    <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+
+        <LinearLayout
+                android:id="@+id/search_layout"
+                android:background="@drawable/shape_fans_search"
+                android:layout_width="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_height="50dp">
+
+            <ImageView
+                    android:layout_marginLeft="35dp"
+                    android:src="@drawable/search_light"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <EditText
+                    android:id="@+id/search_content"
+                    android:layout_width="match_parent"
+                    android:hint="搜索"
+                    android:textSize="13sp"
+                    android:layout_marginRight="35dp"
+                    android:background="@android:color/transparent"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center_vertical"
+                    android:textColor="#c2c2c2"
+                    android:layout_height="match_parent"/>
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycle_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+    </LinearLayout>
+
 
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>

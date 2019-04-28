@@ -108,11 +108,11 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void putSocketResult(String str) {
                 ChatSocketBean socketBean = JsonParseUtil.parseString(str, ChatSocketBean.class);
-                if (socketBean.getType().equals("to_uid")) {
+                if (socketBean.getType().equals("chat")) {
                     PChatPrivateMessageBean bean = new PChatPrivateMessageBean();
-                    bean.setContent(socketBean.getContent());
-                    bean.setType(socketBean.getMessage_type());
-                    bean.setAdd_time(socketBean.getAdd_time());
+                    bean.setContent(socketBean.getData().getContent());
+                    bean.setType(socketBean.getData().getType());
+                    bean.setAdd_time(socketBean.getData().getAdd_time());
                     int currentTime = (int) (System.currentTimeMillis() / 1000);
                     if ((currentTime - lastVisibleTime) / 60 > 10) {
                         lastVisibleTime = currentTime;
@@ -170,12 +170,12 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
                 switch (view.getId()) {
                     case R.id.head_left://左边头像
                         Intent intent = new Intent(ChatMsgActivity.this, MyInfoActivity.class);
-                        intent.putExtra("uid", reAdapter.getData().get(position).getU_from());
+                        intent.putExtra("uid", reAdapter.getData().get(position).getTo_uid());
                         startActivity(intent);
                         break;
                     case R.id.head_right://右边头像 自己
                         intent = new Intent(ChatMsgActivity.this, MyInfoActivity.class);
-                        intent.putExtra("uid", reAdapter.getData().get(position).getU_from());
+                        intent.putExtra("uid", reAdapter.getData().get(position).getUid());
                         startActivity(intent);
                         break;
                     case R.id.left_image://左边大图片
@@ -381,7 +381,7 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void MessageEventBus(final PChatPrivateMessageBean messageInfo) {
-        messageInfo.setU_from(uid);
+        messageInfo.setUid(uid);
         int currentTime = (int) (System.currentTimeMillis() / 1000);
         messageInfo.setAdd_time(currentTime);
         if ((currentTime - lastVisibleTime) / 60 > 10) {
@@ -490,7 +490,7 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
             }
 
             //判断是否是自己   是自己
-            if (dataBean.getU_from().equals(uid)) {
+            if (dataBean.getUid().equals(uid)) {
                 left_image.setVisibility(View.GONE);
                 //判断消息类型   1普通文字  2图片 3部落邀请
                 if (dataBean.getType() == 2) {//2图片

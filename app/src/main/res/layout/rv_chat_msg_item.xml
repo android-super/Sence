@@ -32,6 +32,7 @@
                 android:layout_width="40dp"
                 app:corner_radius="5dp"
                 android:layout_height="40dp"
+                android:scaleType="centerCrop"
                 android:layout_gravity="left"
                 android:src="@drawable/hint_head"/>
 
@@ -151,6 +152,7 @@
                 android:id="@+id/head_right"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:scaleType="centerCrop"
                 android:layout_alignParentRight="true"
                 android:src="@drawable/hint_head"/>
 

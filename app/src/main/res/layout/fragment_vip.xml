@@ -80,8 +80,12 @@
                             android:text="@string/hint_describe"
                             android:layout_width="match_parent"
                             android:gravity="center"
-                            android:textColor="#2f3130"
-                            android:textSize="12sp"
+                            app:setInterval="3000"
+                            app:setTextSize="12sp"
+                            app:setTextColor="#2f3130"
+                            app:setSingleLine="true"
+                            app:setDirection="bottom_to_top"
+                            app:setAnimDuration="1500"
                             android:layout_height="20dp"/>
                 </RelativeLayout>
 

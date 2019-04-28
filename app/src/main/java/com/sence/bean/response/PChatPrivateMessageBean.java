@@ -22,8 +22,8 @@ public class PChatPrivateMessageBean {
      */
 
     private String id;
-    private String u_from;
-    private String u_to;
+    private String uid;
+    private String to_uid;
     private String content;
     private String width;
     private String height;
@@ -57,22 +57,6 @@ public class PChatPrivateMessageBean {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getU_from() {
-        return u_from;
-    }
-
-    public void setU_from(String u_from) {
-        this.u_from = u_from;
-    }
-
-    public String getU_to() {
-        return u_to;
-    }
-
-    public void setU_to(String u_to) {
-        this.u_to = u_to;
     }
 
     public String getContent() {
@@ -130,5 +114,21 @@ public class PChatPrivateMessageBean {
 
     public void setTimeVisible(boolean timeVisible) {
         isTimeVisible = timeVisible;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getTo_uid() {
+        return to_uid;
+    }
+
+    public void setTo_uid(String to_uid) {
+        this.to_uid = to_uid;
     }
 }

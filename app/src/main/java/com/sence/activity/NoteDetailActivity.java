@@ -2,6 +2,7 @@ package com.sence.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -28,6 +29,7 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.sence.R;
+import com.sence.activity.web.WebConstans;
 import com.sence.adapter.CommentAdapter;
 import com.sence.adapter.NoteRecommendAdapter;
 import com.sence.adapter.pager.ViewShowTagPagerAdapter;
@@ -46,6 +48,7 @@ import com.sence.utils.NavigationBarUtil;
 import com.sence.utils.StatusBarUtil;
 import com.sence.view.GridStagSpacingItemDecoration;
 import com.sence.view.NiceImageView;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.util.List;
 
@@ -83,7 +86,12 @@ public class NoteDetailActivity extends BaseActivity implements View.OnClickList
     TextView noteCommentRelease;
     @BindView(R.id.tool_back_press)
     ImageView toolBackPress;
+    @BindView(R.id.tool_more)
+    ImageView toolMore;
+    @BindView(R.id.tool_more_press)
+    ImageView toolMorePress;
 
+    private boolean isMy = false;
     private String nid;
     private float width;
     private float height;
@@ -94,6 +102,7 @@ public class NoteDetailActivity extends BaseActivity implements View.OnClickList
     private CommentAdapter commentAdapter;
 
     private BottomSheetDialog commentSheet;
+    private BottomSheetDialog mBottomSheetDialog;
     private EditText comment_release;
     private TextView comment_title;
     private TextView comment_num;
@@ -123,7 +132,13 @@ public class NoteDetailActivity extends BaseActivity implements View.OnClickList
         noteComment.setText(o.getNote_info().getMessage_count());
         noteLook.setText(o.getNote_info().getClick_num());
         noteContent.setText(o.getNote_info().getContent());
-
+        if ("0".equals(noteInfoBean.getIs_like())) {
+            noteSupport.setSelected(false);
+            noteSupport.setTextColor(Color.parseColor("#5f5f5f"));
+        } else {
+            noteSupport.setSelected(true);
+            noteSupport.setTextColor(Color.parseColor("#16a5af"));
+        }
         initViewPager(o.getNote_info().getAlbums());
     }
 
@@ -136,6 +151,14 @@ public class NoteDetailActivity extends BaseActivity implements View.OnClickList
         nid = this.getIntent().getStringExtra("nid");
         width = this.getIntent().getFloatExtra("width", 0);
         height = this.getIntent().getFloatExtra("height", 0);
+        isMy = this.getIntent().getBooleanExtra("isMy", false);
+        if (isMy) {
+            toolMore.setVisibility(View.VISIBLE);
+            toolMorePress.setVisibility(View.VISIBLE);
+        } else {
+            toolMore.setVisibility(View.GONE);
+            toolMorePress.setVisibility(View.GONE);
+        }
         initAppBarLayout();
         CollapsingToolbarLayout.LayoutParams layoutParams =
                 (CollapsingToolbarLayout.LayoutParams) noteBanner.getLayoutParams();
@@ -198,6 +221,7 @@ public class NoteDetailActivity extends BaseActivity implements View.OnClickList
 
             }
         });
+        bottomSheetDialog();
     }
 
 
@@ -247,10 +271,14 @@ public class NoteDetailActivity extends BaseActivity implements View.OnClickList
                     float alpha_content = ((float) Math.abs(i) * 2 / appBarLayout.getTotalScrollRange()) - 1;
                     toolBack.setAlpha(alpha_content);
                     toolBackPress.setAlpha(0f);
+                    toolMore.setAlpha(alpha_content);
+                    toolMorePress.setAlpha(0f);
                 } else {
                     toolBack.setAlpha(0f);
+                    toolMore.setAlpha(0f);
                     float alpha_content = (float) Math.abs(i) * 2 / appBarLayout.getTotalScrollRange();
                     toolBackPress.setAlpha(Math.abs(1 - alpha_content));
+                    toolMorePress.setAlpha(Math.abs(1 - alpha_content));
                 }
             }
         });
@@ -260,6 +288,8 @@ public class NoteDetailActivity extends BaseActivity implements View.OnClickList
                 ActivityCompat.finishAfterTransition(NoteDetailActivity.this);
             }
         });
+        toolMore.setOnClickListener(this);
+        toolMorePress.setOnClickListener(this);
     }
 
     public void showCommentDialog(final boolean isShow) {
@@ -275,8 +305,11 @@ public class NoteDetailActivity extends BaseActivity implements View.OnClickList
         comment_num = view.findViewById(R.id.comment_num);
         ImageView comment_close = view.findViewById(R.id.comment_close);
         commentAdapter = new CommentAdapter(R.layout.rv_item_comment);
+        commentAdapter.setEmptyView(R.layout.empty_comment, recycle_view);
         recycle_view.setAdapter(commentAdapter);
         commentSheet.setContentView(view);
+        commentSheet.getDelegate().findViewById(com.google.android.material.R.id.design_bottom_sheet)
+                .setBackgroundColor(getResources().getColor(android.R.color.transparent));
         BottomSheetBehavior mBehavior = BottomSheetBehavior.from((View) view.getParent());
         mBehavior.setState(STATE_EXPANDED);
         commentAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -329,13 +362,63 @@ public class NoteDetailActivity extends BaseActivity implements View.OnClickList
             case R.id.comment_close:
                 dismissDialog(commentSheet);
                 break;
+            case R.id.tool_more:
+            case R.id.tool_more_press:
+                mBottomSheetDialog.show();
+                break;
+            case R.id.ll_report_share:
+                Intent intent = new Intent(NoteDetailActivity.this, ReportCauseActivity.class);
+                intent.putExtra("type", "2");
+                intent.putExtra("gid", nid);
+                intent.putExtra("uid", p_uid);
+                startActivity(intent);
+                mBottomSheetDialog.dismiss();
+                break;
+            case R.id.ll_delete_share:
+                noteDelete();
+                mBottomSheetDialog.dismiss();
+                break;
+            case R.id.tv_cancel_share:
+                mBottomSheetDialog.dismiss();
+                break;
         }
     }
+
+    private void bottomSheetDialog() {
+        View mView = View.inflate(this, R.layout.layout_note_delete, null);
+        mBottomSheetDialog = new BottomSheetDialog(this);
+        mBottomSheetDialog.setContentView(mView);
+        mBottomSheetDialog.getDelegate().findViewById(com.google.android.material.R.id.design_bottom_sheet)
+                .setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        mView.findViewById(R.id.ll_report_share).setOnClickListener(this);
+        mView.findViewById(R.id.ll_delete_share).setOnClickListener(this);
+        mView.findViewById(R.id.tv_cancel_share).setOnClickListener(this);
+    }
+
 
     public void dismissDialog(BottomSheetDialog bottomSheetDialog) {
         if (bottomSheetDialog != null && bottomSheetDialog.isShowing()) {
             bottomSheetDialog.dismiss();
         }
+    }
+
+    private void noteDelete() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.NOTE_DELETE, new RNidBean(LoginStatus.getUid(), nid)).request(new ApiCallBack() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(Object o, String msg) {
+                finish();
+            }
+        });
     }
 
     /**
@@ -453,10 +536,12 @@ public class NoteDetailActivity extends BaseActivity implements View.OnClickList
                         noteInfoBean.setIs_like("1");
                         support_num = support_num + 1;
                         noteSupport.setSelected(true);
+                        noteSupport.setTextColor(Color.parseColor("#16a5af"));
                     } else {
                         noteInfoBean.setIs_like("0");
                         support_num = support_num - 1;
                         noteSupport.setSelected(false);
+                        noteSupport.setTextColor(Color.parseColor("#5f5f5f"));
                     }
                     noteInfoBean.setPraise_count(support_num + "");
                     noteSupport.setText(noteInfoBean.getPraise_count());
@@ -498,12 +583,5 @@ public class NoteDetailActivity extends BaseActivity implements View.OnClickList
                 commentAdapter.notifyDataSetChanged();
             }
         });
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
     }
 }

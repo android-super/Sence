@@ -10,5 +10,5 @@ public interface ApiCallBack<P> {
 
     void Message(int code, String message);
 
-    void onSuccess(P p, String msg) throws IllegalAccessException;
+    void onSuccess(P p, String msg);
 }

@@ -10,6 +10,7 @@
             android:layout_width="45dp"
             app:is_circle="true"
             android:id="@+id/item_head"
+            android:scaleType="centerCrop"
             android:layout_marginLeft="15dp"
             android:layout_height="45dp"/>
 

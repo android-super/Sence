@@ -5,19 +5,35 @@
                 android:layout_width="match_parent"
                 android:layout_height="66dp">
 
-    <com.sence.view.NiceImageView
-            android:layout_centerVertical="true"
+    <RelativeLayout
+            android:id="@+id/item_head_layout"
             android:layout_width="45dp"
-            app:is_circle="true"
-            android:id="@+id/item_head"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:layout_height="45dp"/>
+            android:layout_height="45dp">
+
+        <com.sence.view.NiceImageView
+                android:layout_width="45dp"
+                app:is_circle="true"
+                android:scaleType="centerCrop"
+                android:id="@+id/item_head"
+                android:layout_height="45dp"/>
+
+        <ImageView
+                android:id="@+id/item_point"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/shape_message_point"
+                android:layout_width="6dp"
+                android:visibility="gone"
+                android:layout_height="6dp"/>
+    </RelativeLayout>
+
 
     <TextView
             android:id="@+id/item_name"
             android:layout_marginLeft="8dp"
-            android:layout_alignTop="@id/item_head"
-            android:layout_toRightOf="@id/item_head"
+            android:layout_alignTop="@id/item_head_layout"
+            android:layout_toRightOf="@id/item_head_layout"
             android:textColor="#333333"
             android:text="@string/hint_name"
             android:textSize="13sp"
@@ -28,14 +44,15 @@
     <TextView
             android:id="@+id/item_describe"
             android:layout_marginLeft="8dp"
-            android:layout_alignBottom="@id/item_head"
-            android:layout_toRightOf="@id/item_head"
+            android:layout_alignBottom="@id/item_head_layout"
+            android:layout_toRightOf="@id/item_head_layout"
             android:textColor="#999999"
             android:text="@string/hint_name"
             android:textSize="12sp"
             android:layout_marginBottom="1dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+
     <TextView
             android:id="@+id/item_time"
             android:layout_alignParentRight="true"

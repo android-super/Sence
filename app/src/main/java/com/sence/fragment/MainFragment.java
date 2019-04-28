@@ -20,12 +20,16 @@ import com.google.android.material.tabs.TabLayout;
 import com.sence.MainActivity;
 import com.sence.R;
 import com.sence.activity.SearchActivity;
+import com.sence.activity.chat.bean.ChatSocketBean;
 import com.sence.adapter.pager.CustomViewPagerAdapter;
 import com.sence.base.BaseMainFragment;
 import com.sence.fragment.main.FocusFragment;
 import com.sence.fragment.main.NoteFragment;
 import com.sence.fragment.main.RecommendFragment;
+import com.sence.utils.JsonParseUtil;
 import com.sence.utils.LoginStatus;
+import com.sence.utils.SharedPreferencesUtil;
+import com.sence.utils.SocketUtils;
 import com.sence.view.FadeTransformer;
 
 /**
@@ -47,6 +51,22 @@ public class MainFragment extends BaseMainFragment {
 
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        SocketUtils.getInstance().setOnGetSocketResult(new SocketUtils.OnGetSocketResult() {
+            @Override
+            public void putSocketResult(String str) {
+                ChatSocketBean chatSocketBean = JsonParseUtil.parseString(str, ChatSocketBean.class);
+                if (chatSocketBean.getType().equals("user")) {
+                    if (chatSocketBean.getData().getCode().equals("101001")) {
+                        SharedPreferencesUtil.getInstance().putString("is_vip", "1");
+                        onRefresh();
+                    }
+                }
+            }
+        });
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -103,6 +123,13 @@ public class MainFragment extends BaseMainFragment {
 
     @Override
     public void onRefresh() {
-        
+        if (release == null) {
+            return;
+        }
+        if (LoginStatus.isVip()) {
+            release.setVisibility(View.VISIBLE);
+        } else {
+            release.setVisibility(View.GONE);
+        }
     }
 }

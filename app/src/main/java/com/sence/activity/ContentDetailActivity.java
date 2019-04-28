@@ -352,6 +352,7 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
                 dismissDialog(commentSheet);
                 break;
             case R.id.tool_share:
+            case R.id.tool_share_press:
                 mBottomSheetDialog.show();
                 break;
             case R.id.ll_wei_share:
@@ -461,6 +462,7 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
         comment_num = view.findViewById(R.id.comment_num);
         ImageView comment_close = view.findViewById(R.id.comment_close);
         commentAdapter = new CommentAdapter(R.layout.rv_item_comment);
+        commentAdapter.setEmptyView(R.layout.empty_comment, recycle_view);
         recycle_view.setAdapter(commentAdapter);
         commentSheet.setContentView(view);
         commentSheet.getDelegate().findViewById(com.google.android.material.R.id.design_bottom_sheet)
@@ -547,6 +549,8 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
         View mView = View.inflate(this, R.layout.layout_share, null);
         mBottomSheetDialog = new BottomSheetDialog(this);
         mBottomSheetDialog.setContentView(mView);
+        mBottomSheetDialog.getDelegate().findViewById(com.google.android.material.R.id.design_bottom_sheet)
+                .setBackgroundColor(getResources().getColor(android.R.color.transparent));
         mView.findViewById(R.id.ll_report_share).setOnClickListener(this);
         mView.findViewById(R.id.ll_rachel_share).setVisibility(View.GONE);
         mView.findViewById(R.id.ll_code_share).setVisibility(View.GONE);

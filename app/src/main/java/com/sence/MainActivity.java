@@ -122,7 +122,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         setSelect(0);
 //        showUpdateDialog();
-        initUpdataApp();
+//        initUpdataApp();
     }
 
     private void initUpdataApp() {
