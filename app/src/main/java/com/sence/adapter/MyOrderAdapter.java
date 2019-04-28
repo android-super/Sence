@@ -208,7 +208,6 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
                 Intent intent = new Intent(context, ChatMsgActivity.class);
                 intent.putExtra("u_to", list.get(position).getCustom().getId());
                 intent.putExtra("chat_id", "");
-                intent.putExtra("title", "客服");
                 intent.putExtra("name", list.get(position).getCustom().getName());
                 intent.putExtra("u_avatar", list.get(position).getCustom().getAvatar());
                 context.startActivity(intent);

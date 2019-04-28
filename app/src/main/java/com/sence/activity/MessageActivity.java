@@ -130,7 +130,6 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
                 intent.putExtra("u_to", service_uid);
                 intent.putExtra("chat_id", "");
                 intent.putExtra("name", service_name);
-                intent.putExtra("title", "客服");
                 intent.putExtra("u_avatar", service_avatar);
                 startActivity(intent);
                 break;

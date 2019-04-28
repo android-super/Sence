@@ -75,8 +75,7 @@ public class MyOrderActivity extends BaseActivity {
         String evaluate = LoginStatus.getEvaluate();
         if("4".equals(evaluate)){
             SharedPreferencesUtil.getInstance().putString("order_evaluate", "");
-            vpContentMyorder.setCurrentItem(4);
-            waitEvaluate.reresh();
+            setComment();
         }
         allOrder.reresh();
     }

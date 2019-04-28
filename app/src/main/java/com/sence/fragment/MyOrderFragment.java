@@ -123,7 +123,7 @@ public class MyOrderFragment extends Fragment implements View.OnClickListener {
                     ToastUtils.showShort("没有更多了！");
                 }else{
                     page++;
-                    loadData();
+                    loadData(false);
                 }
                 mSmartRefreshLayout.finishLoadMore();
             }
@@ -132,15 +132,14 @@ public class MyOrderFragment extends Fragment implements View.OnClickListener {
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 mSmartRefreshLayout.finishRefresh();
                 page=1;
-                listBeans.clear();
-                loadData();
+                loadData(true);
             }
         });
         mMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 page++;
-                loadData();
+                loadData(false);
             }
         });
         bottomSheetDialog();
@@ -418,13 +417,13 @@ public class MyOrderFragment extends Fragment implements View.OnClickListener {
         }else if("payfail".equals(LoginStatus.getPayType())){
             SharedPreferencesUtil.getInstance().putString("paytype", "");
         }
-        listBeans.clear();
-        loadData();
+        loadData(true);
     }
 
 
 
-    private void loadData() {
+    private void loadData(boolean isclear) {
+
         HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_LIST, new RMyOrderBean(LoginStatus.getUid(),page+"","10",status+"")).request(new ApiCallBack<PMyOrderBean>() {
             @Override
             public void onFinish() {
@@ -440,21 +439,31 @@ public class MyOrderFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onSuccess(PMyOrderBean o, String msg) {
                 Logger.e("msg==========" + msg);
-                listBeans.addAll(o.getList());
-                if(listBeans.size()>0) {
-                    mNot.setVisibility(View.GONE);
+                if(isclear) {
+                    if(o.getList().size()>0) {
+                        mNot.setVisibility(View.GONE);
+                    }else{
+                        mNot.setVisibility(View.VISIBLE);
+                        ((MyOrderActivity)getActivity()).setNumNull(status);
+                    }
+                    mMyOrderAdapter.setList(o.getList());
                 }else{
-                    mNot.setVisibility(View.VISIBLE);
-                    ((MyOrderActivity)getActivity()).setNumNull(status);
+                    listBeans.addAll(o.getList());
+                    if(listBeans.size()>0) {
+                        mNot.setVisibility(View.GONE);
+                    }else{
+                        mNot.setVisibility(View.VISIBLE);
+                        ((MyOrderActivity)getActivity()).setNumNull(status);
+                    }
+                    mMyOrderAdapter.setList(listBeans);
                 }
-                mMyOrderAdapter.setList(listBeans);
+
             }
         });
 
     }
 
     public void reresh() {
-        listBeans.clear();
-        loadData();
+        loadData(true);
     }
 }

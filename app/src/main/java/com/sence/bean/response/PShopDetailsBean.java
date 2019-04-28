@@ -29,7 +29,7 @@ public class PShopDetailsBean {
      * isMember : 1
      * imgUrl : http://sence.forhour.com//Public/Uploads/Goods/2019-04-23/5cbe8b5ddb8db.png
      */
-
+    private String status;
     private String name;
     private String describe;
     private String price;
@@ -53,6 +53,14 @@ public class PShopDetailsBean {
     private String isMember;
     private String imgUrl;
     private List<String> imgs;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getName() {
         return name;

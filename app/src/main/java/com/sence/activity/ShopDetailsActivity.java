@@ -539,6 +539,10 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                     startActivity(new Intent(ShopDetailsActivity.this, LoginActivity.class));
                     return;
                 }
+                if("2".equals(bean.getStatus())){
+                    ToastUtils.showShort("该商品已下架");
+                    return;
+                }
                 bgAlpha(0.5f);
                 popupWindow.showAtLocation(contentView, Gravity.BOTTOM, 0, 0);
                 isAddShop = true;
@@ -546,6 +550,10 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
             case R.id.tv_buy_shopdetails:
                 if (!LoginStatus.isLogin() || LoginStatus.getUid().isEmpty()) {
                     startActivity(new Intent(ShopDetailsActivity.this, LoginActivity.class));
+                    return;
+                }
+                if("2".equals(bean.getStatus())){
+                    ToastUtils.showShort("该商品已下架");
                     return;
                 }
                 bgAlpha(0.5f);
@@ -560,7 +568,6 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                 Intent intentService = new Intent(ShopDetailsActivity.this, ChatMsgActivity.class);
                 intentService.putExtra("u_to", bean.getCustomId());
                 intentService.putExtra("chat_id", "");
-                intentService.putExtra("title", "客服");
                 intentService.putExtra("name", bean.getCustomName());
                 intentService.putExtra("u_avatar", bean.getCustomAvatar());
                 startActivity(intentService);
