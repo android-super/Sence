@@ -80,7 +80,6 @@ public class MyOrderActivity extends BaseActivity {
         allOrder.reresh();
     }
 
-
     public void setTitleNum(String waitPay,String waitSend,String waitConfirm,String waitEvlua) {
         pay = Integer.parseInt(waitPay);
         send = Integer.parseInt(waitSend);

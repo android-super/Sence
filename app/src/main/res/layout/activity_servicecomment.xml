@@ -90,6 +90,7 @@
             android:layout_height="0dp"
             android:paddingLeft="33dp"
             android:paddingRight="20dp"
+            android:textCursorDrawable="@drawable/shape_cursor"
             android:paddingTop="21dp"
             android:id="@+id/et_content_servicecomment"
             android:layout_weight="1"

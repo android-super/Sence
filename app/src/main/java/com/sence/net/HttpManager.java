@@ -398,7 +398,7 @@ public class HttpManager<P> {
                             apiCallBack.onSuccess(result.getData(), result.getMsg());
                         }
                     } else {
-                        if ("不需要升级".equals(result.getMsg()) || "请求成功".equals(result.getMsg())) {
+                        if ("不需要升级".equals(result.getMsg()) || "请求成功".equals(result.getMsg())||result.getMsg().contains("没有用户id")) {
 
                         } else {
                             ToastUtils.showShort(result.getMsg());

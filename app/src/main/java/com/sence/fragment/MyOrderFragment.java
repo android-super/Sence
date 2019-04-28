@@ -88,7 +88,7 @@ public class MyOrderFragment extends Fragment implements View.OnClickListener {
     private int postion;
     private boolean issetnum = true;
     private int type;
-
+    private boolean istitnum = false;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -131,6 +131,7 @@ public class MyOrderFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 mSmartRefreshLayout.finishRefresh();
+                istitnum = true;
                 page=1;
                 loadData(true);
             }
@@ -442,6 +443,9 @@ public class MyOrderFragment extends Fragment implements View.OnClickListener {
                 listBeans.addAll(o.getList());
                 if(isclear) {
                     if(o.getList().size()>0) {
+                        if(istitnum){
+                            ((MyOrderActivity)getActivity()).setTitleNum(o.getWaitPay(),o.getWaitSend(),o.getWaitConfirm(),o.getWaitEvlua());
+                        }
                         mNot.setVisibility(View.GONE);
                     }else{
                         mNot.setVisibility(View.VISIBLE);

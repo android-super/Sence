@@ -123,6 +123,7 @@
             android:hint="宝贝满足您的期望吗？说说它的优点和美中不足的地方吧"
             android:lineSpacingExtra="10dp"
             android:paddingLeft="19dp"
+            android:textCursorDrawable="@drawable/shape_cursor"
             android:paddingRight="37dp"
             android:paddingTop="11dp"
             android:textColor="#333333"
