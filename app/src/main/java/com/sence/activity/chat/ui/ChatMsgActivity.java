@@ -91,6 +91,7 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
     private String u_to;//聊天用戶id
     private String chat_id;//聊天id(从列表传递过来)
     private String u_avatar;//聊天用户头像
+    private String name;//聊天室名称
 
     public void initView() {
         StatusBarUtil.setLightMode(this);
@@ -99,8 +100,9 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
         u_to = getIntent().getStringExtra("u_to");
         chat_id = getIntent().getStringExtra("chat_id");
         u_avatar = getIntent().getStringExtra("u_avatar");
+        name = getIntent().getStringExtra("name");
         uid = LoginStatus.getUid();
-
+        pubTitle.setTitleText(name);
         initWidget();
 
         showMessage();
