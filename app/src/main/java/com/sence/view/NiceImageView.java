@@ -10,10 +10,11 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.graphics.Xfermode;
+import android.os.Build;
 import android.util.AttributeSet;
 
-import com.blankj.utilcode.util.ConvertUtils;
 import com.sence.R;
+import com.sence.activity.chat.util.Utils;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
@@ -49,8 +50,9 @@ public class NiceImageView extends AppCompatImageView {
     private RectF srcRectF; // 图片占的矩形区域
     private RectF borderRectF; // 边框的矩形区域
 
-    private Path path = new Path();
-    private Paint paint = new Paint();
+    private Paint paint;
+    private Path path; // 用来裁剪图片的ptah
+    private Path srcPath; // 图片区域大小的path
 
     public NiceImageView(Context context) {
         this(context, null);
@@ -102,7 +104,15 @@ public class NiceImageView extends AppCompatImageView {
         borderRectF = new RectF();
         srcRectF = new RectF();
 
-        xfermode = new PorterDuffXfermode(PorterDuff.Mode.DST_IN);
+        paint = new Paint();
+        path = new Path();
+
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
+            xfermode = new PorterDuffXfermode(PorterDuff.Mode.DST_IN);
+        } else {
+            xfermode = new PorterDuffXfermode(PorterDuff.Mode.DST_OUT);
+            srcPath = new Path();
+        }
 
         calculateRadii();
         clearInnerBorderWidth();
@@ -125,7 +135,7 @@ public class NiceImageView extends AppCompatImageView {
         if (!isCoverSrc) {
             float sx = 1.0f * (width - 2 * borderWidth - 2 * innerBorderWidth) / width;
             float sy = 1.0f * (height - 2 * borderWidth - 2 * innerBorderWidth) / height;
-            // 缩小画布，使图片内容不被border、padding覆盖
+            // 缩小画布，使图片内容不被borders覆盖
             canvas.scale(sx, sy, width / 2.0f, height / 2.0f);
         }
         super.onDraw(canvas);
@@ -140,7 +150,14 @@ public class NiceImageView extends AppCompatImageView {
         paint.setAntiAlias(true);
         paint.setStyle(Paint.Style.FILL);
         paint.setXfermode(xfermode);
-        canvas.drawPath(path, paint);
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
+            canvas.drawPath(path, paint);
+        } else {
+            srcPath.addRect(srcRectF, Path.Direction.CCW);
+            // 计算tempPath和path的差集
+            srcPath.op(path, Path.Op.DIFFERENCE);
+            canvas.drawPath(srcPath, paint);
+        }
         paint.setXfermode(null);
 
         // 绘制遮罩
@@ -160,8 +177,7 @@ public class NiceImageView extends AppCompatImageView {
                 drawCircleBorder(canvas, borderWidth, borderColor, radius - borderWidth / 2.0f);
             }
             if (innerBorderWidth > 0) {
-                drawCircleBorder(canvas, innerBorderWidth, innerBorderColor,
-                        radius - borderWidth - innerBorderWidth / 2.0f);
+                drawCircleBorder(canvas, innerBorderWidth, innerBorderColor, radius - borderWidth - innerBorderWidth / 2.0f);
             }
         } else {
             if (borderWidth > 0) {
@@ -194,8 +210,7 @@ public class NiceImageView extends AppCompatImageView {
      */
     private void initBorderRectF() {
         if (!isCircle) {
-            borderRectF.set(borderWidth / 2.0f, borderWidth / 2.0f, width - borderWidth / 2.0f,
-                    height - borderWidth / 2.0f);
+            borderRectF.set(borderWidth / 2.0f, borderWidth / 2.0f, width - borderWidth / 2.0f, height - borderWidth / 2.0f);
         }
     }
 
@@ -271,7 +286,7 @@ public class NiceImageView extends AppCompatImageView {
     }
 
     public void setBorderWidth(int borderWidth) {
-        this.borderWidth = ConvertUtils.dp2px(borderWidth);
+        this.borderWidth = Utils.dp2px(context, borderWidth);
         calculateRadiiAndRectF(false);
     }
 
@@ -281,7 +296,7 @@ public class NiceImageView extends AppCompatImageView {
     }
 
     public void setInnerBorderWidth(int innerBorderWidth) {
-        this.innerBorderWidth = ConvertUtils.dp2px(innerBorderWidth);
+        this.innerBorderWidth = Utils.dp2px(context, innerBorderWidth);
         clearInnerBorderWidth();
         invalidate();
     }
@@ -292,27 +307,27 @@ public class NiceImageView extends AppCompatImageView {
     }
 
     public void setCornerRadius(int cornerRadius) {
-        this.cornerRadius = ConvertUtils.dp2px(cornerRadius);
+        this.cornerRadius = Utils.dp2px(context, cornerRadius);
         calculateRadiiAndRectF(false);
     }
 
     public void setCornerTopLeftRadius(int cornerTopLeftRadius) {
-        this.cornerTopLeftRadius = ConvertUtils.dp2px(cornerTopLeftRadius);
+        this.cornerTopLeftRadius = Utils.dp2px(context, cornerTopLeftRadius);
         calculateRadiiAndRectF(true);
     }
 
     public void setCornerTopRightRadius(int cornerTopRightRadius) {
-        this.cornerTopRightRadius = ConvertUtils.dp2px(cornerTopRightRadius);
+        this.cornerTopRightRadius = Utils.dp2px(context, cornerTopRightRadius);
         calculateRadiiAndRectF(true);
     }
 
     public void setCornerBottomLeftRadius(int cornerBottomLeftRadius) {
-        this.cornerBottomLeftRadius = ConvertUtils.dp2px(cornerBottomLeftRadius);
+        this.cornerBottomLeftRadius = Utils.dp2px(context, cornerBottomLeftRadius);
         calculateRadiiAndRectF(true);
     }
 
     public void setCornerBottomRightRadius(int cornerBottomRightRadius) {
-        this.cornerBottomRightRadius = ConvertUtils.dp2px(cornerBottomRightRadius);
+        this.cornerBottomRightRadius = Utils.dp2px(context, cornerBottomRightRadius);
         calculateRadiiAndRectF(true);
     }
 

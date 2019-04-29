@@ -30,7 +30,7 @@ import com.sence.activity.chat.ui.ChatMsgActivity;
 import com.sence.activity.chat.ui.ChatMsgGroupActivity;
 import com.sence.activity.web.WebConstans;
 import com.sence.adapter.MyInfoRecommendViewPagerAdatpter;
-import com.sence.adapter.MyPagerAdapter;
+import com.sence.adapter.MyInfoShopListAdapter;
 import com.sence.base.BaseActivity;
 import com.sence.bean.request.RCancelFocusBean;
 import com.sence.bean.request.RRachelBean;
@@ -64,6 +64,8 @@ import java.net.URL;
 
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -88,15 +90,23 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     CoordinatorLayout clLayoutMyinfo;
     @BindView(R.id.iv_notimg_myinfo)
     ImageView ivNotimgMyinfo;
-    @BindView(R.id.vp_view_myinfo)
-    ViewPager vpViewMyinfo;
+    @BindView(R.id.rv_shoplayout_myinfo)
+    RecyclerView recyclerView;
+    @BindView(R.id.ll_shoplayout_myinfo)
+    LinearLayout llShoplayoutMyinfo;
+    @BindView(R.id.iv_img_myinfo)
+    NiceImageView ivImgMyinfo;
+    @BindView(R.id.tv_shopname_myinfo)
+    TextView tvShopnameMyinfo;
+    @BindView(R.id.tv_price_myinfo)
+    TextView tvPriceMyinfo;
     private ViewPager mViewPager;
     private AppBarLayout mAppBarLayout;
     private TabLayout mTabLayoutButtom;
     private ImageView mBack, mShare;
     private View mView;
     private TextView mName, mAddress, mFocusNum, mFansNum, mSigner;
-    private NiceImageView  mImageView;
+    private NiceImageView mImageView;
     private RelativeLayout mShop;
     private ImageView mHead;
     private NiceImageView mIsV;
@@ -117,6 +127,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     private TextView mType;
     private RelativeLayout mHeadBg;
     private boolean isshow = true;
+    private MyInfoShopListAdapter myInfoShopListAdapter;
 
     @Override
     public int onActLayout() {
@@ -146,6 +157,11 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         mFansNum = findViewById(R.id.tv_fansnum_myinfo);
         mSigner = findViewById(R.id.tv_signer_myinfo);
         mShop = findViewById(R.id.rl_shop_myinfo);
+        myInfoShopListAdapter = new MyInfoShopListAdapter(MyInfoActivity.this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MyInfoActivity.this);
+        linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(myInfoShopListAdapter);
         findViewById(R.id.rl_num_myinfo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -165,14 +181,22 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         mMyInfoRecommendViewPagerAdatpter = new MyInfoRecommendViewPagerAdatpter(getSupportFragmentManager(), this, fragmentList, list, uid);
         mViewPager.setAdapter(mMyInfoRecommendViewPagerAdatpter);
         mTabLayoutButtom.setupWithViewPager(mViewPager);
-
         if (TextUtils.isEmpty(uid) || LoginStatus.getUid().equals(uid)) {
             ivEditMyinfo.setVisibility(View.VISIBLE);
             ivFocusMyinfo.setVisibility(View.GONE);
             ivChatMyinfo.setVisibility(View.GONE);
             uid = LoginStatus.getUid();
         }
-
+        llShoplayoutMyinfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(llShoplayoutMyinfo.getVisibility()==View.VISIBLE){
+                    Intent intent = new Intent(MyInfoActivity.this, ShopDetailsActivity.class);
+                    intent.putExtra("id", bean.getGoods_info().get(0).getId());
+                    startActivity(intent);
+                }
+            }
+        });
         mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
@@ -352,7 +376,15 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                             mHeadBg.setLayoutParams(linearParamsBg);
                         }
                     } else {
-                        vpViewMyinfo.setAdapter(new MyPagerAdapter(MyInfoActivity.this,o.getGoods_info()));
+                        if (o.getGoods_info().size() == 1) {
+                            recyclerView.setVisibility(View.GONE);
+                            GlideUtils.getInstance().loadNormal(o.getGoods_info().get(0).getImg(), ivImgMyinfo);
+                            tvShopnameMyinfo.setText(o.getGoods_info().get(0).getName());
+                            tvPriceMyinfo.setText("￥ " + o.getGoods_info().get(0).getPrice());
+                        } else {
+                            llShoplayoutMyinfo.setVisibility(View.GONE);
+                            myInfoShopListAdapter.setList(o.getGoods_info());
+                        }
                     }
                 }
                 type = o.getIs_shield();
