@@ -27,6 +27,7 @@ import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.GlideUtils;
 import com.sence.utils.LoginStatus;
+import com.sence.utils.PermissionUtil;
 import com.sence.utils.SharedPreferencesUtil;
 import com.sence.utils.StatusBarUtil;
 import com.sence.view.PubTitle;
@@ -87,6 +88,7 @@ public class OrderCommentActivity extends BaseActivity implements View.OnClickLi
     private static String path = "/sdcard/myHead/";// sd路径
     private File[] files;
     private String id;
+    private PermissionUtil permissionUtil;
 
     @Override
     public int onActLayout() {

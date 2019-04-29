@@ -5,12 +5,12 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.*;
-import androidx.annotation.LayoutRes;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.luck.picture.lib.PictureSelector;
@@ -25,19 +25,29 @@ import com.sence.activity.chat.bean.ChatSocketBean;
 import com.sence.activity.chat.bean.FullImageInfo;
 import com.sence.activity.chat.util.GlobalOnItemClickManagerUtils;
 import com.sence.activity.chat.util.Utils;
-import com.sence.activity.chat.widght.EmotionInputDetector;
 import com.sence.activity.chat.widght.EmotionPrivateInputDetector;
 import com.sence.activity.chat.widght.NoScrollViewPager;
 import com.sence.base.BaseActivity;
-import com.sence.bean.request.chat.*;
-import com.sence.bean.response.PChatMessageBean;
+import com.sence.bean.request.chat.RChatListBean;
+import com.sence.bean.request.chat.RChatListIdBean;
+import com.sence.bean.request.chat.RSendImgFileBean;
+import com.sence.bean.request.chat.RSendPrivateImgMessageBean;
+import com.sence.bean.request.chat.RSendPrivateMessageBean;
+import com.sence.bean.request.chat.RUtoBean;
 import com.sence.bean.response.PChatPrivateMessageBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.Urls;
 import com.sence.net.manager.ApiCallBack;
-import com.sence.utils.*;
+import com.sence.utils.BitmapUtils;
+import com.sence.utils.DateUtils;
+import com.sence.utils.GlideUtils;
+import com.sence.utils.JsonParseUtil;
+import com.sence.utils.LoginStatus;
+import com.sence.utils.SocketUtils;
+import com.sence.utils.StatusBarUtil;
 import com.sence.view.PubTitle;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -46,6 +56,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import androidx.annotation.LayoutRes;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
 
 public class ChatMsgActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.edit_text)

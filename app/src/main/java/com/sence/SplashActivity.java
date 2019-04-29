@@ -1,15 +1,12 @@
 package com.sence;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
 import android.widget.ImageView;
 
 import com.blankj.utilcode.util.PhoneUtils;
 import com.blankj.utilcode.util.SPUtils;
-import com.orhanobut.logger.Logger;
 import com.sence.bean.request.RStartPictureBean;
 import com.sence.bean.response.PStartPictureBean;
 import com.sence.net.HttpCode;
@@ -46,7 +43,7 @@ public class SplashActivity extends AppCompatActivity {
         ivFullPicture = findViewById(R.id.iv_full_picture);
         permissionUtil = new PermissionUtil(this);
         if (permissionUtil.requestPermissions(PermissionUtil.READ_PHONE_STATE,
-                new String[]{Manifest.permission.READ_PHONE_STATE})) {
+                new String[]{Manifest.permission.READ_PHONE_STATE,Manifest.permission.WRITE_EXTERNAL_STORAGE})) {
             getStartPicture();
             disposable =
                     Observable.interval(2, TimeUnit.SECONDS).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Long>() {

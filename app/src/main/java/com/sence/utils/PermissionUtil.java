@@ -8,13 +8,15 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.ContextCompat;
+
 import com.sence.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 
 public class PermissionUtil {
     public static final int PHONE_CALL = 0;
@@ -24,6 +26,7 @@ public class PermissionUtil {
     public static final int READ_PHONE_STATE = 4;
     public static final int LOCATION = 5;
     public static final int READ_PHONE_STATE_NORMAL = 6;
+    public static final int WRITE_EXTERNAL_STORAGE = 7;
 
     private Activity activity;
 
@@ -89,6 +92,9 @@ public class PermissionUtil {
                 }
                 if (requestCode == READ_PHONE_STATE_NORMAL) {
                     stringResId = R.string.permission_phone_state_normal;
+                }
+                if (requestCode == WRITE_EXTERNAL_STORAGE) {
+                    stringResId = R.string.permission_write;
                 }
                 createDialog(activity.getResources().getString(stringResId), requestCode);
             }

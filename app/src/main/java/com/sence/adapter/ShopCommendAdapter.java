@@ -115,11 +115,7 @@ public class ShopCommendAdapter extends RecyclerView.Adapter<ShopCommendAdapter.
                 }
             }
         });
-
-
     }
-
-
 
     private void Like(int position) {
         HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_COMMENT_SUPPORT, new RShopDetailsBean(list.get(position).getId(), LoginStatus.getUid())).request(new ApiCallBack<String>() {

@@ -42,4 +42,5 @@
     <string name="permission_phone_state">只有获取手机设备号权限，您才可以登录Sence！</string>
     <string name="permission_location">同意获取位置信息，才可以发布服务，方便其他人更快找到你</string>
     <string name="permission_phone_state_normal">检验IMEL和IMSI码，防止账号被盗</string>
+    <string name="permission_write">您拒绝了写入sdk权限，无法写入sdk!</string>
 </resources>
