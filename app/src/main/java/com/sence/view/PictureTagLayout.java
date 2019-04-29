@@ -125,7 +125,25 @@ public class PictureTagLayout extends RelativeLayout implements View.OnTouchList
             return;
         }
         ((PictureTagView) clickView).setContent(content);
-        tagInfoItems.get((Integer) clickView.getTag()).setContent(content);
+        for (int i = 0; i < tagInfoItems.size(); i++) {
+            if (this.getChildAt(i).getTag() == clickView.getTag()) {
+                tagInfoItems.get(i).setContent(content);
+            }
+        }
+    }
+
+    public void deleteItem() {
+        if (clickView == null) {
+            return;
+        }
+        View view = this.getChildAt((Integer) clickView.getTag());
+        for (int i = 0; i < tagInfoItems.size(); i++) {
+            if (this.getChildAt(i).getTag() == clickView.getTag()) {
+                tagInfoItems.remove(i);
+            }
+        }
+        removeView(view);
+        this.invalidate();
     }
 
 
@@ -202,13 +220,17 @@ public class PictureTagLayout extends RelativeLayout implements View.OnTouchList
         touchView.setLayoutParams(params);
         double width_scale = Arith.div(params.leftMargin, getWidth(), 4);
         double height_scale = Arith.div(params.topMargin, getHeight(), 4);
-        tagInfoItems.get((Integer) touchView.getTag()).setWidth_scale(width_scale);
-        tagInfoItems.get((Integer) touchView.getTag()).setHeight_scale(height_scale);
-        PictureTagView.Direction direction = ((PictureTagView) touchView).getDirection();
-        if (direction == PictureTagView.Direction.Left) {
-            tagInfoItems.get((Integer) touchView.getTag()).setDirection(0);
-        } else {
-            tagInfoItems.get((Integer) touchView.getTag()).setDirection(1);
+        for (int i = 0; i < tagInfoItems.size(); i++) {
+            if (this.getChildAt(i).getTag() == touchView.getTag()) {
+                tagInfoItems.get(i).setWidth_scale(width_scale);
+                tagInfoItems.get(i).setHeight_scale(height_scale);
+                PictureTagView.Direction direction = ((PictureTagView) touchView).getDirection();
+                if (direction == PictureTagView.Direction.Left) {
+                    tagInfoItems.get(i).setDirection(0);
+                } else {
+                    tagInfoItems.get(i).setDirection(1);
+                }
+            }
         }
     }
 

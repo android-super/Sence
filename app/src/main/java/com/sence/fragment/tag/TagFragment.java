@@ -182,6 +182,7 @@ public class TagFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 goodSheet.dismiss();
+                tag_layout.deleteItem();
             }
         });
         save.setOnClickListener(new View.OnClickListener() {

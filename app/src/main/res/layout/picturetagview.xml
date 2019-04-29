@@ -3,7 +3,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:gravity="center_vertical"
-              android:orientation="horizontal" >
+              android:orientation="horizontal">
 
     <LinearLayout
             android:id="@+id/loTag"
@@ -11,7 +11,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
-            android:background="@drawable/note_tag_you" >
+            android:background="@drawable/note_tag_you">
 
         <TextView
                 android:id="@+id/tvPictureTagLabel"
@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="7dp"
                 android:background="@drawable/note_biaoqian"
-                android:visibility="visible" />
+                android:visibility="visible"/>
     </LinearLayout>
 
 </LinearLayout>
