@@ -160,6 +160,8 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
     RelativeLayout rlLayoutShopdetails;
     @BindView(R.id.content_loading_shopdetails)
     ImageView contentLoadingShopdetails;
+    @BindView(R.id.tv_allcomment_shopdetails)
+    TextView tvAllcommentShopdetails;
 
     private ShopDetailsImgAdapter shopDetailsImgAdapter;
     private WebSettings settings;
@@ -354,6 +356,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                     tvTimeshopShopdetails.setText(o.getComment().getAddtime());
                     tvLikenumshopShopdetails.setText(o.getComment().getPraise());
                 } else {
+                    tvAllcommentShopdetails.setVisibility(View.GONE);
                     llLayoutShopdetails.setVisibility(View.GONE);
                 }
                 numShop = Integer.parseInt(o.getCartNum());
@@ -531,7 +534,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
     }
 
 
-    @OnClick({R.id.tv_addshop_shopdetails, R.id.ll_infolayout_shopdetails, R.id.tv_buy_shopdetails, R.id.ll_service_shopdetails, R.id.ll_shop_shopdetails})
+    @OnClick({R.id.iv_imgshopimg_shopdetails,R.id.tv_allcomment_shopdetails,R.id.tv_addshop_shopdetails, R.id.ll_infolayout_shopdetails, R.id.tv_buy_shopdetails, R.id.ll_service_shopdetails, R.id.ll_shop_shopdetails})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_addshop_shopdetails:
@@ -539,7 +542,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                     startActivity(new Intent(ShopDetailsActivity.this, LoginActivity.class));
                     return;
                 }
-                if("2".equals(bean.getStatus())){
+                if ("2".equals(bean.getStatus())) {
                     ToastUtils.showShort("该商品已下架");
                     return;
                 }
@@ -547,12 +550,28 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                 popupWindow.showAtLocation(contentView, Gravity.BOTTOM, 0, 0);
                 isAddShop = true;
                 break;
+            case R.id.iv_imgshopimg_shopdetails:
+                Intent intent = new Intent(ShopDetailsActivity.this, ImgFlexActivity.class);
+                intent.putExtra("img", bean.getComment().getImgs().get(0));
+                startActivity(intent);
+                break;
+            case R.id.tv_allcomment_shopdetails:
+                Intent intentCommend = new Intent(ShopDetailsActivity.this, ShopCommendActivity.class);
+                intentCommend.putExtra("id", bean.getId());
+                intentCommend.putExtra("num", bean.getCartNum());
+                intentCommend.putExtra("postage", bean.getPostage());
+                intentCommend.putExtra("price", bean.getPrice());
+                intentCommend.putExtra("name", bean.getName());
+                intentCommend.putExtra("img", bean.getImg());
+                intentCommend.putExtra("username", bean.getUsername());
+                startActivity(intentCommend);
+                break;
             case R.id.tv_buy_shopdetails:
                 if (!LoginStatus.isLogin() || LoginStatus.getUid().isEmpty()) {
                     startActivity(new Intent(ShopDetailsActivity.this, LoginActivity.class));
                     return;
                 }
-                if("2".equals(bean.getStatus())){
+                if ("2".equals(bean.getStatus())) {
                     ToastUtils.showShort("该商品已下架");
                     return;
                 }
@@ -577,9 +596,9 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                     startActivity(new Intent(ShopDetailsActivity.this, LoginActivity.class));
                     return;
                 }
-                Intent intent = new Intent(ShopDetailsActivity.this, MainActivity.class);
-                intent.putExtra("type", 3);
-                startActivity(intent);
+                Intent intentMain = new Intent(ShopDetailsActivity.this, MainActivity.class);
+                intentMain.putExtra("type", 3);
+                startActivity(intentMain);
                 break;
             case R.id.ll_infolayout_shopdetails:
                 Intent intentInfo = new Intent(ShopDetailsActivity.this, MyInfoActivity.class);
@@ -657,7 +676,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                     numAddShop++;
                     mNum.setText(numAddShop + "");
                 } else {
-                    ToastUtils.showShort("单件商品最多添加十件");
+                    ToastUtils.showShort("添加数量达到上限");
                 }
                 break;
             case R.id.bt_buyshop_confirm:
@@ -671,7 +690,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                 intentBuy.putExtra("id", bean.getId());
                 intentBuy.putExtra("num", mNum.getText().toString());
                 intentBuy.putExtra("postage", bean.getPostage());
-                if ("0".equals(bean.getVprice())) {
+                if ("0".equals(bean.getIsMember())) {
                     intentBuy.putExtra("price", bean.getPrice());
                 } else {
                     intentBuy.putExtra("price", bean.getVprice());

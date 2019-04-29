@@ -66,6 +66,7 @@ public class MyOrderActivity extends BaseActivity {
         vpContentMyorder.setAdapter(mMyOrderViewPagerAdatpter);
         tlTitleMyorder.setupWithViewPager(vpContentMyorder);
         vpContentMyorder.setCurrentItem(type);
+        tlTitleMyorder.setTabTextColors(Color.parseColor("#050505"),Color.parseColor("#16a5af"));
         vpContentMyorder.setOffscreenPageLimit(5);
 
     }

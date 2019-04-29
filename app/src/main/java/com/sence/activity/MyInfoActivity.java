@@ -25,6 +25,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.tabs.TabLayout;
 import com.orhanobut.logger.Logger;
+import com.sence.LoginActivity;
 import com.sence.R;
 import com.sence.activity.chat.ui.ChatMsgActivity;
 import com.sence.activity.chat.ui.ChatMsgGroupActivity;
@@ -110,7 +111,8 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     private RelativeLayout mShop;
     private ImageView mHead;
     private NiceImageView mIsV;
-    private boolean recommendShow, noteShow;
+    private boolean recommendShow = true;
+    private  boolean noteShow = true;
     private MyInfoRecommendViewPagerAdatpter mMyInfoRecommendViewPagerAdatpter;
     private String[] list = {"推荐", "笔记", "共享"};
     private int scaleRatio;
@@ -162,12 +164,6 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(myInfoShopListAdapter);
-        findViewById(R.id.rl_num_myinfo).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MyInfoActivity.this, MyFansFocusNoteActivity.class));
-            }
-        });
         mImageView = findViewById(R.id.iv_imgico_myinfo);
         mViewPager = findViewById(R.id.vp_content_myinfo);
         layout = findViewById(R.id.v_layout_myinfo);
@@ -453,6 +449,10 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_focus_myinfo:
+                if (TextUtils.isEmpty(LoginStatus.getUid())) {
+                    startActivity(new Intent(MyInfoActivity.this, LoginActivity.class));
+                    return;
+                }
                 if ("1".equals(is_focus)) {
                     cancelFocus();
                 } else {
@@ -461,6 +461,10 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
 
                 break;
             case R.id.iv_chat_myinfo:
+                if (TextUtils.isEmpty(LoginStatus.getUid())) {
+                    startActivity(new Intent(MyInfoActivity.this, LoginActivity.class));
+                    return;
+                }
                 Intent intentchat = new Intent(MyInfoActivity.this, ChatMsgActivity.class);
                 intentchat.putExtra("u_to", bean.getUid());
                 intentchat.putExtra("chat_id", "");
@@ -468,11 +472,18 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 startActivity(intentchat);
                 break;
             case R.id.iv_edit_myinfo:
+                if (TextUtils.isEmpty(LoginStatus.getUid())) {
+                    startActivity(new Intent(MyInfoActivity.this, LoginActivity.class));
+                    return;
+                }
                 Intent intentEdit = new Intent(MyInfoActivity.this, EditInfoActivity.class);
-
                 startActivity(intentEdit);
                 break;
             case R.id.iv_groupchat_myinfo:
+                if (TextUtils.isEmpty(LoginStatus.getUid())) {
+                    startActivity(new Intent(MyInfoActivity.this, LoginActivity.class));
+                    return;
+                }
                 Intent intent = new Intent(MyInfoActivity.this, ChatMsgGroupActivity.class);
                 intent.putExtra("v_id", bean.getVid());
                 startActivity(intent);
@@ -669,6 +680,10 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
 
     @OnClick(R.id.iv_share_myinfo)
     public void onViewClicked() {
+        if (TextUtils.isEmpty(LoginStatus.getUid())) {
+            startActivity(new Intent(MyInfoActivity.this, LoginActivity.class));
+            return;
+        }
         if ("0".equals(type)) {
             mType.setText("拉黑");
         } else {
@@ -679,11 +694,6 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
 
     public void setIsShow(boolean isShow) {
         noteShow = isShow;
-        if (noteShow) {
-            ivNotimgMyinfo.setVisibility(View.VISIBLE);
-        } else {
-            ivNotimgMyinfo.setVisibility(View.GONE);
-        }
     }
 
     public void setRecommendShowImg(boolean isShow) {

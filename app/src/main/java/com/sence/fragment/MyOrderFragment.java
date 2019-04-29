@@ -468,6 +468,7 @@ public class MyOrderFragment extends Fragment implements View.OnClickListener {
     }
 
     public void reresh() {
+        page=1;
         loadData(true);
     }
 }

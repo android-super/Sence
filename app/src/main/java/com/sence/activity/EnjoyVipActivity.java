@@ -116,7 +116,8 @@ public class EnjoyVipActivity extends BaseActivity {
             Resources resources = getResources();
             DisplayMetrics dm = resources.getDisplayMetrics();
             int screenHeight = dm.heightPixels;
-            int height = screenHeight - y-30;
+            int heightlayout = tvLayoutEnjoyvip.getHeight();
+            int height = screenHeight - y - heightlayout - 40 ;
             RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) ivNotimgEnjoyvip.getLayoutParams();
             layoutParams.height = height;
             ivNotimgEnjoyvip.setLayoutParams(layoutParams);
@@ -126,6 +127,7 @@ public class EnjoyVipActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        page=1;
         list.clear();
     }
 

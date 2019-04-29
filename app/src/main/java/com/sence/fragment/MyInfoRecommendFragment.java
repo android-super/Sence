@@ -120,7 +120,6 @@ public class MyInfoRecommendFragment extends Fragment {
                 }else if("1".equals(type)){
                     listNote.clear();
                 }
-
                 doHttp();
             }
         });
@@ -131,6 +130,7 @@ public class MyInfoRecommendFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        page=1;
         if("3".equals(type)){
             list.clear();
         }else if("2".equals(type)){
@@ -138,6 +138,7 @@ public class MyInfoRecommendFragment extends Fragment {
         }else if("1".equals(type)){
             listNote.clear();
         }
+        doHttp();
     }
 
     private void doHttp() {

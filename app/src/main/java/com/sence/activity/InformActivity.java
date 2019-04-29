@@ -88,6 +88,7 @@ public class InformActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        page=1;
         list.clear();
     }
 

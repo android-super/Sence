@@ -1,12 +1,10 @@
 package com.sence.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -96,25 +94,12 @@ public class UserRecommendFragment extends Fragment {
     public void initRefresh() {
         smartRefreshLayout = getView().findViewById(R.id.smart_refresh);
         recyclerView = getView().findViewById(R.id.recycle_view);
-        mImg = getView().findViewById(R.id.iv_img_userrecommend);
         smartRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
         smartRefreshLayout.setRefreshFooter(new ClassicsFooter(getActivity()));
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setNestedScrollingEnabled(true);
-
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mImg.getLayoutParams();
-                //获取当前控件的布局对象
-                Log.i("aaaaaa", dx+"=1="+dy);
-                layoutParams.height=dy;//设置当前控件布局的高度
-                mImg.setLayoutParams(layoutParams);
-            }
-        });
-
-        adapter = new UserRecommendAdapter(R.layout.rv_item_userrecommend);
+        adapter = new UserRecommendAdapter(R.layout.rv_item_recommend);
         recyclerView.setAdapter(adapter);
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
@@ -126,7 +111,6 @@ public class UserRecommendFragment extends Fragment {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 page = 1;
-
                 initData();
             }
         });
@@ -134,7 +118,7 @@ public class UserRecommendFragment extends Fragment {
             @Override
             public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
                 if (view.getId() == R.id.item_support || view.getId() == R.id.item_support_img) {
-                    support(position,adapter.getData().get(position).getNid());
+                    support(position, adapter.getData().get(position).getNid());
 
                 }
             }
@@ -143,11 +127,13 @@ public class UserRecommendFragment extends Fragment {
 
     /**
      * 点赞
+     *
      * @param position
      * @param nid
      */
     public void support(final int position, String nid) {
-        HttpManager.getInstance().PlayNetCode(HttpCode.SUPPORT_NOTE_RECOMMEND, new RNidBean(LoginStatus.getUid(), nid)).request(new ApiCallBack() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.SUPPORT_NOTE_RECOMMEND, new RNidBean(LoginStatus.getUid(),
+                nid)).request(new ApiCallBack() {
             @Override
             public void onFinish() {
 

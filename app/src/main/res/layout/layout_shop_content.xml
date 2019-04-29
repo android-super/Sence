@@ -284,6 +284,21 @@
                 </LinearLayout>
 
             </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:paddingRight="17dp"
+                android:paddingLeft="17dp"
+                android:layout_marginTop="35dp"
+                android:textSize="12sp"
+                android:id="@+id/tv_allcomment_shopdetails"
+                android:textColor="#666666"
+                android:background="@drawable/shape_allcomment_shopdetail_bg"
+                android:layout_marginBottom="23dp"
+                android:layout_gravity="center_horizontal"
+                android:text="查看全部评价"/>
         </LinearLayout>
         <TextView
             android:layout_width="match_parent"

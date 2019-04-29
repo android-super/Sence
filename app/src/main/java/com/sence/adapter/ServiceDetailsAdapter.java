@@ -1,6 +1,7 @@
 package com.sence.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.sence.R;
+import com.sence.activity.MyInfoActivity;
 import com.sence.bean.response.PServiceCommendBean;
 import com.sence.utils.GlideUtils;
 import com.sence.view.NiceImageView;
@@ -53,6 +55,14 @@ public class ServiceDetailsAdapter extends RecyclerView.Adapter<ServiceDetailsAd
         holder.mRecyclerView.setAdapter(mServiceDetailsImgAdapter);
         int i = Integer.parseInt(list.get(position).getStar());
         Log.i("aaa",i+"=");
+        holder.mImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, MyInfoActivity.class);
+                intent.putExtra("uid",list.get(position).getUid());
+                context.startActivity(intent);
+            }
+        });
         EnjoyVipImgAdapter mEnjoyVipImgAdapter = new EnjoyVipImgAdapter(context);
         LinearLayoutManager linearLayoutManagero = new LinearLayoutManager(context);
         linearLayoutManagero.setOrientation(linearLayoutManagero.HORIZONTAL);

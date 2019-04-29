@@ -138,6 +138,7 @@ public class ShopCommendActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onResume() {
         super.onResume();
+        page=1;
         beanList.clear();
     }
 

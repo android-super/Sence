@@ -88,7 +88,7 @@ public class ImgFlexActivity extends AppCompatActivity {
                     }
                 });
                 photoView.setScaleType(ImageView.ScaleType.FIT_XY);
-                GlideUtils.getInstance().loadHead( listImg.get(i), photoView);
+                GlideUtils.getInstance().loadNormal( listImg.get(i), photoView);
                 list.add(photoView);
             }
             mImgFlexAdapter.setList(list);
@@ -102,7 +102,7 @@ public class ImgFlexActivity extends AppCompatActivity {
                 }
             });
             photoView.setScaleType(ImageView.ScaleType.FIT_XY);
-            GlideUtils.getInstance().loadHead( img,photoView);
+            GlideUtils.getInstance().loadNormal( img,photoView);
             List<PhotoView> list = new ArrayList<>();
             list.add(photoView);
             mImgFlexAdapter.setList(list);

@@ -62,11 +62,9 @@ public class UserNoteFragment extends Fragment {
         initData();
     }
 
-
     public void initRefresh() {
         smartRefreshLayout = getView().findViewById(R.id.smart_refresh);
         recyclerView = getView().findViewById(R.id.recycle_view);
-        mImg = getView().findViewById(R.id.iv_img_usernote);
         smartRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
         smartRefreshLayout.setRefreshFooter(new ClassicsFooter(getActivity()));
         StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(2,
@@ -99,7 +97,6 @@ public class UserNoteFragment extends Fragment {
             }
         });
     }
-
     /**
      * 点赞
      *
@@ -135,7 +132,6 @@ public class UserNoteFragment extends Fragment {
         });
 
     }
-
     private void initData() {
         HttpManager.getInstance().PlayNetCode(HttpCode.USER_INFO_DATA, new RMyInfoBean(LoginStatus.getUid(),type,uid,page+"","10")).request(new ApiCallBack<PMyInfoBean>() {
             @Override

@@ -41,6 +41,7 @@ public class ShopCommendImgAdapter extends RecyclerView.Adapter<ShopCommendImgAd
     @Override
     public void onBindViewHolder(@NonNull final ShopCommendImgAdapter.ViewHolder holder, final int position) {
         GlideUtils.getInstance().loadNormal( list.get(position),holder.mImageView);
+
         holder.mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -63,11 +63,12 @@
                                 android:layout_alignParentRight="true"
                                 android:layout_marginRight="25dp"
                                 android:layout_marginTop="88dp"
-                                android:scaleType="centerCrop"
+                                android:scaleType="center"
                                 android:src="@drawable/hint_img"
+                                app:is_circle="true"
                                 app:border_width="1dp"
                                 app:is_cover_src="true"
-                                app:is_circle="true"/>
+                                />
 
                             <LinearLayout
                                 android:id="@+id/ll_group_myinfo"
@@ -148,7 +149,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/tv_address_myinfo"
                                 android:layout_marginTop="15dp">
-
                                 <TextView
                                     android:id="@+id/tv_focus_myinfo"
                                     android:layout_width="wrap_content"

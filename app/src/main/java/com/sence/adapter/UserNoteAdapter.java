@@ -38,18 +38,22 @@ public class UserNoteAdapter extends BaseQuickAdapter<PMyInfoBean.ListBean, Base
         final NiceImageView item_head = helper.getView(R.id.item_head);
         GlideUtils.getInstance().loadHead(item.getAvatar(), item_head);
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) item_img.getLayoutParams();
-        layoutParams.height = ConvertUtils.dp2px(item.getHeight()) / 2;
+        if (item.getHeight() > (1030 / 2)) {
+            layoutParams.height = ConvertUtils.dp2px(1030 / 4);
+        } else {
+            layoutParams.height = ConvertUtils.dp2px(item.getHeight()) / 2;
+        }
         GlideUtils.getInstance().loadNormal(item.getAlbum_url(), item_img);
         helper.setText(R.id.item_describe, item.getContent());
         helper.setText(R.id.item_name, item.getNick_name());
         TextView item_support = helper.getView(R.id.item_support);
         item_support.setText(item.getPraise_count());
-        if ("1".equals(item.getIs_like())) {
-            item_support.setTextColor(Color.parseColor("#16a5af"));
+        if (item.getIs_like().equals("1")) {
             item_support.setSelected(true);
+            item_support.setTextColor(Color.parseColor("#16a5af"));
         } else {
-            item_support.setTextColor(Color.parseColor("#666666"));
             item_support.setSelected(false);
+            item_support.setTextColor(Color.parseColor("#5f5f5f"));
         }
         if (item.getNote_type().equals("1")) {
             helper.setGone(R.id.item_video, false);

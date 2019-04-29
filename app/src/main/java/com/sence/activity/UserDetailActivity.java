@@ -109,6 +109,7 @@ public class UserDetailActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        page=1;
         listBean.clear();
     }
 

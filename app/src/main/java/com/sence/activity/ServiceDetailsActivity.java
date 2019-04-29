@@ -130,6 +130,14 @@ public class ServiceDetailsActivity extends BaseActivity {
 
             }
         });
+        ivUserimgServicedetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ServiceDetailsActivity.this, MyInfoActivity.class);
+                intent.putExtra("uid",bean.getSid());
+                startActivity(intent);
+            }
+        });
         srlLayoutServicedetails.setRefreshHeader(new ClassicsHeader(ServiceDetailsActivity.this));
         srlLayoutServicedetails.setRefreshFooter(new ClassicsFooter(ServiceDetailsActivity.this));
         srlLayoutServicedetails.setEnableLoadMoreWhenContentNotFull(false);
@@ -158,6 +166,7 @@ public class ServiceDetailsActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        page=1;
         list.clear();
     }
 

@@ -15,6 +15,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.orhanobut.logger.Logger;
 import com.sence.LoginActivity;
 import com.sence.R;
+import com.sence.activity.ImgFlexActivity;
 import com.sence.bean.request.RShopDetailsBean;
 import com.sence.bean.response.PShopCommendBean;
 import com.sence.net.HttpCode;
@@ -64,6 +65,14 @@ public class ShopCommendAdapter extends RecyclerView.Adapter<ShopCommendAdapter.
         holder.mName.setText(list.get(position).getNickname());
         holder.mTime.setText(list.get(position).getAddtime());
         holder.mLikeNum.setText(list.get(position).getPraise());
+        holder.mImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ImgFlexActivity.class);
+                intent.putExtra("img",list.get(position).getImgs().get(0));
+                context.startActivity(intent);
+            }
+        });
         if(list.get(position).getImgs().size()>0){
             if(list.get(position).getImgs().size()==1){
                 holder.mImg.setVisibility(View.VISIBLE);

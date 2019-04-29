@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -37,18 +38,19 @@ public class UserRecommendAdapter extends BaseQuickAdapter<PMyInfoBean.ListBean,
         helper.setText(R.id.item_title, item.getTitle());
         helper.setText(R.id.item_content, item.getDescribe());
         helper.setText(R.id.item_name, item.getNick_name());
-        if (item.getIs_kol().equals("1")) {
+        if ("1".equals(item.getIs_kol())) {
             helper.setGone(R.id.item_tag, true);
         } else {
             helper.setGone(R.id.item_tag, false);
         }
         ImageView item_support_img = helper.getView(R.id.item_support_img);
+        TextView item_support = helper.getView(R.id.item_support);
         if (item.getIs_like().equals("1")) {
-            helper.setTextColor(R.id.item_support, Color.parseColor("#16a5af"));
             item_support_img.setSelected(true);
+            item_support.setTextColor(Color.parseColor("#16a5af"));
         } else {
-            helper.setTextColor(R.id.item_support, Color.parseColor("#666666"));
             item_support_img.setSelected(false);
+            item_support.setTextColor(Color.parseColor("#666666"));
         }
         helper.setText(R.id.item_support, item.getPraise_count());
         helper.setText(R.id.item_comment, item.getMessage_count());

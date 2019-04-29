@@ -5,11 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -19,17 +14,13 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sence.R;
 import com.sence.adapter.RecommendAdapter;
-import com.sence.bean.request.RContentDetailBean;
 import com.sence.bean.request.RNidBean;
 import com.sence.bean.request.RUidListBean;
 import com.sence.bean.response.PMainBean;
-import com.sence.bean.response.PMainRecommendBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.LoginStatus;
-
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -41,7 +32,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * 推荐Fragment
  */
 public class RecommendFragment extends Fragment {
-    private SmartRefreshLayout smartRefreshLayout;
+       private SmartRefreshLayout smartRefreshLayout;
     private RecyclerView recyclerView;
 
     private RecommendAdapter adapter;
