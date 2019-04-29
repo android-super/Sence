@@ -49,6 +49,9 @@ public class EnjoyVipAdapter extends RecyclerView.Adapter<EnjoyVipAdapter.ViewHo
             holder.mTlaber.setVisibility(View.GONE);
         }
         holder.mNum.setText("体验 "+list.get(position).getNum()+"次");
+        if("0".equals(list.get(position).getNum())){
+            holder.mNum.setVisibility(View.GONE);
+        }
         EnjoyVipImgAdapter enjoyVipImgAdapter = new EnjoyVipImgAdapter(context);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);

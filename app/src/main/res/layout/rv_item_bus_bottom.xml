@@ -5,7 +5,8 @@
               android:layout_width="match_parent"
               android:id="@+id/item"
               android:background="@drawable/shape_bus_bottom"
-              android:layout_height="265dp">
+              android:layout_height="wrap_content"
+              android:minHeight="265dp">
 
     <com.sence.view.NiceImageView
             android:id="@+id/item_img"

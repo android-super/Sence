@@ -209,19 +209,21 @@
                         <View
                             android:id="@+id/v_layout_myinfo"
                             android:layout_width="match_parent"
-                            android:layout_height="25dp"
+                            android:layout_height="20dp"
                             android:layout_alignParentBottom="true"></View>
 
                     </RelativeLayout>
                     <RelativeLayout
                         android:id="@+id/rl_shop_myinfo"
                         android:layout_width="match_parent"
-                        android:layout_height="90dp"
+                        android:layout_height="wrap_content"
+                        android:minHeight="90dp"
                         android:layout_marginTop="-25dp"
                         android:layout_below="@+id/rl_head_myinfo">
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="90dp"
+                            android:layout_height="wrap_content"
+                            android:minHeight="90dp"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginLeft="@dimen/dp_10"
                             android:layout_marginRight="@dimen/dp_10"
@@ -236,8 +238,7 @@
                                 android:layout_height="60dp"
                                 android:layout_marginLeft="@dimen/dp_10"
                                 android:layout_marginRight="@dimen/dp_10"
-                                android:layout_marginTop="8dp"
-                                android:layout_marginBottom="8dp"
+                                android:layout_gravity="center_vertical"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/hint_img"
                                 app:corner_radius="3dp"/>
