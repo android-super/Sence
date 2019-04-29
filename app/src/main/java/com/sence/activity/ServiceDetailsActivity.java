@@ -92,10 +92,6 @@ public class ServiceDetailsActivity extends BaseActivity {
         StatusBarUtil.setLightMode(this);
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
-        boolean isSelf = intent.getBooleanExtra("isSelf", false);
-        if (!isSelf) {
-            ptPubTitle.setRightImg(0);
-        }
         mServiceDetailsAdapter = new ServiceDetailsAdapter(ServiceDetailsActivity.this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ServiceDetailsActivity.this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -104,9 +100,9 @@ public class ServiceDetailsActivity extends BaseActivity {
         ptPubTitle.setRightOnClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if ("0".equals(bean.getIsEvaluate())) {
-//                    return;
-//                }
+                if ("0".equals(bean.getIsEvaluate())) {
+                    return;
+                }
                 Intent intent = new Intent(ServiceDetailsActivity.this, ServiceCommentActivity.class);
                 intent.putExtra("id", bean.getId());
                 startActivity(intent);
@@ -207,6 +203,9 @@ public class ServiceDetailsActivity extends BaseActivity {
                 bean = o;
                 if (o.getImgs().size() > 0) {
                     tvImgnumServicedetails.setText("1/" + o.getImgs().size());
+                }
+                if ("0".equals(o.getIsEvaluate())) {
+                    ptPubTitle.setRightImg(0);
                 }
                 List<ImageView> list = new ArrayList<>();
                 for (int i = 0; i < o.getImgs().size(); i++) {
