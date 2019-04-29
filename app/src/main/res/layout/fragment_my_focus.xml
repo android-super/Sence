@@ -32,6 +32,7 @@
                     android:layout_width="match_parent"
                     android:hint="搜索"
                     android:textSize="13sp"
+                    android:singleLine="true"
                     android:layout_marginRight="35dp"
                     android:background="@android:color/transparent"
                     android:layout_marginLeft="5dp"
@@ -39,6 +40,7 @@
                     android:textColor="#c2c2c2"
                     android:layout_height="match_parent"/>
         </LinearLayout>
+
 
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycle_view"

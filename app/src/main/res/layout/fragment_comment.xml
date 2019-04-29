@@ -42,6 +42,7 @@
                 android:textColor="#84cfd0"
                 android:drawablePadding="3dp"
                 android:textSize="12sp"
+                android:visibility="gone"
                 android:drawableLeft="@drawable/content_xiepinglun"
                 android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"

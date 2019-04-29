@@ -70,12 +70,12 @@ public class EditInfoActivity extends BaseActivity implements View.OnClickListen
         editGirl.setOnClickListener(this);
         editBoy.setOnClickListener(this);
 
-        GlideUtils.getInstance().loadHead(LoginStatus.getAvatar(),editHead);
+        GlideUtils.getInstance().loadHead(LoginStatus.getAvatar(), editHead);
         editName.setText(LoginStatus.getName());
-        if (LoginStatus.getSex().equals("男")){
+        if (LoginStatus.getSex().equals("男")) {
             editBoy.setSelected(true);
             editGirl.setSelected(false);
-        }else{
+        } else {
             editBoy.setSelected(false);
             editGirl.setSelected(true);
         }
@@ -154,7 +154,7 @@ public class EditInfoActivity extends BaseActivity implements View.OnClickListen
                         Bitmap bitmap = BitmapUtils.getSmallBitmap(selectList.get(0).getCompressPath());
                         head = BitmapUtils.Bitmap2File(bitmap, getPackageName(), 100);
                         PChatMessageBean.MessageBean bean = new PChatMessageBean.MessageBean();
-                        bean.setContent(selectList.get(0).getCompressPath());
+                        bean.setImg(selectList.get(0).getCompressPath());
                         bean.setType(2);
                         EventBus.getDefault().post(bean);
                     }

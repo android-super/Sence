@@ -36,6 +36,9 @@ public class MyAccountActivity extends BaseActivity implements View.OnClickListe
     @BindView(R.id.account_card)
     TextView accountCard;
 
+    private String money;
+    private String poundage;
+
     public void initData() {
         HttpManager.getInstance().PlayNetCode(HttpCode.USER_ACCOUNT, new RUidBean(LoginStatus.getUid())).request(new ApiCallBack<PAccountBean>() {
             @Override
@@ -50,6 +53,8 @@ public class MyAccountActivity extends BaseActivity implements View.OnClickListe
 
             @Override
             public void onSuccess(PAccountBean o, String msg) {
+                money = o.getMoney();
+                poundage = o.getPoundage();
                 accountUsed.setText(o.getMoney());
                 accountBenefit.setText(o.getPartnerIncome());
             }
@@ -84,7 +89,10 @@ public class MyAccountActivity extends BaseActivity implements View.OnClickListe
                 startActivity(new Intent(MyAccountActivity.this, RechargeActivity.class));
                 break;
             case R.id.account_cash:
-                startActivity(new Intent(MyAccountActivity.this, CashActivity.class));
+                Intent intent = new Intent(MyAccountActivity.this, CashActivity.class);
+                intent.putExtra("cash_money",money);
+                intent.putExtra("poundage",poundage);
+                startActivity(intent);
                 break;
             case R.id.account_card:
                 startActivity(new Intent(MyAccountActivity.this, CardActivity.class));

@@ -56,7 +56,7 @@ public class LoginStatus {
 
     public static String getName() {
         String name = SharedPreferencesUtil.getInstance().getString("nick_name");
-        return name == null ? "请登录" : name;
+        return name == null ? "未登录" : name;
     }
 
     public static String getPayType() {

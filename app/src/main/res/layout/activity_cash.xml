@@ -17,6 +17,7 @@
             android:layout_height="45dp"/>
 
     <TextView
+            android:id="@+id/cash_money"
             android:layout_width="match_parent"
             android:layout_height="28dp"
             android:background="#fdf0d8"
@@ -48,6 +49,7 @@
                 android:layout_marginRight="15dp"
                 android:textSize="14sp"
                 android:textColor="#333333"
+                android:inputType="number"
                 android:background="@android:color/transparent"
                 android:layout_alignParentRight="true"
                 android:gravity="center_vertical|right"
@@ -106,21 +108,32 @@
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
-
+        <ImageView
+                android:id="@+id/cash_back"
+                android:src="@drawable/card_zhankai"
+                android:layout_alignParentRight="true"
+                android:layout_width="40dp"
+                android:scaleType="center"
+                android:layout_height="55dp"/>
         <TextView
                 android:id="@+id/cash_select"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:minWidth="150dp"
-                android:layout_marginRight="15dp"
                 android:textSize="14sp"
+                android:layout_toLeftOf="@id/cash_back"
                 android:textColor="#333333"
                 android:background="@android:color/transparent"
-                android:layout_alignParentRight="true"
-                android:drawableRight="@drawable/card_zhankai"
-                android:drawablePadding="8dp"
                 android:gravity="center_vertical|right"
                 android:hint="请添加银行卡"/>
+
+        <com.sence.view.NiceImageView
+                app:is_circle="true"
+                android:id="@+id/cash_img"
+                android:layout_toLeftOf="@id/cash_back"
+                android:layout_centerVertical="true"
+                android:layout_width="35dp"
+                android:layout_height="35dp"/>
 
         <View
                 android:layout_width="match_parent"

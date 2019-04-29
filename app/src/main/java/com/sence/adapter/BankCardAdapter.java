@@ -23,6 +23,5 @@ public class BankCardAdapter extends BaseQuickAdapter<PBankCardBean, BaseViewHol
     protected void convert(BaseViewHolder helper, PBankCardBean item) {
         helper.setText(R.id.item_name, item.getBank_name());
         helper.setText(R.id.item_num, item.getCard_num());
-        GlideUtils.getInstance().loadNormal(item.getBank_img(), (ImageView) helper.getView(R.id.item_img));
     }
 }

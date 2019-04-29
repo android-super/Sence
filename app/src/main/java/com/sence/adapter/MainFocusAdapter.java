@@ -15,6 +15,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sence.R;
 import com.sence.activity.ContentDetailActivity;
+import com.sence.activity.NoteDetailActivity;
+import com.sence.activity.NoteVideoDetailActivity;
 import com.sence.bean.response.PMainBean;
 import com.sence.utils.GlideUtils;
 import com.sence.view.NiceImageView;
@@ -61,9 +63,17 @@ public class MainFocusAdapter extends BaseQuickAdapter<PMainBean.NoteListBean, B
             @Override
             public void onClick(View v) {
                 ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(activity,
-                        item_img, activity.getResources().getString(R.string.translation_recommend_name));
-                Intent intent = new Intent(activity, ContentDetailActivity.class);
+                        item_img,
+                        activity.getResources().getString(R.string.translation_note_name));
+                Intent intent;
+                if (item.getNote_type().equals("1")) {
+                    intent = new Intent(activity, NoteDetailActivity.class);
+                } else {
+                    intent = new Intent(activity, NoteVideoDetailActivity.class);
+                }
                 intent.putExtra("nid", item.getNid());
+                intent.putExtra("width", item.getWidth());
+                intent.putExtra("height", item.getHeight());
                 activity.startActivity(intent, activityOptions.toBundle());
             }
         });

@@ -12,10 +12,7 @@ import com.sence.bean.response.PStartPictureBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
-import com.sence.utils.GlideUtils;
-import com.sence.utils.LoginStatus;
-import com.sence.utils.PermissionUtil;
-import com.sence.utils.StatusBarUtil;
+import com.sence.utils.*;
 
 import java.util.concurrent.TimeUnit;
 
@@ -37,6 +34,9 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        if (NavigationBarUtil.hasNavigationBar(this)) {
+            NavigationBarUtil.initActivity(findViewById(android.R.id.content));
+        }
         StatusBarUtil.setTranslucentForCoordinatorLayout(this, 0);
         StatusBarUtil.setLightMode(this);
         ivPicture = findViewById(R.id.iv_picture);

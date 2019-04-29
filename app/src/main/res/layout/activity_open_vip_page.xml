@@ -42,7 +42,7 @@
         <TextView
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
-                android:text="终于等到您~"
+                android:text="终于等到你~"
                 android:textSize="24sp"
                 android:textColor="#97f2f8"
                 android:layout_width="wrap_content"

@@ -10,8 +10,10 @@ public class Urls {
 
     public static final String true_ip = "http://sence.forhour.com";
     public static final String test_ip = "http://192.168.1.10:8085";
-    public static final String IP_ = "192.168.1.10";//长连接测试
+    public static final String IP_TEST = "192.168.1.10";//长连接测试
+    public static final String IP_TRUE = "60.205.179.160";//长连接测试
     public static final int POST_ = 6681;//端口号
+    public static final String base_ip = isTest ? IP_TEST : IP_TRUE;
     public static final String base_url = isTest ? test_ip : true_ip;
     public static final String SYSTEM_TIME = "/index.php/Api/Base/getServerTime";//获取服务器时间
     public static final String SERVICE_ADDCOMMENT = "/index.php/Api/Serve/evaluateService";//服务评论

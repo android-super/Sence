@@ -2,7 +2,9 @@ package com.sence.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -18,8 +20,11 @@ import com.sence.bean.response.PVerifyCodeBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
+import com.sence.utils.Arith;
+import com.sence.utils.GlideUtils;
 import com.sence.utils.LoginStatus;
 import com.sence.utils.StatusBarUtil;
+import com.sence.view.NiceImageView;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
@@ -47,13 +52,21 @@ public class CashActivity extends BaseActivity implements View.OnClickListener {
     EditText cashVerifyCode;
     @BindView(R.id.cash_commit)
     TextView cashCommit;
+    @BindView(R.id.cash_money)
+    TextView cashMoney;
+    @BindView(R.id.cash_img)
+    NiceImageView cashImg;
 
     private Disposable mDisposable;
 
     private String money;
     private String card_id;
-    private String phone;
+    private String card_phone;
+    private String card_img;
     private String code_id;
+
+    private String cash_money;
+    private String poundage;
 
     @Override
     public int onActLayout() {
@@ -63,19 +76,49 @@ public class CashActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void initView() {
         StatusBarUtil.setLightMode(this);
+        cash_money = this.getIntent().getStringExtra("cash_money");
+        poundage = this.getIntent().getStringExtra("poundage");
         cashSelect.setOnClickListener(this);
         cashVerify.setOnClickListener(this);
         cashCommit.setOnClickListener(this);
+        cashMoney.setText("可提现余额为" + cash_money + "元");
+        cashName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String content_price = s.toString();
+                if (!TextUtils.isEmpty(content_price)) {
+                    if (Float.parseFloat(content_price) > Float.parseFloat(cash_money)) {
+                        content_price = cash_money;
+                        cashName.setText(content_price);
+                    }
+                    float now_price = Float.parseFloat(content_price);
+                    float now_poundage = Float.parseFloat(poundage);
+                    double all_price = Arith.round(Arith.mul(now_price, now_poundage), 2);
+                    cashPrice.setText(all_price + "元");
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.cash_commit:
                 userCash();
                 break;
             case R.id.cash_select:
-                startActivityForResult(new Intent(CashActivity.this,CardActivity.class),BANK_CODE);
+                startActivityForResult(new Intent(CashActivity.this, CardActivity.class), BANK_CODE);
                 break;
             case R.id.cash_verify:
                 sendVerifyCode();
@@ -86,8 +129,11 @@ public class CashActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == BANK_CODE){
+        if (resultCode == BANK_CODE) {
             card_id = data.getStringExtra("card_id");
+            card_phone = data.getStringExtra("card_phone");
+            card_img = data.getStringExtra("card_img");
+            GlideUtils.getInstance().loadNormal(card_img, cashImg);
         }
     }
 
@@ -95,13 +141,22 @@ public class CashActivity extends BaseActivity implements View.OnClickListener {
      * 提现
      */
     public void userCash() {
-        money = cashPrice.getText().toString();
-        if (TextUtils.isEmpty(money)){
+        money = cashName.getText().toString();
+        if (TextUtils.isEmpty(money)) {
             ToastUtils.showShort("请输入提现金额");
             return;
         }
+        if (Integer.parseInt(money) < 100) {
+            ToastUtils.showShort("提现金额不能小于100元");
+            return;
+        }
+        String cash_verify_code = cashVerifyCode.getText().toString();
+        if (TextUtils.isEmpty(cash_verify_code)) {
+            ToastUtils.showShort("验证码不能为空");
+            return;
+        }
         HttpManager.getInstance().PlayNetCode(HttpCode.USER_CASH,
-                new RCashBean(LoginStatus.getUid(), money, card_id)).request(new ApiCallBack() {
+                new RCashBean(LoginStatus.getUid(), money, card_id, code_id, card_phone, cash_verify_code)).request(new ApiCallBack() {
             @Override
             public void onFinish() {
 
@@ -114,7 +169,7 @@ public class CashActivity extends BaseActivity implements View.OnClickListener {
 
             @Override
             public void onSuccess(Object o, String msg) {
-
+                ToastUtils.showShort(o.toString());
             }
         });
     }
@@ -123,7 +178,11 @@ public class CashActivity extends BaseActivity implements View.OnClickListener {
      * 发送验证码
      */
     private void sendVerifyCode() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.SEND_VERIFY_CODE, new RRegisterBean(phone)).request(new ApiCallBack<PVerifyCodeBean>() {
+        if (TextUtils.isEmpty(card_phone)) {
+            ToastUtils.showShort("请选择银行卡");
+            return;
+        }
+        HttpManager.getInstance().PlayNetCode(HttpCode.SEND_VERIFY_CODE, new RRegisterBean(card_phone)).request(new ApiCallBack<PVerifyCodeBean>() {
             @Override
             public void onFinish() {
 
@@ -168,7 +227,7 @@ public class CashActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void onDestroy() {
-        if (mDisposable != null && mDisposable.isDisposed()) {
+        if (mDisposable != null && !mDisposable.isDisposed()) {
             mDisposable.dispose();
         }
         super.onDestroy();

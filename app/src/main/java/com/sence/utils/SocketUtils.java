@@ -119,7 +119,7 @@ public class SocketUtils {
             public void run() {
                 try {
                     // 创建Socket对象 & 指定服务端的IP 及 端口号
-                    InetAddress addr = InetAddress.getByName(Urls.IP_);
+                    InetAddress addr = InetAddress.getByName(Urls.base_ip);
                     socket = new Socket(addr, Urls.POST_);
                     socket.setTcpNoDelay(true);
 

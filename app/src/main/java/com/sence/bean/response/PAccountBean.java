@@ -16,6 +16,7 @@ public class PAccountBean {
     private String uid;
     private String money;
     private String partnerIncome;
+    private String poundage;
 
     public String getUid() {
         return uid;
@@ -39,5 +40,13 @@ public class PAccountBean {
 
     public void setPartnerIncome(String partnerIncome) {
         this.partnerIncome = partnerIncome;
+    }
+
+    public String getPoundage() {
+        return poundage;
+    }
+
+    public void setPoundage(String poundage) {
+        this.poundage = poundage;
     }
 }

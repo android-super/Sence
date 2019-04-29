@@ -88,7 +88,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void initView() {
         StatusBarUtil.setLightMode(this);
-        SocketUtils.getInstance().startSocket();
 
         sheet_content = findViewById(R.id.sheet_content);
         sheet_img = findViewById(R.id.sheet_img);
@@ -121,7 +120,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mains = new LinearLayout[]{mainHome, mainVip, mainKind, mainBus, mainUser};
 
         setSelect(0);
-//        initUpdataApp();
+        initUpdataApp();
     }
 
     private void initUpdataApp() {
@@ -139,7 +138,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
             @Override
             public void onSuccess(PUpDataAppInfo o, String msg) {
-                Logger.e("msg==========" + msg);
                 showUpdateDialog(o);
             }
         });
@@ -167,6 +165,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.sheet_img:
+                    sheet_content.setVisibility(View.GONE);
                     PictureSelector.create(MainActivity.this)
                             .openGallery(PictureMimeType.ofImage())
                             .maxSelectNum(9)
@@ -175,6 +174,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                             .forResult(PictureConfig.CHOOSE_REQUEST);
                     break;
                 case R.id.sheet_video:
+                    sheet_content.setVisibility(View.GONE);
                     PictureSelector.create(MainActivity.this)
                             .openGallery(PictureMimeType.ofVideo())
                             .maxSelectNum(1)

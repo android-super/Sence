@@ -35,4 +35,5 @@ public class WebConstans {
     public static final String WZXQ = "http://www.maysence.com/share/details.html";//文章详情
     public static final String SPXQ = "http://www.maysence.com/share/goods.html";//商品详情
     public static final String GRZL = "http://www.maysence.com/share/datum.html";//个人资料
+    
 }

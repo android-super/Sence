@@ -24,6 +24,7 @@ public class PBankCardBean {
     private String bank_name;
     private String bank_img;
     private String bank_img_two;
+    private String pre_phone;
 
     public String getId() {
         return id;
@@ -79,5 +80,13 @@ public class PBankCardBean {
 
     public void setBank_img_two(String bank_img_two) {
         this.bank_img_two = bank_img_two;
+    }
+
+    public String getPre_phone() {
+        return pre_phone;
+    }
+
+    public void setPre_phone(String pre_phone) {
+        this.pre_phone = pre_phone;
     }
 }

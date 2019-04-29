@@ -63,6 +63,8 @@ public class CardActivity extends BaseActivity {
             public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
                 Intent intent = new Intent();
                 intent.putExtra("card_id", adapter.getData().get(position).getId());
+                intent.putExtra("card_phone",adapter.getData().get(position).getPre_phone());
+                intent.putExtra("card_img",adapter.getData().get(position).getBank_img());
                 setResult(BANK_CODE, intent);
                 finish();
             }

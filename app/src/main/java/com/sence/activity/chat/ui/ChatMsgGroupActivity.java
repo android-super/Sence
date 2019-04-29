@@ -110,6 +110,9 @@ public class ChatMsgGroupActivity extends BaseActivity implements View.OnClickLi
                     bean.setContent(socketBean.getData().getContent());
                     bean.setType(socketBean.getData().getType());
                     bean.setAdd_time(socketBean.getData().getAdd_time());
+                    bean.setUid(socketBean.getData().getUid());
+                    bean.setAvatar(socketBean.getData().getAvatar());
+                    bean.setImg(socketBean.getData().getImg());
                     int currentTime = (int) (System.currentTimeMillis() / 1000);
                     if ((currentTime - lastVisibleTime) / 60 > 10) {
                         lastVisibleTime = currentTime;
@@ -491,10 +494,10 @@ public class ChatMsgGroupActivity extends BaseActivity implements View.OnClickLi
                     holder.getView(R.id.head_right).setVisibility(View.VISIBLE);
                     right_image.setVisibility(View.VISIBLE);
                     holder.getView(R.id.right_layout).setVisibility(View.GONE);
-                    if (!dataBean.getContent().contains("/Public")) {
-                        GlideUtils.getInstance().loadNormal(dataBean.getContent(), right_image, true);
+                    if (!dataBean.getImg().contains("/Public")) {
+                        GlideUtils.getInstance().loadNormal(dataBean.getImg(), right_image, true);
                     } else {
-                        GlideUtils.getInstance().loadNormal(dataBean.getContent(), right_image);
+                        GlideUtils.getInstance().loadNormal(dataBean.getImg(), right_image);
                     }
 
                 } else if (dataBean.getType() == 1) {//1普通文字
@@ -523,7 +526,7 @@ public class ChatMsgGroupActivity extends BaseActivity implements View.OnClickLi
                 if (dataBean.getType() == 2) {//2图片
                     left_image.setVisibility(View.VISIBLE);
                     left_layout.setVisibility(View.GONE);
-                    GlideUtils.getInstance().loadNormal(dataBean.getContent(), left_image);
+                    GlideUtils.getInstance().loadNormal(dataBean.getImg(), left_image);
                 } else if (dataBean.getType() == 1) {//1普通文字
                     left_image.setVisibility(View.GONE);
                     left_layout.setVisibility(View.VISIBLE);

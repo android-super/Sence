@@ -8,12 +8,12 @@
 
     <TextView
             android:text="暂无更多内容"
-            android:textSize="16sp"
+            android:textSize="13sp"
             android:drawableTop="@drawable/main_zanwunei"
-            android:drawablePadding="20dp"
-            android:textColor="#666666"
+            android:drawablePadding="15dp"
+            android:textColor="#cccccc"
             android:gravity="center"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="35dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 </LinearLayout>

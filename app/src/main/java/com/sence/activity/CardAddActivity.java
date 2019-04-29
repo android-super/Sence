@@ -119,6 +119,7 @@ public class CardAddActivity extends BaseActivity implements View.OnClickListene
 
             @Override
             public void onSuccess(Object o, String msg) {
+                ToastUtils.showShort(o.toString());
                 finish();
             }
         });

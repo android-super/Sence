@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -131,6 +132,8 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
                     bean.setContent(socketBean.getData().getContent());
                     bean.setType(socketBean.getData().getType());
                     bean.setAdd_time(socketBean.getData().getAdd_time());
+                    bean.setUid(socketBean.getData().getUid());
+                    bean.setImg(socketBean.getData().getImg());
                     int currentTime = (int) (System.currentTimeMillis() / 1000);
                     if ((currentTime - lastVisibleTime) / 60 > 10) {
                         lastVisibleTime = currentTime;
@@ -199,10 +202,10 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
                     case R.id.left_image://左边大图片
                     case R.id.right_image://右边大图片
                         if (reAdapter.getData().get(position).getType() == 2) {
-                            if (!reAdapter.getData().get(position).getContent().contains("/Public")) {
+                            if (!reAdapter.getData().get(position).getImg().contains("/Public")) {
                                 imgPath = reAdapter.getData().get(position).getContent();
                             } else {
-                                imgPath = Urls.base_url + reAdapter.getData().get(position).getContent();
+                                imgPath = Urls.base_url + reAdapter.getData().get(position).getImg();
                             }
                             int location[] = new int[2];
                             view.getLocationOnScreen(location);
@@ -469,7 +472,7 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
                         Bitmap bitmap = BitmapUtils.getSmallBitmap(selectList.get(0).getCompressPath());
                         imgFile = BitmapUtils.Bitmap2File(bitmap, getPackageName(), 100);
                         PChatPrivateMessageBean bean = new PChatPrivateMessageBean();
-                        bean.setContent(selectList.get(0).getCompressPath());
+                        bean.setImg(selectList.get(0).getCompressPath());
                         bean.setType(2);
                         EventBus.getDefault().post(bean);
                     }
@@ -515,10 +518,13 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
                     holder.getView(R.id.head_right).setVisibility(View.VISIBLE);
                     right_image.setVisibility(View.VISIBLE);
                     holder.getView(R.id.right_layout).setVisibility(View.GONE);
-                    if (!dataBean.getContent().contains("/Public")) {
-                        GlideUtils.getInstance().loadNormal(dataBean.getContent(), right_image, true);
+
+                    if (!dataBean.getImg().contains("/Public")) {
+                        Log.e("TAG", dataBean.getImg() + "=========true");
+                        GlideUtils.getInstance().loadNormal(dataBean.getImg(), right_image, true);
                     } else {
-                        GlideUtils.getInstance().loadNormal(dataBean.getContent(), right_image);
+                        Log.e("TAG", dataBean.getImg() + "=========false");
+                        GlideUtils.getInstance().loadNormal(dataBean.getImg(), right_image);
                     }
 
                 } else if (dataBean.getType() == 1) {//1普通文字
@@ -541,7 +547,7 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
                 if (dataBean.getType() == 2) {//2图片
                     left_image.setVisibility(View.VISIBLE);
                     left_layout.setVisibility(View.GONE);
-                    GlideUtils.getInstance().loadNormal(dataBean.getContent(), left_image);
+                    GlideUtils.getInstance().loadNormal(dataBean.getImg(), left_image);
                 } else if (dataBean.getType() == 1) {//1普通文字
                     left_image.setVisibility(View.GONE);
                     left_layout.setVisibility(View.VISIBLE);

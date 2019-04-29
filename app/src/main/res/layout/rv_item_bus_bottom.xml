@@ -13,7 +13,6 @@
             android:layout_height="172dp"
             app:corner_top_left_radius="6dp"
             app:corner_top_right_radius="6dp"
-            android:src="@drawable/hint_img"
             android:scaleType="centerCrop"
             />
 
@@ -22,7 +21,7 @@
             android:textSize="14sp"
             android:textColor="#666666"
             android:text="@string/hint_name"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:maxLines="2"
@@ -36,7 +35,7 @@
             android:orientation="horizontal"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
-            android:paddingBottom="15dp"
+            android:paddingBottom="10dp"
             android:layout_height="wrap_content">
 
         <TextView

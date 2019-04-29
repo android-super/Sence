@@ -33,30 +33,32 @@ public class PictureShowTagLayout extends RelativeLayout {
 
     private void addItem(int width, int height, double tag_gap) {
         for (int i = 0; i < tagInfoItems.size(); i++) {
-            View view = null;
-            double width_scale = tagInfoItems.get(i).getWidth_scale();
-            double height_scale = tagInfoItems.get(i).getHeight_scale();
-            int direction = tagInfoItems.get(i).getDirection();
-            LayoutParams params =
-                    new LayoutParams(LayoutParams.WRAP_CONTENT,
-                            LayoutParams.WRAP_CONTENT);
-            if (direction == 0) {
-                params.leftMargin = (int) (width_scale * width);
-                view = new PictureTagShowView(getContext(), PictureTagShowView.Direction.Left);
-            } else {
-                params.leftMargin = (int) (width_scale * width);
-                view = new PictureTagShowView(getContext(), PictureTagShowView.Direction.Right);
+            if (!TextUtils.isEmpty(tagInfoItems.get(i).getContent())) {
+                View view = null;
+                double width_scale = tagInfoItems.get(i).getWidth_scale();
+                double height_scale = tagInfoItems.get(i).getHeight_scale();
+                int direction = tagInfoItems.get(i).getDirection();
+                LayoutParams params =
+                        new LayoutParams(LayoutParams.WRAP_CONTENT,
+                                LayoutParams.WRAP_CONTENT);
+                if (direction == 0) {
+                    params.leftMargin = (int) (width_scale * width);
+                    view = new PictureTagShowView(getContext(), PictureTagShowView.Direction.Left);
+                } else {
+                    params.leftMargin = (int) (width_scale * width);
+                    view = new PictureTagShowView(getContext(), PictureTagShowView.Direction.Right);
+                }
+                ((PictureTagShowView) view).setContent(tagInfoItems.get(i).getContent());
+                params.topMargin = (int) (height * height_scale);
+                //上下位置在视图内
+                if (params.topMargin < 0) {
+                    params.topMargin = 0;
+                } else if ((params.topMargin + PictureTagShowView.getViewHeight()) > height) {
+                    params.topMargin = height - PictureTagShowView.getViewHeight();
+                }
+                view.setTag(i);
+                this.addView(view, params);
             }
-            ((PictureTagShowView) view).setContent(tagInfoItems.get(i).getContent());
-            params.topMargin = (int) (height * height_scale);
-            //上下位置在视图内
-            if (params.topMargin < 0) {
-                params.topMargin = 0;
-            } else if ((params.topMargin + PictureTagShowView.getViewHeight()) > height) {
-                params.topMargin = height - PictureTagShowView.getViewHeight();
-            }
-            view.setTag(i);
-            this.addView(view, params);
         }
     }
 }

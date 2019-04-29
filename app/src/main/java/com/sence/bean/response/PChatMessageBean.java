@@ -63,6 +63,7 @@ public class PChatMessageBean {
         private String is_kol;
         private String is_focus;
         private String vid;
+        private String img;
         private boolean isTimeVisible = false;//计算每条消息是否显示时间
 
         public String getId() {
@@ -167,6 +168,14 @@ public class PChatMessageBean {
 
         public void setTimeVisible(boolean timeVisible) {
             isTimeVisible = timeVisible;
+        }
+
+        public String getImg() {
+            return img;
+        }
+
+        public void setImg(String img) {
+            this.img = img;
         }
     }
 }

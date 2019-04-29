@@ -31,12 +31,14 @@ import com.sence.bean.request.RNoteAddImgBean;
 import com.sence.bean.request.RNoteAddVideoBean;
 import com.sence.bean.request.RNoteFileAddBean;
 import com.sence.bean.request.tag.RTagInfo;
+import com.sence.bean.request.tag.RTagInfoItem;
 import com.sence.bean.request.tag.RTagMultiItem;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.*;
 import com.sence.view.GridSpacingItemDecoration;
+import com.sence.view.SuccinctProgress;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -193,11 +195,6 @@ public class CommitTagActivity extends BaseActivity implements View.OnClickListe
 
     public void addTag(boolean is_video) {
         uid = LoginStatus.getUid();
-        content = tagContent.getText().toString();
-        if (TextUtils.isEmpty(content)){
-            ToastUtils.showShort("分享内容不能为空");
-            return;
-        }
         HttpManager httpManager;
         if (is_video) {
             type = "2";
@@ -206,8 +203,6 @@ public class CommitTagActivity extends BaseActivity implements View.OnClickListe
             video_img = BitmapUtils.Bitmap2File(getVideoThumb(adapter.getData().get(0).getLocalMedia().getPath()),
                     getPackageName(), 100);
             video = new File(adapter.getData().get(0).getLocalMedia().getPath());
-            Log.e("TAG",
-                    width + "====" + height + "====" + video_img.getAbsolutePath() + "====" + video.getAbsolutePath());
             httpManager = HttpManager.getInstance().PlayNetCode(HttpCode.NOTE_ADD, new RNoteAddVideoBean(uid, type,
                             content, width + "", height + ""),
                     new RNoteFileAddBean(video, video_img, true));
@@ -215,15 +210,17 @@ public class CommitTagActivity extends BaseActivity implements View.OnClickListe
             type = "1";
             width = ConvertUtils.px2dp(width);
             height = ConvertUtils.px2dp(height);
+            Log.e("TAG", getTagInfo());
             httpManager = HttpManager.getInstance().PlayNetCode(HttpCode.NOTE_ADD, new RNoteAddImgBean(uid, type,
                             content, width + ""
                             , height +
-                            "", tagInfo),
+                            "", getTagInfo()),
                     new RNoteFileAddBean(getImages(), false));
         }
         httpManager.request(new ApiCallBack() {
             @Override
             public void onFinish() {
+                SuccinctProgress.dismiss();
             }
 
             @Override
@@ -237,6 +234,23 @@ public class CommitTagActivity extends BaseActivity implements View.OnClickListe
                 startActivity(intent);
             }
         });
+    }
+
+    public String getTagInfo() {
+        List<RTagInfo> list = new ArrayList<>();
+        for (int i = 0; i < TagUtils.tagInfos.size(); i++) {
+            RTagInfo rTagInfo = TagUtils.tagInfos.get(i);
+            List<RTagInfoItem> rTagInfoItems = rTagInfo.getTagInfoItems();
+            ArrayList<RTagInfoItem> newTagInfoItems = new ArrayList<>();
+            for (int j = 0; j < rTagInfoItems.size(); j++) {
+                if (!TextUtils.isEmpty(rTagInfoItems.get(j).getContent())) {
+                    newTagInfoItems.add(rTagInfoItems.get(j));
+                }
+            }
+            rTagInfo.setTagInfoItems(newTagInfoItems);
+            list.add(rTagInfo);
+        }
+        return JsonParseUtil.toJson(list);
     }
 
 
@@ -254,6 +268,14 @@ public class CommitTagActivity extends BaseActivity implements View.OnClickListe
                 finish();
                 break;
             case R.id.tag_next:
+                content = tagContent.getText().toString();
+                if (TextUtils.isEmpty(content)) {
+                    ToastUtils.showShort("分享内容不能为空");
+                    return;
+                }
+                content = filterCharToNormal(content);
+                SuccinctProgress.showSuccinctProgress(CommitTagActivity.this, "", SuccinctProgress.THEME_LINE, false,
+                        true);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -264,6 +286,28 @@ public class CommitTagActivity extends BaseActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * 过滤表情符号
+     *
+     * @param oldString
+     * @return
+     */
+    public static String filterCharToNormal(String oldString) {
+        StringBuilder stringBuilder = new StringBuilder();
+        int length = oldString.length();
+        for (int i = 0; i < length; i++) {//遍历传入的String的所有字符
+            char codePoint = oldString.charAt(i);
+            if (//如果当前字符为常规字符,则将该字符拼入StringBuilder
+                    ((codePoint >= 0x4e00) && (codePoint <= 0x9fa5)) ||//表示汉字区间
+                            ((codePoint >= 0x30) && (codePoint <= 0x39)) ||//表示数字区间
+                            ((codePoint >= 0x41) && (codePoint <= 0x5a)) ||//表示大写字母区间
+                            ((codePoint >= 0x61) && (codePoint <= 0x7a))) {//小写字母区间
+                stringBuilder.append(codePoint);
+            } else {//如果当前字符为非常规字符,则忽略掉该字符
+            }
+        }
+        return stringBuilder.toString();
+    }
 
     @Override
     public void onActivityResult(int req, int res, Intent data) {

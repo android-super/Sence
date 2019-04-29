@@ -8,9 +8,9 @@ import com.sence.bean.base.BaseRequestBean;
  * 描述:SenceGit
  */
 public class RUtoBean extends BaseRequestBean {
-    public RUtoBean(String uid, String u_to) {
+    public RUtoBean(String uid, String to_uid) {
         this.uid = uid;
-        this.u_to = u_to;
+        this.to_uid = to_uid;
     }
 
     public String getUid() {
@@ -22,13 +22,13 @@ public class RUtoBean extends BaseRequestBean {
     }
 
     private String uid;
-    private String u_to;
+    private String to_uid;
 
-    public String getU_to() {
-        return u_to;
+    public String getTo_uid() {
+        return to_uid;
     }
 
-    public void setU_to(String u_to) {
-        this.u_to = u_to;
+    public void setTo_uid(String to_uid) {
+        this.to_uid = to_uid;
     }
 }

@@ -8,10 +8,14 @@ import com.sence.bean.base.BaseRequestBean;
  * 描述:SenceGit
  */
 public class RCashBean extends BaseRequestBean {
-    public RCashBean(String uid, String money, String bank_id) {
+
+    public RCashBean(String uid, String money, String bank_id, String code_id, String user_name, String code_num) {
         this.uid = uid;
         this.money = money;
         this.bank_id = bank_id;
+        this.code_id = code_id;
+        this.user_name = user_name;
+        this.code_num = code_num;
     }
 
     public String getUid() {
@@ -41,4 +45,31 @@ public class RCashBean extends BaseRequestBean {
     private String uid;
     private String money;
     private String bank_id;
+    private String code_id;
+    private String user_name;
+    private String code_num;
+
+    public String getCode_id() {
+        return code_id;
+    }
+
+    public void setCode_id(String code_id) {
+        this.code_id = code_id;
+    }
+
+    public String getUser_name() {
+        return user_name;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
+    }
+
+    public String getCode_num() {
+        return code_num;
+    }
+
+    public void setCode_num(String code_num) {
+        this.code_num = code_num;
+    }
 }
