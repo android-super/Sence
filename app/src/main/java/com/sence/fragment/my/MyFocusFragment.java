@@ -27,6 +27,7 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sence.R;
 import com.sence.activity.MyFansFocusNoteActivity;
+import com.sence.activity.MyInfoActivity;
 import com.sence.activity.SearchActivity;
 import com.sence.adapter.FansAdapter;
 import com.sence.adapter.SearchFriendAdapter;
@@ -104,6 +105,14 @@ public class MyFocusFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
 
+            }
+        });
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
+                Intent intent = new Intent(getActivity(), MyInfoActivity.class);
+                intent.putExtra("uid",adapter.getData().get(position).getUid());
+                startActivity(intent);
             }
         });
         adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {

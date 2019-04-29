@@ -8,7 +8,7 @@ package com.sence.net;
 public class Urls {
     public static boolean isTest = false;
 
-    public static final String true_ip = "http://sence.forhour.com";
+    public static final String true_ip = "";
     public static final String test_ip = "http://192.168.1.10:8085";
     public static final String IP_ = "192.168.1.10";//长连接测试
     public static final int POST_ = 6681;//端口号
@@ -49,7 +49,7 @@ public class Urls {
     public static final String USER_PW_CHANGE = "/index.php/Api/mine/editLoginPwd";//修改登录密码，忘记密码
     public static final String USER_INFO = "/index.php/Api/mine/mine";//我的
     public static final String USER_AUTH = "/index.php/Api/User/realNameAuth";//添加银行卡，实名认证
-    public static final String USER_IS_REGISTER = "/index.php/Api/User/isRegister";//用户是否注册
+    public static final String USER_IS_REGISTER = "/index.php/Api/mine/checkPhoneNum";//用户是否注册
     public static final String USER_SEND_CODE = "/index.php/Api/User/makeCode";//发送验证码
     public static final String USER_LOGIN = "/index.php/Api/User/weChatLogin";//用户登录
     public static final String USER_SIGN_UP = "/index.php/Api/User/weChatSignUp";//用户注册

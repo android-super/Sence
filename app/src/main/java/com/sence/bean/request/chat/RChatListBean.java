@@ -8,9 +8,9 @@ import com.sence.bean.base.BaseRequestBean;
  * 描述:SenceGit
  */
 public class RChatListBean extends BaseRequestBean {
-    public RChatListBean(String uid, String u_to, String page) {
+    public RChatListBean(String uid, String to_uid, String page) {
         this.uid = uid;
-        this.u_to = u_to;
+        this.to_uid = to_uid;
         this.page = page;
         this.pagesize = "10";
     }
@@ -24,13 +24,6 @@ public class RChatListBean extends BaseRequestBean {
     }
 
 
-    public String getU_to() {
-        return u_to;
-    }
-
-    public void setU_to(String u_to) {
-        this.u_to = u_to;
-    }
 
     public String getPage() {
         return page;
@@ -49,7 +42,15 @@ public class RChatListBean extends BaseRequestBean {
     }
 
     private String uid;
-    private String u_to;
+    private String to_uid;
     private String page;
     private String pagesize;
+
+    public String getTo_uid() {
+        return to_uid;
+    }
+
+    public void setTo_uid(String to_uid) {
+        this.to_uid = to_uid;
+    }
 }

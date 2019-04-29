@@ -26,7 +26,7 @@ public interface HttpService {
 
     @FormUrlEncoded
     @POST(Urls.USER_IS_REGISTER)
-    Observable<BaseResponseBean<String>> IsRegister(@FieldMap Map<String, Object> map);//用户是否注册
+    Observable<BaseResponseBean<Object>> IsRegister(@FieldMap Map<String, Object> map);//用户是否注册
 
     @FormUrlEncoded
     @POST(Urls.ADDRESS_ADD)

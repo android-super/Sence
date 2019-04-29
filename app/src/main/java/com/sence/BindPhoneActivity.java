@@ -13,6 +13,11 @@ import butterknife.ButterKnife;
 import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.sence.base.BaseActivity;
+import com.sence.bean.request.RRegisterBean;
+import com.sence.bean.request.RUserRegisterBean;
+import com.sence.net.HttpCode;
+import com.sence.net.HttpManager;
+import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.StatusBarUtil;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
@@ -90,20 +95,39 @@ public class BindPhoneActivity extends BaseActivity {
             public void onClick(View v) {
                 String phone = bindNumber.getText().toString().trim();
                 if (RegexUtils.isMobileExact(phone)) {
-                    Intent intent = new Intent(BindPhoneActivity.this, VerifyActivity.class);
-                    intent.putExtra("phone", bindNumber.getText().toString());
-                    intent.putExtra("unionid", unionid);
-                    intent.putExtra("openid", openid);
-                    intent.putExtra("profile_image_url", profile_image_url);
-                    intent.putExtra("gender", gender);
-                    intent.putExtra("name", name);
-                    intent.putExtra("screen_name", screen_name);
-                    intent.putExtra("iconurl", iconurl);
-                    startActivity(intent);
+                    isRegister(phone);
                 } else {
                     ToastUtils.showShort("请输入正确的手机号");
                 }
 
+            }
+        });
+    }
+
+    public void isRegister(String phone){
+        HttpManager.getInstance().PlayNetCode(HttpCode.IS_REGISTER, new RRegisterBean(phone)).request(new ApiCallBack() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+
+            }
+
+            @Override
+            public void onSuccess(Object o, String msg) {
+                Intent intent = new Intent(BindPhoneActivity.this, VerifyActivity.class);
+                intent.putExtra("phone", phone);
+                intent.putExtra("unionid", unionid);
+                intent.putExtra("openid", openid);
+                intent.putExtra("profile_image_url", profile_image_url);
+                intent.putExtra("gender", gender);
+                intent.putExtra("name", name);
+                intent.putExtra("screen_name", screen_name);
+                intent.putExtra("iconurl", iconurl);
+                startActivity(intent);
             }
         });
     }

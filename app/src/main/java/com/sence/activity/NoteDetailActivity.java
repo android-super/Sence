@@ -12,6 +12,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,7 +30,6 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.sence.R;
-import com.sence.activity.web.WebConstans;
 import com.sence.adapter.CommentAdapter;
 import com.sence.adapter.NoteRecommendAdapter;
 import com.sence.adapter.pager.ViewShowTagPagerAdapter;
@@ -48,7 +48,6 @@ import com.sence.utils.NavigationBarUtil;
 import com.sence.utils.StatusBarUtil;
 import com.sence.view.GridStagSpacingItemDecoration;
 import com.sence.view.NiceImageView;
-import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.util.List;
 
@@ -90,6 +89,10 @@ public class NoteDetailActivity extends BaseActivity implements View.OnClickList
     ImageView toolMore;
     @BindView(R.id.tool_more_press)
     ImageView toolMorePress;
+    @BindView(R.id.view_pager_index)
+    TextView viewPagerIndex;
+    @BindView(R.id.view_pager_layout)
+    RelativeLayout viewPagerLayout;
 
     private boolean isMy = false;
     private String nid;
@@ -161,7 +164,7 @@ public class NoteDetailActivity extends BaseActivity implements View.OnClickList
         }
         initAppBarLayout();
         CollapsingToolbarLayout.LayoutParams layoutParams =
-                (CollapsingToolbarLayout.LayoutParams) noteBanner.getLayoutParams();
+                (CollapsingToolbarLayout.LayoutParams) viewPagerLayout.getLayoutParams();
         layoutParams.height = ConvertUtils.dp2px(height);
         StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL);
@@ -213,7 +216,7 @@ public class NoteDetailActivity extends BaseActivity implements View.OnClickList
 
             @Override
             public void onPageSelected(int position) {
-
+                viewPagerIndex.setText((position+1) + " / " + tagAdapter.getCount());
             }
 
             @Override
@@ -584,5 +587,12 @@ public class NoteDetailActivity extends BaseActivity implements View.OnClickList
                 commentAdapter.notifyDataSetChanged();
             }
         });
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }
