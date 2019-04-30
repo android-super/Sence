@@ -148,8 +148,8 @@ public class EnjoyVipActivity extends BaseActivity {
             public void onSuccess(PEnjoyVipBean o, String msg) {
                 Logger.e("msg==========" + msg);
                 list.addAll(o.getService());
+                tvPriceEnjoyvip.setText("￥" + o.getMoney());
                 if (list.size() > 0) {
-                    tvPriceEnjoyvip.setText("￥" + o.getMoney());
                     mEnjoyVipAdapter.setList(list);
                     ivNotimgEnjoyvip.setVisibility(View.GONE);
                 }

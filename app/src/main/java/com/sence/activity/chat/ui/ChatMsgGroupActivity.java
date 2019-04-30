@@ -4,12 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.View;
-import android.widget.*;
-import androidx.annotation.LayoutRes;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.luck.picture.lib.PictureSelector;
@@ -37,8 +37,15 @@ import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.Urls;
 import com.sence.net.manager.ApiCallBack;
-import com.sence.utils.*;
+import com.sence.utils.BitmapUtils;
+import com.sence.utils.DateUtils;
+import com.sence.utils.GlideUtils;
+import com.sence.utils.JsonParseUtil;
+import com.sence.utils.LoginStatus;
+import com.sence.utils.SocketUtils;
+import com.sence.utils.StatusBarUtil;
 import com.sence.view.PubTitle;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -47,6 +54,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import androidx.annotation.LayoutRes;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
 
 public class ChatMsgGroupActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.edit_text)
@@ -90,6 +103,7 @@ public class ChatMsgGroupActivity extends BaseActivity implements View.OnClickLi
     private boolean isFirst = true; //是否为第一个  第一个也要显示时间
 
     private String v_id;//v群id
+    private String name;
 
     public void initView() {
         StatusBarUtil.setLightMode(this);
@@ -97,7 +111,8 @@ public class ChatMsgGroupActivity extends BaseActivity implements View.OnClickLi
 
         v_id = getIntent().getStringExtra("v_id");
         uid = LoginStatus.getUid();
-
+        name = getIntent().getStringExtra("name");
+        pubTitle.setTitleText(name);
         initWidget();
 
         showMessage();

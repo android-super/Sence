@@ -109,6 +109,7 @@ public class SplashActivity extends AppCompatActivity {
                                            @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         permissionUtil.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
     }
 
     @Override
