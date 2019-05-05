@@ -88,7 +88,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void initView() {
         StatusBarUtil.setLightMode(this);
-
         sheet_content = findViewById(R.id.sheet_content);
         sheet_img = findViewById(R.id.sheet_img);
         sheet_video = findViewById(R.id.sheet_video);
@@ -121,6 +120,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         setSelect(0);
         initUpdataApp();
+
     }
 
     private void initUpdataApp() {
@@ -153,7 +153,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         if (tag == (int) view.getTag()) {
             return;
         }
-
         setSelect((Integer) view.getTag());
     }
 

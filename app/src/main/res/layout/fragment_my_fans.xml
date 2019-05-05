@@ -34,6 +34,7 @@
                     android:singleLine="true"
                     android:textSize="13sp"
                     android:layout_marginRight="35dp"
+                    android:imeOptions="actionSearch"
                     android:background="@android:color/transparent"
                     android:layout_marginLeft="5dp"
                     android:gravity="center_vertical"

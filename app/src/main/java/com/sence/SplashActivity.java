@@ -109,7 +109,15 @@ public class SplashActivity extends AppCompatActivity {
                                            @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         permissionUtil.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
+        disposable =
+                Observable.interval(2, TimeUnit.SECONDS).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) {
+                        disposable.dispose();
+                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                        finish();
+                    }
+                });
     }
 
     @Override

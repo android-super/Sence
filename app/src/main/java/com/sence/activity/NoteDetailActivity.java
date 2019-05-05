@@ -29,6 +29,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.sence.LoginActivity;
 import com.sence.R;
 import com.sence.adapter.CommentAdapter;
 import com.sence.adapter.NoteRecommendAdapter;
@@ -178,6 +179,10 @@ public class NoteDetailActivity extends BaseActivity implements View.OnClickList
         noteSupport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (TextUtils.isEmpty(LoginStatus.getUid())) {
+                    startActivity(new Intent(NoteDetailActivity.this, LoginActivity.class));
+                    return;
+                }
                 support(nid, false, -1);
             }
         });
@@ -185,12 +190,20 @@ public class NoteDetailActivity extends BaseActivity implements View.OnClickList
         adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
+                if (TextUtils.isEmpty(LoginStatus.getUid())) {
+                    startActivity(new Intent(NoteDetailActivity.this, LoginActivity.class));
+                    return;
+                }
                 support(adapter.getData().get(position).getNid(), true, position);
             }
         });
         noteHead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (TextUtils.isEmpty(LoginStatus.getUid())) {
+                    startActivity(new Intent(NoteDetailActivity.this, LoginActivity.class));
+                    return;
+                }
                 Intent intent = new Intent(NoteDetailActivity.this, MyInfoActivity.class);
                 intent.putExtra("uid", noteInfoBean.getUid());
                 startActivity(intent);
@@ -199,12 +212,20 @@ public class NoteDetailActivity extends BaseActivity implements View.OnClickList
         noteComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (TextUtils.isEmpty(LoginStatus.getUid())) {
+                    startActivity(new Intent(NoteDetailActivity.this, LoginActivity.class));
+                    return;
+                }
                 showCommentDialog(false);
             }
         });
         noteCommentRelease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (TextUtils.isEmpty(LoginStatus.getUid())) {
+                    startActivity(new Intent(NoteDetailActivity.this, LoginActivity.class));
+                    return;
+                }
                 showCommentDialog(false);
             }
         });
@@ -216,7 +237,7 @@ public class NoteDetailActivity extends BaseActivity implements View.OnClickList
 
             @Override
             public void onPageSelected(int position) {
-                viewPagerIndex.setText((position+1) + " / " + tagAdapter.getCount());
+                viewPagerIndex.setText((position + 1) + " / " + tagAdapter.getCount());
             }
 
             @Override
@@ -229,6 +250,7 @@ public class NoteDetailActivity extends BaseActivity implements View.OnClickList
 
 
     private void initViewPager(List<PNoteDetailBean.NoteInfoBean.AlbumsBean> albums) {
+        viewPagerIndex.setText(1 + " / " + albums.size());
         tagAdapter = new ViewShowTagPagerAdapter(getSupportFragmentManager());
         for (int i = 0; i < albums.size(); i++) {
             PNoteDetailBean.NoteInfoBean.AlbumsBean bean = albums.get(i);
@@ -368,6 +390,10 @@ public class NoteDetailActivity extends BaseActivity implements View.OnClickList
                 break;
             case R.id.tool_more:
             case R.id.tool_more_press:
+                if (TextUtils.isEmpty(LoginStatus.getUid())) {
+                    startActivity(new Intent(NoteDetailActivity.this, LoginActivity.class));
+                    return;
+                }
                 mBottomSheetDialog.show();
                 break;
             case R.id.ll_report_share:

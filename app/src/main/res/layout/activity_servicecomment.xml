@@ -97,7 +97,7 @@
             android:background="@null"
             android:gravity="top"
             android:lineSpacingExtra="11dp"
-            android:hint="此次约见您还满意吗？说说您的心得体会...这是提示文案在这不太完美的世间，快乐的秘籍就是找到内心的安宁。"
+            android:hint="服务满足您的期待吗？说说它的优点和有没有不足的地方吧"
             android:textColor="#333333"
             android:textColorHint="#999999"
             android:textSize="13dp"/>

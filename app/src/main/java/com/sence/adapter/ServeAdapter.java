@@ -45,6 +45,11 @@ public class ServeAdapter extends BaseQuickAdapter<PServeBean, BaseViewHolder> {
                 item_stars[i].setVisibility(View.GONE);
             }
         }
+        if (item.getNum().equals("0")) {
+            helper.setGone(R.id.item_num, false);
+        } else {
+            helper.setGone(R.id.item_num, true);
+        }
         helper.setText(R.id.item_num, "体验 " + item.getNum() + " 次");
     }
 }

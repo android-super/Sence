@@ -28,6 +28,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.sence.LoginActivity;
 import com.sence.R;
 import com.sence.activity.web.WebConstans;
 import com.sence.adapter.CommentAdapter;
@@ -166,6 +167,10 @@ public class NoteVideoDetailActivity extends BaseActivity implements View.OnClic
         noteSupport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (TextUtils.isEmpty(LoginStatus.getUid())) {
+                    startActivity(new Intent(NoteVideoDetailActivity.this, LoginActivity.class));
+                    return;
+                }
                 support(nid, false, -1);
             }
         });
@@ -173,12 +178,20 @@ public class NoteVideoDetailActivity extends BaseActivity implements View.OnClic
         adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
+                if (TextUtils.isEmpty(LoginStatus.getUid())) {
+                    startActivity(new Intent(NoteVideoDetailActivity.this, LoginActivity.class));
+                    return;
+                }
                 support(adapter.getData().get(position).getNid(), true, position);
             }
         });
         noteHead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (TextUtils.isEmpty(LoginStatus.getUid())) {
+                    startActivity(new Intent(NoteVideoDetailActivity.this, LoginActivity.class));
+                    return;
+                }
                 Intent intent = new Intent(NoteVideoDetailActivity.this, MyInfoActivity.class);
                 intent.putExtra("uid", noteInfoBean.getUid());
                 startActivity(intent);
@@ -187,12 +200,20 @@ public class NoteVideoDetailActivity extends BaseActivity implements View.OnClic
         noteComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (TextUtils.isEmpty(LoginStatus.getUid())) {
+                    startActivity(new Intent(NoteVideoDetailActivity.this, LoginActivity.class));
+                    return;
+                }
                 showCommentDialog(false);
             }
         });
         noteCommentRelease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (TextUtils.isEmpty(LoginStatus.getUid())) {
+                    startActivity(new Intent(NoteVideoDetailActivity.this, LoginActivity.class));
+                    return;
+                }
                 showCommentDialog(false);
             }
         });
@@ -259,6 +280,8 @@ public class NoteVideoDetailActivity extends BaseActivity implements View.OnClic
                 ActivityCompat.finishAfterTransition(NoteVideoDetailActivity.this);
             }
         });
+        toolMore.setOnClickListener(this);
+        toolMorePress.setOnClickListener(this);
     }
 
     public void showCommentDialog(final boolean isShow) {
@@ -330,6 +353,14 @@ public class NoteVideoDetailActivity extends BaseActivity implements View.OnClic
         switch (v.getId()) {
             case R.id.comment_close:
                 dismissDialog(commentSheet);
+                break;
+            case R.id.tool_more:
+            case R.id.tool_more_press:
+                if (TextUtils.isEmpty(LoginStatus.getUid())) {
+                    startActivity(new Intent(NoteVideoDetailActivity.this, LoginActivity.class));
+                    return;
+                }
+                mBottomSheetDialog.show();
                 break;
             case R.id.ll_report_share:
                 Intent intent = new Intent(NoteVideoDetailActivity.this, ReportCauseActivity.class);

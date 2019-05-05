@@ -1,7 +1,9 @@
 package com.sence.fragment.main;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+import com.sence.LoginActivity;
 import com.sence.R;
 import com.sence.adapter.NoteAdapter;
 import com.sence.bean.request.RNidBean;
@@ -133,6 +136,10 @@ public class NoteFragment extends Fragment {
      * @param nid
      */
     public void support(final int position, String nid) {
+        if (TextUtils.isEmpty(LoginStatus.getUid())) {
+            startActivity(new Intent(getContext(), LoginActivity.class));
+            return;
+        }
         HttpManager.getInstance().PlayNetCode(HttpCode.SUPPORT_NOTE_RECOMMEND, new RNidBean(LoginStatus.getUid(),
                 nid)).request(new ApiCallBack() {
             @Override

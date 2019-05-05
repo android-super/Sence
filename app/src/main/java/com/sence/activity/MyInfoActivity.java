@@ -469,7 +469,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 intentchat.putExtra("u_to", bean.getUid());
                 intentchat.putExtra("chat_id", "");
                 intentchat.putExtra("u_avatar", bean.getAvatar());
-                intentchat.putExtra("name", bean.getUser_name());
+                intentchat.putExtra("name", bean.getNick_name());
                 startActivity(intentchat);
                 break;
             case R.id.iv_edit_myinfo:
@@ -487,7 +487,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 }
                 Intent intent = new Intent(MyInfoActivity.this, ChatMsgGroupActivity.class);
                 intent.putExtra("v_id", bean.getVid());
-                intent.putExtra("name", bean.getUser_name()+"的聊天室");
+                intent.putExtra("name", bean.getNick_name()+"的聊天室");
                 startActivity(intent);
                 break;
         }

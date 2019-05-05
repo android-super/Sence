@@ -67,7 +67,8 @@ public class BlackListAdapter extends RecyclerView.Adapter<BlackListAdapter.View
     }
 
     private void relieve(final int position) {
-        HttpManager.getInstance().PlayNetCode(HttpCode.RACHEL, new RRachelBean(LoginStatus.getUid(), list.get(position).getUid(),"2")).request(new ApiCallBack<String>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.RACHEL, new RRachelBean(LoginStatus.getUid(),
+                list.get(position).getGid(),"2")).request(new ApiCallBack<String>() {
             @Override
             public void onFinish() {
 

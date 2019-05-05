@@ -37,6 +37,7 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.orhanobut.logger.Logger;
+import com.sence.LoginActivity;
 import com.sence.R;
 import com.sence.activity.web.WebConstans;
 import com.sence.adapter.CommentAdapter;
@@ -258,7 +259,10 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
         adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
-
+                if (TextUtils.isEmpty(LoginStatus.getUid())) {
+                    startActivity(new Intent(ContentDetailActivity.this, LoginActivity.class));
+                    return;
+                }
                 addBus(adapter.getData().get(position).getId());
             }
         });
@@ -270,8 +274,10 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
         contentSupport.setOnClickListener(this);
         contentBuy.setOnClickListener(this);
         contentFocusTv.setOnClickListener(this);
+        contentFocus.setOnClickListener(this);
         toolShare.setOnClickListener(this);
         toolContentFocus.setOnClickListener(this);
+        toolFocus.setOnClickListener(this);
 
         bottomSheetDialog();
     }
@@ -330,27 +336,51 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.content_comment:
+                if (TextUtils.isEmpty(LoginStatus.getUid())) {
+                    startActivity(new Intent(ContentDetailActivity.this, LoginActivity.class));
+                    return;
+                }
                 showCommentDialog(false);
                 break;
             case R.id.content_head:
             case R.id.tool_head:
+                if (TextUtils.isEmpty(LoginStatus.getUid())) {
+                    startActivity(new Intent(ContentDetailActivity.this, LoginActivity.class));
+                    return;
+                }
                 Intent intent = new Intent(this, MyInfoActivity.class);
                 intent.putExtra("uid", to_uid);
                 startActivity(intent);
                 break;
             case R.id.content_support_num:
             case R.id.content_support:
+                if (TextUtils.isEmpty(LoginStatus.getUid())) {
+                    startActivity(new Intent(ContentDetailActivity.this, LoginActivity.class));
+                    return;
+                }
                 support(nid);
                 break;
             case R.id.content_buy:
+                if (TextUtils.isEmpty(LoginStatus.getUid())) {
+                    startActivity(new Intent(ContentDetailActivity.this, LoginActivity.class));
+                    return;
+                }
                 showGoodDialog();
                 break;
             case R.id.tool_content_focus:
             case R.id.content_focus_tv:
+                if (TextUtils.isEmpty(LoginStatus.getUid())) {
+                    startActivity(new Intent(ContentDetailActivity.this, LoginActivity.class));
+                    return;
+                }
                 toFocus();
                 break;
             case R.id.tool_focus:
             case R.id.content_focus:
+                if (TextUtils.isEmpty(LoginStatus.getUid())) {
+                    startActivity(new Intent(ContentDetailActivity.this, LoginActivity.class));
+                    return;
+                }
                 cancelFocus();
                 break;
             case R.id.comment_close:
@@ -358,6 +388,10 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.tool_share:
             case R.id.tool_share_press:
+                if (TextUtils.isEmpty(LoginStatus.getUid())) {
+                    startActivity(new Intent(ContentDetailActivity.this, LoginActivity.class));
+                    return;
+                }
                 mBottomSheetDialog.show();
                 break;
             case R.id.ll_wei_share:

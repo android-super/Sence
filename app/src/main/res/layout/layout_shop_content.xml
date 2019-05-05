@@ -39,6 +39,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:layout_marginLeft="4dp"
+                        android:id="@+id/rl_layout_vprice"
                         >
                         <TextView
                             android:layout_width="wrap_content"

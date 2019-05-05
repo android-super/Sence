@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import butterknife.BindView;
@@ -56,6 +57,8 @@ public class CashActivity extends BaseActivity implements View.OnClickListener {
     TextView cashMoney;
     @BindView(R.id.cash_img)
     NiceImageView cashImg;
+    @BindView(R.id.cash_select_layout)
+    RelativeLayout cashSelectLayout;
 
     private Disposable mDisposable;
 
@@ -78,7 +81,7 @@ public class CashActivity extends BaseActivity implements View.OnClickListener {
         StatusBarUtil.setLightMode(this);
         cash_money = this.getIntent().getStringExtra("cash_money");
         poundage = this.getIntent().getStringExtra("poundage");
-        cashSelect.setOnClickListener(this);
+        cashSelectLayout.setOnClickListener(this);
         cashVerify.setOnClickListener(this);
         cashCommit.setOnClickListener(this);
         cashMoney.setText("可提现余额为" + cash_money + "元");
@@ -117,7 +120,7 @@ public class CashActivity extends BaseActivity implements View.OnClickListener {
             case R.id.cash_commit:
                 userCash();
                 break;
-            case R.id.cash_select:
+            case R.id.cash_select_layout:
                 startActivityForResult(new Intent(CashActivity.this, CardActivity.class), BANK_CODE);
                 break;
             case R.id.cash_verify:
@@ -134,6 +137,7 @@ public class CashActivity extends BaseActivity implements View.OnClickListener {
             card_phone = data.getStringExtra("card_phone");
             card_img = data.getStringExtra("card_img");
             GlideUtils.getInstance().loadNormal(card_img, cashImg);
+            cashSelect.setText("");
         }
     }
 
@@ -169,7 +173,8 @@ public class CashActivity extends BaseActivity implements View.OnClickListener {
 
             @Override
             public void onSuccess(Object o, String msg) {
-                ToastUtils.showShort(o.toString());
+                ToastUtils.showShort(msg);
+                finish();
             }
         });
     }
@@ -231,5 +236,12 @@ public class CashActivity extends BaseActivity implements View.OnClickListener {
             mDisposable.dispose();
         }
         super.onDestroy();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

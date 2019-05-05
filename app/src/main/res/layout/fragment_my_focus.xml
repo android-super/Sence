@@ -31,6 +31,7 @@
                     android:id="@+id/search_content"
                     android:layout_width="match_parent"
                     android:hint="搜索"
+                    android:imeOptions="actionSearch"
                     android:textSize="13sp"
                     android:singleLine="true"
                     android:layout_marginRight="35dp"

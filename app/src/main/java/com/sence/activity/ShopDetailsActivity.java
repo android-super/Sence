@@ -10,24 +10,17 @@ import android.net.http.SslError;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.webkit.SslErrorHandler;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import android.view.*;
+import android.webkit.*;
+import android.widget.*;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -61,15 +54,6 @@ import com.umeng.socialize.media.UMWeb;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.widget.NestedScrollView;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * 商品详情
@@ -162,6 +146,8 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
     ImageView contentLoadingShopdetails;
     @BindView(R.id.tv_allcomment_shopdetails)
     TextView tvAllcommentShopdetails;
+    @BindView(R.id.rl_layout_vprice)
+    RelativeLayout rlLayoutVprice;
 
     private ShopDetailsImgAdapter shopDetailsImgAdapter;
     private WebSettings settings;
@@ -272,7 +258,8 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void Like() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_COMMENT_SUPPORT, new RShopDetailsBean(bean.getComment().getId(), LoginStatus.getUid())).request(new ApiCallBack<String>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.ORDER_COMMENT_SUPPORT,
+                new RShopDetailsBean(bean.getComment().getId(), LoginStatus.getUid())).request(new ApiCallBack<String>() {
             @Override
             public void onFinish() {
 
@@ -392,7 +379,8 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                 if (textsize) {
                     textsize = false;
                     int width = tvOpriceShopdetails.getWidth();
-                    RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) viewOpriceShopdetails.getLayoutParams();
+                    RelativeLayout.LayoutParams layoutParams =
+                            (RelativeLayout.LayoutParams) viewOpriceShopdetails.getLayoutParams();
                     int round = o.getPrice().length() / 2;
                     if (o.getPrice().length() % 2 == 1) {
                         round++;
@@ -401,9 +389,10 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                     viewOpriceShopdetails.setLayoutParams(layoutParams);
                 }
                 tvOpriceShopdetails.setText("￥" + o.getPrice());
-                if ("0".equals(o.getVprice())) {
+                if ("0".equals(o.getVprice()) || o.getVprice() == o.getPrice() || o.getPrice().equals(o.getVprice())) {
                     tvCpriceShopdetails.setText("￥" + o.getPrice());
                     tvVipShopdetails.setVisibility(View.GONE);
+                    rlLayoutVprice.setVisibility(View.GONE);
                 } else {
                     tvCpriceShopdetails.setText("￥" + o.getVprice());
                 }
@@ -478,7 +467,8 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
     private void bottomwindow() {
         contentView = LayoutInflater.from(ShopDetailsActivity.this).inflate(
                 R.layout.layout_buyshop, null);
-        popupWindow = new PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow = new PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
         popupWindow.setFocusable(true);// 取得焦点
         //点击外部消失
         popupWindow.setOutsideTouchable(true);
@@ -534,7 +524,9 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
     }
 
 
-    @OnClick({R.id.iv_imgshopimg_shopdetails,R.id.tv_allcomment_shopdetails,R.id.tv_addshop_shopdetails, R.id.ll_infolayout_shopdetails, R.id.tv_buy_shopdetails, R.id.ll_service_shopdetails, R.id.ll_shop_shopdetails})
+    @OnClick({R.id.iv_imgshopimg_shopdetails, R.id.tv_allcomment_shopdetails, R.id.tv_addshop_shopdetails,
+            R.id.ll_infolayout_shopdetails, R.id.tv_buy_shopdetails, R.id.ll_service_shopdetails,
+            R.id.ll_shop_shopdetails})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_addshop_shopdetails:
@@ -620,7 +612,8 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void addShop(final String s) {
-        HttpManager.getInstance().PlayNetCode(HttpCode.BUS_ADD, new RBusAddBean(bean.getId(), LoginStatus.getUid(), s, "1")).request(new ApiCallBack() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.BUS_ADD, new RBusAddBean(bean.getId(), LoginStatus.getUid(), s
+                , "1")).request(new ApiCallBack() {
             @Override
             public void onFinish() {
 
@@ -703,12 +696,16 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.ll_wei_share:
 
-                shareWeb(ShopDetailsActivity.this, WebConstans.SPXQ + "?id=" + bean.getId() + "&token=" + LoginStatus.getUserToken(), bean.getName(), "女神周边，精品生活", SHARE_MEDIA.WEIXIN, bean.getImgUrl());
+                shareWeb(ShopDetailsActivity.this,
+                        WebConstans.SPXQ + "?id=" + bean.getId() + "&token=" + LoginStatus.getUserToken(),
+                        bean.getName(), "女神周边，精品生活", SHARE_MEDIA.WEIXIN, bean.getImgUrl());
                 mBottomSheetDialog.dismiss();
                 break;
             case R.id.ll_friend_share:
 
-                shareWeb(ShopDetailsActivity.this, WebConstans.SPXQ + "?id=" + bean.getId() + "&token=" + LoginStatus.getUserToken(), bean.getName(), "女神周边，精品生活", SHARE_MEDIA.WEIXIN_CIRCLE, bean.getImgUrl());
+                shareWeb(ShopDetailsActivity.this,
+                        WebConstans.SPXQ + "?id=" + bean.getId() + "&token=" + LoginStatus.getUserToken(),
+                        bean.getName(), "女神周边，精品生活", SHARE_MEDIA.WEIXIN_CIRCLE, bean.getImgUrl());
                 mBottomSheetDialog.dismiss();
                 break;
             case R.id.tv_cancel_share:

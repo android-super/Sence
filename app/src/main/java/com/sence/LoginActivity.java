@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.PhoneUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.sence.activity.WebActivity;
 import com.sence.activity.web.WebConstans;
 import com.sence.base.BaseActivity;
@@ -60,6 +61,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         loginProtocol.setOnClickListener(this);
         loginLook.setOnClickListener(this);
         loginRule.setOnClickListener(this);
+        loginCheck.setSelected(true);
     }
 
 
@@ -91,7 +93,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 finish();
                 break;
             case R.id.login_wx:
-                UMShareAPI.get(this).getPlatformInfo(this, SHARE_MEDIA.WEIXIN, umAuthListener);
+                if (loginCheck.isSelected()) {
+                    UMShareAPI.get(this).getPlatformInfo(this, SHARE_MEDIA.WEIXIN, umAuthListener);
+                }else{
+                    ToastUtils.showShort("请阅读许可协议并勾选");
+                }
+
                 break;
         }
     }

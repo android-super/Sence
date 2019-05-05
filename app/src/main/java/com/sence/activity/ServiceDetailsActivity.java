@@ -9,7 +9,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.blankj.utilcode.util.ToastUtils;
 import com.orhanobut.logger.Logger;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -36,14 +42,6 @@ import com.sence.view.PubTitle;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * 服务详情
@@ -75,6 +73,8 @@ public class ServiceDetailsActivity extends BaseActivity {
     RelativeLayout rlLayoutServicedetail;
     @BindView(R.id.srl_layout_servicedetails)
     SmartRefreshLayout srlLayoutServicedetails;
+    @BindView(R.id.iv_img_servicedetails)
+    ImageView ivImgServicedetails;
 
     private ServiceDetailsAdapter mServiceDetailsAdapter;
     private int page = 1;
@@ -82,6 +82,7 @@ public class ServiceDetailsActivity extends BaseActivity {
     private PServiceeDetails bean = null;
     private ShopDetailsImgAdapter shopDetailsImgAdapter;
     List<PServiceCommendBean> list = new ArrayList<>();
+
     @Override
     public int onActLayout() {
         return R.layout.activity_servicedetails;
@@ -130,7 +131,7 @@ public class ServiceDetailsActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ServiceDetailsActivity.this, MyInfoActivity.class);
-                intent.putExtra("uid",bean.getSid());
+                intent.putExtra("uid", bean.getSid());
                 startActivity(intent);
             }
         });
@@ -162,7 +163,7 @@ public class ServiceDetailsActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        page=1;
+        page = 1;
         list.clear();
     }
 
@@ -178,7 +179,8 @@ public class ServiceDetailsActivity extends BaseActivity {
             int screenHeight = dm.heightPixels;
             int heightlayout = llLayoutServicedetail.getHeight();
             int height = screenHeight - y - heightlayout;
-            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) tvNotdataServicedetails.getLayoutParams();
+            RelativeLayout.LayoutParams layoutParams =
+                    (RelativeLayout.LayoutParams) tvNotdataServicedetails.getLayoutParams();
             layoutParams.height = height;
             tvNotdataServicedetails.setLayoutParams(layoutParams);
         }
@@ -206,6 +208,9 @@ public class ServiceDetailsActivity extends BaseActivity {
                 }
                 if ("0".equals(o.getIsEvaluate())) {
                     ptPubTitle.setRightImg(0);
+                }
+                if("1".equals(o.getIs_free())){
+                    ivImgServicedetails.setVisibility(View.VISIBLE);
                 }
                 List<ImageView> list = new ArrayList<>();
                 for (int i = 0; i < o.getImgs().size(); i++) {
