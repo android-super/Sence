@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="234dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/shape_myabnormal_bg"
+    android:minHeight="176dp"
+    android:orientation="vertical"
+    android:paddingLeft="15dp"
+    android:paddingRight="@dimen/sp_16"
+    android:paddingTop="26dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="13dp"
+        android:id="@+id/tv_time_abnormal"
+        android:text="你的Sence账号于16:04:01在其他设备登录。如非本人操作登录密码可能已经泄露，请修改密码，建议妥善保存个人相关信息。"
+        android:textColor="#333333"
+        android:textSize="12sp"/>
+    <Button
+        android:layout_width="82dp"
+        android:layout_height="27dp"
+        android:textSize="13sp"
+        android:textColor="@color/white"
+        android:id="@+id/bt_confirm_abnormal"
+        android:background="@drawable/shape_abnormal_btbg"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="确认"/>
+
+</LinearLayout>
