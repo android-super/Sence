@@ -42,6 +42,7 @@ public class MemberActivity extends BaseActivity implements View.OnClickListener
     private String to_uid;
 
     private BottomSheetDialog bottomSheetDialog;
+    private boolean isMyGroup;
 
     @Override
     public int onActLayout() {
@@ -52,6 +53,7 @@ public class MemberActivity extends BaseActivity implements View.OnClickListener
     public void initView() {
         StatusBarUtil.setLightMode(this);
         v_id = this.getIntent().getStringExtra("v_id");
+        isMyGroup = this.getIntent().getBooleanExtra("ismygroup",false);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 5);
         recycleView.setLayoutManager(gridLayoutManager);
         recycleView.addItemDecoration(new GridSpacingItemDecoration(5, ConvertUtils.dp2px(20), true));
@@ -145,6 +147,9 @@ public class MemberActivity extends BaseActivity implements View.OnClickListener
         GlideUtils.getInstance().loadHead(avatar, into_head);
         TextView into_user = view.findViewById(R.id.into_user);
         TextView into_ban = view.findViewById(R.id.into_ban);
+        if(!isMyGroup){
+            into_ban.setVisibility(View.GONE);
+        }
         if (state.equals("1")) {
             into_ban.setText("解除禁言");
             into_ban.setBackgroundResource(R.drawable.shape_circle_theme_green_light);
@@ -158,7 +163,7 @@ public class MemberActivity extends BaseActivity implements View.OnClickListener
     }
 
     /**
-     * 加入V群
+     * 禁言
      */
     public void ban() {
         HttpManager.getInstance().PlayNetCode(HttpCode.CHAT_BAN, new RUtoVidBean(LoginStatus.getUid(), v_id, to_uid)).request(new ApiCallBack() {

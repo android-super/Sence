@@ -487,6 +487,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 }
                 Intent intent = new Intent(MyInfoActivity.this, ChatMsgGroupActivity.class);
                 intent.putExtra("v_id", bean.getVid());
+                intent.putExtra("uid", bean.getUid());
                 intent.putExtra("name", bean.getNick_name()+"的聊天室");
                 startActivity(intent);
                 break;

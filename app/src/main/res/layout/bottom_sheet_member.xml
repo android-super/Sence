@@ -22,9 +22,10 @@
             android:background="@drawable/shape_round_top_right_white"
             android:layout_width="match_parent"
             android:orientation="vertical"
+            android:paddingBottom="30dp"
             android:layout_marginTop="-40dp"
             android:gravity="center_horizontal"
-            android:layout_height="230dp">
+            android:layout_height="wrap_content">
 
         <TextView
                 android:id="@+id/into_user"
@@ -45,6 +46,7 @@
                 android:gravity="center"
                 android:textColor="@color/white"
                 android:textSize="16sp"
+
                 android:background="@drawable/shape_circle_theme_green"
                 android:layout_height="40dp"/>
     </LinearLayout>

@@ -104,17 +104,18 @@ public class ChatMsgGroupActivity extends BaseActivity implements View.OnClickLi
 
     private String v_id;//v群id
     private String name;
+    private String id;
 
     public void initView() {
         StatusBarUtil.setLightMode(this);
         EventBus.getDefault().register(this);
 
         v_id = getIntent().getStringExtra("v_id");
+        id = getIntent().getStringExtra("uid");
         uid = LoginStatus.getUid();
         name = getIntent().getStringExtra("name");
         pubTitle.setTitleText(name);
         initWidget();
-
         showMessage();
         SocketUtils.getInstance().setOnGetSocketResult(new SocketUtils.OnGetSocketResult() {
             @Override
@@ -148,12 +149,12 @@ public class ChatMsgGroupActivity extends BaseActivity implements View.OnClickLi
         reAdapter.setUpFetchEnable(true);
         reAdapter.setStartUpFetchPosition(2);
 
-        reAdapter.setUpFetchListener(new BaseQuickAdapter.UpFetchListener() {
-            @Override
-            public void onUpFetch() {
-                startUpFetch();
-            }
-        });
+//        reAdapter.setUpFetchListener(new BaseQuickAdapter.UpFetchListener() {
+//            @Override
+//            public void onUpFetch() {
+//                startUpFetch();
+//            }
+//        });
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -224,8 +225,12 @@ public class ChatMsgGroupActivity extends BaseActivity implements View.OnClickLi
         pubTitle.setRightOnClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(ChatMsgGroupActivity.this, MemberActivity.class);
                 intent.putExtra("v_id", v_id);
+                if(id.equals(uid)){
+                    intent.putExtra("ismygroup",true);
+                }
                 startActivity(intent);
             }
         });
@@ -273,7 +278,7 @@ public class ChatMsgGroupActivity extends BaseActivity implements View.OnClickLi
                 if (dataList.size() < 10) {
                     reAdapter.setUpFetchEnable(false);
                 }
-                reAdapter.addData(0, dataList);
+//                reAdapter.addData(0, dataList);
                 /**
                  * set fetching off when network request ends.
                  */
@@ -322,9 +327,7 @@ public class ChatMsgGroupActivity extends BaseActivity implements View.OnClickLi
 
             @Override
             public void Message(int code, String message) {
-                if (page > 1) {
-                    dataList = new ArrayList<>();
-                }
+
             }
 
             @Override
@@ -332,13 +335,15 @@ public class ChatMsgGroupActivity extends BaseActivity implements View.OnClickLi
                 if (o.getMessage() == null || o.getMessage().size() == 0) {
                     return;
                 }
-                dataList = o.getMessage();
-                Collections.reverse(dataList);
+                if(page==1){
+                    dataList.clear();
+                }
+                Collections.reverse(o.getMessage());
+                dataList.addAll(0,o.getMessage());
+                reAdapter.setNewData(dataList);
                 if (page == 1) {
-                    reAdapter.setNewData(dataList);
                     recyclerView.scrollToPosition(reAdapter.getData().size() - 1);
                 }
-
                 if (page == 1) {
                     lastVisibleTime = reAdapter.getData().get(reAdapter.getData().size() - 1).getAdd_time();
                 }
@@ -574,6 +579,7 @@ public class ChatMsgGroupActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        dataList.clear();
         EventBus.getDefault().removeStickyEvent(this);
         EventBus.getDefault().unregister(this);
         PictureFileUtils.deleteCacheDirFile(ChatMsgGroupActivity.this);

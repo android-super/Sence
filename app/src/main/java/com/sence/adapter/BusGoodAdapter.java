@@ -32,7 +32,11 @@ public class BusGoodAdapter extends BaseQuickAdapter<PBusBean.CartBean.GoodsBean
         GlideUtils.getInstance().loadNormal(item.getImg(), (ImageView) helper.getView(R.id.item_img));
         helper.setText(R.id.item_content, item.getName());
         if (isMember.equals("1")){
-            helper.setText(R.id.item_price, "￥"+item.getVprice());
+            if("0".equals(item.getVprice())){
+                helper.setText(R.id.item_price, "￥"+item.getPrice());
+            }else{
+                helper.setText(R.id.item_price, "￥"+item.getVprice());
+            }
         }else{
             helper.setText(R.id.item_price, "￥"+item.getPrice());
         }

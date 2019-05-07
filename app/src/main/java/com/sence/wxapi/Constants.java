@@ -1,5 +1,5 @@
 package com.sence.wxapi;
 
 public class Constants {
-    public static final String APP_ID = "wx4045a7f46e598ff1";
+    public static final String APP_ID = "wxed0cf4063d6f539d";
 }

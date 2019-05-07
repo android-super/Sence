@@ -3,10 +3,13 @@ package com.sence;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.blankj.utilcode.util.PhoneUtils;
 import com.blankj.utilcode.util.SPUtils;
+import com.sence.activity.WebActivity;
+import com.sence.activity.web.WebConstans;
 import com.sence.bean.request.RStartPictureBean;
 import com.sence.bean.response.PStartPictureBean;
 import com.sence.net.HttpCode;
@@ -29,6 +32,7 @@ public class SplashActivity extends AppCompatActivity {
     private PermissionUtil permissionUtil;
     private Disposable disposable;
     private ImageView ivPicture, ivFullPicture;
+    private PStartPictureBean bean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,32 @@ public class SplashActivity extends AppCompatActivity {
         ivPicture = findViewById(R.id.iv_picture);
         ivFullPicture = findViewById(R.id.iv_full_picture);
         permissionUtil = new PermissionUtil(this);
+        ivFullPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(bean.getLink()!=null){
+                    Intent intent = new Intent(SplashActivity.this, WebActivity.class);
+                    intent.putExtra("url", bean.getLink());
+                    intent.putExtra("title", "");
+                    intent.putExtra("code", WebConstans.WebCode.XTTZ);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        });
+        ivPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(bean.getLink()!=null){
+                    Intent intent = new Intent(SplashActivity.this, WebActivity.class);
+                    intent.putExtra("url", bean.getLink());
+                    intent.putExtra("title", "");
+                    intent.putExtra("code", WebConstans.WebCode.XTTZ);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        });
         if (permissionUtil.requestPermissions(PermissionUtil.READ_PHONE_STATE,
                 new String[]{Manifest.permission.READ_PHONE_STATE,Manifest.permission.WRITE_EXTERNAL_STORAGE})) {
             getStartPicture();
@@ -73,6 +103,7 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(PStartPictureBean o, String msg) {
+                bean = o;
                 if ("0".equals(o.getIs_full())) {
                     GlideUtils.getInstance().loadNormal(o.getImg(), ivFullPicture);
                 } else {

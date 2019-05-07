@@ -121,7 +121,6 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
         uid = LoginStatus.getUid();
         pubTitle.setTitleText(name);
         initWidget();
-
         showMessage();
         SocketUtils.getInstance().setOnGetSocketResult(new SocketUtils.OnGetSocketResult() {
             @Override
@@ -270,7 +269,7 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
                 if (dataList.size() < 10) {
                     reAdapter.setUpFetchEnable(false);
                 }
-                reAdapter.addData(0, dataList);
+//                reAdapter.addData(0, dataList);
                 /**
                  * set fetching off when network request ends.
                  */
@@ -332,9 +331,7 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
 
             @Override
             public void Message(int code, String message) {
-                if (page > 1) {
-                    dataList = new ArrayList<>();
-                }
+
             }
 
             @Override
@@ -342,10 +339,14 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
                 if (o == null || o.size() == 0) {
                     return;
                 }
-                dataList = o;
-                Collections.reverse(dataList);
+                if(page==1){
+                    dataList.clear();
+                }
+                Collections.reverse(o);
+                dataList.addAll(0,o);
+                reAdapter.setNewData(dataList);
                 if (page == 1) {
-                    reAdapter.setNewData(dataList);
+
                     recyclerView.scrollToPosition(reAdapter.getData().size() - 1);
                 }
 
@@ -580,6 +581,7 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        dataList.clear();
         EventBus.getDefault().removeStickyEvent(this);
         EventBus.getDefault().unregister(this);
         PictureFileUtils.deleteCacheDirFile(ChatMsgActivity.this);

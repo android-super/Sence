@@ -10,11 +10,11 @@
         tools:context=".activity.WebActivity">
 
     <com.sence.view.PubTitle
-            app:is_back="true"
             app:tool_cover_title="web"
             app:tool_cover_background="@color/white"
             style="@style/NoLeftToolbar"
             android:id="@+id/pt_web"
+            app:is_onclick_back="true"
             android:layout_width="match_parent"
             android:layout_height="45dp"/>
 

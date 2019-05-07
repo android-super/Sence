@@ -57,14 +57,13 @@ public class WeiXinPayUtils {
         req.nonceStr = wxBean.getNonce_str();
         req.timeStamp = wxBean.getTimestamp();
 
-        List<NameValuePair> signParams = new LinkedList<NameValuePair>();
-        signParams.add(new BasicNameValuePair("appid", req.appId));
-        signParams.add(new BasicNameValuePair("noncestr", req.nonceStr));
-        signParams.add(new BasicNameValuePair("package", req.packageValue));
-        signParams.add(new BasicNameValuePair("partnerid", req.partnerId));
-        signParams.add(new BasicNameValuePair("prepayid", req.prepayId));
-        signParams.add(new BasicNameValuePair("timestamp", req.timeStamp));
-
+//        List<NameValuePair> signParams = new LinkedList<NameValuePair>();
+//        signParams.add(new BasicNameValuePair("appid", req.appId));
+//        signParams.add(new BasicNameValuePair("noncestr", req.nonceStr));
+//        signParams.add(new BasicNameValuePair("package", req.packageValue));
+//        signParams.add(new BasicNameValuePair("partnerid", req.partnerId));
+//        signParams.add(new BasicNameValuePair("prepayid", req.prepayId));
+//        signParams.add(new BasicNameValuePair("timestamp", req.timeStamp));
         req.sign = wxBean.getSign();
     }
 

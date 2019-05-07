@@ -39,6 +39,7 @@ public class PubTitle extends Toolbar {
 
     private boolean is_back = true;
     private boolean is_animator_back = false;
+    private boolean is_onclick_back = false;
     private int tool_cover_background = 0x00ffffff;
     private String tool_cover_title;
     private Drawable tool_cover_right_img;
@@ -64,6 +65,7 @@ public class PubTitle extends Toolbar {
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.PubTitle);
         is_back = array.getBoolean(R.styleable.PubTitle_is_back, is_back);
         is_animator_back = array.getBoolean(R.styleable.PubTitle_is_animator_back, is_animator_back);
+        is_animator_back = array.getBoolean(R.styleable.PubTitle_is_onclick_back, is_onclick_back);
         tool_cover_background = array.getColor(R.styleable.PubTitle_tool_cover_background, tool_cover_background);
         tool_cover_title = array.getString(R.styleable.PubTitle_tool_cover_title);
         tool_cover_right_img = array.getDrawable(R.styleable.PubTitle_tool_cover_right_img);
@@ -144,6 +146,9 @@ public class PubTitle extends Toolbar {
         back_img.setImageResource(R.drawable.fanhui);
         back_img.setScaleType(ImageView.ScaleType.CENTER);
         parent.addView(back_img);
+        if(is_onclick_back){
+            return;
+        }
         if (is_animator_back) {
             back_img.setOnClickListener(new OnClickListener() {
                 @Override
@@ -194,6 +199,14 @@ public class PubTitle extends Toolbar {
         }
         if (right_img != null) {
             right_img.setOnClickListener(listener);
+        }
+    }
+    public void setBackOnClick(View.OnClickListener listener) {
+        if (back_img != null) {
+            back_img.setOnClickListener(listener);
+        }
+        if (back_img != null) {
+            back_img.setOnClickListener(listener);
         }
     }
 }

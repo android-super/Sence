@@ -686,7 +686,11 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                 if ("0".equals(bean.getIsMember())) {
                     intentBuy.putExtra("price", bean.getPrice());
                 } else {
-                    intentBuy.putExtra("price", bean.getVprice());
+                    if("0".equals(bean.getVprice())){
+                        intentBuy.putExtra("price", bean.getPrice());
+                    }else {
+                        intentBuy.putExtra("price", bean.getVprice());
+                    }
                 }
                 intentBuy.putExtra("name", bean.getName());
                 intentBuy.putExtra("img", bean.getImg());

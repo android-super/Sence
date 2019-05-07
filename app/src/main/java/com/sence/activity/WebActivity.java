@@ -4,20 +4,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.net.http.SslError;
-import android.webkit.JavascriptInterface;
-import android.webkit.SslErrorHandler;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-
+import android.view.View;
+import android.webkit.*;
+import butterknife.BindView;
+import com.sence.MainActivity;
 import com.sence.R;
 import com.sence.activity.web.WebConstans;
 import com.sence.base.BaseActivity;
 import com.sence.utils.StatusBarUtil;
 import com.sence.view.PubTitle;
 
-import butterknife.BindView;
+import static com.sence.activity.web.WebConstans.WebCode.XTTZ;
 
 /**
  * WebView页面
@@ -31,6 +28,7 @@ public class WebActivity extends BaseActivity {
 
     private WebConstans.WebCode code;
     private String url = "";
+    private String titlelSys;
 
     @Override
     public int onActLayout() {
@@ -41,6 +39,15 @@ public class WebActivity extends BaseActivity {
     public void initView() {
         StatusBarUtil.setLightMode(this);
         initSetting();
+        ptWeb.setBackOnClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(code == XTTZ && titlelSys.equals("")){
+                    startActivity(new Intent(WebActivity.this, MainActivity.class));
+                }
+                finish();
+            }
+        });
         code = (WebConstans.WebCode) this.getIntent().getSerializableExtra("code");
         switch (code) {
             case GRZL:
@@ -69,7 +76,7 @@ public class WebActivity extends BaseActivity {
                 break;
             case XTTZ:
                 url = getIntent().getStringExtra("url");
-                String titlelSys = getIntent().getStringExtra("title");
+                titlelSys = getIntent().getStringExtra("title");
                 ptWeb.setTitleText(titlelSys);
                 webView.loadUrl(url);
                 break;

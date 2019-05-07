@@ -3,13 +3,24 @@ package com.sence.base;
 import android.app.Application;
 import android.content.Context;
 
+import android.content.Intent;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import androidx.appcompat.app.AlertDialog;
 import cn.jpush.android.api.JPushInterface;
 import com.blankj.utilcode.util.CrashUtils;
 import com.blankj.utilcode.util.Utils;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
+import com.scwang.smartrefresh.layout.util.DensityUtil;
+import com.sence.MainActivity;
+import com.sence.R;
+import com.sence.bean.response.PAbnormalAccountBean;
 import com.sence.net.manager.HttpClientManager;
+import com.sence.utils.JsonParseUtil;
 import com.sence.utils.SharedPreferencesUtil;
+import com.sence.utils.SocketUtils;
 import com.squareup.leakcanary.LeakCanary;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
@@ -37,6 +48,7 @@ public class BaseApp extends Application {
         initSharedPreference();
         initJPush();
         CrashUtils.init();
+
     }
 
     @Override
@@ -44,6 +56,7 @@ public class BaseApp extends Application {
         super.attachBaseContext(base);
         MultiDex.install(this);
     }
+
 
     /**
      * 极光推送

@@ -284,7 +284,11 @@ public class BusFragment extends BaseMainFragment {
                     double one_price;
                     int num;
                     if (isMember.equals("1")) {
-                        one_price = Double.parseDouble(goodsBeans.get(j).getVprice());
+                        if("0".equals(goodsBeans.get(j).getVprice())){
+                            one_price = Double.parseDouble(goodsBeans.get(j).getPrice());
+                        }else{
+                            one_price = Double.parseDouble(goodsBeans.get(j).getVprice());
+                        }
                     } else {
                         one_price = Double.parseDouble(goodsBeans.get(j).getPrice());
                     }
@@ -323,7 +327,11 @@ public class BusFragment extends BaseMainFragment {
                     double one_price;
                     int num;
                     if (isMember.equals("1")) {
-                        one_price = Double.parseDouble(goodsBeans.get(j).getVprice());
+                        if("0".equals(goodsBeans.get(j).getVprice())){
+                            one_price = Double.parseDouble(goodsBeans.get(j).getPrice());
+                        }else{
+                            one_price = Double.parseDouble(goodsBeans.get(j).getVprice());
+                        }
                     } else {
                         one_price = Double.parseDouble(goodsBeans.get(j).getPrice());
                     }
