@@ -2,6 +2,7 @@ package com.sence;
 
 import android.Manifest;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,6 +11,7 @@ import com.blankj.utilcode.util.PhoneUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.sence.activity.WebActivity;
 import com.sence.activity.web.WebConstans;
+import com.sence.activity.web.WebLinkActivity;
 import com.sence.bean.request.RStartPictureBean;
 import com.sence.bean.response.PStartPictureBean;
 import com.sence.net.HttpCode;
@@ -33,6 +35,8 @@ public class SplashActivity extends AppCompatActivity {
     private Disposable disposable;
     private ImageView ivPicture, ivFullPicture;
     private PStartPictureBean bean;
+    private boolean isload = true;
+    private boolean isloadpic = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +53,13 @@ public class SplashActivity extends AppCompatActivity {
         ivFullPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(isload){
+                   return;
+                }
                 if(bean.getLink()!=null){
-                    Intent intent = new Intent(SplashActivity.this, WebActivity.class);
+                    disposable.dispose();
+                    Intent intent = new Intent(SplashActivity.this, WebLinkActivity.class);
                     intent.putExtra("url", bean.getLink());
-                    intent.putExtra("title", "");
-                    intent.putExtra("code", WebConstans.WebCode.XTTZ);
                     startActivity(intent);
                     finish();
                 }
@@ -62,11 +68,13 @@ public class SplashActivity extends AppCompatActivity {
         ivPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(isloadpic){
+                    return;
+                }
                 if(bean.getLink()!=null){
-                    Intent intent = new Intent(SplashActivity.this, WebActivity.class);
+                    disposable.dispose();
+                    Intent intent = new Intent(SplashActivity.this, WebLinkActivity.class);
                     intent.putExtra("url", bean.getLink());
-                    intent.putExtra("title", "");
-                    intent.putExtra("code", WebConstans.WebCode.XTTZ);
                     startActivity(intent);
                     finish();
                 }
@@ -105,8 +113,14 @@ public class SplashActivity extends AppCompatActivity {
             public void onSuccess(PStartPictureBean o, String msg) {
                 bean = o;
                 if ("0".equals(o.getIs_full())) {
+                    if(o.getLink()!=null||"".equals(o.getLink())){
+                        isload=false;
+                    }
                     GlideUtils.getInstance().loadNormal(o.getImg(), ivFullPicture);
                 } else {
+                    if(o.getLink()!=null||"".equals(o.getLink())){
+                        isloadpic=false;
+                    }
                     GlideUtils.getInstance().loadNormal(o.getImg(), ivPicture);
                 }
 

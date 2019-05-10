@@ -12,12 +12,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import android.widget.*;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.alipay.sdk.app.PayTask;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -47,22 +47,16 @@ import com.sence.utils.LoginStatus;
 import com.sence.utils.SharedPreferencesUtil;
 import com.sence.wxapi.WeiXinPayUtils;
 import com.sence.zhifubao.PayResult;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class MyOrderFragment extends Fragment implements View.OnClickListener {
 
@@ -81,7 +75,7 @@ public class MyOrderFragment extends Fragment implements View.OnClickListener {
     private TextView tvMinutePay;
     private TextView tvSecondPay;
     private ImageView ivZhiPay;
-    private ImageView ivWeiPay;
+    private ImageView ivWeiPay,ivBalPay;
     private int time;
     private int PAYMENTTYPE = 2;
     private AlertDialog dialog;
@@ -192,18 +186,28 @@ public class MyOrderFragment extends Fragment implements View.OnClickListener {
             case R.id.ll_zhi_pay:
                 ivZhiPay.setImageResource(R.drawable.xuanzhong);
                 ivWeiPay.setImageResource(R.drawable.weixuan);
+                ivBalPay.setImageResource(R.drawable.weixuan);
                 PAYMENTTYPE=2;
                 break;
             case R.id.ll_wei_pay:
                 ivWeiPay.setImageResource(R.drawable.xuanzhong);
                 ivZhiPay.setImageResource(R.drawable.weixuan);
+                ivBalPay.setImageResource(R.drawable.weixuan);
                 PAYMENTTYPE=1;
+                break;
+            case R.id.ll_bal_pay:
+                ivWeiPay.setImageResource(R.drawable.weixuan);
+                ivZhiPay.setImageResource(R.drawable.weixuan);
+                ivBalPay.setImageResource(R.drawable.xuanzhong);
+                PAYMENTTYPE=3;
                 break;
             case R.id.bt_pay_pay:
                 if(PAYMENTTYPE==1){
                     PayWx();
                 }else if(PAYMENTTYPE == 2){
                     aLiPay();
+                }else if(PAYMENTTYPE == 3){
+                    confirmbal();
                 }
                 mBottomSheetDialog.dismiss();
                 break;
@@ -212,6 +216,67 @@ public class MyOrderFragment extends Fragment implements View.OnClickListener {
                 break;
         }
     }
+
+    private void confirmbal() {
+        View view = View.inflate(getActivity(), R.layout.alter_deleteorder, null);
+        dialog = new AlertDialog.Builder(getActivity(), R.style.AlertDialogStyle).create();
+        dialog.setView(view);
+        dialog.getWindow().setLayout(new DensityUtil().dip2px(270), LinearLayout.LayoutParams.WRAP_CONTENT);
+        dialog.show();
+        TextView mTitle = view.findViewById(R.id.tv_title_deleteorder);
+        mTitle.setText("支付信息");
+        TextView mContent = view.findViewById(R.id.tv_content_deleteorder);
+        mContent.setText("使用余额账户付款，付款金额："+listBeans.get(postion).getNeedpay()+"元");
+        TextView mCancel = view.findViewById(R.id.tv_cancel_deleteorder);
+        mCancel.setText("取消付款");
+        TextView mConfirm = view.findViewById(R.id.tv_confirm_deleteorder);
+        mConfirm.setText("确认付款");
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+        mCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                mBottomSheetDialog.show();
+            }
+        });
+
+        mConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                dalpay();
+            }
+        });
+    }
+
+    private void dalpay() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.PAY_BAl, new RWxPayBean(LoginStatus.getUid(), "1",listBeans.get(postion).getNeedpay()+"",
+                listBeans.get(postion).getId())).request(new ApiCallBack<String>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+                if(code==2){
+                    alterBal();
+                }
+            }
+
+            @Override
+            public void onSuccess(String o, String msg) {
+                Logger.e("msg==========" + msg);
+                alterDone();
+            }
+        });
+    }
+
+    private void alterBal() {
+
+    }
+
     /**
      * 微信
      */
@@ -369,8 +434,10 @@ public class MyOrderFragment extends Fragment implements View.OnClickListener {
         tvSecondPay = mView.findViewById(R.id.tv_second_pay);
         ivZhiPay = mView.findViewById(R.id.iv_zhi_pay);
         ivWeiPay = mView.findViewById(R.id.iv_wei_pay);
+        ivBalPay = mView.findViewById(R.id.iv_bal_pay);
         ImageView ivBackPay = mView.findViewById(R.id.iv_back_pay);
         Button btPayPay = mView.findViewById(R.id.bt_pay_pay);
+        mView.findViewById(R.id.ll_bal_pay).setOnClickListener(this);
         mView.findViewById(R.id.iv_back_pay).setOnClickListener(this);
         mView.findViewById(R.id.ll_zhi_pay).setOnClickListener(this);
         mView.findViewById(R.id.ll_wei_pay).setOnClickListener(this);

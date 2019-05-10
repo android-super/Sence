@@ -78,7 +78,7 @@ public class BaseApp extends Application {
     private void initUM() {
         UMConfigure.init(this, "5c99859a203657099a00116c", "umeng", UMConfigure.DEVICE_TYPE_PHONE,
                 "");
-        PlatformConfig.setWeixin("wx4045a7f46e598ff1", "17e8a40b58971544024dd0a1328b3a55");
+        PlatformConfig.setWeixin("wxed0cf4063d6f539d", "789850efdf9fc83211a684826c89e7e3");
 
     }
 

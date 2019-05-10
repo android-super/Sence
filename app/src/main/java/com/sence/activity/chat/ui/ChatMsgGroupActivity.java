@@ -288,7 +288,7 @@ public class ChatMsgGroupActivity extends BaseActivity implements View.OnClickLi
     }
 
     //添加聊天记录
-    private void sendChatMessage(boolean isImgMsg) {
+    private void sendChatMessage(boolean isImgMsg,final PChatMessageBean.MessageBean messageInfo) {
         HttpManager httpManager;
         if (isImgMsg) {
             httpManager =
@@ -312,7 +312,17 @@ public class ChatMsgGroupActivity extends BaseActivity implements View.OnClickLi
 
             @Override
             public void onSuccess(Object o, String msg) {
-
+                messageInfo.setUid(uid);
+                int currentTime = (int) (System.currentTimeMillis() / 1000);
+                messageInfo.setAdd_time(currentTime);
+                if ((currentTime - lastVisibleTime) / 60 > 10) {
+                    lastVisibleTime = currentTime;
+                    messageInfo.setTimeVisible(true);
+                } else {
+                    messageInfo.setTimeVisible(false);
+                }
+                reAdapter.addData(messageInfo);
+                recyclerView.scrollToPosition(reAdapter.getData().size() - 1);
             }
         });
     }
@@ -398,26 +408,14 @@ public class ChatMsgGroupActivity extends BaseActivity implements View.OnClickLi
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void MessageEventBus(final PChatMessageBean.MessageBean messageInfo) {
-        messageInfo.setUid(uid);
-        int currentTime = (int) (System.currentTimeMillis() / 1000);
-        messageInfo.setAdd_time(currentTime);
-        if ((currentTime - lastVisibleTime) / 60 > 10) {
-            lastVisibleTime = currentTime;
-            messageInfo.setTimeVisible(true);
-        } else {
-            messageInfo.setTimeVisible(false);
-        }
-        reAdapter.addData(messageInfo);
-        recyclerView.scrollToPosition(reAdapter.getData().size() - 1);
         type = messageInfo.getType();
-
         if (type == 1) {
-            sendChatMessage(false);
+            sendChatMessage(false,messageInfo);
         } else {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    sendChatMessage(true);
+                    sendChatMessage(true,messageInfo);
                 }
             }).start();
         }

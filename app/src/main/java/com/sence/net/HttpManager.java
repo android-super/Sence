@@ -35,7 +35,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class HttpManager<P> {
     private static HttpManager httpManager;
-
+    public boolean isclick = true;
     public static HttpManager getInstance() {
         if (httpManager == null) {
             synchronized (HttpManager.class) {
@@ -289,6 +289,9 @@ public class HttpManager<P> {
             case PAY_WX:
                 observable = httpService.PayWx(requestBean.getMap());
                 break;
+            case PAY_BAl:
+                observable = httpService.PayBal(requestBean.getMap());
+                break;
             case START_PICTURE:
                 observable = httpService.StartPicture(requestBean.getMap());
                 break;
@@ -375,6 +378,7 @@ public class HttpManager<P> {
      * @param apiCallBack
      */
     public void request(final ApiCallBack<P> apiCallBack) {
+        isclick = true;
         if (apiCallBack == null) {
             return;
         }
@@ -388,6 +392,7 @@ public class HttpManager<P> {
 
             @Override
             public void onNext(BaseResponseBean<P> result) {
+                isclick = false;
                 Logger.e("status===>" + result.getStatus() + "\nmsg===>" + result.getMsg() + "\ndata===>" + result.getData().toString());
                 if (!disposable.isDisposed()) {
                     if (result.getStatus() == 1) {

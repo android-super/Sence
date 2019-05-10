@@ -3,6 +3,7 @@ package com.sence.base;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
 import com.sence.MainActivity;
 import com.sence.R;
 import com.sence.bean.response.PAbnormalAccountBean;
+import com.sence.net.HttpManager;
 import com.sence.utils.JsonParseUtil;
 import com.sence.utils.LoginStatus;
 import com.sence.utils.SharedPreferencesUtil;
@@ -40,6 +42,12 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseInte
             }
         });
     }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return HttpManager.getInstance().isclick;
+    }
+
     private void alter(String data){
         View view = View.inflate(this, R.layout.layout_abnormal_account, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogStyle);

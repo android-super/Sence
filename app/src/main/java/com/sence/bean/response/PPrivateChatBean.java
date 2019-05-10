@@ -26,7 +26,7 @@ public class PPrivateChatBean {
     private String img;
     private String nick_name;
     private String avatar;
-    private String add_time;
+    private String time;
 
     public String getId() {
         return id;
@@ -108,11 +108,11 @@ public class PPrivateChatBean {
         this.avatar = avatar;
     }
 
-    public String getAdd_time() {
-        return add_time;
+    public String getTime() {
+        return time;
     }
 
-    public void setAdd_time(String add_time) {
-        this.add_time = add_time;
+    public void setTime(String time) {
+        this.time = time;
     }
 }

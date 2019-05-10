@@ -8,7 +8,7 @@ import android.os.Build;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
+import androidx.core.app.ActivityOptionsCompat;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -18,8 +18,6 @@ import com.sence.activity.NoteVideoDetailActivity;
 import com.sence.bean.response.PMyInfoBean;
 import com.sence.utils.GlideUtils;
 import com.sence.view.NiceImageView;
-
-import androidx.core.app.ActivityOptionsCompat;
 
 /**
  * Created by zwy on 2019/3/18.

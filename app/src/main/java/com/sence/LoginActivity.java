@@ -104,9 +104,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
 
-    public void Login(String wechat_openid, final Map<String, String> map) {
+    public void Login( String wechat_openid, String unionid, final Map<String, String> map) {
         HttpManager.getInstance().PlayNetCode(HttpCode.USER_LOGIN, new RLoginBean(wechat_openid, "android",
-                PhoneUtils.getIMEI())).request(new ApiCallBack<PUserBean>() {
+                PhoneUtils.getIMEI(),unionid)).request(new ApiCallBack<PUserBean>() {
             @Override
             public void onFinish() {
 
@@ -160,7 +160,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
             if (UMShareAPI.get(LoginActivity.this).isAuthorize(LoginActivity.this, SHARE_MEDIA.WEIXIN)) {
                 String open_id = map.get("openid");
-                Login(open_id, map);
+                String unionid = map.get("unionid");
+                Login(open_id,unionid, map);
             }
         }
 

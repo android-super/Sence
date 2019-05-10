@@ -11,11 +11,20 @@ public class RLoginBean extends BaseRequestBean {
     private String wechat_openid;
     private String device_type;
     private String device;
-
-    public RLoginBean(String wechat_openid, String device_type, String device) {
+    private String wechat_unionid;
+    public RLoginBean(String wechat_openid, String device_type, String device,String wechat_unionid) {
         this.wechat_openid = wechat_openid;
         this.device_type = device_type;
         this.device = device;
+        this.wechat_unionid = wechat_unionid;
+    }
+
+    public String getWechat_unionid() {
+        return wechat_unionid;
+    }
+
+    public void setWechat_unionid(String wechat_unionid) {
+        this.wechat_unionid = wechat_unionid;
     }
 
     public String getDevice() {

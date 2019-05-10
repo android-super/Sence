@@ -77,12 +77,8 @@ public class BusTopAdapter extends BaseQuickAdapter<PBusBean.CartBean, BaseViewH
             helper.setGone(R.id.item_discount_layout, true);
             helper.setText(R.id.item_discount, "活动优惠-￥:" + item.getFavourable());
         }
-        if ("1".equals(item.getExpress())) {
-            helper.setText(R.id.item_kind_cost, "包邮");
-        } else if ("2".equals(item.getExpress())) {
-            helper.setText(R.id.item_kind_cost, "已免邮费");
-        } else {
-            helper.setText(R.id.item_kind_cost, "还差些钱才能免邮");
+        if ("0".equals(item.getPostage())||"0.00".equals(item.getPostage())||"0.0".equals(item.getPostage())) {
+            helper.setVisible(R.id.item_kind_cost,false);
         }
         final TextView item_name_select = helper.getView(R.id.item_name_select);
         if (item.isSelect()) {

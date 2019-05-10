@@ -352,10 +352,10 @@ public class BitmapUtils {
         int length = source.getWidth() < source.getHeight() ? source.getWidth() : source.getHeight();
         Paint paint = new Paint();
         paint.setAntiAlias(true);
-        Bitmap target = Bitmap.createBitmap(length, length, Bitmap.Config.ARGB_8888);
+        Bitmap target = Bitmap.createBitmap(length, length, Config.ARGB_8888);
         Canvas canvas = new Canvas(target);
         canvas.drawCircle(length / 2, length / 2, length / 2, paint);
-        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
         canvas.drawBitmap(source, 0, 0, paint);
         return target;
     }

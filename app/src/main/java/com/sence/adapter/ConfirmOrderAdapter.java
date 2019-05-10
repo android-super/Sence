@@ -41,7 +41,7 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<ConfirmOrderAdapte
         ConfirmOrderItemAdapter confirmOrderItemAdapter = new ConfirmOrderItemAdapter(context);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
-        if("1".equals(list.get(position).getExpress())){
+        if("0".equals(list.get(position).getAll_postage())||"0.00".equals(list.get(position).getAll_postage())||"0.0".equals(list.get(position).getAll_postage())){
             holder.mExmption.setVisibility(View.VISIBLE);
         }
         holder.mRecyclerView.setLayoutManager(linearLayoutManager);

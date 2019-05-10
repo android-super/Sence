@@ -177,8 +177,8 @@ public class FlowLayout extends ViewGroup {
 
         listData = list;
         //往容器内添加TextView数据
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
+                LayoutParams.WRAP_CONTENT);
         layoutParams.setMargins(15, 8, 15, 8);
         removeAllViews();
         if(list.length==0){

@@ -396,6 +396,10 @@ public interface HttpService {
     Observable<BaseResponseBean<PWxPayBean>> PayWx(@FieldMap Map<String, Object> map);//微信支付
 
     @FormUrlEncoded
+    @POST(Urls.PAY_BAL)
+    Observable<BaseResponseBean<String>> PayBal(@FieldMap Map<String, Object> map);//微信支付
+
+    @FormUrlEncoded
     @POST(Urls.START_PICTURE)
     Observable<BaseResponseBean<PStartPictureBean>> StartPicture(@FieldMap Map<String, Object> map);//启动图片
 

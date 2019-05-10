@@ -9,18 +9,15 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.CAMERA"/> <!-- 允许程序访问CellID或WiFi热点来获取粗略的位置 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
-
-    <!-- Required -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/> <!-- Required -->
     <permission
             android:name="com.sence.permission.JPUSH_MESSAGE"
-            android:protectionLevel="signature"/>
-
-    <!-- Required  一些系统要求的权限，如访问网络等-->
+            android:protectionLevel="signature"/> <!-- Required  一些系统要求的权限，如访问网络等 -->
     <uses-permission android:name="com.sence.permission.JPUSH_MESSAGE"/>
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT"/>
     <uses-permission
@@ -28,25 +25,26 @@
             tools:ignore="ProtectedPermissions"/>
     <uses-permission
             android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
-            tools:ignore="ProtectedPermissions"/>
-    <!-- Optional for location -->
+            tools:ignore="ProtectedPermissions"/> <!-- Optional for location -->
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/> <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
     <uses-permission android:name="android.permission.GET_TASKS"/>
 
-
     <application
             android:name=".base.BaseApp"
             android:allowBackup="true"
             android:icon="@drawable/load"
             android:label="@string/app_name"
-            android:roundIcon="@drawable/load"
             android:networkSecurityConfig="@xml/network_security_config"
+            android:roundIcon="@drawable/load"
             android:supportsRtl="true"
             android:theme="@style/AppThemeNoActionBar"
             tools:replace="android:theme">
+        <activity android:name=".activity.web.WebLinkActivity">
+        </activity>
+
         <service android:name=".utils.UpdateService"/>
 
         <activity android:name=".activity.ReportCauseActivity">
@@ -60,9 +58,7 @@
         <activity android:name=".activity.InformActivity">
         </activity>
         <activity android:name=".activity.ImgFlexActivity">
-        </activity>
-
-        <!-- Rich push 核心功能 since 2.0.6-->
+        </activity> <!-- Rich push 核心功能 since 2.0.6 -->
         <meta-data
                 android:name="JPUSH_CHANNEL"
                 android:value="developer-default"/>
@@ -72,54 +68,48 @@
 
         <activity
                 android:name="cn.jpush.android.ui.PopWinActivity"
-                android:theme="@style/MyDialogStyle"
-                android:exported="false">
-        </activity>
-        <!-- Required SDK核心功能-->
+                android:exported="false"
+                android:theme="@style/MyDialogStyle">
+        </activity> <!-- Required SDK核心功能 -->
         <activity
                 android:name="cn.jpush.android.ui.PushActivity"
                 android:configChanges="orientation|keyboardHidden"
-                android:theme="@android:style/Theme.NoTitleBar"
-                android:exported="false">
+                android:exported="false"
+                android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="cn.jpush.android.ui.PushActivity"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="com.sence"/>
             </intent-filter>
-        </activity>
-        <!-- Required SDK 核心功能-->
+        </activity> <!-- Required SDK 核心功能 -->
         <!-- 可配置android:process参数将PushService放在其他进程中 -->
         <service
                 android:name="cn.jpush.android.service.PushService"
-                android:process=":pushcore"
-                android:exported="false">
+                android:exported="false"
+                android:process=":pushcore">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.REGISTER"/>
                 <action android:name="cn.jpush.android.intent.REPORT"/>
                 <action android:name="cn.jpush.android.intent.PushService"/>
                 <action android:name="cn.jpush.android.intent.PUSH_TIME"/>
             </intent-filter>
-        </service>
-        <!-- since 3.0.9 Required SDK 核心功能-->
+        </service> <!-- since 3.0.9 Required SDK 核心功能 -->
         <provider
-                android:authorities="com.sence.DataProvider"
                 android:name="cn.jpush.android.service.DataProvider"
-                android:process=":pushcore"
+                android:authorities="com.sence.DataProvider"
                 android:exported="false"
-                />
-        <!-- since 3.1.0 Required SDK 核心功能-->
+                android:process=":pushcore"/> <!-- since 3.1.0 Required SDK 核心功能 -->
         <provider
-                android:authorities="com.sence.DownloadProvider"
                 android:name="cn.jpush.android.service.DownloadProvider"
-                android:exported="true"/>
-        <!-- Required SDK核心功能-->
+                android:authorities="com.sence.DownloadProvider"
+                android:exported="true"/> <!-- Required SDK核心功能 -->
         <receiver
                 android:name="cn.jpush.android.service.PushReceiver"
                 android:enabled="true"
                 android:exported="false">
             <intent-filter android:priority="1000">
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY"/>   <!--Required  显示通知栏 -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY"/> <!-- Required  显示通知栏 -->
                 <category android:name="com.sence"/>
             </intent-filter>
             <intent-filter>
@@ -133,24 +123,20 @@
 
                 <data android:scheme="package"/>
             </intent-filter>
-        </receiver>
-
-        <!-- Required SDK核心功能-->
+        </receiver> <!-- Required SDK核心功能 -->
         <receiver
                 android:name="cn.jpush.android.service.AlarmReceiver"
-                android:exported="false"/>
-
-        <!-- User defined.  For test only  用户自定义的广播接收器-->
+                android:exported="false"/> <!-- User defined.  For test only  用户自定义的广播接收器 -->
         <receiver
-                android:name="com.sence.jpush.MyReceiver"
-                android:exported="false"
-                android:enabled="true">
+                android:name=".jpush.MyReceiver"
+                android:enabled="true"
+                android:exported="false">
             <intent-filter>
-                <action android:name="cn.jpush.android.intent.REGISTRATION"/> <!--Required  用户注册SDK的intent-->
-                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED"/> <!--Required  用户接收SDK消息的intent-->
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED"/> <!--Required  用户接收SDK通知栏信息的intent-->
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED"/> <!--Required  用户打开自定义通知栏的intent-->
-                <action android:name="cn.jpush.android.intent.CONNECTION"/><!-- 接收网络变化 连接/断开 since 1.6.3 -->
+                <action android:name="cn.jpush.android.intent.REGISTRATION"/> <!-- Required  用户注册SDK的intent -->
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED"/> <!-- Required  用户接收SDK消息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED"/> <!-- Required  用户接收SDK通知栏信息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED"/> <!-- Required  用户打开自定义通知栏的intent -->
+                <action android:name="cn.jpush.android.intent.CONNECTION"/> <!-- 接收网络变化 连接/断开 since 1.6.3 -->
                 <category android:name="com.sence"/>
             </intent-filter>
         </receiver>
@@ -168,8 +154,7 @@
                 android:configChanges="orientation|keyboardHidden|navigation"
                 android:exported="false"
                 android:screenOrientation="behind"
-                android:windowSoftInputMode="adjustResize|stateHidden"/>
-        <!-- 微信支付 -->
+                android:windowSoftInputMode="adjustResize|stateHidden"/> <!-- 微信支付 -->
         <activity
                 android:name=".wxapi.WXEntryActivity"
                 android:configChanges="keyboardHidden|orientation|screenSize"
@@ -250,6 +235,16 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+
+                <data
+                        android:host="sence.com"
+                        android:scheme="senceowne"/>
+            </intent-filter>
         </activity>
         <activity android:name=".activity.MyAccountActivity">
         </activity>
@@ -296,7 +291,7 @@
                 android:value="b9423c91ab0d7939f4a816ee945a54c4"/>
         <meta-data
                 android:name="UMENG_CHANNEL"
-                android:value="${UMENG_CHANNEL_VALUE}" />
+                android:value="${UMENG_CHANNEL_VALUE}"/>
     </application>
 
 </manifest>

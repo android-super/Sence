@@ -1,77 +1,46 @@
-package com.sence.activity;
+package com.sence.activity.web;
 
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.net.http.SslError;
+import android.os.Bundle;
 import android.view.View;
 import android.webkit.*;
+import android.widget.ImageView;
+import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.sence.MainActivity;
 import com.sence.R;
-import com.sence.activity.web.WebConstans;
-import com.sence.base.BaseActivity;
+import com.sence.activity.MyAccountActivity;
 import com.sence.utils.StatusBarUtil;
-import com.sence.view.PubTitle;
 
-import static com.sence.activity.web.WebConstans.WebCode.XTTZ;
+public class WebLinkActivity extends AppCompatActivity {
 
-/**
- * WebView页面
- */
-public class WebActivity extends BaseActivity {
+    @BindView(R.id.iv_back_web)
+    ImageView ivBackWeb;
     @BindView(R.id.webView)
     WebView webView;
-    @BindView(R.id.pt_web)
-    PubTitle ptWeb;
     private WebSettings settings;
-
-    private WebConstans.WebCode code;
-    private String url = "";
-    private String titlelSys;
+    private String url;
 
     @Override
-    public int onActLayout() {
-        return R.layout.activity_web;
-    }
-
-    @Override
-    public void initView() {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_web_link);
+        ButterKnife.bind(this);
         StatusBarUtil.setLightMode(this);
+        url = getIntent().getStringExtra("url");
         initSetting();
-        code = (WebConstans.WebCode) this.getIntent().getSerializableExtra("code");
-        switch (code) {
-            case GRZL:
-                webView.loadUrl(url);
-                break;
-            case SPXQ:
-                webView.loadUrl(url);
-                break;
-            case WZXQ:
-                webView.loadUrl(url);
-                break;
-            case YHXX:
-                ptWeb.setTitleText("用户协议");
-                url = WebConstans.YHXX;
-                webView.loadUrl(url);
-                break;
-            case YSZC:
-                ptWeb.setTitleText("隐私政策");
-                url = WebConstans.YSZC;
-                webView.loadUrl(url);
-                break;
-            case HYXY:
-                ptWeb.setTitleText("会员协议");
-                url = WebConstans.HYXY;
-                webView.loadUrl(url);
-                break;
-            case XTTZ:
-                url = getIntent().getStringExtra("url");
-                titlelSys = getIntent().getStringExtra("title");
-                ptWeb.setTitleText(titlelSys);
-                webView.loadUrl(url);
-                break;
-        }
+        webView.loadUrl(url);
+        ivBackWeb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(WebLinkActivity.this, MainActivity.class));
+                finish();
+            }
+        });
     }
 
     private void initSetting() {
@@ -94,7 +63,6 @@ public class WebActivity extends BaseActivity {
         webView.setFocusable(true);
         webView.requestFocus();
         webView.setWebChromeClient(new WebChromeClient());  //解决android与H5协议交互,弹不出对话框问题
-        webView.addJavascriptInterface(new JsInterface(this), "Android");
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
@@ -120,31 +88,15 @@ public class WebActivity extends BaseActivity {
             }
         });
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         if(webView!=null){
+            webView.stopLoading();
             webView.destroy();
         }
     }
-    public class JsInterface {
-        private Context mContext;
 
-        public JsInterface(Context context) {
-            this.mContext = context;
-        }
 
-        //在js中调用window.AndroidWebView.showInfoFromJs(name)，便会触发此方法。
-        @JavascriptInterface
-        public void closeBtnClick() {
-            finish();
-        }
-
-        @JavascriptInterface
-        public void accountClick() {
-            Intent intent = new Intent(WebActivity.this, MyAccountActivity.class);
-            startActivity(intent);
-        }
-
-    }
 }

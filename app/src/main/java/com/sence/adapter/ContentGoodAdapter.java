@@ -1,6 +1,9 @@
 package com.sence.adapter;
 
+import android.annotation.TargetApi;
+import android.content.Intent;
 import android.graphics.Paint;
+import android.os.Build;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -8,6 +11,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sence.R;
+import com.sence.activity.ShopDetailsActivity;
 import com.sence.bean.response.PContentDetailBean;
 import com.sence.utils.GlideUtils;
 
@@ -41,5 +45,13 @@ public class ContentGoodAdapter extends BaseQuickAdapter<PContentDetailBean.Note
         item_pre_price_describe.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         item_pre_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         helper.addOnClickListener(R.id.item_bus);
+        helper.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(helper.itemView.getContext(), ShopDetailsActivity.class);
+                intent.putExtra("id", item.getId());
+                helper.itemView.getContext().startActivity(intent);
+            }
+        });
     }
 }

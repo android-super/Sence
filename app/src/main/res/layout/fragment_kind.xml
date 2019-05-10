@@ -16,7 +16,7 @@
             >
 
         <TextView
-                android:text="分类"
+                android:text="商品分类"
                 android:gravity="center"
                 android:textSize="18sp"
                 android:textColor="@color/black"

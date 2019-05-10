@@ -37,8 +37,8 @@ public class UpdateService extends Service {
     private PendingIntent pendingIntent;
     private int notification_id = 96;
 
-    private UpdateService.DownloadBinder binder = new UpdateService.DownloadBinder();
-    private UpdateService.DownloadCallback callback;
+    private DownloadBinder binder = new DownloadBinder();
+    private DownloadCallback callback;
 
 
     /**
@@ -87,7 +87,7 @@ public class UpdateService extends Service {
      * @author user
      */
     public class DownloadBinder extends Binder {
-        public void start(UpdateService.DownloadCallback callback, String app_name, String down_url) {
+        public void start(DownloadCallback callback, String app_name, String down_url) {
             //下载
             startDownload(callback, app_name, down_url);
         }
@@ -96,7 +96,7 @@ public class UpdateService extends Service {
     /**
      * 下载模块
      */
-    private void startDownload(final UpdateService.DownloadCallback callback, String app_name, String down_url) {
+    private void startDownload(final DownloadCallback callback, String app_name, String down_url) {
         this.callback = callback;
         this.app_name = app_name;
         this.down_url = down_url;

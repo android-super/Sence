@@ -34,7 +34,7 @@
         <ImageView
                 android:layout_alignParentRight="true"
                 android:id="@+id/release"
-                android:src="@drawable/main_fabiaobij"
+                android:src="@drawable/main_fabu"
                 android:layout_width="50dp"
                 android:scaleType="center"
                 android:layout_height="28dp"/>

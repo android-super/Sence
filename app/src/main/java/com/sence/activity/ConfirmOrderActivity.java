@@ -99,7 +99,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private String isMember;
     private BottomSheetDialog mBottomSheetDialog;
     private TextView tvPricePay, tvTimePay, tvMinutePay, tvSecondPay;
-    private ImageView ivZhiPay, ivWeiPay, ivBackPay;
+    private ImageView ivZhiPay, ivWeiPay, ivBackPay,ivBalPay;
     private Button btPayPay;
     private List<PBusBean.CartBean> listData = new ArrayList<>();
     private Double priceAll = 0.0;
@@ -173,25 +173,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     }
     @Override
     public void initData() {
-        isCheckAddress = LoginStatus.getIsCheckShopAddress();
-        boolean isNullAddress = LoginStatus.getIsNullShopAddress();
-        if(isNullAddress){
-            SharedPreferencesUtil.getInstance().putBoolean("isnull_shopaddress", false);
-            rlAddaddressConfirmorder.setVisibility(View.VISIBLE);
-            rlAddressConfirmorder.setVisibility(View.GONE);
-        }
-        if(isCheckAddress){
-            rlAddaddressConfirmorder.setVisibility(View.GONE);
-            rlAddressConfirmorder.setVisibility(View.VISIBLE);
-            address = LoginStatus.getAddress();
-            nameAddress = LoginStatus.getNameAddress();
-            phoneAddress = LoginStatus.getPhoneAddress();
-            idAddress = LoginStatus.getIdAddress();
-            tvAddressConfirmorder.setText(address);
-            tvPhoneConfirmorder.setText(phoneAddress);
-            tvNameConfirmorder.setText(nameAddress);
-            SharedPreferencesUtil.getInstance().putBoolean("ischeck_shopaddress", false);
-        }
+
 
     }
 
@@ -232,6 +214,26 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         }else if("payfail".equals(LoginStatus.getPayType())){
             SharedPreferencesUtil.getInstance().putString("paytype", "");
             alter();
+        }
+
+        isCheckAddress = LoginStatus.getIsCheckAddress();
+        boolean isNullAddress = LoginStatus.getIsNullShopAddress();
+        if(isNullAddress){
+            SharedPreferencesUtil.getInstance().putBoolean("isnull_shopaddress", false);
+            rlAddaddressConfirmorder.setVisibility(View.VISIBLE);
+            rlAddressConfirmorder.setVisibility(View.GONE);
+        }
+        if(isCheckAddress){
+            rlAddaddressConfirmorder.setVisibility(View.GONE);
+            rlAddressConfirmorder.setVisibility(View.VISIBLE);
+            address = LoginStatus.getAddress();
+            nameAddress = LoginStatus.getNameAddress();
+            phoneAddress = LoginStatus.getPhoneAddress();
+            idAddress = LoginStatus.getIdAddress();
+            tvAddressConfirmorder.setText(address);
+            tvPhoneConfirmorder.setText(phoneAddress);
+            tvNameConfirmorder.setText(nameAddress);
+            SharedPreferencesUtil.getInstance().putBoolean("ischeck_address", false);
         }
     }
     @OnClick({R.id.rl_address_confirmorder, R.id.bt_submint_confirmorder, R.id.rl_addaddress_confirmorder})
@@ -316,18 +318,28 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             case R.id.ll_zhi_pay:
                 ivZhiPay.setImageResource(R.drawable.xuanzhong);
                 ivWeiPay.setImageResource(R.drawable.weixuan);
+                ivBalPay.setImageResource(R.drawable.weixuan);
                 PAYMENTTYPE = 2;
                 break;
             case R.id.ll_wei_pay:
                 ivWeiPay.setImageResource(R.drawable.xuanzhong);
                 ivZhiPay.setImageResource(R.drawable.weixuan);
+                ivBalPay.setImageResource(R.drawable.weixuan);
                 PAYMENTTYPE = 1;
+                break;
+            case R.id.ll_bal_pay:
+                ivWeiPay.setImageResource(R.drawable.weixuan);
+                ivZhiPay.setImageResource(R.drawable.weixuan);
+                ivBalPay.setImageResource(R.drawable.xuanzhong);
+                PAYMENTTYPE = 3;
                 break;
             case R.id.bt_pay_pay:
                 if(PAYMENTTYPE==1){
                     PayWx();
                 }else if(PAYMENTTYPE == 2){
                     aLiPay();
+                }else if(PAYMENTTYPE == 3){
+                    confirmbal();
                 }
                 mBottomSheetDialog.dismiss();
                 break;
@@ -336,6 +348,67 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 break;
         }
     }
+
+    private void confirmbal() {
+        View view = View.inflate(ConfirmOrderActivity.this, R.layout.alter_deleteorder, null);
+        dialog = new AlertDialog.Builder(ConfirmOrderActivity.this, R.style.AlertDialogStyle).create();
+        dialog.setView(view);
+        dialog.getWindow().setLayout(new DensityUtil().dip2px(270), LinearLayout.LayoutParams.WRAP_CONTENT);
+        dialog.show();
+        TextView mTitle = view.findViewById(R.id.tv_title_deleteorder);
+        mTitle.setText("支付信息");
+        TextView mContent = view.findViewById(R.id.tv_content_deleteorder);
+        mContent.setText("使用余额账户付款，付款金额："+allprice+"元");
+        TextView mCancel = view.findViewById(R.id.tv_cancel_deleteorder);
+        mCancel.setText("取消付款");
+        TextView mConfirm = view.findViewById(R.id.tv_confirm_deleteorder);
+        mConfirm.setText("确认付款");
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+        mCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                mBottomSheetDialog.show();
+            }
+        });
+
+        mConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                dalpay();
+            }
+        });
+    }
+
+    private void dalpay() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.PAY_BAl, new RWxPayBean(LoginStatus.getUid(), "1",allprice+"",
+                oid)).request(new ApiCallBack<String>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+                if(code==2){
+                    alterBal();
+                }
+            }
+
+            @Override
+            public void onSuccess(String o, String msg) {
+                Logger.e("msg==========" + msg);
+                alterDone();
+            }
+        });
+    }
+
+    private void alterBal() {
+
+    }
+
     private void alterDone() {
         View view = View.inflate(ConfirmOrderActivity.this, R.layout.alter_deleteorder, null);
         dialog = new AlertDialog.Builder(ConfirmOrderActivity.this, R.style.AlertDialogStyle).create();
@@ -475,9 +548,11 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         tvMinutePay = mView.findViewById(R.id.tv_minute_pay);
         tvSecondPay = mView.findViewById(R.id.tv_second_pay);
         ivZhiPay = mView.findViewById(R.id.iv_zhi_pay);
+        ivBalPay = mView.findViewById(R.id.iv_bal_pay);
         ivWeiPay = mView.findViewById(R.id.iv_wei_pay);
         ivBackPay = mView.findViewById(R.id.iv_back_pay);
         btPayPay = mView.findViewById(R.id.bt_pay_pay);
+        mView.findViewById(R.id.ll_bal_pay).setOnClickListener(this);
         mView.findViewById(R.id.ll_zhi_pay).setOnClickListener(this);
         mView.findViewById(R.id.ll_wei_pay).setOnClickListener(this);
         ivBackPay.setOnClickListener(this);

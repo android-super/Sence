@@ -73,8 +73,8 @@ public class BigMidSmallTextView extends LinearLayout {
             return;
         }
         left = new TextView(context);
-        left.setLayoutParams(new LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
+        left.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
+                LayoutParams.WRAP_CONTENT));
         left.setText(left_text);
         left.setTextColor(left_color);
         left.getPaint().setTextSize(left_size);
@@ -89,8 +89,8 @@ public class BigMidSmallTextView extends LinearLayout {
             return;
         }
         mid = new TextView(context);
-        mid.setLayoutParams(new LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
+        mid.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
+                LayoutParams.WRAP_CONTENT));
         mid.setText(mid_text);
         mid.setTextColor(mid_color);
         mid.getPaint().setTextSize(mid_size);
@@ -105,8 +105,8 @@ public class BigMidSmallTextView extends LinearLayout {
             return;
         }
         right = new TextView(context);
-        right.setLayoutParams(new LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
+        right.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
+                LayoutParams.WRAP_CONTENT));
         right.setText(right_text);
         right.setTextColor(right_color);
         right.getPaint().setTextSize(right_size);

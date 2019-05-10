@@ -150,7 +150,7 @@ public class PictureTagLayout extends RelativeLayout implements View.OnTouchList
     private void addItem(int x, int y) {
         tag++;
         View view = null;
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
+        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,
                 LayoutParams.WRAP_CONTENT);
         if (x > getWidth() * 0.5) {
             params.leftMargin = x - PictureTagView.getViewWidth();
@@ -179,9 +179,9 @@ public class PictureTagLayout extends RelativeLayout implements View.OnTouchList
             double width_scale = tagInfoItems.get(i).getWidth_scale();
             double height_scale = tagInfoItems.get(i).getHeight_scale();
             int direction = tagInfoItems.get(i).getDirection();
-            RelativeLayout.LayoutParams params =
-                    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
-                            RelativeLayout.LayoutParams.WRAP_CONTENT);
+            LayoutParams params =
+                    new LayoutParams(LayoutParams.WRAP_CONTENT,
+                            LayoutParams.WRAP_CONTENT);
             if (direction == 0) {
                 params.leftMargin = (int) (width_scale * width);
                 view = new PictureTagView(getContext(), PictureTagView.Direction.Left);
@@ -208,7 +208,7 @@ public class PictureTagLayout extends RelativeLayout implements View.OnTouchList
 
     private void moveView(int x, int y) {
         if (touchView == null) return;
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
+        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,
                 LayoutParams.WRAP_CONTENT);
         params.leftMargin = x - startX + startTouchViewLeft;
         params.topMargin = y - startY + startTouchViewTop;

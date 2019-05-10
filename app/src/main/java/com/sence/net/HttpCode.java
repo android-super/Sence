@@ -93,6 +93,7 @@ public enum HttpCode {
     NOTE_ADD,//添加笔记
     PAY_ALI,//支付宝支付
     PAY_WX,//微信支付
+    PAY_BAl,//余额支付
     VIP_OPEN,//开通会员
     START_PICTURE,//驱动图片
     UPDATE_APP,//更新版本

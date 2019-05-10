@@ -124,7 +124,7 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
     private TextView tvMinutePay;
     private TextView tvSecondPay;
     private ImageView ivZhiPay;
-    private ImageView ivWeiPay;
+    private ImageView ivWeiPay,ivBalPay;
     private ImageView ivBackPay;
     private Button btPayPay;
     private String idAddress;
@@ -169,7 +169,7 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
         tvSpriceConfrimorder.setText("￥" + shopMaxPrice);
         tvPostpriceConfirmorder.setText("￥" + ShopPostPrice);
         GlideUtils.getInstance().loadNormal(img, ivImgConfirmorder);
-        if("0".equals(postage)){
+        if("0".equals(postage)||"0.00".equals(postage)||"0.0".equals(postage)){
             tvExemptionConfirmorder.setVisibility(View.VISIBLE);
         }
         tvShopnameConfirmorder.setText(name);
@@ -259,6 +259,65 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
             tvNameConfirmorder.setText(nameAddress);
             SharedPreferencesUtil.getInstance().putBoolean("ischeck_shopaddress", false);
         }
+
+    }
+    private void confirmbal() {
+        View view = View.inflate(ShopConfirmOrderActivity.this, R.layout.alter_deleteorder, null);
+        dialog = new AlertDialog.Builder(ShopConfirmOrderActivity.this, R.style.AlertDialogStyle).create();
+        dialog.setView(view);
+        dialog.getWindow().setLayout(new DensityUtil().dip2px(270), LinearLayout.LayoutParams.WRAP_CONTENT);
+        dialog.show();
+        TextView mTitle = view.findViewById(R.id.tv_title_deleteorder);
+        mTitle.setText("支付信息");
+        TextView mContent = view.findViewById(R.id.tv_content_deleteorder);
+        mContent.setText("使用余额账户付款，付款金额："+shopMaxPrice+"元");
+        TextView mCancel = view.findViewById(R.id.tv_cancel_deleteorder);
+        mCancel.setText("取消付款");
+        TextView mConfirm = view.findViewById(R.id.tv_confirm_deleteorder);
+        mConfirm.setText("确认付款");
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+        mCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                mBottomSheetDialog.show();
+            }
+        });
+
+        mConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                dalpay();
+            }
+        });
+    }
+
+    private void dalpay() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.PAY_BAl, new RWxPayBean(LoginStatus.getUid(), "1",shopMaxPrice+"",
+                oid)).request(new ApiCallBack<String>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void Message(int code, String message) {
+                if(code==2){
+                    alterBal();
+                }
+            }
+
+            @Override
+            public void onSuccess(String o, String msg) {
+                Logger.e("msg==========" + msg);
+                alterDone();
+            }
+        });
+    }
+
+    private void alterBal() {
 
     }
 
@@ -493,18 +552,28 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
             case R.id.ll_zhi_pay:
                 ivZhiPay.setImageResource(R.drawable.xuanzhong);
                 ivWeiPay.setImageResource(R.drawable.weixuan);
+                ivBalPay.setImageResource(R.drawable.weixuan);
                 PAYMENTTYPE= 2;
                 break;
             case R.id.ll_wei_pay:
                 ivWeiPay.setImageResource(R.drawable.xuanzhong);
                 ivZhiPay.setImageResource(R.drawable.weixuan);
+                ivBalPay.setImageResource(R.drawable.weixuan);
                 PAYMENTTYPE = 1;
+                break;
+            case R.id.ll_bal_pay:
+                ivWeiPay.setImageResource(R.drawable.weixuan);
+                ivZhiPay.setImageResource(R.drawable.weixuan);
+                ivBalPay.setImageResource(R.drawable.xuanzhong);
+                PAYMENTTYPE = 3;
                 break;
             case R.id.bt_pay_pay:
                 if(PAYMENTTYPE==1){
                     PayWx();
                 }else if(PAYMENTTYPE == 2){
                     aLiPay();
+                }else if (PAYMENTTYPE == 3){
+                    confirmbal();
                 }
                 mBottomSheetDialog.dismiss();
                 break;
@@ -524,8 +593,10 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
         tvSecondPay = mView.findViewById(R.id.tv_second_pay);
         ivZhiPay = mView.findViewById(R.id.iv_zhi_pay);
         ivWeiPay = mView.findViewById(R.id.iv_wei_pay);
+        ivBalPay = mView.findViewById(R.id.iv_bal_pay);
         ivBackPay = mView.findViewById(R.id.iv_back_pay);
         btPayPay = mView.findViewById(R.id.bt_pay_pay);
+        mView.findViewById(R.id.ll_bal_pay).setOnClickListener(this);
         mView.findViewById(R.id.ll_zhi_pay).setOnClickListener(this);
         mView.findViewById(R.id.ll_wei_pay).setOnClickListener(this);
         ivBackPay.setOnClickListener(this);

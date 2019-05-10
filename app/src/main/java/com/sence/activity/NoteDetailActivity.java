@@ -311,7 +311,8 @@ public class NoteDetailActivity extends BaseActivity implements View.OnClickList
         toolBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityCompat.finishAfterTransition(NoteDetailActivity.this);
+                finish();
+//                ActivityCompat.finishAfterTransition(NoteDetailActivity.this);
             }
         });
         toolMore.setOnClickListener(this);

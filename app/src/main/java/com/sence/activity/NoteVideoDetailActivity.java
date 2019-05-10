@@ -277,7 +277,8 @@ public class NoteVideoDetailActivity extends BaseActivity implements View.OnClic
         toolBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityCompat.finishAfterTransition(NoteVideoDetailActivity.this);
+                finish();
+//                ActivityCompat.finishAfterTransition(NoteVideoDetailActivity.this);
             }
         });
         toolMore.setOnClickListener(this);

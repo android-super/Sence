@@ -609,6 +609,10 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
         if (mBottomSheetDialog != null) {
             mBottomSheetDialog.dismiss();
         }
+        if(wvContentShopdetails!=null){
+            wvContentShopdetails.destroy();
+        }
+
     }
 
     private void addShop(final String s) {
@@ -822,6 +826,10 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
 
     @OnClick({R.id.iv_share_shopdetails})
     public void onViewClicked() {
+        if (!LoginStatus.isLogin() || LoginStatus.getUid().isEmpty()) {
+            startActivity(new Intent(ShopDetailsActivity.this, LoginActivity.class));
+            return;
+        }
         mBottomSheetDialog.show();
     }
 

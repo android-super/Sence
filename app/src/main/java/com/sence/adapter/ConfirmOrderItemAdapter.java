@@ -32,13 +32,13 @@ public class ConfirmOrderItemAdapter extends RecyclerView.Adapter<ConfirmOrderIt
 
     @NonNull
     @Override
-    public ConfirmOrderItemAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.rv_item_confirmorderitem, parent, false);
-        return new ConfirmOrderItemAdapter.ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ConfirmOrderItemAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         GlideUtils.getInstance().loadHead( list.get(position).getImg(),holder.mImageView);
         holder.mName.setText(list.get(position).getName());
         holder.mPrice.setText("￥" + list.get(position).getPrice());
