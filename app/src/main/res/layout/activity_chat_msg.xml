@@ -13,9 +13,13 @@
             app:tool_cover_background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="45dp"/>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#EDEDED"></View>
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
+            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/ll_bottom"

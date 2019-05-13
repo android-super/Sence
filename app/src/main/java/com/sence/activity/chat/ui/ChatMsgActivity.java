@@ -498,6 +498,8 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
             TextView right_msg = holder.getView(R.id.right_msg);
             TextView left_msg = holder.getView(R.id.left_msg);
             TextView chat_time = holder.getView(R.id.chat_time);
+            TextView right_name = holder.getView(R.id.right_name);
+            TextView left_name = holder.getView(R.id.left_name);
             LinearLayout left_layout = holder.getView(R.id.left_layout);
             TextView join_tribe = holder.getView(R.id.join_tribe);//邀请 自己看见的底下的灰条
             Context mContext = holder.itemView.getContext();
@@ -534,6 +536,7 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
                     holder.getView(R.id.right_layout).setVisibility(View.VISIBLE);
                     right_msg.setText(Utils.getEmotionContent(holder.itemView.getContext(), right_msg,
                             dataBean.getContent()));
+                    right_name.setText(dataBean.getNick_name());
                 }
 
                 left_layout.setVisibility(View.GONE);
@@ -554,6 +557,7 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
                     left_layout.setVisibility(View.VISIBLE);
                     left_msg.setText(Utils.getEmotionContent(holder.itemView.getContext(), left_msg,
                             dataBean.getContent()));
+                    left_name.setText(dataBean.getNick_name());
                 }
                 right_image.setVisibility(View.GONE);
                 holder.getView(R.id.head_left).setVisibility(View.VISIBLE);

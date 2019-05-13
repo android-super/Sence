@@ -4,6 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"
+              android:background="@color/white"
               android:padding="10dp">
 
     <TextView
@@ -46,24 +47,38 @@
                 android:maxWidth="211dp"
                 android:visibility="gone"
                 app:corner_radius="10dp"/>
-
         <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/head_left"
+            android:layout_marginLeft="6dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="糖兜兜"
+                android:textColor="#949494"
+                android:textSize="10sp"
+                android:layout_marginTop="6dp"
+                android:id="@+id/left_name"/>
+            <LinearLayout
                 android:id="@+id/left_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:layout_gravity="left"
-                android:layout_marginLeft="8dp"
-                android:layout_toRightOf="@+id/head_left"
-                android:background="@drawable/chat_bai">
+                android:background="@drawable/chat_huidi">
 
-            <TextView
+                <TextView
                     android:id="@+id/left_msg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:textColor="#0c0c0c"
                     android:textSize="14sp"/>
+            </LinearLayout>
         </LinearLayout>
+
 
         <LinearLayout
                 android:id="@+id/ll_chat_tribe"
@@ -167,17 +182,30 @@
                 android:visibility="gone"
                 app:corner_radius="10dp"
                 />
-
         <LinearLayout
-                android:id="@+id/right_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_toLeftOf="@+id/head_right"
+            android:layout_marginRight="8dp"
+            >
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="9dp"
-                android:layout_toLeftOf="@+id/head_right"
-                android:layout_weight="1"
-                android:background="@drawable/chat_blu">
+                android:text="糖兜兜"
+                android:layout_gravity="right"
+                android:textColor="#949494"
+                android:textSize="10sp"
+                android:layout_marginTop="6dp"
+                android:id="@+id/right_name"/>
+            <LinearLayout
+                android:id="@+id/right_layout"
+                android:layout_marginTop="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/chat_lvdi">
 
-            <TextView
+                <TextView
                     android:id="@+id/right_msg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -185,7 +213,9 @@
                     android:textColor="#0c0c0c"
                     android:textSize="15sp"/>
 
+            </LinearLayout>
         </LinearLayout>
+
 
     </RelativeLayout>
 
