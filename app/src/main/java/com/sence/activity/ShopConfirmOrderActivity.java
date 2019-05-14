@@ -305,7 +305,8 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
             @Override
             public void Message(int code, String message) {
                 if(code==2){
-                    alterBal();
+                    ToastUtils.showShort("账户余额不足");
+                    mBottomSheetDialog.show();
                 }
             }
 

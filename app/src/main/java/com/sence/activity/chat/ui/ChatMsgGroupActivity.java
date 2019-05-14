@@ -537,7 +537,7 @@ public class ChatMsgGroupActivity extends BaseActivity implements View.OnClickLi
 
                 left_layout.setVisibility(View.GONE);
                 holder.getView(R.id.head_left).setVisibility(View.GONE);
-
+                holder.getView(R.id.left_name).setVisibility(View.GONE);
                 String avatar = LoginStatus.getAvatar();
                 if (avatar != null) {
                     GlideUtils.getInstance().loadHead(avatar, (ImageView) holder.getView(R.id.head_right));
@@ -555,6 +555,7 @@ public class ChatMsgGroupActivity extends BaseActivity implements View.OnClickLi
                             dataBean.getContent()));
                     left_name.setText(dataBean.getNick_name());
                 }
+                holder.getView(R.id.right_name).setVisibility(View.GONE);
                 right_image.setVisibility(View.GONE);
                 holder.getView(R.id.head_left).setVisibility(View.VISIBLE);
                 holder.getView(R.id.right_layout).setVisibility(View.GONE);

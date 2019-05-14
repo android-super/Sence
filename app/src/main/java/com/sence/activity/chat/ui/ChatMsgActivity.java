@@ -538,7 +538,7 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
                             dataBean.getContent()));
                     right_name.setText(dataBean.getNick_name());
                 }
-
+                holder.getView(R.id.left_name).setVisibility(View.GONE);
                 left_layout.setVisibility(View.GONE);
                 holder.getView(R.id.head_left).setVisibility(View.GONE);
 
@@ -559,6 +559,7 @@ public class ChatMsgActivity extends BaseActivity implements View.OnClickListene
                             dataBean.getContent()));
                     left_name.setText(dataBean.getNick_name());
                 }
+                holder.getView(R.id.right_name).setVisibility(View.GONE);
                 right_image.setVisibility(View.GONE);
                 holder.getView(R.id.head_left).setVisibility(View.VISIBLE);
                 holder.getView(R.id.right_layout).setVisibility(View.GONE);
