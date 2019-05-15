@@ -2,22 +2,23 @@ package com.sence;
 
 import android.Manifest;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.blankj.utilcode.util.PhoneUtils;
 import com.blankj.utilcode.util.SPUtils;
-import com.sence.activity.WebActivity;
-import com.sence.activity.web.WebConstans;
 import com.sence.activity.web.WebLinkActivity;
 import com.sence.bean.request.RStartPictureBean;
 import com.sence.bean.response.PStartPictureBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
 import com.sence.net.manager.ApiCallBack;
-import com.sence.utils.*;
+import com.sence.utils.GlideUtils;
+import com.sence.utils.LoginStatus;
+import com.sence.utils.NavigationBarUtil;
+import com.sence.utils.PermissionUtil;
+import com.sence.utils.StatusBarUtil;
 
 import java.util.concurrent.TimeUnit;
 
@@ -37,7 +38,7 @@ public class SplashActivity extends AppCompatActivity {
     private PStartPictureBean bean;
     private boolean isload = true;
     private boolean isloadpic = true;
-
+    private boolean islink = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +57,10 @@ public class SplashActivity extends AppCompatActivity {
                 if(isload){
                    return;
                 }
-                if(bean.getLink()!=null){
+                if(islink){
+                    if(bean.getLink()==null||"".equals(bean.getLink())){
+                        return;
+                    }
                     disposable.dispose();
                     Intent intent = new Intent(SplashActivity.this, WebLinkActivity.class);
                     intent.putExtra("url", bean.getLink());
@@ -71,7 +75,10 @@ public class SplashActivity extends AppCompatActivity {
                 if(isloadpic){
                     return;
                 }
-                if(bean.getLink()!=null){
+                if(islink){
+                    if(bean.getLink()==null||"".equals(bean.getLink())){
+                        return;
+                    }
                     disposable.dispose();
                     Intent intent = new Intent(SplashActivity.this, WebLinkActivity.class);
                     intent.putExtra("url", bean.getLink());
@@ -106,12 +113,15 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void Message(int code, String message) {
-
+                if(code==0){
+                    islink = false;
+                }
             }
 
             @Override
             public void onSuccess(PStartPictureBean o, String msg) {
                 bean = o;
+                islink = true;
                 if ("0".equals(o.getIs_full())) {
                     if(o.getLink()!=null||"".equals(o.getLink())){
                         isload=false;
