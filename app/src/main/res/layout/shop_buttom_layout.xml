@@ -2,21 +2,36 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="51dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <View
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="bottom"
-            android:background="@color/white"
-            android:id="@+id/ll_fooler_shopdetails"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal">
+            android:layout_height="1dp"
+            android:background="#f5f5f5"></View>
 
         <LinearLayout
+            android:id="@+id/ll_fooler_shopdetails"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
-            <LinearLayout
+                <LinearLayout
                     android:id="@+id/ll_service_shopdetails"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -24,63 +39,66 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                <ImageView
+                    <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/shopdetails_kefu"/>
 
-                <TextView
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="联系客服"
                         android:textSize="8sp"/>
-            </LinearLayout>
+                </LinearLayout>
 
-            <LinearLayout
+                <LinearLayout
                     android:id="@+id/ll_shop_shopdetails"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical">
-                <RelativeLayout
+
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center">
 
-                    <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                        <ImageView
                             android:id="@+id/iv_shop_shopdetails"
-                            android:src="@drawable/shopdetails_gouwuche"/>
-                    <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/shape_shopnum"
-                            android:layout_marginTop="-2dp"
-                            android:layout_marginLeft="10dp"
+                            android:src="@drawable/shopdetails_gouwuche"/>
+
+                        <TextView
                             android:id="@+id/tv_shopnum_shopdetails"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="-2dp"
+                            android:background="@drawable/shape_shopnum"
                             android:gravity="center"
-                            android:visibility="gone"
                             android:text="1"
-                            android:textSize="9sp"
                             android:textColor="@color/white"
+                            android:textSize="9sp"
+                            android:visibility="gone"
                             />
-                    <TextView
+
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/iv_shop_shopdetails"
                             android:text="购物车"
                             android:textSize="8sp"/>
-                </RelativeLayout>
+                    </RelativeLayout>
+
+
+                </LinearLayout>
 
 
             </LinearLayout>
 
-
-        </LinearLayout>
-
-        <TextView
+            <TextView
                 android:id="@+id/tv_addshop_shopdetails"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -91,7 +109,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_16"/>
 
-        <TextView
+            <TextView
                 android:id="@+id/tv_buy_shopdetails"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -101,5 +119,6 @@
                 android:text="立即购买"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_16"/>
+        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
