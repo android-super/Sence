@@ -204,7 +204,7 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
         contentSupportNum.setText("赞·" + noteInfoBean.getPraise_count());
         contentComment.setText("评论·" + noteInfoBean.getMessage_count());
 
-        contentBuyNum.setText(noteInfoBean.getGoods_info().size() + "");
+        contentBuyNum.setText(noteInfoBean.getGoods_num() + "");
         goodsInfoBeans = noteInfoBean.getGoods_info();
         adapter.setNewData(noteInfoBean.getGoods_info());
         contentWeb.loadUrl(noteInfoBean.getContent());
@@ -309,8 +309,13 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 //页面加载完成之后
-                contentWeb.setVisibility(View.VISIBLE);
-                content_loading.setVisibility(View.GONE);
+                if(contentWeb!=null){
+                    contentWeb.setVisibility(View.VISIBLE);
+                }
+                if(content_loading!=null){
+                    content_loading.setVisibility(View.GONE);
+                }
+
             }
 
             public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
@@ -884,6 +889,9 @@ public class ContentDetailActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        contentWeb.stopLoading();
+        if(contentWeb!=null){
+            contentWeb.stopLoading();
+            contentWeb.destroy();
+        }
     }
 }

@@ -92,6 +92,15 @@ public class PContentDetailBean {
         private String is_focus;
         private List<AlbumsBean> albums;
         private List<GoodsInfoBean> goods_info;
+        private String goods_num;
+
+        public String getGoods_num() {
+            return goods_num;
+        }
+
+        public void setGoods_num(String goods_num) {
+            this.goods_num = goods_num;
+        }
 
         public String getNid() {
             return nid;

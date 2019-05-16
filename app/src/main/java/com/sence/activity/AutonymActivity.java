@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.orhanobut.logger.Logger;
 import com.sence.R;
 import com.sence.base.BaseActivity;
@@ -102,6 +103,7 @@ public class AutonymActivity extends BaseActivity {
             @Override
             public void onSuccess(String o, String msg) {
                 Logger.e("msg==========" + msg);
+                ToastUtils.showShort(msg);
                 SharedPreferencesUtil.getInstance().putString("id_status", "2");
                 String name = etNameAutonym.getText().toString().trim();
                 String autonym = etIdentityAutonym.getText().toString().trim();

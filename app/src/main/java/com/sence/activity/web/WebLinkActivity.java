@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.sence.LoginActivity;
 import com.sence.MainActivity;
 import com.sence.R;
 import com.sence.activity.MyAccountActivity;
@@ -63,6 +64,7 @@ public class WebLinkActivity extends AppCompatActivity {
         webView.setFocusable(true);
         webView.requestFocus();
         webView.setWebChromeClient(new WebChromeClient());  //解决android与H5协议交互,弹不出对话框问题
+        webView.addJavascriptInterface(new JsInterface(this), "Android");
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
@@ -89,6 +91,23 @@ public class WebLinkActivity extends AppCompatActivity {
         });
     }
 
+    private class JsInterface {
+        private Context mContext;
+
+        public JsInterface(Context context) {
+            this.mContext = context;
+        }
+
+        //在js中调用window.AndroidWebView.showInfoFromJs(name)，便会触发此方法。
+        @JavascriptInterface
+        public void goToLogin() {
+            Intent intent = new Intent(WebLinkActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();

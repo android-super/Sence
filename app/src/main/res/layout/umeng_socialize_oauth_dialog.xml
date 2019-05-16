@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="#D4E0E5">
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#D4E0E5">
 
 
-    <RelativeLayout
-        android:id="@+id/umeng_socialize_titlebar"
-        android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:background="#0086DC">
+  <RelativeLayout
+          android:id="@+id/umeng_socialize_titlebar"
+          android:layout_width="match_parent"
+          android:layout_height="54dp"
+          android:background="#0086DC">
 
-        <TextView
+    <TextView
             android:id="@+id/umeng_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
             android:textColor="#ffffff"
             android:textSize="18sp" />
 
-        <RelativeLayout
+    <RelativeLayout
             android:id="@+id/umeng_back"
             android:layout_width="60dp"
             android:layout_height="match_parent"
@@ -28,17 +28,17 @@
             android:onClick="onCancel"
             android:visibility="visible">
 
-            <ImageButton
+      <ImageButton
 
-                android:layout_width="12dp"
-                android:layout_height="20dp"
-                android:layout_centerVertical="true"
-                android:background="@drawable/umeng_socialize_back_icon"
-                android:layout_marginLeft="15dp"
-                android:scaleType="center" />
-        </RelativeLayout>
+              android:layout_width="12dp"
+              android:layout_height="20dp"
+              android:layout_centerVertical="true"
+              android:background="@drawable/umeng_socialize_back_icon"
+              android:layout_marginLeft="15dp"
+              android:scaleType="center" />
+    </RelativeLayout>
 
-        <TextView
+    <TextView
             android:id="@+id/umeng_share_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,17 +49,17 @@
             android:padding="4dp"
             android:text="分享"
             android:textColor="#ffffff" />
-    </RelativeLayout>
+  </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/umeng_socialize_follow"
-        android:layout_width="fill_parent"
-        android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
-        android:background="#AAAAAA"
-        android:visibility="visible">
+  <RelativeLayout
+          android:id="@+id/umeng_socialize_follow"
+          android:layout_width="fill_parent"
+          android:layout_height="40dp"
+          android:layout_alignParentBottom="true"
+          android:background="#AAAAAA"
+          android:visibility="visible">
 
-        <CheckBox
+    <CheckBox
             android:id="@+id/umeng_socialize_follow_check"
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -68,7 +68,7 @@
             android:checked="true"
             android:visibility="gone" />
 
-        <TextView
+    <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -78,44 +78,44 @@
             android:textColor="#f8f8f8"
             android:textSize="16sp"
             android:visibility="gone" />
-    </RelativeLayout>
+  </RelativeLayout>
 
-    <!--<LinearLayout-->
-        <!--android:id="@+id/webView_container"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_above="@id/umeng_socialize_follow"-->
-        <!--android:layout_below="@id/umeng_socialize_titlebar"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:visibility="visible" />-->
+  <!--<LinearLayout-->
+  <!--android:id="@+id/webView_container"-->
+  <!--android:layout_width="match_parent"-->
+  <!--android:layout_height="match_parent"-->
+  <!--android:layout_above="@id/umeng_socialize_follow"-->
+  <!--android:layout_below="@id/umeng_socialize_titlebar"-->
+  <!--android:orientation="horizontal"-->
+  <!--android:visibility="visible" />-->
 
-    <WebView
-        android:id="@+id/webView"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="#F2F5F6"
-        android:layout_above="@id/umeng_socialize_follow"
-        android:layout_below="@id/umeng_socialize_titlebar"
-        android:visibility="visible" />
+  <WebView
+          android:id="@+id/webView"
+          android:layout_width="fill_parent"
+          android:layout_height="fill_parent"
+          android:background="#F2F5F6"
+          android:layout_above="@id/umeng_socialize_follow"
+          android:layout_below="@id/umeng_socialize_titlebar"
+          android:visibility="visible" />
 
-    <RelativeLayout
-        android:id="@+id/progress_bar_parent"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@id/umeng_socialize_titlebar"
-        android:background="#F2F5F6" >
+  <RelativeLayout
+          android:id="@+id/progress_bar_parent"
+          android:layout_width="fill_parent"
+          android:layout_height="fill_parent"
+          android:layout_below="@id/umeng_socialize_titlebar"
+          android:background="#F2F5F6" >
 
-        <LinearLayout
+    <LinearLayout
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_centerInParent="true"
             android:orientation="horizontal">
 
-            <ProgressBar
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_margin="10dp" />
-        </LinearLayout>
-    </RelativeLayout>
+      <ProgressBar
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:layout_margin="10dp" />
+    </LinearLayout>
+  </RelativeLayout>
 
 </RelativeLayout>

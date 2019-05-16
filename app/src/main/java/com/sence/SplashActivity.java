@@ -3,6 +3,7 @@ package com.sence;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -120,8 +121,19 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(PStartPictureBean o, String msg) {
+                if(o.getLink().contains("sence@id")){
+                    if(LoginStatus.isLogin()){
+                        o.setLink(o.getLink().replace("sence@id","?uid="+LoginStatus.getUid()));
+                    }else{
+                        o.setLink(o.getLink().replace("sence@id","?uid=0"));
+                    }
+                }
+                Log.i("aaa",o.getLink());
                 bean = o;
                 islink = true;
+                if("1".equals(o.getIs_tab())){
+                    hideNavigationBar();
+                }
                 if ("0".equals(o.getIs_full())) {
                     if(o.getLink()!=null||"".equals(o.getLink())){
                         isload=false;
@@ -137,7 +149,12 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
     }
-
+    private void hideNavigationBar() {
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
+    }
     private void getSystemTime() {
         HttpManager.getInstance().PlayNetCode(HttpCode.GET_SYSTEM_TIME).request(new ApiCallBack<String>() {
             @Override

@@ -355,7 +355,6 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
 
                     mIsV.setVisibility(View.GONE);
                     layout.setVisibility(View.GONE);
-                    ivGroupchatMyinfo.setVisibility(View.GONE);
                 } else {
                     if (o.getGoods_info().size() == 0) {
                         layout.setVisibility(View.GONE);
@@ -382,6 +381,9 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                             myInfoShopListAdapter.setList(o.getGoods_info());
                         }
                     }
+                }
+                if("".equals(o.getVid())){
+                    ivGroupchatMyinfo.setVisibility(View.GONE);
                 }
                 type = o.getIs_shield();
                 mName.setText(o.getNick_name());

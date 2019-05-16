@@ -16,7 +16,7 @@
             app:tool_cover_background="@color/white"
             style="@style/NoLeftToolbar"
             app:tool_cover_right_size="16sp"
-            app:tool_cover_right_text="加入"
+            app:tool_cover_right_text=""
             app:tool_cover_right_color="@color/theme_green"
             android:layout_width="match_parent"
             android:layout_height="45dp"/>

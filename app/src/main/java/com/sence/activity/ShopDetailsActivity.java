@@ -437,8 +437,12 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                wvContentShopdetails.setVisibility(View.VISIBLE);
-                contentLoadingShopdetails.setVisibility(View.GONE);
+                if(wvContentShopdetails!=null){
+                    wvContentShopdetails.setVisibility(View.VISIBLE);
+                }
+                if(contentLoadingShopdetails!=null){
+                    contentLoadingShopdetails.setVisibility(View.GONE);
+                }
                 //页面加载完成之后
             }
 
@@ -610,6 +614,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
             mBottomSheetDialog.dismiss();
         }
         if(wvContentShopdetails!=null){
+            wvContentShopdetails.stopLoading();
             wvContentShopdetails.destroy();
         }
 

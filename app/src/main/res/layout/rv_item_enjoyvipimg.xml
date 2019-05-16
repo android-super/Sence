@@ -5,9 +5,9 @@
                 android:descendantFocusability="blocksDescendants">
 
     <ImageView
-        android:id="@+id/iv_xing_enjoyvipimg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="3dp"
-        android:src="@drawable/enjoyvip_xingxing"/>
+            android:id="@+id/iv_xing_enjoyvipimg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="3dp"
+            android:src="@drawable/enjoyvip_xingxing"/>
 </RelativeLayout>

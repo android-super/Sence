@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import com.blankj.utilcode.util.ConvertUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.sence.R;
@@ -36,7 +37,6 @@ public class MemberActivity extends BaseActivity implements View.OnClickListener
     RecyclerView recycleView;
     @BindView(R.id.pub_title)
     PubTitle pubTitle;
-
     private MemberAdapter adapter;
     private String v_id;
     private String to_uid;
@@ -57,12 +57,13 @@ public class MemberActivity extends BaseActivity implements View.OnClickListener
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 5);
         recycleView.setLayoutManager(gridLayoutManager);
         recycleView.addItemDecoration(new GridSpacingItemDecoration(5, ConvertUtils.dp2px(20), true));
-        adapter = new MemberAdapter(R.layout.rv_item_member);
+        adapter = new MemberAdapter(R.layout.rv_item_member,isMyGroup);
         recycleView.setAdapter(adapter);
 
         pubTitle.setRightOnClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Join();
             }
         });
@@ -94,6 +95,11 @@ public class MemberActivity extends BaseActivity implements View.OnClickListener
 
             @Override
             public void onSuccess(RMemberBean o, String msg) {
+                if("1".equals(o.getIs_join())){
+                    pubTitle.setRigthText("");
+                }else{
+                    pubTitle.setRigthText("加入");
+                }
                 adapter.setNewData(o.getList());
             }
         });
@@ -116,6 +122,8 @@ public class MemberActivity extends BaseActivity implements View.OnClickListener
 
             @Override
             public void onSuccess(Object o, String msg) {
+                ToastUtils.showShort("加入成功");
+                pubTitle.setRigthText("");
                 initData();
             }
         });
