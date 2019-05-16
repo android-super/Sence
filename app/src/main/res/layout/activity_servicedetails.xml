@@ -37,7 +37,7 @@
             android:orientation="vertical">
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="184dp">
+                android:layout_height="498px">
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/vp_img_servicedetails"
                     android:layout_width="match_parent"
