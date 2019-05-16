@@ -60,7 +60,7 @@ public class MyInfoServiceAdapter extends RecyclerView.Adapter<MyInfoServiceAdap
         holder.mRecyclerView.setLayoutManager(linearLayoutManager);
         holder.mRecyclerView.setAdapter(enjoyVipImgAdapter);
         int num = Integer.parseInt(list.get(position).getStar());
-        enjoyVipImgAdapter.setList(num,R.drawable.xingxing);
+        enjoyVipImgAdapter.setList(num,R.drawable.myinfo_xingxing);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
