@@ -215,14 +215,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             SharedPreferencesUtil.getInstance().putString("paytype", "");
             alter();
         }
-
         isCheckAddress = LoginStatus.getIsCheckAddress();
-        boolean isNullAddress = LoginStatus.getIsNullShopAddress();
-        if(isNullAddress){
-            SharedPreferencesUtil.getInstance().putBoolean("isnull_shopaddress", false);
-            rlAddaddressConfirmorder.setVisibility(View.VISIBLE);
-            rlAddressConfirmorder.setVisibility(View.GONE);
-        }
         if(isCheckAddress){
             rlAddaddressConfirmorder.setVisibility(View.GONE);
             rlAddressConfirmorder.setVisibility(View.VISIBLE);
@@ -234,6 +227,12 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             tvPhoneConfirmorder.setText(phoneAddress);
             tvNameConfirmorder.setText(nameAddress);
             SharedPreferencesUtil.getInstance().putBoolean("ischeck_address", false);
+        }
+        boolean isNullAddress = LoginStatus.getIsNullShopAddress();
+        if(isNullAddress){
+            SharedPreferencesUtil.getInstance().putBoolean("isnull_shopaddress", false);
+            rlAddaddressConfirmorder.setVisibility(View.VISIBLE);
+            rlAddressConfirmorder.setVisibility(View.GONE);
         }
     }
     @OnClick({R.id.rl_address_confirmorder, R.id.bt_submint_confirmorder, R.id.rl_addaddress_confirmorder})

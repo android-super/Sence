@@ -241,12 +241,7 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
             alter();
         }
         isCheckAddress = LoginStatus.getIsCheckShopAddress();
-        boolean isNullAddress = LoginStatus.getIsNullShopAddress();
-        if(isNullAddress){
-            SharedPreferencesUtil.getInstance().putBoolean("isnull_shopaddress", true);
-            rlAddaddressConfirmorder.setVisibility(View.VISIBLE);
-            rlAddressConfirmorder.setVisibility(View.GONE);
-        }
+
         if(isCheckAddress){
             rlAddaddressConfirmorder.setVisibility(View.GONE);
             rlAddressConfirmorder.setVisibility(View.VISIBLE);
@@ -259,7 +254,12 @@ public class ShopConfirmOrderActivity extends BaseActivity implements View.OnCli
             tvNameConfirmorder.setText(nameAddress);
             SharedPreferencesUtil.getInstance().putBoolean("ischeck_shopaddress", false);
         }
-
+        boolean isNullAddress = LoginStatus.getIsNullShopAddress();
+        if(isNullAddress){
+            SharedPreferencesUtil.getInstance().putBoolean("isnull_shopaddress", false);
+            rlAddaddressConfirmorder.setVisibility(View.VISIBLE);
+            rlAddressConfirmorder.setVisibility(View.GONE);
+        }
     }
     private void confirmbal() {
         View view = View.inflate(ShopConfirmOrderActivity.this, R.layout.alter_deleteorder, null);
