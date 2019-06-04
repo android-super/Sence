@@ -114,7 +114,6 @@ public class OrderCommentActivity extends BaseActivity implements View.OnClickLi
         ptTablayout.setRightOnClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 doHttp();
             }
         });

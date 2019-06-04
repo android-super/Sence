@@ -1,45 +1,49 @@
 package com.sence.bean.response;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class PShopDetailsBean {
 
+
     /**
-     * imgs : ["/Public/Uploads/Goods/2019-04-23/5cbe8b5ddc05c.jpg","/Public/Uploads/Goods/2019-04-23/5cbe8b5ddc65f.jpg"]
-     * name : 2019最新款耳机机构行家有同居体育等法规和小伙伴幸福感
-     * describe : http://sence.forhour.com//index.php/Api/Goods/getGoodsHtml/23
-     * price : 650
-     * vprice : 630
-     * uid : 19
-     * img : /Public/Uploads/Goods/2019-04-23/5cbe8b5ddb8db.png
-     * postage : 0
-     * id : 23
-     * subhead :
-     * favourable : 0.00
-     * discount : 9.7
-     * username : o～糖菓菓o_O
-     * avatar : /Public/Uploads/header/2019-04-22/oH3Cg1N6vRkmU8vZ8RSI0CPgUc6U.jpg
-     * cartNum : 7
-     * customId : 28
-     * customName : 千山暮雪
-     * customAvatar : /Public/Uploads/avatar/2019-04-26/5cc27f58b6575.jpg
-     * commentNum : 1
-     * commentRate : 100
-     * comment : {"content":"来咯呕吐都来了","imgs":[],"id":"37","praise":"1","addtime":"2019-04-25","nickname":"相濡以沫ふ","avatar":"/Public/Uploads/header/2019-04-23/oH3Cg1Pzkv_GmcFkRUkKVQHVmgl4.jpg","isPraise":"0"}
-     * isMember : 1
-     * imgUrl : http://sence.forhour.com//Public/Uploads/Goods/2019-04-23/5cbe8b5ddb8db.png
+     * status : 1
+     * imgUrl : http://192.168.1.10:8085//Public/Uploads/Goods/2019-03-27/5c9afaf63f8b8.jpg
+     * favourable : 1
+     * isMember :
+     * id : 1
+     * img : /Public/Uploads/Goods/2019-03-27/5c9afaf63f8b8.jpg
+     * postage : 6
+     * imgs : [{"type":"2","img":"/Public/Uploads/Goods/2019-06-03/5cf4e8653cee1.jpg","video":"/Public/Uploads/Goods/2019-06-03/5cf4e865439f2.mp4"},{"type":"1","img":"/Public/Uploads/Goods/2019-06-03/5cf4e86546810.jpg","video":""},{"type":"1","img":"/Public/Uploads/Goods/2019-06-03/5cf4e86547ea7.jpg","video":""}]
+     * name : 一号商品
+     * describe : http://192.168.1.10:8081/index.php/Shares/Public/show_notice_info/6
+     * price : 10
+     * vprice : 5
+     * uid : 1
+     * discount : 5
+     * username : hhhh
+     * avatar :
+     * cartNum : 0
+     * customId : 1
+     * customName : hhhh
+     * customAvatar :
+     * commentNum : 2903
+     * commentRate : 97.7
+     * comment : {"content":"天通苑南不阿妈啦呼呼呼呼呼呼11","imgs":["/Public/Uploads/Order/2019-04-18//5cb7f60e54c4b.jpg","/Public/Uploads/Order/2019-04-18//5cb7f60e556df.jpg","/Public/Uploads/Order/2019-04-18//5cb7f60e56016.jpg"],"id":"30","praise":"0","addtime":"2019-04-18","nickname":"辣啦啦啦啦","avatar":"/Public/Uploads/avatar/2019-04-13/5cb1d167ca300.jpg","isPraise":"0"}
      */
+
     private String status;
+    private String imgUrl;
+    private String favourable;
+    private String isMember;
+    private String id;
+    private String img;
+    private String postage;
     private String name;
     private String describe;
     private String price;
     private String vprice;
     private String uid;
-    private String img;
-    private String postage;
-    private String id;
-    private String subhead;
-    private String favourable;
     private String discount;
     private String username;
     private String avatar;
@@ -50,9 +54,7 @@ public class PShopDetailsBean {
     private String commentNum;
     private String commentRate;
     private CommentBean comment;
-    private String isMember;
-    private String imgUrl;
-    private List<String> imgs;
+    private List<ImgsBean> imgs;
 
     public String getStatus() {
         return status;
@@ -60,6 +62,54 @@ public class PShopDetailsBean {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public String getFavourable() {
+        return favourable;
+    }
+
+    public void setFavourable(String favourable) {
+        this.favourable = favourable;
+    }
+
+    public String getIsMember() {
+        return isMember;
+    }
+
+    public void setIsMember(String isMember) {
+        this.isMember = isMember;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public String getPostage() {
+        return postage;
+    }
+
+    public void setPostage(String postage) {
+        this.postage = postage;
     }
 
     public String getName() {
@@ -100,46 +150,6 @@ public class PShopDetailsBean {
 
     public void setUid(String uid) {
         this.uid = uid;
-    }
-
-    public String getImg() {
-        return img;
-    }
-
-    public void setImg(String img) {
-        this.img = img;
-    }
-
-    public String getPostage() {
-        return postage;
-    }
-
-    public void setPostage(String postage) {
-        this.postage = postage;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getSubhead() {
-        return subhead;
-    }
-
-    public void setSubhead(String subhead) {
-        this.subhead = subhead;
-    }
-
-    public String getFavourable() {
-        return favourable;
-    }
-
-    public void setFavourable(String favourable) {
-        this.favourable = favourable;
     }
 
     public String getDiscount() {
@@ -222,39 +232,23 @@ public class PShopDetailsBean {
         this.comment = comment;
     }
 
-    public String getIsMember() {
-        return isMember;
-    }
-
-    public void setIsMember(String isMember) {
-        this.isMember = isMember;
-    }
-
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
-    }
-
-    public List<String> getImgs() {
+    public List<ImgsBean> getImgs() {
         return imgs;
     }
 
-    public void setImgs(List<String> imgs) {
+    public void setImgs(List<ImgsBean> imgs) {
         this.imgs = imgs;
     }
 
     public static class CommentBean {
         /**
-         * content : 来咯呕吐都来了
-         * imgs : []
-         * id : 37
-         * praise : 1
-         * addtime : 2019-04-25
-         * nickname : 相濡以沫ふ
-         * avatar : /Public/Uploads/header/2019-04-23/oH3Cg1Pzkv_GmcFkRUkKVQHVmgl4.jpg
+         * content : 天通苑南不阿妈啦呼呼呼呼呼呼11
+         * imgs : ["/Public/Uploads/Order/2019-04-18//5cb7f60e54c4b.jpg","/Public/Uploads/Order/2019-04-18//5cb7f60e556df.jpg","/Public/Uploads/Order/2019-04-18//5cb7f60e56016.jpg"]
+         * id : 30
+         * praise : 0
+         * addtime : 2019-04-18
+         * nickname : 辣啦啦啦啦
+         * avatar : /Public/Uploads/avatar/2019-04-13/5cb1d167ca300.jpg
          * isPraise : 0
          */
 
@@ -329,6 +323,42 @@ public class PShopDetailsBean {
 
         public void setImgs(List<String> imgs) {
             this.imgs = imgs;
+        }
+    }
+
+    public static class ImgsBean implements Serializable {
+        /**
+         * type : 2
+         * img : /Public/Uploads/Goods/2019-06-03/5cf4e8653cee1.jpg
+         * video : /Public/Uploads/Goods/2019-06-03/5cf4e865439f2.mp4
+         */
+
+        private String type;
+        private String img;
+        private String video;
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public String getImg() {
+            return img;
+        }
+
+        public void setImg(String img) {
+            this.img = img;
+        }
+
+        public String getVideo() {
+            return video;
+        }
+
+        public void setVideo(String video) {
+            this.video = video;
         }
     }
 }

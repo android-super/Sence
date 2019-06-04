@@ -10,17 +10,24 @@ import android.net.http.SslError;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.*;
-import android.webkit.*;
-import android.widget.*;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.widget.NestedScrollView;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.webkit.SslErrorHandler;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -34,11 +41,13 @@ import com.sence.adapter.ShopCommendImgAdapter;
 import com.sence.adapter.ShopDetailsImgAdapter;
 import com.sence.base.BaseActivity;
 import com.sence.bean.request.RBusAddBean;
+import com.sence.bean.request.RShopBean;
 import com.sence.bean.request.RShopDetailsBean;
 import com.sence.bean.request.RUidBean;
 import com.sence.bean.response.PShopDetailsBean;
 import com.sence.net.HttpCode;
 import com.sence.net.HttpManager;
+import com.sence.net.Urls;
 import com.sence.net.manager.ApiCallBack;
 import com.sence.utils.GlideUtils;
 import com.sence.utils.LoginStatus;
@@ -54,6 +63,16 @@ import com.umeng.socialize.media.UMWeb;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import cn.jzvd.JzvdStd;
 
 /**
  * 商品详情
@@ -151,7 +170,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
 
     private ShopDetailsImgAdapter shopDetailsImgAdapter;
     private WebSettings settings;
-    private List<String> imgs = new ArrayList<>();
+    private List<PShopDetailsBean.ImgsBean> imgs = new ArrayList<>();
     private String id;
     private PShopDetailsBean bean = null;
     private int numAddShop;
@@ -300,7 +319,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
     }
 
     public void initData() {
-        HttpManager.getInstance().PlayNetCode(HttpCode.GOOD_DETAIL, new RShopDetailsBean(id, LoginStatus.getUid())).request(new ApiCallBack<PShopDetailsBean>() {
+        HttpManager.getInstance().PlayNetCode(HttpCode.GOOD_DETAIL, new RShopBean(id, LoginStatus.getUid(),"1")).request(new ApiCallBack<PShopDetailsBean>() {
             @Override
             public void onFinish() {
 
@@ -357,22 +376,30 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                         tvImgnumShopdetails.setText("1/" + imgs.size());
                     }
 
-                    List<ImageView> list = new ArrayList<>();
+                    List<View> list = new ArrayList<>();
                     for (int i = 0; i < imgs.size(); i++) {
-                        ImageView imageView = new ImageView(ShopDetailsActivity.this);
-                        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                        GlideUtils.getInstance().loadNormal(imgs.get(i), imageView);
-                        list.add(imageView);
-                        final int position = i;
-                        imageView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent = new Intent(ShopDetailsActivity.this, ImgFlexActivity.class);
-                                intent.putStringArrayListExtra("imgs", (ArrayList<String>) imgs);
-                                intent.putExtra("position", position);
-                                startActivity(intent);
-                            }
-                        });
+                        if(imgs.get(i).getType().equals("1")){
+                            ImageView imageView = new ImageView(ShopDetailsActivity.this);
+                            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                            list.add(imageView);
+                        }else {
+                            JzvdStd jzvdStd =  new JzvdStd(ShopDetailsActivity.this);
+                            jzvdStd.setUp(Urls.base_url + imgs.get(i).getVideo()
+                                    , "", JzvdStd.SCREEN_NORMAL);
+                            GlideUtils.getInstance().loadNormal(imgs.get(i).getImg(), jzvdStd.thumbImageView);
+                            list.add(jzvdStd);
+                        }
+
+//                        final int position = i;
+//                        list.get(i).setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                Intent intent = new Intent(ShopDetailsActivity.this, ImgFlexActivity.class);
+//                                intent.putStringArrayListExtra("views", imgs);
+//                                intent.putExtra("position", position);
+//                                startActivity(intent);
+//                            }
+//                        });
                     }
                     shopDetailsImgAdapter.setList(list);
                 }

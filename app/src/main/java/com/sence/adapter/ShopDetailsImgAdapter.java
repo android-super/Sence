@@ -2,7 +2,6 @@ package com.sence.adapter;
 
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
 public class ShopDetailsImgAdapter extends PagerAdapter {
-    private List<ImageView> list = new ArrayList<>();
-    public void setList( List<ImageView> list){
+    private List<View> list = new ArrayList<>();
+    public void setList( List<View> list){
         this.list=list;
         notifyDataSetChanged();
     }
