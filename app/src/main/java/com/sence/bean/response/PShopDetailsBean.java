@@ -31,7 +31,8 @@ public class PShopDetailsBean {
      * commentRate : 97.7
      * comment : {"content":"天通苑南不阿妈啦呼呼呼呼呼呼11","imgs":["/Public/Uploads/Order/2019-04-18//5cb7f60e54c4b.jpg","/Public/Uploads/Order/2019-04-18//5cb7f60e556df.jpg","/Public/Uploads/Order/2019-04-18//5cb7f60e56016.jpg"],"id":"30","praise":"0","addtime":"2019-04-18","nickname":"辣啦啦啦啦","avatar":"/Public/Uploads/avatar/2019-04-13/5cb1d167ca300.jpg","isPraise":"0"}
      */
-
+    private String note;
+    private String orig;
     private String status;
     private String imgUrl;
     private String favourable;
@@ -55,6 +56,22 @@ public class PShopDetailsBean {
     private String commentRate;
     private CommentBean comment;
     private List<ImgsBean> imgs;
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getOrig() {
+        return orig;
+    }
+
+    public void setOrig(String orig) {
+        this.orig = orig;
+    }
 
     public String getStatus() {
         return status;

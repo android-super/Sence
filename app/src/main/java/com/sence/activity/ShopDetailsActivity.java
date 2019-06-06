@@ -72,6 +72,7 @@ import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
 
 /**
@@ -188,6 +189,7 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
     private boolean page = true;
     private boolean isAddShop = false;
     private ShopCommendImgAdapter shopCommendImgAdapter;
+    private JzvdStd jzvdStd;
 
     @Override
     public int onActLayout() {
@@ -273,7 +275,6 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                 }
             }
         });
-
     }
 
     private void Like() {
@@ -381,9 +382,10 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                         if(imgs.get(i).getType().equals("1")){
                             ImageView imageView = new ImageView(ShopDetailsActivity.this);
                             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                            GlideUtils.getInstance().loadNormal(imgs.get(i).getImg(),imageView);
                             list.add(imageView);
                         }else {
-                            JzvdStd jzvdStd =  new JzvdStd(ShopDetailsActivity.this);
+                            jzvdStd = new JzvdStd(ShopDetailsActivity.this);
                             jzvdStd.setUp(Urls.base_url + imgs.get(i).getVideo()
                                     , "", JzvdStd.SCREEN_NORMAL);
                             GlideUtils.getInstance().loadNormal(imgs.get(i).getImg(), jzvdStd.thumbImageView);
@@ -415,13 +417,18 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
                     layoutParams.width = width * round;
                     viewOpriceShopdetails.setLayoutParams(layoutParams);
                 }
-                tvOpriceShopdetails.setText("￥" + o.getPrice());
-                if ("0".equals(o.getVprice()) || o.getVprice() == o.getPrice() || o.getPrice().equals(o.getVprice())) {
-                    tvCpriceShopdetails.setText("￥" + o.getPrice());
+                tvCpriceShopdetails.setText( o.getPrice());
+                tvOpriceShopdetails.setText("￥" + o.getOrig());
+                if(o.getNote().equals("")||TextUtils.isEmpty(o.getNote())){
                     tvVipShopdetails.setVisibility(View.GONE);
+                }else{
+                    tvVipShopdetails.setVisibility(View.VISIBLE);
+                    tvVipShopdetails.setText(o.getNote());
+                }
+                if ("0".equals(o.getOrig()) || 0>=Integer.parseInt(o.getOrig())) {
                     rlLayoutVprice.setVisibility(View.GONE);
                 } else {
-                    tvCpriceShopdetails.setText("￥" + o.getVprice());
+                    rlLayoutVprice.setVisibility(View.VISIBLE);
                 }
                 tvNameShopdetails.setText(o.getName());
                 doData(o.getDescribe());
@@ -433,7 +440,18 @@ public class ShopDetailsActivity extends BaseActivity implements View.OnClickLis
         });
     }
 
-
+    @Override
+    public void onBackPressed() {
+        if (Jzvd.backPress()) {
+            return;
+        }
+        super.onBackPressed();
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Jzvd.resetAllVideos();
+    }
     private void doData(final String url) {
         settings = wvContentShopdetails.getSettings();
         settings.setDefaultTextEncodingName("UTF-8");

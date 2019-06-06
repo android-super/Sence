@@ -58,39 +58,53 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
         if ("1".equals(list.get(position).getStatus())) {
             holder.mAlipay.setText("立即支付");
             holder.mState.setText("待支付");
+            holder.mAlipay.setVisibility(View.VISIBLE);
+            holder.mSevice.setVisibility(View.VISIBLE);
+            holder.mCancel.setVisibility(View.VISIBLE);
         } else if ("2".equals(list.get(position).getStatus())) {
             holder.mCancel.setText("查看订单");
             holder.mState.setText("待发货");
             holder.mAlipay.setVisibility(View.GONE);
+            holder.mSevice.setVisibility(View.VISIBLE);
+            holder.mCancel.setVisibility(View.VISIBLE);
         } else if ("3".equals(list.get(position).getStatus())) {
             holder.mCancel.setText("查看订单");
             holder.mState.setText("待收货");
             holder.mAlipay.setText("确认收货");
+            holder.mAlipay.setVisibility(View.VISIBLE);
+            holder.mSevice.setVisibility(View.VISIBLE);
+            holder.mCancel.setVisibility(View.VISIBLE);
         } else if ("4".equals(list.get(position).getStatus())) {
             holder.mSevice.setVisibility(View.GONE);
             holder.mCancel.setText("查看订单");
             holder.mAlipay.setText("评价");
             holder.mState.setText("写评价");
+            holder.mAlipay.setVisibility(View.VISIBLE);
+            holder.mCancel.setVisibility(View.VISIBLE);
         } else if ("5".equals(list.get(position).getStatus())) {
             holder.mSevice.setVisibility(View.GONE);
             holder.mAlipay.setVisibility(View.GONE);
             holder.mCancel.setText("再次购买");
             holder.mState.setText("用户关闭");
+            holder.mCancel.setVisibility(View.VISIBLE);
         } else if ("6".equals(list.get(position).getStatus())) {
             holder.mSevice.setVisibility(View.GONE);
             holder.mAlipay.setVisibility(View.GONE);
             holder.mCancel.setText("再次购买");
             holder.mState.setText("后台关闭");
+            holder.mCancel.setVisibility(View.VISIBLE);
         } else if ("7".equals(list.get(position).getStatus())) {
             holder.mSevice.setVisibility(View.GONE);
             holder.mAlipay.setVisibility(View.GONE);
             holder.mState.setText("已完成");
             holder.mCancel.setText("删除订单");
+            holder.mCancel.setVisibility(View.VISIBLE);
         } else if ("8".equals(list.get(position).getStatus())) {
             holder.mSevice.setVisibility(View.GONE);
             holder.mAlipay.setVisibility(View.GONE);
             holder.mState.setText("交易关闭");
             holder.mCancel.setText("再次购买");
+            holder.mCancel.setVisibility(View.VISIBLE);
         }
         MyOrderItemAdapter myOrderItemAdapter = new MyOrderItemAdapter(context);
         LinearLayoutManager linearLayout = new LinearLayoutManager(context);
